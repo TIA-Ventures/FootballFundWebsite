@@ -291,11 +291,6 @@ export default function IpswichPage() {
                   A historic club, <em>positioned for transformation.</em>
                 </h2>
               </div>
-              <p className="sh-deck">
-                Ipswich Town anchors Clara Vista&apos;s Football &amp; Technology portfolio — a club where strong
-                on-field momentum, an elite operating leader, and a structurally undervalued asset base align with our
-                investment criteria.
-              </p>
             </div>
 
             <div className="prose-body" style={{ maxWidth: 820, margin: 0 }}>
