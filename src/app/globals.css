@@ -1277,6 +1277,13 @@ body {
   grid-template-columns: 1fr;
   gap: 0;
 }
+/* Ipswich deep-dive: tighten inter-section rhythm after deal block removal */
+.cv-page.ipswich-page .section {
+  padding: 72px 56px;
+}
+.cv-page.ipswich-page .section-head {
+  margin-bottom: 52px;
+}
 .cv-page .sh-eyebrow {
   font-family: 'Onest', sans-serif;
   font-size: 11px;

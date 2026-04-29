@@ -179,7 +179,7 @@ export default function IpswichPage() {
   return (
     <>
       <Topbar activeNav="portfolio" />
-      <main className="cv-page portfolio-page">
+      <main className="cv-page portfolio-page ipswich-page">
         <div className="deep-hero">
           <div className="deep-hero-inner">
             <div className="breadcrumb">
