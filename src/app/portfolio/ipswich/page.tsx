@@ -128,24 +128,6 @@ const ACCOMPLISHMENTS: AccompCard[] = [
 
 const DEAL_ROWS: DealRow[] = [
   {
-    label: "Initial investment",
-    value: (
-      <>
-        <strong>March 2024</strong> — Clara Vista&apos;s first commitment to Ipswich Town, taken alongside the existing
-        ownership group following promotion to the EFL Championship.
-      </>
-    ),
-  },
-  {
-    label: "Expansion",
-    value: (
-      <>
-        <strong>December 2025</strong> — Clara Vista&apos;s stake in Portman Holdings is in addition to the original
-        investment, expanding the consortium&apos;s ownership to a <em>controlling position</em>.
-      </>
-    ),
-  },
-  {
     label: "Holding vehicle",
     value: (
       <>
@@ -363,14 +345,9 @@ export default function IpswichPage() {
               <div>
                 <div className="sh-eyebrow">003 · The Deal</div>
                 <h2 className="sh-h2">
-                  Two transactions. <em>One conviction.</em>
+                  <em>Deal structure.</em>
                 </h2>
               </div>
-              <p className="sh-deck">
-                Clara Vista first invested in March 2024. In December 2025, alongside Bright Path Sports Partners and
-                the Three Lions Fund, we expanded that position into a controlling consortium — Portman Holdings LLC —
-                now the majority shareholder of Gamechanger 20 Ltd, the parent company of the club.
-              </p>
             </div>
 
             <div className="deal-rows">
