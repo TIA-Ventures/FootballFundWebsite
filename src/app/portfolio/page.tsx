@@ -17,6 +17,8 @@ type PortfolioCard = {
   href: string;
   status: ClubStatus;
   statusLabel: string;
+  /** Ipswich crest; Italy/Spain use reserved placeholder row (home club-card parity). */
+  logo: "ipswich" | null;
   name: ReactNode;
   loc: string;
   note: ReactNode;
@@ -32,6 +34,7 @@ const CLUBS: PortfolioCard[] = [
     href: "/portfolio/ipswich",
     status: "active",
     statusLabel: "Active",
+    logo: "ipswich",
     name: "Ipswich Town",
     loc: "Ipswich · England · EFL Championship",
     note: (
@@ -51,6 +54,7 @@ const CLUBS: PortfolioCard[] = [
     href: "/portfolio/italy",
     status: "pending",
     statusLabel: "Pending close",
+    logo: null,
     name: (
       <>
         Italy <em>(target)</em>
@@ -73,6 +77,7 @@ const CLUBS: PortfolioCard[] = [
     href: "/portfolio/spain",
     status: "diligence",
     statusLabel: "Active diligence",
+    logo: null,
     name: (
       <>
         Spain <em>(target)</em>
@@ -96,7 +101,7 @@ export default function PortfolioPage() {
   return (
     <>
       <Topbar activeNav="portfolio" />
-      <main className="cv-page portfolio-page">
+      <main className="cv-page portfolio-page portfolio-hub">
         <div className="page-hero">
           <div className="page-hero-inner">
             <div>
@@ -118,6 +123,15 @@ export default function PortfolioPage() {
             <div className="portfolio-grid">
               {CLUBS.map((c) => (
                 <Link key={c.num} href={c.href} className="pclub">
+                  <div
+                    className={`pclub-logo${c.logo ? "" : " pclub-logo-placeholder"}`}
+                    aria-hidden={c.logo ? undefined : true}
+                  >
+                    {c.logo === "ipswich" ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src="/ipswich-town.svg" alt="Ipswich Town FC crest" />
+                    ) : null}
+                  </div>
                   <div className="pclub-meta">
                     <span className="pclub-num">{c.num}</span>
                     <span className="pclub-status">

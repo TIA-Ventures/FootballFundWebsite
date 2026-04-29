@@ -13,7 +13,7 @@ export default function SpainPage() {
       breadcrumbCurrent="Spain · target"
       h1={
         <>
-          Spain <em>(target).</em>
+          Spain <em>(target)</em> <em className="deep-h1-accent">.</em>
         </>
       }
       sub="Active diligence on a historic La Liga club — gateway to a 600M-strong Spanish-speaking audience."
@@ -38,25 +38,13 @@ export default function SpainPage() {
         eyebrow: "Diligence brief",
         paragraphs: [
           <>
-            The diligence target is a historic Spanish club competing in <em>La Liga</em>, the{" "}
-            <strong>second most-valuable football league in the world</strong> and the primary league for the global
-            Spanish-speaking market — roughly <strong>600M</strong> people. In several international markets the league's
-            aggregate <strong>social footprint competes with the Premier League</strong> for attention.
+            The diligence target is a historic Spanish club competing in <em>La Liga</em> — the gateway property for the
+            global Spanish-speaking market and, by audience and rights value, the closest peer to the Premier League.
           </>,
           <>
-            Mid-table La Liga clubs historically trade at meaningful discounts to comparable English Championship and
-            Italian Serie A clubs — despite competing in a higher-value league with a larger total addressable audience.
-            Published <strong>league-wide revenue multiples (~5.3×)</strong> are skewed by Real Madrid and Barcelona
-            (enterprise values of <strong>~€6.3B</strong> and <strong>~€5B</strong>);{" "}
-            <strong>mid- and lower-table</strong> names often print closer to <strong>2–2.5×</strong> revenues. Clara
-            Vista views residual mispricing as closing through media rights renegotiation, US audience monetization, and
-            ongoing club-level operating professionalization.
-          </>,
-          <>
-            The <strong>LaLiga–CVC</strong> partnership (2021, <strong>~€1.9B</strong>) directs roughly{" "}
-            <strong>70%</strong> of its mandate to <strong>stadium and digital infrastructure</strong> — raising the
-            quality of the asset base across the league. Recent seasons brought <strong>16M+</strong> fans through the
-            turnstiles in a single campaign, underscoring the depth of domestic demand.
+            Our interest is grounded in a structural <strong>valuation asymmetry</strong>: outside Real Madrid and
+            Barcelona, mid-table La Liga clubs print at meaningful discounts to English and Italian peers despite a
+            larger addressable audience and a league-wide modernization cycle now underway.
           </>,
           <>
             Specific club identity, financial position, and proposed deal structure remain{" "}

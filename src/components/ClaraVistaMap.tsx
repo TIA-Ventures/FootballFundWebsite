@@ -1515,7 +1515,10 @@ export function ClaraVistaMap() {
             </div>
             <div className="cc-meta">
               <span className="cc-num">01 / Ipswich Town FC</span>
-              <span className="cc-status-text">Active</span>
+              <span className="cc-status">
+                <span className="cc-dot active" aria-hidden="true" />
+                <span className="cc-status-text">Active</span>
+              </span>
             </div>
             <div className="cc-name">Ipswich Town</div>
             <div className="cc-location">Ipswich · England</div>
@@ -1534,12 +1537,18 @@ export function ClaraVistaMap() {
                 <div className="cc-stat-value">Championship</div>
               </div>
             </div>
+            <Link href="/portfolio/ipswich" className="cc-link">
+              View deep dive
+            </Link>
           </div>
           <div className="club-card">
             <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
             <div className="cc-meta">
               <span className="cc-num">02 / Italy</span>
-              <span className="cc-status-text">Pending close</span>
+              <span className="cc-status">
+                <span className="cc-dot pending" aria-hidden="true" />
+                <span className="cc-status-text">Pending close</span>
+              </span>
             </div>
             <div className="cc-name">
               Italy <em>(target)</em>
@@ -1561,12 +1570,18 @@ export function ClaraVistaMap() {
                 <div className="cc-stat-value">Serie B</div>
               </div>
             </div>
+            <Link href="/portfolio/italy" className="cc-link">
+              View deal preview
+            </Link>
           </div>
           <div className="club-card">
             <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
             <div className="cc-meta">
               <span className="cc-num">03 / Spain</span>
-              <span className="cc-status-text">Active diligence</span>
+              <span className="cc-status">
+                <span className="cc-dot diligence" aria-hidden="true" />
+                <span className="cc-status-text">Active diligence</span>
+              </span>
             </div>
             <div className="cc-name">
               Spain <em>(target)</em>
@@ -1589,18 +1604,10 @@ export function ClaraVistaMap() {
                 <div className="cc-stat-value">La Liga</div>
               </div>
             </div>
+            <Link href="/portfolio/spain" className="cc-link">
+              View diligence brief
+            </Link>
           </div>
-        </div>
-        <div className="ps-deep-row" aria-label="Portfolio document links">
-          <Link href="/portfolio/ipswich" className="ps-deep-link">
-            View deep dive
-          </Link>
-          <Link href="/portfolio/italy" className="ps-deep-link">
-            View deal preview
-          </Link>
-          <Link href="/portfolio/spain" className="ps-deep-link">
-            View diligence brief
-          </Link>
         </div>
       </section>
 

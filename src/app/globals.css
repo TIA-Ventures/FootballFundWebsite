@@ -745,48 +745,8 @@ body {
   gap: 1px;
   background: var(--line);
   border-top: 1px solid var(--line);
-  transition: background 0.6s ease, border-color 0.6s ease;
-}
-/* Mirrors /portfolio hub .pclub-link row: one strip under the three cards */
-.ps-deep-row {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   transition: background 0.6s ease, border-color 0.6s ease;
-}
-.ps-deep-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 22px 16px;
-  background: var(--bg);
-  font-family: 'Onest', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--green-light);
-  font-weight: 500;
-  text-decoration: none;
-  text-align: center;
-  transition: background 0.5s, color 0.6s ease;
-}
-.ps-deep-link:hover {
-  background: var(--bg-card);
-}
-.ps-deep-link:focus-visible {
-  outline: none;
-  background: var(--bg-card);
-  box-shadow: inset 0 0 0 1px var(--green-light);
-}
-.ps-deep-link::after {
-  content: ' →';
-  font-family: 'Newsreader', serif;
-  font-style: italic;
 }
 .club-card {
   background: var(--bg);
@@ -840,6 +800,29 @@ body {
   font-family: 'JetBrains Mono', monospace;
   font-weight: 300; letter-spacing: 0.1em;
   transition: color 0.6s ease;
+}
+.cc-status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cc-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cc-dot.active {
+  background: var(--green-light);
+  box-shadow: 0 0 8px var(--green-glow);
+}
+.cc-dot.pending {
+  background: var(--amber);
+  box-shadow: 0 0 8px rgba(212, 168, 106, 0.6);
+}
+.cc-dot.diligence {
+  background: transparent;
+  border: 1px solid var(--ivory-dim);
 }
 .cc-status-text {
   color: var(--ivory-dim);
@@ -902,6 +885,32 @@ body {
   color: var(--ivory-dim);
   font-size: 14px;
   transition: color 0.6s ease;
+}
+/* In-card CTA — matches /portfolio .pclub-link (plain caps + arrow, no bar/button chrome) */
+.cc-link {
+  margin-top: 22px;
+  align-self: flex-start;
+  font-family: 'Onest', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green-light);
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.3s ease, color 0.6s ease;
+}
+.cc-link::after {
+  content: ' →';
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+}
+.cc-link:hover {
+  opacity: 0.86;
+}
+.cc-link:focus-visible {
+  outline: none;
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px var(--green-light);
 }
 
 /* ---- Manifesto slab (used on / and /thesis) ----
@@ -1133,7 +1142,6 @@ body {
 @media (max-width: 1100px) {
   .ps-head { grid-template-columns: 1fr; gap: 32px; }
   .ps-grid { grid-template-columns: 1fr; }
-  .ps-deep-row { grid-template-columns: 1fr; }
   .credentials { display: none; }
   .thesis-section-head { grid-template-columns: 1fr; gap: 32px; align-items: start; }
   .pillar-rail-row {
@@ -1173,6 +1181,13 @@ body {
   color: var(--ivory);
   position: relative;
   z-index: 1;
+}
+
+/* Match home .portfolio-section warmth (cream gradient in day, layered depth in night).
+   Scoped to the hub only — deep-dive pages keep the default --bg. */
+.cv-page.portfolio-hub {
+  background: linear-gradient(to bottom, var(--bg-deep), var(--bg));
+  transition: background 0.6s ease;
 }
 
 .cv-page .page-hero {
@@ -1653,6 +1668,27 @@ body {
   transition: transform 0.7s cubic-bezier(.2,.8,.2,1);
 }
 .cv-page .pclub:hover::before { transform: scaleX(1); }
+.cv-page .pclub-logo {
+  height: 48px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+}
+.cv-page .pclub-logo img {
+  height: 100%;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+  transition: filter 0.6s ease, transform 0.5s cubic-bezier(.2,.8,.2,1);
+}
+.cv-page .pclub:hover .pclub-logo img { transform: translateY(-2px); }
+[data-theme="day"] .cv-page .pclub-logo img {
+  filter: drop-shadow(0 4px 10px rgba(26, 37, 32, 0.12));
+}
+.cv-page .pclub-logo-placeholder {
+  background: transparent;
+}
 .cv-page .pclub-meta {
   font-family: 'Onest', sans-serif;
   font-size: 10px;
@@ -1674,7 +1710,7 @@ body {
   color: var(--ivory-dim);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 14px;
 }
 .cv-page .pclub-dot {
   width: 7px;
@@ -1805,6 +1841,11 @@ body {
   gap: 80px;
   align-items: end;
 }
+/* Ipswich (and any hero with only the title column): drop the empty 2nd grid track */
+.cv-page .deep-meta:has(> :only-child) {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
 .cv-page .deep-h1 {
   font-family: 'Newsreader', serif;
   font-size: clamp(48px, 5.6vw, 88px);
@@ -1819,10 +1860,10 @@ body {
   color: var(--green-light);
   font-weight: 400;
 }
-/* Green full-stop after a wordmark: extra air so italic dot doesn’t collide with the last letter */
+/* Green full-stop: single word-space only (no extra margin — matches Italy/Spain accent) */
 .cv-page .deep-h1 em.deep-h1-accent {
   font-style: normal;
-  margin-left: 0.28em;
+  margin-left: 0;
 }
 .cv-page .deep-sub {
   font-family: 'Newsreader', serif;

@@ -13,7 +13,7 @@ export default function ItalyPage() {
       breadcrumbCurrent="Italy · target"
       h1={
         <>
-          Italy <em>(target).</em>
+          Italy <em>(target)</em> <em className="deep-h1-accent">.</em>
         </>
       }
       sub="Controlling interest in a historic Italian club — Serie B with a credible path to Serie A."
