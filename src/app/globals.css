@@ -1284,6 +1284,9 @@ body {
 .cv-page.ipswich-page .section-head {
   margin-bottom: 52px;
 }
+.cv-page.ipswich-page .ipswich-accomp-section {
+  padding-bottom: 36px;
+}
 .cv-page .sh-eyebrow {
   font-family: 'Onest', sans-serif;
   font-size: 11px;

@@ -224,7 +224,7 @@ export default function IpswichPage() {
           </div>
         </div>
 
-        <div className="section">
+        <div className="section ipswich-accomp-section">
           <div className="section-inner">
             <div className="section-head">
               <div>
