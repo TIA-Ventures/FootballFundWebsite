@@ -354,14 +354,6 @@ export default function IpswichPage() {
                 </div>
               ))}
             </div>
-
-            <div className="accomp-footer">
-              <p className="sh-deck">
-                Each accomplishment maps to one of Clara Vista&apos;s five operating pillars — <em>sporting infrastructure</em>,{" "}
-                <em>data operations</em>, <em>commercial</em>, <em>stadium &amp; matchday</em>, and <em>back office</em>{" "}
-                — reviewed quarterly by the Investment Committee.
-              </p>
-            </div>
           </div>
         </div>
 
