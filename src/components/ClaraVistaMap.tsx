@@ -497,14 +497,16 @@ export function ClaraVistaMap() {
     let W = 0;
     let H = 0;
     const DPR = Math.min(window.devicePixelRatio || 1, 2);
-    // Nudge the projected Europe map so it doesn't sit under the headline.
-    // (Small offsets; keeps the overall v5_3 layout intact.)
-    const MAP_SHIFT_X = 0.12; // proportion of viewport width
-    const MAP_SHIFT_Y = -0.02; // proportion of viewport height (negative = up)
+    // Camera framing:
+    // - Desktop: slight right/up nudge so Europe doesn't sit under the headline.
+    // - Mobile: center + zoom the Europe bounds so portfolio dots don't collapse together.
+    const DESKTOP_MAP_SHIFT_X = 0.12; // proportion of viewport width
+    const DESKTOP_MAP_SHIFT_Y = -0.02; // proportion of viewport height (negative = up)
 
     let proj = { ox: 0, oy: 0, drawW: 0, drawH: 0 };
     function computeProjection() {
-      const targetWidth = Math.min(W * 0.62, 1100);
+      const isMobile = W <= 720;
+      const targetWidth = isMobile ? Math.min(W * 1.06, 980) : Math.min(W * 0.62, 1100);
       const lngRange = BOUNDS.maxLng - BOUNDS.minLng;
       const latRange = BOUNDS.maxLat - BOUNDS.minLat;
       const meanLatCos = Math.cos(((BOUNDS.maxLat + BOUNDS.minLat) / 2) * Math.PI / 180);
@@ -512,13 +514,18 @@ export function ClaraVistaMap() {
 
       let drawW = targetWidth;
       let drawH = drawW / dataAspect;
-      const maxH = H * 0.78;
+      const maxH = isMobile ? H * 0.72 : H * 0.78;
       if (drawH > maxH) {
         drawH = maxH;
         drawW = drawH * dataAspect;
       }
-      const ox = (W - drawW) / 2 + W * MAP_SHIFT_X;
-      const oy = (H - drawH) / 2 - H * 0.04 + H * MAP_SHIFT_Y;
+      // Mobile framing notes:
+      // - Push Europe up so northern latitudes crop out (focus: UK/Spain/Italy triangle).
+      // - Nudge right so Spain has left breathing room.
+      const shiftX = isMobile ? 0.06 : DESKTOP_MAP_SHIFT_X;
+      const shiftY = isMobile ? -0.13 : DESKTOP_MAP_SHIFT_Y;
+      const ox = (W - drawW) / 2 + W * shiftX;
+      const oy = (H - drawH) / 2 - H * 0.04 + H * shiftY;
       proj = { ox, oy, drawW, drawH };
     }
 
@@ -673,12 +680,12 @@ export function ClaraVistaMap() {
     const WAVES: any[] = [];
     // Round-robin scheduler: one city pulses at a time, with a fixed minimum
     // gap between any two pulses so the rhythm reads as orderly, not bunched.
-    const WAVE_FIRST_DELAY = 2400;
-    const WAVE_GAP = 8000; // ms between consecutive city pulses (any city)
+    const WAVE_FIRST_DELAY = 3200;
+    const WAVE_GAP = 16000; // ms between consecutive city pulses (any city)
     let nextWaveCityIdx = 0;
     let lastAnyWaveTime = -Infinity;
     function emitWave(city: any, startT: number) {
-      WAVES.push({ cx: city.px, cy: city.py, start: startT, duration: 7800 });
+      WAVES.push({ cx: city.px, cy: city.py, start: startT, duration: 9000 });
     }
 
     // ---- MOUSE ----
@@ -786,13 +793,17 @@ export function ClaraVistaMap() {
     let firstFrame = performance.now();
     let lastBroadcastTime = [-Infinity, -Infinity, -Infinity];
     // Slow broadcast ripples too (they radiate from the same 3 portfolio towns).
-    const BROADCAST_INTERVAL = [13500, 14800, 14100];
+    const BROADCAST_INTERVAL = [26000, 28500, 27200];
     let lastTransferTime = -Infinity;
     let rafRender = 0;
 
     function render(t: number) {
       const elapsed = t - firstFrame;
       const C = getColors();
+      const isDayFrame = getTheme() === "day";
+      // Pre-parse the broadcast color base alpha once per frame (regex was running per ripple).
+      const broadcastBaseAlpha = parseFloat((C.broadcast.match(/[\d.]+(?=\))/) ?? ["0"])[0]);
+      const broadcastStrokeRGB = isDayFrame ? "6, 93, 57" : "52, 194, 129";
       ctx.clearRect(0, 0, W, H);
 
       // Background spotlight
@@ -1045,16 +1056,14 @@ export function ClaraVistaMap() {
         const maxR = Math.hypot(W, H) * 0.85;
         const r = e * maxR;
         const alphaMul = Math.sin(e * Math.PI);
-        const baseAlpha = parseFloat((C.broadcast.match(/[\d.]+(?=\))/) ?? ["0"])[0]);
-        const alpha = alphaMul * baseAlpha;
-        ctx.strokeStyle = getTheme() === "day" ? `rgba(6, 93, 57, ${alpha})` : `rgba(52, 194, 129, ${alpha})`;
+        const alpha = alphaMul * broadcastBaseAlpha;
+        ctx.strokeStyle = `rgba(${broadcastStrokeRGB}, ${alpha})`;
         ctx.lineWidth = 0.9;
         ctx.beginPath();
         ctx.arc(b.cx, b.cy, r, 0, Math.PI * 2);
         ctx.stroke();
         if (r > 30) {
-          ctx.strokeStyle =
-            getTheme() === "day" ? `rgba(6, 93, 57, ${alpha * 0.45})` : `rgba(52, 194, 129, ${alpha * 0.45})`;
+          ctx.strokeStyle = `rgba(${broadcastStrokeRGB}, ${alpha * 0.45})`;
           ctx.lineWidth = 0.5;
           ctx.beginPath();
           ctx.arc(b.cx, b.cy, r * 0.92, 0, Math.PI * 2);
@@ -1216,10 +1225,10 @@ export function ClaraVistaMap() {
         ctx.arc(c.px, c.py, glowR * hoverMul, 0, Math.PI * 2);
         ctx.fill();
 
-        const ringPhase = (t / 5200 + i * 0.33) % 1;
+        const ringPhase = (t / 9500 + i * 0.33) % 1;
         const ringR = ringPhase * (glowR * 1.2);
-        const ringAlpha = (1 - ringPhase) * 0.45 * ease;
-        ctx.strokeStyle = getTheme() === "day" ? `rgba(6, 93, 57, ${ringAlpha})` : `rgba(52, 194, 129, ${ringAlpha})`;
+        const ringAlpha = (1 - ringPhase) * 0.28 * ease;
+        ctx.strokeStyle = `rgba(${broadcastStrokeRGB}, ${ringAlpha})`;
         if (c.kind === "closed") {
           ctx.lineWidth = 1;
           ctx.setLineDash([]);
@@ -1430,30 +1439,30 @@ export function ClaraVistaMap() {
             <span>Active Portfolio</span>
             <span className="pp-label-count">01 / 03</span>
           </div>
-          <div className="pp-row">
+          <Link href="/portfolio/ipswich" className="pp-row" aria-label="View Ipswich Town FC details">
             <div className="pp-num">01</div>
             <div className="pp-info">
               <div className="pp-city">Ipswich</div>
               <div className="pp-club">Ipswich Town FC · England</div>
             </div>
             <div className="pp-status active" title="Active" />
-          </div>
-          <div className="pp-row">
+          </Link>
+          <Link href="/portfolio/italy" className="pp-row" aria-label="View Italy target details">
             <div className="pp-num">02</div>
             <div className="pp-info">
               <div className="pp-city">Italy</div>
               <div className="pp-club">Target · pending close</div>
             </div>
             <div className="pp-status pending" title="Pending" />
-          </div>
-          <div className="pp-row">
+          </Link>
+          <Link href="/portfolio/spain" className="pp-row" aria-label="View Spain target details">
             <div className="pp-num">03</div>
             <div className="pp-info">
               <div className="pp-city">Spain</div>
               <div className="pp-club">Target · active diligence</div>
             </div>
             <div className="pp-status diligence" title="Diligence" />
-          </div>
+          </Link>
         </div>
 
         <div className="credentials">
@@ -1502,10 +1511,6 @@ export function ClaraVistaMap() {
               Three clubs. Three leagues. <em>One operating system.</em>
             </h2>
           </div>
-          <p className="ps-head-right">
-            A geographically diversified portfolio of European clubs, unified by a single data-led operating model and disciplined
-            capital deployment — engineered to generate asymmetric outcomes across the world&apos;s most-watched sport.
-          </p>
         </div>
         <div className="ps-grid">
           <div className="club-card">
