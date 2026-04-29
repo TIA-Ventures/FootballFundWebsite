@@ -433,6 +433,14 @@ export default function IpswichPage() {
               <Link href="/thesis" className="cta-link">
                 Read the thesis
               </Link>
+              <a
+                href="https://www.itfc.co.uk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cta-link"
+              >
+                Visit itfc.co.uk
+              </a>
               <a href="#" className="cta-link">
                 Fund II terms
               </a>
