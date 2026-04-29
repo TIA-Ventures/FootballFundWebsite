@@ -18,7 +18,6 @@ type AccompCard = {
   when: string;
   body: ReactNode;
 };
-type DealRow = { label: string; value: ReactNode };
 type TimelineEvent = {
   year: string;
   label: ReactNode;
@@ -121,45 +120,6 @@ const ACCOMPLISHMENTS: AccompCard[] = [
         A consortium of institutional capital alongside Clara Vista: <em>Avenue Capital Group</em>, ORG Portfolio
         Management (a US public pension fund), the Three Lions Fund, and ownership of the Florida Panthers — partners
         with long-term horizons matching the club&apos;s generational rebuild.
-      </>
-    ),
-  },
-];
-
-const DEAL_ROWS: DealRow[] = [
-  {
-    label: "Holding vehicle",
-    value: (
-      <>
-        <strong>Portman Holdings LLC</strong> — Clara Vista, ORG Portfolio Management, and the Three Lions Fund. Now the
-        majority shareholder of Gamechanger 20 Ltd.
-      </>
-    ),
-  },
-  {
-    label: "Governance",
-    value: (
-      <>
-        <strong>Bob Gold</strong> joins the board of Gamechanger 20 Ltd. Decision-making sits with Bob Gold (Clara
-        Vista), Ed Schwartz (ORG), and Berke Bakay (Three Lions / Bright Path).
-      </>
-    ),
-  },
-  {
-    label: "Continuing partner",
-    value: (
-      <>
-        <strong>PSPRS</strong> — under Mark Steed — remains a key stakeholder following partial transfer of shares,
-        retaining strategic involvement in the club&apos;s continued growth.
-      </>
-    ),
-  },
-  {
-    label: "Counsel",
-    value: (
-      <>
-        Sidley Austin LLP — cross-border M&amp;A and Private Equity team led by Daniel Belke, Mark Castiglia, and Adam
-        Runcorn.
       </>
     ),
   },
@@ -339,33 +299,11 @@ export default function IpswichPage() {
           </div>
         </div>
 
-        <div className="section bg-deep">
-          <div className="section-inner">
-            <div className="section-head">
-              <div>
-                <div className="sh-eyebrow">003 · The Deal</div>
-                <h2 className="sh-h2">
-                  <em>Deal structure.</em>
-                </h2>
-              </div>
-            </div>
-
-            <div className="deal-rows">
-              {DEAL_ROWS.map((d) => (
-                <div className="deal-row" key={d.label}>
-                  <div className="deal-row-label">{d.label}</div>
-                  <div className="deal-row-value">{d.value}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
         <div className="section">
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">004 · History</div>
+                <div className="sh-eyebrow">003 · History</div>
                 <h2 className="sh-h2">
                   From founding <em>to control.</em>
                 </h2>
@@ -391,9 +329,6 @@ export default function IpswichPage() {
             </div>
 
             <div className="cta-row">
-              <Link href="/portfolio" className="cta-link">
-                Back to portfolio
-              </Link>
               <Link href="/thesis" className="cta-link">
                 Read the thesis
               </Link>
@@ -404,9 +339,6 @@ export default function IpswichPage() {
                 className="cta-link"
               >
                 Visit itfc.co.uk
-              </a>
-              <a href="#" className="cta-link">
-                Fund II terms
               </a>
             </div>
           </div>
