@@ -212,9 +212,6 @@ export default function TeamPage() {
                   Leadership and <em>Investment Committee.</em>
                 </h2>
               </div>
-              <p className="sh-deck">
-                The partners and committee members who source, underwrite, and govern Clara Vista&apos;s investments.
-              </p>
             </div>
             <div className="person-grid">
               {LEADERSHIP.map((p) => (
@@ -233,10 +230,6 @@ export default function TeamPage() {
                   Senior Advisors <em>and Experts.</em>
                 </h2>
               </div>
-              <p className="sh-deck">
-                A bench of senior operators and domain experts we deploy on diligence, deal structuring, and post-close
-                value creation across the portfolio.
-              </p>
             </div>
             <div className="person-grid">
               {ADVISORS.map((p) => (

@@ -1481,12 +1481,12 @@ body {
   background-size: cover;
   background-position: center 40%;
   background-repeat: no-repeat;
-  filter: saturate(0.88) brightness(0.66);
+  filter: saturate(0.85) brightness(0.68);
   transform: scale(1.04);
   transition: filter 0.6s ease;
 }
 :root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner::before {
-  filter: saturate(0.8) brightness(0.8);
+  filter: saturate(0.80) brightness(0.80);
 }
 .cv-page.thesis-page .thesis-asset-banner::after {
   content: '';
@@ -1497,19 +1497,20 @@ body {
   transition: background 0.6s ease;
 }
 :root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner::after {
+  /* Match home .portfolio-section — lighter scrim so the pitch stays visible */
   background: linear-gradient(
     to bottom,
-    rgba(245, 242, 235, 0.88) 0%,
-    rgba(245, 242, 235, 0.78) 38%,
-    rgba(234, 229, 218, 0.85) 100%
+    rgba(245, 242, 235, 0.68) 0%,
+    rgba(245, 242, 235, 0.56) 45%,
+    rgba(234, 229, 218, 0.64) 100%
   );
 }
 :root[data-theme="night"] .cv-page.thesis-page .thesis-asset-banner::after {
   background: linear-gradient(
     to bottom,
-    rgba(6, 10, 8, 0.82) 0%,
-    rgba(6, 10, 8, 0.74) 45%,
-    rgba(3, 6, 4, 0.8) 100%
+    rgba(6, 10, 8, 0.66) 0%,
+    rgba(6, 10, 8, 0.58) 50%,
+    rgba(3, 6, 4, 0.64) 100%
   );
 }
 .cv-page.thesis-page .thesis-asset-banner > * {
@@ -1523,29 +1524,42 @@ body {
   border-bottom: none;
   background: transparent;
 }
+/* Thesis KPI strip: same treatment as homepage .ps-grid / .club-card — hairline
+   gutters, flat frosted fills (no backdrop-filter), optional hover lift. */
+.cv-page.thesis-page .thesis-asset-banner .stat-grid {
+  gap: 1px;
+  background: var(--line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  isolation: isolate;
+}
 .cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell {
-  -webkit-backdrop-filter: blur(14px) saturate(118%);
-  backdrop-filter: blur(14px) saturate(118%);
-  box-shadow: inset 0 1px 0 0 var(--line-soft);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  border-left: none;
+  position: relative;
+  transition: background 0.5s ease, box-shadow 0.5s ease, color 0.6s ease, border-color 0.6s ease;
 }
 :root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell {
-  background: linear-gradient(
-    to right,
-    rgba(245, 242, 235, 0.76) 0%,
-    rgba(245, 242, 235, 0.36) 100%
-  );
+  background: rgba(245, 242, 235, 0.84);
 }
 :root[data-theme="night"] .cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell {
-  background: linear-gradient(
-    to right,
-    rgba(10, 18, 14, 0.62) 0%,
-    rgba(10, 18, 14, 0.3) 100%
-  );
+  background: rgba(10, 18, 14, 0.68);
+}
+.cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell:hover {
+  box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.35);
+}
+:root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell:hover {
+  background: rgba(251, 248, 241, 0.92);
+}
+:root[data-theme="night"] .cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell:hover {
+  background: rgba(14, 26, 20, 0.78);
 }
 
-/* Stat grid · 1 lead stat + 4 supporting (Thesis 001).
-   Cards use the same gradient-lifted treatment as .team-page .exp-stat
-   so the visual language stays consistent across pages. No dividing lines. */
+/* Stat grid · 1 lead stat + 4 supporting (Thesis 001 only). On /thesis banner,
+   cells use homepage club-card styling via scoped rules above. Elsewhere this
+   grid would pick up the flat tokens below (currently thesis-only). */
 .cv-page .stat-grid {
   display: grid;
   grid-template-columns: 1.55fr 1fr 1fr;
