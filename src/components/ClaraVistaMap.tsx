@@ -37,21 +37,21 @@ export function ClaraVistaMap() {
         return {
           spotlight1: "rgba(220, 215, 195, 0.55)",
           spotlight2: "rgba(244, 237, 220, 0)",
-          countryFill: "rgba(6, 93, 57, 0.045)",
-          countryStroke: "rgba(6, 93, 57, 0.42)",
-          countryStrokeStrong: "rgba(6, 93, 57, 0.55)",
-          particle: "rgba(26, 37, 32, 0.22)",
+          countryFill: "rgba(6, 93, 57, 0.072)",
+          countryStroke: "rgba(6, 93, 57, 0.52)",
+          countryStrokeStrong: "rgba(6, 93, 57, 0.66)",
+          particle: "rgba(26, 37, 32, 0.28)",
           ambientCity: "rgba(26, 37, 32, 0.7)",
           ambientCityHalo: "rgba(6, 93, 57, 0.18)",
           worldCity: "rgba(26, 37, 32, 0.45)",
           worldCityLit: "rgba(6, 93, 57, 0.85)",
           portfolioCore: ["#34c281", "#0a7a47", "#065d39"],
-          portfolioGlow: "rgba(14, 138, 85, 0.42)",
-          portfolioRing: "rgba(6, 93, 57, 0.62)",
+          portfolioGlow: "rgba(14, 138, 85, 0.48)",
+          portfolioRing: "rgba(6, 93, 57, 0.72)",
           portfolioPulse: "rgba(6, 93, 57, 0.45)",
-          broadcast: "rgba(6, 93, 57, 0.30)",
-          broadcastInner: "rgba(6, 93, 57, 0.13)",
-          transferLine: "rgba(154, 111, 48, 0.28)",
+          broadcast: "rgba(6, 93, 57, 0.38)",
+          broadcastInner: "rgba(6, 93, 57, 0.17)",
+          transferLine: "rgba(154, 111, 48, 0.34)",
           transferGlow: "rgba(154, 111, 48, 0.85)",
           labelPrimary: "#1A2520",
           labelSecondary: "rgba(26, 37, 32, 0.62)",
@@ -61,21 +61,21 @@ export function ClaraVistaMap() {
       return {
         spotlight1: "rgba(20, 50, 36, 0.45)",
         spotlight2: "rgba(8, 22, 14, 0.20)",
-        countryFill: "rgba(52, 194, 129, 0.045)",
-        countryStroke: "rgba(52, 194, 129, 0.30)",
-        countryStrokeStrong: "rgba(52, 194, 129, 0.42)",
-        particle: "rgba(242, 234, 214, 0.22)",
+        countryFill: "rgba(52, 194, 129, 0.06)",
+        countryStroke: "rgba(52, 194, 129, 0.36)",
+        countryStrokeStrong: "rgba(52, 194, 129, 0.48)",
+        particle: "rgba(242, 234, 214, 0.26)",
         ambientCity: "rgba(242, 234, 214, 0.78)",
         ambientCityHalo: "rgba(242, 234, 214, 0.32)",
         worldCity: "rgba(242, 234, 214, 0.34)",
         worldCityLit: "rgba(242, 234, 214, 0.95)",
         portfolioCore: ["#7be0aa", "#34c281", "#065d39"],
-        portfolioGlow: "rgba(52, 194, 129, 0.5)",
-        portfolioRing: "rgba(52, 194, 129, 0.7)",
+        portfolioGlow: "rgba(52, 194, 129, 0.56)",
+        portfolioRing: "rgba(52, 194, 129, 0.76)",
         portfolioPulse: "rgba(52, 194, 129, 0.45)",
-        broadcast: "rgba(52, 194, 129, 0.16)",
-        broadcastInner: "rgba(52, 194, 129, 0.07)",
-        transferLine: "rgba(212, 168, 106, 0.20)",
+        broadcast: "rgba(52, 194, 129, 0.22)",
+        broadcastInner: "rgba(52, 194, 129, 0.10)",
+        transferLine: "rgba(212, 168, 106, 0.26)",
         transferGlow: "rgba(232, 197, 71, 0.85)",
         labelPrimary: "#F2EAD6",
         labelSecondary: "rgba(242, 234, 214, 0.62)",
@@ -858,9 +858,9 @@ export function ClaraVistaMap() {
       // HUB NETWORK
       const hubReveal = Math.min(1, Math.max(0, (elapsed - 600) / 1800));
       const hubEase = 1 - Math.pow(1 - hubReveal, 3);
-      const hubAlpha = (getTheme() === "day" ? 0.18 : 0.085) * hubEase;
+      const hubAlpha = (getTheme() === "day" ? 0.27 : 0.11) * hubEase;
       ctx.strokeStyle = getTheme() === "day" ? `rgba(6, 93, 57, ${hubAlpha})` : `rgba(52, 194, 129, ${hubAlpha})`;
-      ctx.lineWidth = 0.5;
+      ctx.lineWidth = getTheme() === "day" ? 0.65 : 0.55;
       ctx.beginPath();
       for (let i = 0; i < HUB_LINKS.length; i++) {
         const a = CITY_INDEX[HUB_LINKS[i][0]];
@@ -883,10 +883,10 @@ export function ClaraVistaMap() {
       const portR = isDay ? 4 : 122;
       const portG = isDay ? 70 : 226;
       const portB = isDay ? 42 : 170;
-      const baseAlphaPort = isDay ? 0.55 : 0.21;
-      const baseAlphaReg = isDay ? 0.3 : 0.115;
-      const pulseAmpPort = isDay ? 0.08 : 0.055;
-      const pulseAmpReg = isDay ? 0.035 : 0.022;
+      const baseAlphaPort = isDay ? 0.66 : 0.26;
+      const baseAlphaReg = isDay ? 0.42 : 0.15;
+      const pulseAmpPort = isDay ? 0.095 : 0.065;
+      const pulseAmpReg = isDay ? 0.048 : 0.028;
       const mx = mouse.x;
       const my = mouse.y;
       const mouseActive = mx > -1000;
@@ -915,7 +915,7 @@ export function ClaraVistaMap() {
         const waveBoost = d.waveBoost * 0.45;
         const alpha = (baseAlpha + breath * pulseAmp + proxBoost + waveBoost) * dotEase;
 
-        const baseSize = isPort ? 0.95 : 0.7;
+        const baseSize = isPort ? 0.95 : 0.78;
         const size = baseSize + d.proximity * 1.35 + d.waveBoost * 0.85;
         ctx.fillStyle = isPort ? `rgba(${portR},${portG},${portB},${alpha})` : `rgba(${dotR},${dotG},${dotB},${alpha})`;
         ctx.beginPath();
@@ -926,7 +926,7 @@ export function ClaraVistaMap() {
       if (mouseActive) {
         const haloGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 180);
         if (isDay) {
-          haloGrad.addColorStop(0, "rgba(6, 93, 57, 0.05)");
+          haloGrad.addColorStop(0, "rgba(6, 93, 57, 0.08)");
           haloGrad.addColorStop(1, "rgba(6, 93, 57, 0)");
         } else {
           haloGrad.addColorStop(0, "rgba(52, 194, 129, 0.08)");
@@ -1013,11 +1013,11 @@ export function ClaraVistaMap() {
         const distance = Math.hypot(b.px - a.px, b.py - a.py);
         const lift = -Math.min(distance * 0.32, 80);
 
-        const trailAlpha = Math.sin(e * Math.PI) * 0.22;
+        const trailAlpha = Math.sin(e * Math.PI) * 0.3;
         const trailColor =
           getTheme() === "day" ? `rgba(154, 111, 48, ${trailAlpha})` : `rgba(212, 168, 106, ${trailAlpha})`;
         ctx.strokeStyle = trailColor;
-        ctx.lineWidth = 0.7;
+        ctx.lineWidth = getTheme() === "day" ? 0.85 : 0.75;
         ctx.beginPath();
         ctx.moveTo(a.px, a.py);
         ctx.quadraticCurveTo(midX, midY + lift, b.px, b.py);
@@ -1064,13 +1064,13 @@ export function ClaraVistaMap() {
         const alphaMul = Math.sin(e * Math.PI);
         const alpha = alphaMul * broadcastBaseAlpha;
         ctx.strokeStyle = `rgba(${broadcastStrokeRGB}, ${alpha})`;
-        ctx.lineWidth = 0.9;
+        ctx.lineWidth = getTheme() === "day" ? 1.05 : 0.95;
         ctx.beginPath();
         ctx.arc(b.cx, b.cy, r, 0, Math.PI * 2);
         ctx.stroke();
         if (r > 30) {
           ctx.strokeStyle = `rgba(${broadcastStrokeRGB}, ${alpha * 0.45})`;
-          ctx.lineWidth = 0.5;
+          ctx.lineWidth = getTheme() === "day" ? 0.62 : 0.55;
           ctx.beginPath();
           ctx.arc(b.cx, b.cy, r * 0.92, 0, Math.PI * 2);
           ctx.stroke();
@@ -1124,11 +1124,11 @@ export function ClaraVistaMap() {
 
         const ringGrad = ctx.createRadialGradient(c.px, c.py, 0, c.px, c.py, glowR * hoverMul);
         if (getTheme() === "day") {
-          const glowAlpha = (0.18 + litBoost * 0.22) * ease * peripheralW;
+          const glowAlpha = (0.26 + litBoost * 0.28) * ease * peripheralW;
           ringGrad.addColorStop(0, `rgba(6, 93, 57, ${glowAlpha})`);
           ringGrad.addColorStop(1, "rgba(6, 93, 57, 0)");
         } else {
-          const glowAlpha = (0.22 + litBoost * 0.25) * ease * peripheralW;
+          const glowAlpha = (0.26 + litBoost * 0.28) * ease * peripheralW;
           ringGrad.addColorStop(0, `rgba(242, 234, 214, ${glowAlpha})`);
           ringGrad.addColorStop(1, "rgba(242, 234, 214, 0)");
         }
@@ -1137,7 +1137,7 @@ export function ClaraVistaMap() {
         ctx.arc(c.px, c.py, glowR * hoverMul, 0, Math.PI * 2);
         ctx.fill();
 
-        const coreAlpha = (0.32 + litBoost * 0.22) * ease * peripheralW;
+        const coreAlpha = (0.42 + litBoost * 0.26) * ease * peripheralW;
         ctx.fillStyle =
           getTheme() === "day"
             ? `rgba(26, 37, 32, ${Math.min(1, coreAlpha)})`
@@ -1174,10 +1174,10 @@ export function ClaraVistaMap() {
 
         const ringGrad = ctx.createRadialGradient(c.px, c.py, 0, c.px, c.py, glowR * hoverMul);
         if (getTheme() === "day") {
-          ringGrad.addColorStop(0, `rgba(6, 93, 57, ${0.35 * ease})`);
+          ringGrad.addColorStop(0, `rgba(6, 93, 57, ${0.44 * ease})`);
           ringGrad.addColorStop(1, "rgba(6, 93, 57, 0)");
         } else {
-          ringGrad.addColorStop(0, `rgba(242, 234, 214, ${0.45 * ease})`);
+          ringGrad.addColorStop(0, `rgba(242, 234, 214, ${0.5 * ease})`);
           ringGrad.addColorStop(1, "rgba(242, 234, 214, 0)");
         }
         ctx.fillStyle = ringGrad;
@@ -1218,12 +1218,12 @@ export function ClaraVistaMap() {
 
         const outerGrad = ctx.createRadialGradient(c.px, c.py, 0, c.px, c.py, glowR * hoverMul);
         if (getTheme() === "day") {
-          outerGrad.addColorStop(0, `rgba(14, 138, 85, ${0.36 * ease})`);
-          outerGrad.addColorStop(0.4, `rgba(14, 138, 85, ${0.12 * ease})`);
+          outerGrad.addColorStop(0, `rgba(14, 138, 85, ${0.44 * ease})`);
+          outerGrad.addColorStop(0.4, `rgba(14, 138, 85, ${0.17 * ease})`);
           outerGrad.addColorStop(1, "rgba(14, 138, 85, 0)");
         } else {
-          outerGrad.addColorStop(0, `rgba(52, 194, 129, ${0.5 * ease})`);
-          outerGrad.addColorStop(0.4, `rgba(52, 194, 129, ${0.16 * ease})`);
+          outerGrad.addColorStop(0, `rgba(52, 194, 129, ${0.56 * ease})`);
+          outerGrad.addColorStop(0.4, `rgba(52, 194, 129, ${0.2 * ease})`);
           outerGrad.addColorStop(1, "rgba(52, 194, 129, 0)");
         }
         ctx.fillStyle = outerGrad;
@@ -1233,7 +1233,7 @@ export function ClaraVistaMap() {
 
         const ringPhase = (t / 9500 + i * 0.33) % 1;
         const ringR = ringPhase * (glowR * 1.2);
-        const ringAlpha = (1 - ringPhase) * 0.28 * ease;
+        const ringAlpha = (1 - ringPhase) * (getTheme() === "day" ? 0.34 : 0.3) * ease;
         ctx.strokeStyle = `rgba(${broadcastStrokeRGB}, ${ringAlpha})`;
         if (c.kind === "closed") {
           ctx.lineWidth = 1;

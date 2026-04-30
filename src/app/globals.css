@@ -107,7 +107,7 @@ html[data-font-preset="axis"] {
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
-/* Font bundles A–F (Topbar “Fonts”) — sets display/body/mono + maps to --font-serif/sans/mono. */
+/* Font bundles A–F, D1–D6 (Topbar “Fonts”) — display/body/mono + --font-serif/sans/mono. */
 html[data-fonts="a"] {
   --font-display: 'Spectral', Georgia, 'Times New Roman', serif;
   --font-body: 'Onest', system-ui, sans-serif;
@@ -146,6 +146,51 @@ html[data-fonts="e"] {
 html[data-fonts="f"] {
   --font-display: 'Manrope', system-ui, sans-serif;
   --font-body: 'Manrope', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+
+/* Font bundles D1–D6 (same Topbar picker; variable font names where required). */
+html[data-fonts="d1"] {
+  --font-display: 'Geist', system-ui, sans-serif;
+  --font-body: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+html[data-fonts="d2"] {
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+html[data-fonts="d3"] {
+  --font-display: 'General Sans', system-ui, sans-serif;
+  --font-body: 'General Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+html[data-fonts="d4"] {
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+/* Fontsource registers variable faces as “Mona Sans Variable” / “Hubot Sans Variable”. */
+html[data-fonts="d5"] {
+  --font-display: 'Mona Sans Variable', system-ui, sans-serif;
+  --font-body: 'Mona Sans Variable', system-ui, sans-serif;
+  --font-mono: 'Hubot Sans Variable', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+html[data-fonts="d6"] {
+  --font-display: 'Switzer', system-ui, sans-serif;
+  --font-body: 'Switzer', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-serif: var(--font-display);
   --font-sans: var(--font-body);

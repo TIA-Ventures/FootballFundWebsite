@@ -50,7 +50,7 @@ const PRESETS = [
   },
 ] as const;
 
-const BUNDLES = [
+const BUNDLES_AF = [
   {
     id: "a" as const,
     label: "A · Calibrated Modern",
@@ -83,8 +83,43 @@ const BUNDLES = [
   },
 ] as const;
 
+const BUNDLES_D1_D6 = [
+  {
+    id: "d1" as const,
+    label: "D1 · Geist Direct",
+    detail: "Geist · Geist Mono",
+  },
+  {
+    id: "d2" as const,
+    label: "D2 · Inter Tight Bold",
+    detail: "Inter Tight · Inter · JetBrains Mono",
+  },
+  {
+    id: "d3" as const,
+    label: "D3 · General Sans",
+    detail: "General Sans · JetBrains Mono",
+  },
+  {
+    id: "d4" as const,
+    label: "D4 · Bricolage Grotesque",
+    detail: "Bricolage Grotesque · Inter · JetBrains Mono",
+  },
+  {
+    id: "d5" as const,
+    label: "D5 · Mona Sans",
+    detail: "Mona Sans Variable · Hubot Sans Variable",
+  },
+  {
+    id: "d6" as const,
+    label: "D6 · Switzer",
+    detail: "Switzer · JetBrains Mono",
+  },
+] as const;
+
 export type FontPresetId = (typeof PRESETS)[number]["id"];
-export type FontBundleId = (typeof BUNDLES)[number]["id"];
+export type FontBundleId =
+  | (typeof BUNDLES_AF)[number]["id"]
+  | (typeof BUNDLES_D1_D6)[number]["id"];
 
 /** Serialized for useSyncExternalStore — `b:a` or `p:meridian`. */
 export type FontCompareToken = `b:${FontBundleId}` | `p:${FontPresetId}`;
@@ -107,6 +142,12 @@ const ALLOW_BUNDLE: Record<FontBundleId, true> = {
   d: true,
   e: true,
   f: true,
+  d1: true,
+  d2: true,
+  d3: true,
+  d4: true,
+  d5: true,
+  d6: true,
 };
 
 function readPresetFromStorage(): FontPresetId {
@@ -168,7 +209,7 @@ function getServerSnapshot(): FontCompareToken {
   return "p:clara-vista";
 }
 
-/** Top bar: presets (data-font-preset) or bundles A–F (data-fonts). */
+/** Top bar: presets (data-font-preset) or font bundles (data-fonts). */
 export function FontCompare() {
   const token = useSyncExternalStore(subscribeStore, readToken, getServerSnapshot);
 
@@ -239,7 +280,21 @@ export function FontCompare() {
             </button>
           ))}
           <div className="font-compare-panel-divider" aria-hidden="true" />
-          {BUNDLES.map((opt) => (
+          {BUNDLES_AF.map((opt) => (
+            <button
+              key={opt.id}
+              type="button"
+              role="option"
+              aria-selected={token === `b:${opt.id}`}
+              className={`font-compare-option${token === `b:${opt.id}` ? " is-active" : ""}`}
+              onClick={() => selectBundle(opt.id)}
+            >
+              <span className="font-compare-option-label">{opt.label}</span>
+              <span className="font-compare-option-detail">{opt.detail}</span>
+            </button>
+          ))}
+          <div className="font-compare-panel-divider" aria-hidden="true" />
+          {BUNDLES_D1_D6.map((opt) => (
             <button
               key={opt.id}
               type="button"
