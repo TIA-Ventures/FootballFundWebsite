@@ -2,7 +2,8 @@
 
 import { useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 
-const STORAGE_KEY = "cv-font-preset";
+const STORAGE_PRESET = "cv-font-preset";
+const STORAGE_BUNDLE = "cv-font-bundle";
 const STORAGE_LEGACY = "cv-font-sans";
 const FONT_STORE_EVENT = "cv-font-preset-change";
 
@@ -49,20 +50,69 @@ const PRESETS = [
   },
 ] as const;
 
+const BUNDLES = [
+  {
+    id: "a" as const,
+    label: "A · Calibrated Modern",
+    detail: "Spectral · Onest · JetBrains Mono",
+  },
+  {
+    id: "b" as const,
+    label: "B · Editorial Tech",
+    detail: "Instrument Serif · Inter · JetBrains Mono",
+  },
+  {
+    id: "c" as const,
+    label: "C · Sports Broadcast",
+    detail: "Inter Tight · Inter · JetBrains Mono",
+  },
+  {
+    id: "d" as const,
+    label: "D · RedBird Direct",
+    detail: "Geist · Geist Mono",
+  },
+  {
+    id: "e" as const,
+    label: "E · Quant Shop",
+    detail: "JetBrains Mono (display) · Inter · JetBrains Mono",
+  },
+  {
+    id: "f" as const,
+    label: "F · Stadium Tunnel",
+    detail: "Manrope · JetBrains Mono",
+  },
+] as const;
+
 export type FontPresetId = (typeof PRESETS)[number]["id"];
+export type FontBundleId = (typeof BUNDLES)[number]["id"];
 
-function applyToDocument(id: FontPresetId) {
-  if (id === "clara-vista") {
-    document.documentElement.removeAttribute("data-font-preset");
-  } else {
-    document.documentElement.dataset.fontPreset = id;
-  }
-}
+/** Serialized for useSyncExternalStore — `b:a` or `p:meridian`. */
+export type FontCompareToken = `b:${FontBundleId}` | `p:${FontPresetId}`;
 
-function readStored(): FontPresetId {
+const ALLOW_PRESET: Record<FontPresetId, true> = {
+  "clara-vista": true,
+  apex: true,
+  axis: true,
+  vertex: true,
+  ion: true,
+  signal: true,
+  meridian: true,
+  pulse: true,
+};
+
+const ALLOW_BUNDLE: Record<FontBundleId, true> = {
+  a: true,
+  b: true,
+  c: true,
+  d: true,
+  e: true,
+  f: true,
+};
+
+function readPresetFromStorage(): FontPresetId {
   if (typeof window === "undefined") return "clara-vista";
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (raw && PRESETS.some((p) => p.id === raw)) {
+  const raw = localStorage.getItem(STORAGE_PRESET);
+  if (raw && ALLOW_PRESET[raw as FontPresetId]) {
     return raw as FontPresetId;
   }
   const legacy = localStorage.getItem(STORAGE_LEGACY);
@@ -78,6 +128,31 @@ function readStored(): FontPresetId {
   return "clara-vista";
 }
 
+function readToken(): FontCompareToken {
+  if (typeof window === "undefined") return "p:clara-vista";
+  const b = localStorage.getItem(STORAGE_BUNDLE);
+  if (b && ALLOW_BUNDLE[b as FontBundleId]) {
+    return `b:${b as FontBundleId}`;
+  }
+  const p = readPresetFromStorage();
+  return `p:${p}`;
+}
+
+function applyTokenToDocument(token: FontCompareToken) {
+  const [kind, id] = token.split(":") as ["b" | "p", string];
+  if (kind === "b") {
+    document.documentElement.removeAttribute("data-font-preset");
+    document.documentElement.setAttribute("data-fonts", id);
+    return;
+  }
+  document.documentElement.removeAttribute("data-fonts");
+  if (id === "clara-vista") {
+    document.documentElement.removeAttribute("data-font-preset");
+  } else {
+    document.documentElement.setAttribute("data-font-preset", id);
+  }
+}
+
 function subscribeStore(onChange: () => void) {
   if (typeof window === "undefined") return () => {};
   const handler = () => onChange();
@@ -89,17 +164,17 @@ function subscribeStore(onChange: () => void) {
   };
 }
 
-function getServerSnapshot(): FontPresetId {
-  return "clara-vista";
+function getServerSnapshot(): FontCompareToken {
+  return "p:clara-vista";
 }
 
-/** Top bar: coordinated sans + serif + mono (sets html[data-font-preset]). */
+/** Top bar: presets (data-font-preset) or bundles A–F (data-fonts). */
 export function FontCompare() {
-  const active = useSyncExternalStore(subscribeStore, readStored, getServerSnapshot);
+  const token = useSyncExternalStore(subscribeStore, readToken, getServerSnapshot);
 
   useLayoutEffect(() => {
-    applyToDocument(active);
-  }, [active]);
+    applyTokenToDocument(token);
+  }, [token]);
 
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -113,10 +188,19 @@ export function FontCompare() {
     return () => document.removeEventListener("pointerdown", onDown, true);
   }, [open]);
 
-  const select = (id: FontPresetId) => {
-    localStorage.setItem(STORAGE_KEY, id);
+  const selectPreset = (id: FontPresetId) => {
+    localStorage.removeItem(STORAGE_BUNDLE);
+    localStorage.setItem(STORAGE_PRESET, id);
     localStorage.removeItem(STORAGE_LEGACY);
-    applyToDocument(id);
+    applyTokenToDocument(`p:${id}`);
+    window.dispatchEvent(new Event(FONT_STORE_EVENT));
+    setOpen(false);
+  };
+
+  const selectBundle = (id: FontBundleId) => {
+    localStorage.setItem(STORAGE_BUNDLE, id);
+    localStorage.removeItem(STORAGE_LEGACY);
+    applyTokenToDocument(`b:${id}`);
     window.dispatchEvent(new Event(FONT_STORE_EVENT));
     setOpen(false);
   };
@@ -146,9 +230,23 @@ export function FontCompare() {
               key={opt.id}
               type="button"
               role="option"
-              aria-selected={active === opt.id}
-              className={`font-compare-option${active === opt.id ? " is-active" : ""}`}
-              onClick={() => select(opt.id)}
+              aria-selected={token === `p:${opt.id}`}
+              className={`font-compare-option${token === `p:${opt.id}` ? " is-active" : ""}`}
+              onClick={() => selectPreset(opt.id)}
+            >
+              <span className="font-compare-option-label">{opt.label}</span>
+              <span className="font-compare-option-detail">{opt.detail}</span>
+            </button>
+          ))}
+          <div className="font-compare-panel-divider" aria-hidden="true" />
+          {BUNDLES.map((opt) => (
+            <button
+              key={opt.id}
+              type="button"
+              role="option"
+              aria-selected={token === `b:${opt.id}`}
+              className={`font-compare-option${token === `b:${opt.id}` ? " is-active" : ""}`}
+              onClick={() => selectBundle(opt.id)}
             >
               <span className="font-compare-option-label">{opt.label}</span>
               <span className="font-compare-option-detail">{opt.detail}</span>

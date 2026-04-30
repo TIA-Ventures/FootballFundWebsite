@@ -107,6 +107,50 @@ html[data-font-preset="axis"] {
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
+/* Font bundles A–F (Topbar “Fonts”) — sets display/body/mono + maps to --font-serif/sans/mono. */
+html[data-fonts="a"] {
+  --font-display: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-body: 'Onest', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+html[data-fonts="b"] {
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+html[data-fonts="c"] {
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+html[data-fonts="d"] {
+  --font-display: 'Geist', system-ui, sans-serif;
+  --font-body: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+html[data-fonts="e"] {
+  --font-display: 'JetBrains Mono', ui-monospace, monospace;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+html[data-fonts="f"] {
+  --font-display: 'Manrope', system-ui, sans-serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg); transition: background-color 0.6s ease; }
 body {
@@ -627,6 +671,13 @@ body {
   transition: background 0.4s ease, border-color 0.6s ease;
   max-height: min(72vh, 520px);
   overflow-y: auto;
+}
+.font-compare-panel-divider {
+  flex-shrink: 0;
+  height: 1px;
+  margin: 6px 4px;
+  background: var(--line);
+  opacity: 0.85;
 }
 .font-compare-option {
   font-family: var(--font-sans);
