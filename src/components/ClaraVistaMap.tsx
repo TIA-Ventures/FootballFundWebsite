@@ -395,10 +395,10 @@ export function ClaraVistaMap() {
         lat: 42.6,
         lng: 12.5,
         label: "Italy",
-        club: "Target acquisition · pending close",
+        club: "Target acquisition · active diligence",
         league: "Serie B",
-        status: "Pending close",
-        kind: "pending",
+        status: "Diligence",
+        kind: "diligence",
         num: "02",
       },
       {
@@ -1489,17 +1489,17 @@ export function ClaraVistaMap() {
         <div className="hero-headline">
           <div className="eyebrow">Fund II — Data-Driven Sports Investment</div>
           <h1 className="headline">
-            Owning <em>exceptional</em>
+            WE <em>INVEST.</em>
             <br />
-            football clubs in
+            WE <em>BUILD.</em>
             <br />
-            Europe&apos;s most
-            <br />
-            valuable leagues.
+            WE <em>WIN.</em>
+            
           </h1>
           <p className="subhead">
+            Owning exceptional football clubs in the world's most valuable leagues.
             We invest behind strong tailwinds and partner with winning organizations to achieve excellence across every dimension of
-            performance — backed by data, technology, and the world&apos;s most-watched sport.
+            performance.
           </p>
         </div>
 
@@ -1520,9 +1520,9 @@ export function ClaraVistaMap() {
             <div className="pp-num">02</div>
             <div className="pp-info">
               <div className="pp-city">Italy</div>
-              <div className="pp-club">Target · pending close</div>
+              <div className="pp-club">Target · active diligence</div>
             </div>
-            <div className="pp-status pending" title="Pending" />
+            <div className="pp-status diligence" title="Diligence" />
           </Link>
           <Link href="/portfolio/spain" className="pp-row" aria-label="View Spain target details">
             <div className="pp-num">03</div>
@@ -1620,8 +1620,8 @@ export function ClaraVistaMap() {
             <div className="cc-meta">
               <span className="cc-num">02 / Italy</span>
               <span className="cc-status">
-                <span className="cc-dot pending" aria-hidden="true" />
-                <span className="cc-status-text">Pending close</span>
+                <span className="cc-dot diligence" aria-hidden="true" />
+                <span className="cc-status-text">Active diligence</span>
               </span>
             </div>
             <div className="cc-name">
@@ -1630,7 +1630,7 @@ export function ClaraVistaMap() {
             <div className="cc-location">Italy · Serie B</div>
             <p className="cc-note">
               A historic Italian club with a track record of recent Serie A promotions, a modern Serie A-ready stadium, and the
-              youngest squad in Serie B. <em>Acquisition pending close — full disclosure following announcement.</em>
+              youngest squad in Serie B. <em>Details under embargo.</em>
             </p>
             <div className="cc-stats">
               <div>
@@ -1645,7 +1645,7 @@ export function ClaraVistaMap() {
               </div>
             </div>
             <Link href="/portfolio/italy" className="cc-link">
-              View deal preview
+              View diligence brief
             </Link>
           </div>
           <div className="club-card">

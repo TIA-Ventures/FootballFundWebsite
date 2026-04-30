@@ -52,8 +52,8 @@ const CLUBS: PortfolioCard[] = [
   {
     num: "02 / Italy",
     href: "/portfolio/italy",
-    status: "pending",
-    statusLabel: "Pending close",
+    status: "diligence",
+    statusLabel: "Active diligence",
     logo: null,
     name: (
       <>
@@ -64,13 +64,13 @@ const CLUBS: PortfolioCard[] = [
     note: (
       <>
         A historic Italian club with a track record of recent Serie A promotions, modern infrastructure, and the
-        youngest squad in Serie B. <em>Acquisition pending close — full disclosure following announcement.</em>
+        youngest squad in Serie B. <em>Details under embargo.</em>
       </>
     ),
     founded: <em>under embargo</em>,
     leagueLabel: "League",
     leagueValue: "Serie B",
-    link: "View deal preview",
+    link: "View diligence brief",
   },
   {
     num: "03 / Spain",

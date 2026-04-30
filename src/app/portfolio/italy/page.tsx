@@ -4,7 +4,7 @@ import { TbdClubPage } from "@/components/TbdClubPage";
 export const metadata: Metadata = {
   title: "Italy (target) · Portfolio · Clara Vista Investment Partners",
   description:
-    "Clara Vista is in late-stage diligence on a controlling interest in a historic Italian football club competing in Serie B with a credible path to Serie A.",
+    "Clara Vista is conducting diligence on a controlling interest in a historic Italian football club competing in Serie B with a credible path to Serie A.",
 };
 
 export default function ItalyPage() {
@@ -16,29 +16,29 @@ export default function ItalyPage() {
           Italy <em>(target)</em> <em className="deep-h1-accent">.</em>
         </>
       }
-      sub="Controlling interest in a historic Italian club — Serie B with a credible path to Serie A."
+      sub="Active diligence on a historic Italian club — Serie B with a credible path to Serie A."
       sideMeta={[
         { label: "Country", value: "Italy" },
         { label: "League", value: "Serie B" },
         { label: "Founded", value: <em>under embargo</em> },
         { label: "Stadium", value: <em>under embargo</em> },
         { label: "Stake", value: "Controlling (~80%)" },
-        { label: "Status", value: "Pending close" },
+        { label: "Status", value: "Active diligence" },
       ]}
       banner={{
-        eyebrow: "Acquisition pending close",
+        eyebrow: "Active diligence",
         body: (
           <>
-            Clara Vista is in late-stage diligence on a controlling interest in a historic Italian club.{" "}
-            <em>Full disclosure will follow announcement.</em>
+            Clara Vista is conducting diligence on a controlling interest in a historic Italian club.{" "}
+            <em>Details remain under embargo.</em>
           </>
         ),
       }}
       prose={{
-        eyebrow: "Deal preview",
+        eyebrow: "Diligence brief",
         paragraphs: [
           <>
-            The target is a historic Italian football club currently competing in <em>Serie B</em>, with three Serie A
+            The diligence target is a historic Italian football club currently competing in <em>Serie B</em>, with three Serie A
             promotions in the last decade and one of the youngest squads in the league. The acquisition contemplates a
             controlling interest at approximately <strong>1.5x revenues</strong> — a structural discount to comparable
             European clubs.
@@ -49,10 +49,9 @@ export default function ItalyPage() {
             combine to create a credible path to Serie A and to enterprise-value re-rating.
           </>,
           <>
-            Detailed deal terms — including final purchase price, capital structure, management arrangements, and
-            post-close operating plan — remain{" "}
-            <span className="em-dash">— under embargo until close —</span> and will be disclosed in the Investment
-            Committee close memo.
+            Specific club identity, financial position, and proposed deal structure remain{" "}
+            <span className="em-dash">— under embargo —</span> until diligence concludes and an Investment Committee
+            decision is reached.
           </>,
         ],
       }}
