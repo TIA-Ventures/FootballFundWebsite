@@ -145,8 +145,7 @@ export function SelectionScorecard() {
   const [activeAxis, setActiveAxis] = useState<AxisKey>("fanbase");
 
   const detail = CRITERION[activeAxis];
-  const score =
-    activeClub === "ideal" ? null : CLUB_SCORES[activeClub][activeAxis];
+  const score = CLUB_SCORES[activeClub][activeAxis];
   const center = CENTER_LABEL[activeClub];
 
   return (
@@ -193,10 +192,9 @@ export function SelectionScorecard() {
             <div className="scoring-detail-name">{detail.name}</div>
             {/* Keep this node mounted for Ideal too so tab switches don’t change column height (banner + cover). */}
             <div
-              className={`scoring-detail-score${score == null ? " scoring-detail-score--ideal" : ""}`}
-              aria-hidden={score == null}
+              className={`scoring-detail-score${activeClub === "ideal" ? " is-ideal-tab" : ""}`}
             >
-              {score != null ? score : <span className="scoring-detail-score-ghost">88</span>}
+              {score}
               <em>/100</em>
             </div>
             <p className="scoring-detail-desc">{detail.desc}</p>
@@ -275,6 +273,21 @@ export function SelectionScorecard() {
                 {v.label}
               </text>
             ))}
+
+            {activeClub === "ideal" &&
+              AXIS_VERTICES.map((v) => (
+                <text
+                  key={`ideal-axis-score-${v.axis}`}
+                  x={v.labelX}
+                  y={v.labelY + 16}
+                  className={`sc-ideal-axis-score${activeAxis === v.axis ? " is-selected" : ""}`}
+                  textAnchor={v.labelAnchor}
+                  data-axis={v.axis}
+                  onClick={() => setActiveAxis(v.axis)}
+                >
+                  100
+                </text>
+              ))}
           </svg>
 
           <div className="scoring-center" aria-hidden="true">

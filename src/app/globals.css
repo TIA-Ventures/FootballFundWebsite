@@ -3373,6 +3373,26 @@ body {
   font-weight: 600;
 }
 
+/* Ideal tab: score under each axis caption (all dimensions at 100) */
+.cv-page .sc-ideal-axis-score {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  fill: var(--green-light);
+  opacity: 0.9;
+  cursor: pointer;
+  user-select: none;
+  transition: fill 0.2s ease, opacity 0.2s ease;
+}
+.cv-page .sc-ideal-axis-score:hover {
+  opacity: 1;
+}
+.cv-page .sc-ideal-axis-score.is-selected {
+  opacity: 1;
+  font-weight: 700;
+}
+
 /* Center label (overlaid HTML for cleaner kerning) */
 .cv-page .scoring-center {
   position: absolute;
@@ -3441,9 +3461,8 @@ body {
   font-weight: 300;
   margin-left: 4px;
 }
-.cv-page .scoring-detail-score--ideal .scoring-detail-score-ghost,
-.cv-page .scoring-detail-score--ideal em {
-  visibility: hidden;
+.cv-page .scoring-detail-score.is-ideal-tab {
+  color: var(--green-light);
 }
 .cv-page .scoring-detail-desc {
   font-family: var(--font-sans);
