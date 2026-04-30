@@ -14,13 +14,15 @@ try {
   var fb = localStorage.getItem(bundleKey);
   if (fb && bundleAllow[fb]) {
     document.documentElement.setAttribute('data-fonts', fb);
+    document.documentElement.removeAttribute('data-font-preset');
   } else {
     var k = 'cv-font-preset';
     var allow = { signal: 1, meridian: 1, pulse: 1, apex: 1, vertex: 1, ion: 1, axis: 1 };
     var v = localStorage.getItem(k);
     if (!v) {
       var o = localStorage.getItem('cv-font-sans');
-      if (o === 'space-grotesk') v = 'signal';
+      if (o === 'onest') v = 'clara-vista';
+      else if (o === 'space-grotesk') v = 'signal';
       else if (o === 'plus-jakarta') v = 'meridian';
       else if (o === 'manrope') v = 'pulse';
       if (v) {
@@ -28,7 +30,16 @@ try {
         localStorage.removeItem('cv-font-sans');
       }
     }
-    if (v && allow[v]) document.documentElement.setAttribute('data-font-preset', v);
+    if (v === 'clara-vista') {
+      document.documentElement.setAttribute('data-font-preset', 'clara-vista');
+      document.documentElement.removeAttribute('data-fonts');
+    } else if (v && allow[v]) {
+      document.documentElement.setAttribute('data-font-preset', v);
+      document.documentElement.removeAttribute('data-fonts');
+    } else {
+      document.documentElement.setAttribute('data-fonts', 'd6');
+      document.documentElement.removeAttribute('data-font-preset');
+    }
   }
 } catch (e) {}
 `;
@@ -39,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="day">
+    <html lang="en" data-theme="day" data-fonts="d6" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: FONT_PRESET_BOOT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

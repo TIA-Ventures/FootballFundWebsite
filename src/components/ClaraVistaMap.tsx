@@ -387,6 +387,7 @@ export function ClaraVistaMap() {
         status: "Active",
         kind: "closed",
         num: "01",
+        logo: "/ipswich-town.svg",
       },
       {
         name: "Italy",
@@ -489,6 +490,15 @@ export function ClaraVistaMap() {
     const ALL_EU = [...PORTFOLIO, ...AMBIENT];
     PORTFOLIO.forEach((c) => {
       c.tier = "P";
+    });
+    const portfolioLogoImages: Record<string, HTMLImageElement> = {};
+    PORTFOLIO.forEach((c) => {
+      const src = c.logo as string | undefined;
+      if (src && !portfolioLogoImages[src]) {
+        const im = new Image();
+        im.src = src;
+        portfolioLogoImages[src] = im;
+      }
     });
     AMBIENT.forEach((c) => {
       c.tier = "A";
@@ -1302,13 +1312,47 @@ export function ClaraVistaMap() {
         ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
         const subW = ctx.measureText(subLabel).width;
 
+        const logoSrc = c.logo as string | undefined;
+        const logoImg = logoSrc ? portfolioLogoImages[logoSrc] : undefined;
+        const logoReady = Boolean(logoImg && logoImg.complete && logoImg.naturalWidth > 0);
+        /** Stacked crest + wordmark (broadcast / fixture-card pattern); inline row for other markers. */
+        const LOGO_STACK_H = 26;
+        const logoWStack =
+          logoReady && logoImg ? LOGO_STACK_H * (logoImg.naturalWidth / logoImg.naturalHeight) : 0;
+
+        const gapLogoTitle = 5;
+        const gapTitleSub = 5;
+        const titleLineH = 18;
+        const subLineH = 12;
+
         const isDayTheme = getTheme() === "day";
+        let haloCx: number;
+        let haloCy: number;
+        let haloRx: number;
+        let haloRy: number;
+        let lockupColumnX = 0;
+        let stackTop = 0;
+        const stackH =
+          LOGO_STACK_H + gapLogoTitle + titleLineH + gapTitleSub + subLineH;
+
+        if (logoReady && logoImg) {
+          lockupColumnX = labelX + numW + 10;
+          stackTop = c.py - stackH / 2;
+          const blockW = Math.max(logoWStack, labelW, subW);
+          haloCx = lockupColumnX + blockW / 2;
+          haloCy = c.py;
+          haloRx = blockW / 2 + 56;
+          haloRy = stackH / 2 + 26;
+        } else {
+          const blockStart = labelX + 22;
+          const blockW = Math.max(labelW, subW);
+          haloCx = blockStart + blockW / 2;
+          haloCy = c.py + 5;
+          haloRx = blockW / 2 + 60;
+          haloRy = 30;
+        }
+
         // Soft elliptical halo behind the label: looks like a vignette, not a rectangle.
-        // Fades to fully transparent on every side so it dissolves into the map.
-        const haloCx = labelX + 22 + Math.max(labelW, subW) / 2;
-        const haloCy = c.py + 5;
-        const haloRx = Math.max(labelW, subW) / 2 + 60;
-        const haloRy = 30;
         ctx.save();
         ctx.translate(haloCx, haloCy);
         ctx.scale(haloRx / haloRy, 1);
@@ -1339,22 +1383,43 @@ export function ClaraVistaMap() {
 
         ctx.fillStyle = isDayTheme ? `rgba(6, 93, 57, ${labelOpacity})` : `rgba(52, 194, 129, ${labelOpacity})`;
         ctx.font = `italic 400 12px ${canvasFontVar("--font-serif")}`;
+        ctx.textBaseline = "middle";
         ctx.fillText(c.num, labelX, c.py - 1);
 
-        ctx.fillStyle = isDayTheme
-          ? `rgba(26, 37, 32, ${labelOpacity})`
-          : `rgba(242, 234, 214, ${labelOpacity})`;
-        ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
-        ctx.fillText(c.label, labelX + 22, c.py - 1);
-
-        ctx.fillStyle = isDayTheme
-          ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
-          : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
-        ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
-        ctx.fillText(subLabel, labelX + 22, c.py + 15);
+        if (logoReady && logoImg) {
+          ctx.globalAlpha = labelOpacity;
+          ctx.drawImage(logoImg, lockupColumnX, stackTop, logoWStack, LOGO_STACK_H);
+          ctx.globalAlpha = 1;
+          ctx.textBaseline = "top";
+          ctx.fillStyle = isDayTheme
+            ? `rgba(26, 37, 32, ${labelOpacity})`
+            : `rgba(242, 234, 214, ${labelOpacity})`;
+          ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
+          ctx.fillText(c.label, lockupColumnX, stackTop + LOGO_STACK_H + gapLogoTitle);
+          ctx.fillStyle = isDayTheme
+            ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
+            : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
+          ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
+          ctx.fillText(
+            subLabel,
+            lockupColumnX,
+            stackTop + LOGO_STACK_H + gapLogoTitle + titleLineH + gapTitleSub,
+          );
+        } else {
+          const nameX = labelX + 22;
+          ctx.fillStyle = isDayTheme
+            ? `rgba(26, 37, 32, ${labelOpacity})`
+            : `rgba(242, 234, 214, ${labelOpacity})`;
+          ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
+          ctx.textBaseline = "middle";
+          ctx.fillText(c.label, nameX, c.py - 1);
+          ctx.fillStyle = isDayTheme
+            ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
+            : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
+          ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
+          ctx.fillText(subLabel, nameX, c.py + 15);
+        }
         ctx.textBaseline = "alphabetic";
-        // Suppress unused-var warning for measured "01" width (kept for future use).
-        void numW;
       });
 
       // TOOLTIP

@@ -85,6 +85,11 @@ const BUNDLES_AF = [
 
 const BUNDLES_D1_D6 = [
   {
+    id: "d6" as const,
+    label: "D6 · Switzer",
+    detail: "Switzer · JetBrains Mono",
+  },
+  {
     id: "d1" as const,
     label: "D1 · Geist Direct",
     detail: "Geist · Geist Mono",
@@ -108,11 +113,6 @@ const BUNDLES_D1_D6 = [
     id: "d5" as const,
     label: "D5 · Mona Sans",
     detail: "Mona Sans Variable · Hubot Sans Variable",
-  },
-  {
-    id: "d6" as const,
-    label: "D6 · Switzer",
-    detail: "Switzer · JetBrains Mono",
   },
 ] as const;
 
@@ -150,11 +150,15 @@ const ALLOW_BUNDLE: Record<FontBundleId, true> = {
   d6: true,
 };
 
-function readPresetFromStorage(): FontPresetId {
-  if (typeof window === "undefined") return "clara-vista";
+function readToken(): FontCompareToken {
+  if (typeof window === "undefined") return "b:d6";
+  const b = localStorage.getItem(STORAGE_BUNDLE);
+  if (b && ALLOW_BUNDLE[b as FontBundleId]) {
+    return `b:${b as FontBundleId}`;
+  }
   const raw = localStorage.getItem(STORAGE_PRESET);
   if (raw && ALLOW_PRESET[raw as FontPresetId]) {
-    return raw as FontPresetId;
+    return `p:${raw as FontPresetId}`;
   }
   const legacy = localStorage.getItem(STORAGE_LEGACY);
   const fromLegacy: Record<string, FontPresetId> = {
@@ -164,19 +168,9 @@ function readPresetFromStorage(): FontPresetId {
     manrope: "pulse",
   };
   if (legacy && fromLegacy[legacy]) {
-    return fromLegacy[legacy];
+    return `p:${fromLegacy[legacy]}`;
   }
-  return "clara-vista";
-}
-
-function readToken(): FontCompareToken {
-  if (typeof window === "undefined") return "p:clara-vista";
-  const b = localStorage.getItem(STORAGE_BUNDLE);
-  if (b && ALLOW_BUNDLE[b as FontBundleId]) {
-    return `b:${b as FontBundleId}`;
-  }
-  const p = readPresetFromStorage();
-  return `p:${p}`;
+  return "b:d6";
 }
 
 function applyTokenToDocument(token: FontCompareToken) {
@@ -187,11 +181,7 @@ function applyTokenToDocument(token: FontCompareToken) {
     return;
   }
   document.documentElement.removeAttribute("data-fonts");
-  if (id === "clara-vista") {
-    document.documentElement.removeAttribute("data-font-preset");
-  } else {
-    document.documentElement.setAttribute("data-font-preset", id);
-  }
+  document.documentElement.setAttribute("data-font-preset", id);
 }
 
 function subscribeStore(onChange: () => void) {
@@ -206,7 +196,7 @@ function subscribeStore(onChange: () => void) {
 }
 
 function getServerSnapshot(): FontCompareToken {
-  return "p:clara-vista";
+  return "b:d6";
 }
 
 /** Top bar: presets (data-font-preset) or font bundles (data-fonts). */
@@ -240,6 +230,7 @@ export function FontCompare() {
 
   const selectBundle = (id: FontBundleId) => {
     localStorage.setItem(STORAGE_BUNDLE, id);
+    localStorage.removeItem(STORAGE_PRESET);
     localStorage.removeItem(STORAGE_LEGACY);
     applyTokenToDocument(`b:${id}`);
     window.dispatchEvent(new Event(FONT_STORE_EVENT));
