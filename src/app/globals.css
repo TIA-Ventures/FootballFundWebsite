@@ -1919,6 +1919,152 @@ body {
   padding-bottom: 24px;
 }
 
+/* Full-bleed celebration photography behind Approach hero + selection radar
+   (same photo → scrim → content stack as .thesis-asset-banner / .portfolio-section). */
+.cv-page.approach-page .approach-invest-banner {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  transition: border-color 0.6s ease;
+}
+.cv-page.approach-page .approach-invest-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('/approach-invest-banner-bg.png');
+  background-size: cover;
+  /* Centered crop — no vertical bias toward faces */
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  filter: saturate(0.85) brightness(0.68);
+  transition: filter 0.6s ease;
+}
+/* Viewport-fixed on desktop: plate scrolls over the photo so the image shifts as you scroll.
+   (scroll alone glues the bitmap to the band — reads as “not moving”.) Narrow viewports stay scroll. */
+@media (min-width: 901px) {
+  .cv-page.approach-page .approach-invest-banner::before {
+    background-attachment: fixed;
+  }
+}
+:root[data-theme="day"] .cv-page.approach-page .approach-invest-banner::before {
+  filter: saturate(0.80) brightness(0.80);
+}
+.cv-page.approach-page .approach-invest-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transition: background 0.6s ease;
+}
+:root[data-theme="day"] .cv-page.approach-page .approach-invest-banner::after {
+  /* Lighter at top for hero; fade to heavy cream on bottom half so “001” block reads */
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 242, 235, 0.57) 0%,
+    rgba(245, 242, 235, 0.58) 28%,
+    rgba(245, 242, 235, 0.72) 48%,
+    rgba(245, 242, 235, 0.86) 68%,
+    rgba(245, 242, 235, 0.93) 100%
+  );
+}
+:root[data-theme="night"] .cv-page.approach-page .approach-invest-banner::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 10, 8, 0.52) 0%,
+    rgba(6, 10, 8, 0.62) 32%,
+    rgba(6, 10, 8, 0.76) 55%,
+    rgba(3, 6, 4, 0.86) 78%,
+    rgba(3, 6, 4, 0.9) 100%
+  );
+}
+.cv-page.approach-page .approach-invest-banner > * {
+  position: relative;
+  z-index: 1;
+}
+.cv-page.approach-page .approach-invest-banner .page-hero {
+  border-bottom: none;
+}
+.cv-page.approach-page .approach-invest-banner .approach-invest-section {
+  border-bottom: none;
+  background: transparent;
+  padding-top: 48px;
+  padding-bottom: 96px;
+}
+
+/* Two-up strip · same flat panels as thesis KPIs / club cards; no column hairline */
+.cv-page.approach-page .approach-invest-section .scoring-block {
+  margin-top: 0;
+  position: relative;
+}
+.cv-page.approach-page .approach-invest-section .scoring-block .scoring-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+  gap: 0;
+  background: transparent;
+  border: none;
+  isolation: isolate;
+  align-items: stretch;
+}
+/* Stable band height when switching Ideal vs clubs (reduces cover “zoom” + fixed-clip jumps). */
+@media (min-width: 901px) {
+  .cv-page.approach-page .approach-invest-section .scoring-block .scoring-layout {
+    min-height: 560px;
+  }
+}
+.cv-page.approach-page .approach-invest-section .scoring-text-col,
+.cv-page.approach-page .approach-invest-section .scoring-chart {
+  position: relative;
+  padding: 44px 36px 40px;
+  transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+:root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-text-col,
+:root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-chart {
+  background: rgba(245, 242, 235, 0.84);
+}
+:root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-text-col,
+:root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-chart {
+  background: rgba(10, 18, 14, 0.68);
+}
+.cv-page.approach-page .approach-invest-section .scoring-text-col:hover,
+.cv-page.approach-page .approach-invest-section .scoring-chart:hover {
+  box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.35);
+}
+:root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-text-col:hover,
+:root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-chart:hover {
+  background: rgba(251, 248, 241, 0.92);
+}
+:root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-text-col:hover,
+:root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-chart:hover {
+  background: rgba(14, 26, 20, 0.78);
+}
+.cv-page.approach-page .approach-invest-section .scoring-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  max-width: none;
+  aspect-ratio: auto;
+}
+.cv-page.approach-page .approach-invest-section .scoring-chart svg {
+  max-width: 440px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+/* Criterion inset reads as part of the cell (like club-card stats row), not a second card */
+.cv-page.approach-page .approach-invest-section .scoring-detail {
+  border: none;
+  background: transparent;
+  padding: 28px 0 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--line-soft);
+}
+
 /* ---- Selection scorecard · Radar (Approach 001) ----
    Heptagonal radar with seven selection criteria scored 0–100. Ideal
    target renders as a green heptagon at radius 100; each portfolio club
@@ -2153,6 +2299,10 @@ body {
   color: var(--ivory-dim);
   font-weight: 300;
   margin-left: 4px;
+}
+.cv-page .scoring-detail-score--ideal .scoring-detail-score-ghost,
+.cv-page .scoring-detail-score--ideal em {
+  visibility: hidden;
 }
 .cv-page .scoring-detail-desc {
   font-family: var(--font-sans);
@@ -2639,6 +2789,17 @@ body {
 @media (max-width: 980px) {
   .cv-page .scoring-layout { grid-template-columns: 1fr; gap: 40px; }
   .cv-page .scoring-chart { max-width: 480px; margin: 0 auto; }
+  .cv-page.approach-page .approach-invest-section .scoring-block .scoring-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .cv-page.approach-page .approach-invest-section .scoring-text-col,
+  .cv-page.approach-page .approach-invest-section .scoring-chart {
+    padding: 32px 22px 36px;
+  }
+  .cv-page.approach-page .approach-invest-section .scoring-chart svg {
+    max-width: min(440px, 100%);
+  }
   .cv-page .pillar-cols {
     display: flex;
     flex-direction: column;
@@ -2659,6 +2820,9 @@ body {
   .cv-page .scoring-tabs { width: 100%; }
   .cv-page .scoring-tab { flex: 1 1 0; padding: 12px 8px; font-size: 9.5px; letter-spacing: 0.12em; }
   .cv-page .scoring-detail { padding: 24px; }
+  .cv-page.approach-page .approach-invest-section .scoring-detail {
+    padding: 22px 0 0;
+  }
   .cv-page .sc-label { font-size: 9px; letter-spacing: 0.10em; }
   .cv-page .re-multiplier { font-size: 48px; }
   .cv-page .terminal-table thead { display: none; }

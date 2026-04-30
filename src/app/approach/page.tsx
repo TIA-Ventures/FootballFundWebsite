@@ -8,7 +8,7 @@ import { Topbar } from "@/components/Topbar";
 export const metadata: Metadata = {
   title: "Approach · Clara Vista Investment Partners",
   description:
-    "Three principles, one playbook. We invest. We build. We win. Selection, then execution, then returns — applied with the same discipline to every club in the portfolio.",
+    "Chapter 02 — We invest. We build. We win. How Clara Vista selects clubs, executes on operations, and drives returns across the portfolio.",
 };
 
 /* /approach — Chapter 02 · How we invest.
@@ -105,29 +105,24 @@ export default function ApproachPage() {
     <>
       <Topbar activeNav="approach" />
       <main className="cv-page approach-page">
-        {/* Page hero · the italic verbs (invest / build / win) provide the
-            manifesto voice; sizing matches every other page hero on the site
-            for consistency. */}
-        <div className="page-hero">
-          <div className="page-hero-inner">
-            <div>
-              <div className="ph-eyebrow">Approach · Chapter 02</div>
-              <h1 className="ph-h1">
-                We <em>invest.</em> We <em>build.</em> We <em>win.</em>
-              </h1>
+        {/* Hero + 001 We invest · full-bleed photography + scrim (thesis / portfolio pattern) */}
+        <div className="approach-invest-banner">
+          <div className="page-hero">
+            <div className="page-hero-inner">
+              <div>
+                <div className="ph-eyebrow">Approach · Chapter 02</div>
+                <h1 className="ph-h1">
+                  We <em>invest.</em> We <em>build.</em> We <em>win.</em>
+                </h1>
+              </div>
             </div>
-            <p className="ph-intro">
-              Three principles, one playbook. Selection, then execution, then
-              returns — applied with the <em>same discipline</em> to every club
-              in the portfolio.
-            </p>
           </div>
-        </div>
 
-        {/* 001 · We invest — Acquire the right clubs (selection radar) */}
-        <div className="section">
-          <div className="section-inner">
-            <SelectionScorecard />
+          {/* 001 · We invest — Acquire the right clubs (selection radar) */}
+          <div className="section approach-invest-section">
+            <div className="section-inner">
+              <SelectionScorecard />
+            </div>
           </div>
         </div>
 

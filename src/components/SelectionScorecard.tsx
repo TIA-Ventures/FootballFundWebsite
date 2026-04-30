@@ -191,12 +191,14 @@ export function SelectionScorecard() {
           <div className="scoring-detail">
             <div className="scoring-detail-eyebrow">Selected criterion</div>
             <div className="scoring-detail-name">{detail.name}</div>
-            {score != null ? (
-              <div className="scoring-detail-score">
-                {score}
-                <em>/100</em>
-              </div>
-            ) : null}
+            {/* Keep this node mounted for Ideal too so tab switches don’t change column height (banner + cover). */}
+            <div
+              className={`scoring-detail-score${score == null ? " scoring-detail-score--ideal" : ""}`}
+              aria-hidden={score == null}
+            >
+              {score != null ? score : <span className="scoring-detail-score-ghost">88</span>}
+              <em>/100</em>
+            </div>
             <p className="scoring-detail-desc">{detail.desc}</p>
           </div>
         </div>
