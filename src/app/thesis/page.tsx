@@ -1,147 +1,217 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Footer } from "@/components/Footer";
-import { ManifestoSlab } from "@/components/ManifestoSlab";
 import { Topbar } from "@/components/Topbar";
 
 export const metadata: Metadata = {
   title: "Thesis · Clara Vista Investment Partners",
   description:
-    "Clara Vista is a data-driven sports investment platform built to generate asymmetric outcomes. We invest behind strong tailwinds and partner with winning organizations to achieve excellence across every dimension of performance.",
+    "The most-watched sport on earth — and one of the few global asset classes still structurally underowned by institutional capital. Football is mispriced.",
 };
 
-const EXPERIENCE_PILLARS = [
+/* Asset-class outperformance · 2×2 floating-bar layout (Variant A from the
+   source-of-truth). Each row is one performance dimension; the data sits on a
+   horizontal axis with sports highlighted and negative bars tokenized as `is-negative`. */
+type AcBar = { value: string; label: string; left: string; tone?: "sports" | "negative" };
+type AcRow = { name: string; meta: string; bars: AcBar[] };
+
+const AC_ROWS: AcRow[] = [
   {
-    num: "01",
-    title: "Experience",
-    body:
-      "Our team has managed over $10B across global private equity, real estate, and venture funds — consistently delivering top-quartile returns with zero principal losses. We bring governance, discipline, and judgment earned through decades of investing and operating.",
+    name: "Long-term outperformance",
+    meta: "Annualized return · last 10 yrs",
+    bars: [
+      { value: "11%", label: "S&P 500", left: "14%" },
+      { value: "15%", label: "NASDAQ", left: "42%" },
+      { value: "17%", label: "U.S. PE", left: "70%" },
+      { value: "18%", label: "Sports", left: "90%", tone: "sports" },
+    ],
   },
   {
-    num: "02",
-    title: "Access",
-    body:
-      "Decades of trusted relationships unlock unique, off-market opportunities few investors can access. We pair this access with deep structuring expertise to ensure alignment, transparency, and durability across every investment.",
+    name: "Outperformance during downturns",
+    meta: "Avg. return during Global Financial Crisis · 2007–2009",
+    bars: [
+      { value: "-22%", label: "S&P 500", left: "14%", tone: "negative" },
+      { value: "-16%", label: "NASDAQ", left: "38%", tone: "negative" },
+      { value: "-11%", label: "U.S. PE", left: "60%", tone: "negative" },
+      { value: "+4%", label: "Sports", left: "90%", tone: "sports" },
+    ],
   },
   {
-    num: "03",
-    title: "Action",
-    body:
-      "We've built and scaled companies worth billions, including category-defining businesses like Netflix and Google. This operator DNA gives us the ability to turn complexity into execution — and execution into lasting value.",
+    name: "Low correlation",
+    meta: "Correlation vs S&P 500 · last 10 yrs",
+    bars: [
+      { value: "4%", label: "Sports", left: "12%", tone: "sports" },
+      { value: "81%", label: "U.S. PE", left: "64%", tone: "negative" },
+      { value: "91%", label: "NASDAQ", left: "78%", tone: "negative" },
+      { value: "100%", label: "S&P 500", left: "92%", tone: "negative" },
+    ],
   },
   {
-    num: "04",
-    title: "Returns",
-    body:
-      "We manage every investment with the focus of owners and the discipline of fiduciaries — driving performance at every level of the organization and always optimizing for the best path to exit.",
+    name: "Low volatility",
+    meta: "% volatility · last 10 yrs",
+    bars: [
+      { value: "9%", label: "Sports", left: "12%", tone: "sports" },
+      { value: "13%", label: "S&P 500", left: "44%" },
+      { value: "14%", label: "U.S. PE", left: "56%" },
+      { value: "19%", label: "NASDAQ", left: "90%" },
+    ],
   },
 ];
 
-const OPERATING_SYSTEM = [
-  {
-    num: "01",
-    title: "Team Selection",
-    body:
-      "Identifying and investing in clubs with untapped potential, asymmetric upside, and clear pathways to transformative value.",
-  },
-  {
-    num: "02",
-    title: "World-Class Management",
-    body:
-      "Implementing best-in-class management structures that accelerate progress and strengthen every layer of the club.",
-  },
-  {
-    num: "03",
-    title: "Data-Driven Sports Operations",
-    body:
-      "We build a data-driven culture that systematically maximizes competitiveness, performance bonuses, and transfer profits.",
-  },
-  {
-    num: "04",
-    title: "Commercial Optimization",
-    body:
-      "We deploy best-in-class technology that expands sponsorships, merchandising, gameday, and other revenue streams.",
-  },
-  {
-    num: "05",
-    title: "Back Office Efficiency",
-    body:
-      "We modernize governance, analytics, and financial infrastructure to improve efficiency, accountability, and ROI from every operating dollar.",
-  },
-];
-
-type RailItem = { num: string; title: string; body: string };
-
-function PillarRail({ items }: { items: RailItem[] }) {
-  return (
-    <ol className="pillar-rail" role="list">
-      {items.map((it) => (
-        <li key={it.num} className="pillar-rail-row">
-          <div className="pillar-rail-num">{it.num}</div>
-          <h3 className="pillar-rail-title">{it.title}</h3>
-          <p className="pillar-rail-body">{it.body}</p>
-        </li>
-      ))}
-    </ol>
-  );
+function toneClass(tone?: "sports" | "negative") {
+  if (tone === "sports") return "ac-bar is-sports";
+  if (tone === "negative") return "ac-bar is-negative";
+  return "ac-bar";
 }
 
 export default function ThesisPage() {
   return (
     <>
       <Topbar activeNav="thesis" />
-      <main className="thesis-page">
-        <ManifestoSlab eyebrowNumber="001" showPlatformLine />
-
-        <section className="thesis-section" aria-labelledby="experience-heading">
-          <div className="thesis-section-head">
+      <main className="cv-page thesis-page">
+        <div className="page-hero">
+          <div className="page-hero-inner">
             <div>
-              <div className="thesis-eyebrow">
-                <span className="thesis-eyebrow-num">002</span>
-                <span className="thesis-eyebrow-rule" aria-hidden />
-                <span>Experience That Wins</span>
-              </div>
-              <h2 className="thesis-heading" id="experience-heading">
-                Operators with <em>a track record</em>
-                <br />
-                of winning.
-              </h2>
+              <div className="ph-eyebrow">Thesis</div>
+              <h1 className="ph-h1">
+                An asset class, <em>mispriced.</em>
+              </h1>
             </div>
-            <p className="thesis-intro">
-              Our team combines decades of financial leadership with deep operating experience across sports, media, technology,
-              and data to produce winning results.
+            <p className="ph-intro">
+              The <em>most-watched sport on earth</em> — and one of the few global asset classes still structurally
+              underowned by institutional capital.
             </p>
           </div>
-          <PillarRail items={EXPERIENCE_PILLARS} />
-        </section>
+        </div>
 
-        <section className="thesis-section" aria-labelledby="operating-heading">
-          <div className="thesis-section-head">
-            <div>
-              <div className="thesis-eyebrow">
-                <span className="thesis-eyebrow-num">003</span>
-                <span className="thesis-eyebrow-rule" aria-hidden />
-                <span>Excellence Everywhere</span>
+        <div className="section compact">
+          <div className="section-inner">
+            <div className="stat-grid">
+              <div className="stat-cell is-lead">
+                <div className="stat-eyebrow">The audience</div>
+                <div className="stat-num">
+                  3.5<em>B</em>
+                </div>
+                <div className="stat-label">Global football fans · most-watched sport on earth</div>
               </div>
-              <h2 className="thesis-heading" id="operating-heading">
-                The <em>Operating System.</em>
+              <div className="stat-cell">
+                <div className="stat-num">
+                  7<em>×</em>
+                </div>
+                <div className="stat-label">Football viewership relative to American football</div>
+              </div>
+              <div className="stat-cell">
+                <div className="stat-num">
+                  96<em>/100</em>
+                </div>
+                <div className="stat-label">Top US broadcasts in 2024 were live sports</div>
+              </div>
+              <div className="stat-cell">
+                <div className="stat-num">
+                  $60<em>B+</em>
+                </div>
+                <div className="stat-label">Invested by private equity into sports since 2020</div>
+              </div>
+              <div className="stat-cell">
+                <div className="stat-num">
+                  $36<em>B+</em>
+                </div>
+                <div className="stat-label">Projected fan engagement market by 2035</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="section bg-deep" style={{ borderBottom: "none" }}>
+          <div className="section-inner">
+            <div className="section-head" style={{ marginBottom: 40 }}>
+              <div>
+                <div className="sh-eyebrow">002 · Asset class outperformance</div>
+                <h2 className="sh-h2">
+                  Reliable. <em>Uncorrelated.</em> Resilient.
+                </h2>
+              </div>
+            </div>
+
+            <div className="ac-grid">
+              {AC_ROWS.map((row) => (
+                <div key={row.name} className="ac-row">
+                  <div className="ac-row-head">
+                    <div className="ac-row-name">{row.name}</div>
+                    <div className="ac-row-meta">{row.meta}</div>
+                  </div>
+                  <div className="ac-bars">
+                    <div className="ac-axis" />
+                    {row.bars.map((b) => (
+                      <div
+                        key={`${row.name}-${b.label}`}
+                        className={toneClass(b.tone)}
+                        style={{ left: b.left }}
+                      >
+                        <div className="ac-bar-pill">{b.value}</div>
+                        <div className="ac-bar-label">{b.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="ac-source">Source · Forbes, Cambridge Associates, S&amp;P CapIQ</p>
+          </div>
+        </div>
+
+        <div className="thesis-takeaway">
+          <div className="thesis-takeaway-inner">
+            <div className="thesis-takeaway-eyebrow">003 · The takeaway</div>
+            <h3 className="thesis-takeaway-lede">
+              The most-watched sport on earth, structurally underowned, trading at a{" "}
+              <em>fraction of US sports multiples</em>.
+            </h3>
+
+            <div className="thesis-takeaway-grid">
+              <div className="thesis-takeaway-prop">
+                <div className="thesis-takeaway-label">Scale</div>
+                <div className="thesis-takeaway-claim">
+                  A global asset class with <em>150-year clubs</em> as inventory and 3.5 billion fans as audience.
+                </div>
+              </div>
+              <div className="thesis-takeaway-prop">
+                <div className="thesis-takeaway-label">Mispricing</div>
+                <div className="thesis-takeaway-claim">
+                  Global clubs trade at <em>2–6× revenues</em> versus <em>5–15×</em> for US franchises.
+                </div>
+              </div>
+              <div className="thesis-takeaway-prop">
+                <div className="thesis-takeaway-label">Path to value</div>
+                <div className="thesis-takeaway-claim">
+                  Multiple expansion at the league level, <em>operational alpha</em> at the club level.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Chapter break · framed as "Our Approach" to set up how Clara Vista
+            actually deploys the thesis (operating model, sourcing, diligence).
+            Routes to /portfolio for now since that's the live next chapter — if
+            a dedicated /approach page is added later, swap the href here. */}
+        <Link href="/portfolio" className="chapter-break">
+          <div className="chapter-break-inner">
+            <div>
+              <div className="chapter-break-eyebrow">Next chapter · 02 · Approach</div>
+              <h2 className="chapter-break-h2">
+                Our <em>approach.</em>
+                <span className="chapter-break-arrow">→</span>
               </h2>
             </div>
-            <p className="thesis-intro">
-              We identify exceptional sports teams that carry outsized growth potential, unlocking their trapped value through
-              deep focus across every dimension of performance.
-            </p>
+            <div className="chapter-break-meta">
+              Operating model · Sourcing · Diligence
+              <br />
+              How we turn the thesis into returns.
+            </div>
           </div>
-          <PillarRail items={OPERATING_SYSTEM} />
-        </section>
-
-        <section className="thesis-cta" aria-label="Continue">
-          <a href="/#portfolio" className="thesis-cta-link">
-            <span className="thesis-cta-label">See the portfolio</span>
-            <span className="thesis-cta-arrow" aria-hidden>
-              →
-            </span>
-          </a>
-        </section>
+        </Link>
       </main>
       <Footer />
     </>

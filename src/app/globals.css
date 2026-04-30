@@ -21,14 +21,25 @@
   --ivory-faint: rgba(242, 234, 214, 0.18);
   --line: rgba(52, 194, 129, 0.12);
   --line-soft: rgba(242, 234, 214, 0.10);
+  /* Negative / loss accent — used by /thesis ac-bars to mark drawdowns
+     against the green-led palette without introducing a new design language. */
+  --neg: #d87575;
+  --neg-line: rgba(216, 117, 117, 0.35);
+  --neg-soft: rgba(216, 117, 117, 0.06);
   --grain-opacity: 0.05;
   --grain-blend: overlay;
 }
 :root[data-theme="day"] {
-  --bg: #F4EDDC;
-  --bg-deep: #EAE2CC;
-  --bg-card: #FBF5E5;
-  --bg-elev: #FBF5E5;
+  /* Modern warm-neutral palette.
+     Previous values (#F4EDDC / #EAE2CC / #FBF5E5) sat at ~HSL(43°, 60–73%) and
+     read as a heavy sepia cream — perceptually closer to a vintage editorial
+     stock than a forward-looking tech brand. Pulling saturation down to ~10–18%
+     keeps a faint warm undertone (so the page never feels clinical or sterile)
+     while letting the whites read as actual whites at a glance. */
+  --bg: #F5F2EB;
+  --bg-deep: #EAE5DA;
+  --bg-card: #FBF8F1;
+  --bg-elev: #FBF8F1;
   --green-deep: #044228;
   --green-mid: #055130;
   --green: #065d39;
@@ -43,7 +54,13 @@
   --ivory-faint: rgba(26, 37, 32, 0.18);
   --line: rgba(6, 93, 57, 0.16);
   --line-soft: rgba(26, 37, 32, 0.10);
-  --grain-opacity: 0.07;
+  --neg: #a23939;
+  --neg-line: rgba(162, 57, 57, 0.45);
+  --neg-soft: rgba(162, 57, 57, 0.08);
+  /* Lighter grain wash in day mode — 0.07 multiply on the old saturated cream
+     amplified the yellow; against the new near-white base 0.04 keeps just
+     enough texture to avoid plasticky flat color without re-introducing tint. */
+  --grain-opacity: 0.04;
   --grain-blend: multiply;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -114,7 +131,7 @@ body {
   background: linear-gradient(to bottom, rgba(6, 10, 8, 0.88), rgba(6, 10, 8, 0.42));
 }
 :root[data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(244, 237, 220, 0.92), rgba(244, 237, 220, 0.55));
+  background: linear-gradient(to bottom, rgba(245, 242, 235, 0.92), rgba(245, 242, 235, 0.55));
 }
 .brand {
   display: flex; align-items: center; gap: 14px;
@@ -343,12 +360,12 @@ body {
   padding: 10px;
   border-radius: 6px;
   border: 1px solid var(--line);
-  background: rgba(244, 237, 220, 0.92);
+  background: rgba(245, 242, 235, 0.92);
   -webkit-backdrop-filter: blur(20px) saturate(120%);
   backdrop-filter: blur(20px) saturate(120%);
   box-shadow:
     0 24px 60px -28px rgba(6, 10, 8, 0.22),
-    0 1px 0 rgba(244, 237, 220, 0.6) inset;
+    0 1px 0 rgba(245, 242, 235, 0.6) inset;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -575,8 +592,8 @@ body {
 }
 [data-theme="day"] .headline {
   text-shadow:
-    0 0 14px rgba(244, 237, 220, 0.95),
-    0 0 32px rgba(244, 237, 220, 0.7);
+    0 0 14px rgba(245, 242, 235, 0.95),
+    0 0 32px rgba(245, 242, 235, 0.7);
 }
 .headline em {
   font-style: italic; font-weight: 400;
@@ -592,7 +609,7 @@ body {
   transition: color 0.6s ease;
 }
 [data-theme="day"] .subhead {
-  text-shadow: 0 0 12px rgba(244, 237, 220, 0.92);
+  text-shadow: 0 0 12px rgba(245, 242, 235, 0.92);
 }
 
 /* ---- Portfolio Panel ---- */
@@ -612,7 +629,7 @@ body {
   box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
 }
 [data-theme="day"] .portfolio-panel {
-  background: rgba(244, 237, 220, 0.55);
+  background: rgba(245, 242, 235, 0.55);
   border-color: rgba(26, 37, 32, 0.08);
   box-shadow: 0 30px 60px -30px rgba(26, 37, 32, 0.18);
 }
@@ -1015,7 +1032,8 @@ body {
   font-size: 14px;
   transition: color 0.6s ease;
 }
-/* In-card CTA — matches /portfolio .pclub-link (plain caps + arrow, no bar/button chrome) */
+/* In-card CTA — matches /portfolio .pclub-link (plain caps + arrow, no bar/button chrome).
+   Acts as a stretched link: the entire .club-card is clickable while remaining accessible. */
 .cc-link {
   margin-top: 22px;
   align-self: flex-start;
@@ -1032,6 +1050,20 @@ body {
   content: ' →';
   font-family: 'Newsreader', serif;
   font-style: italic;
+}
+/* Stretched-link overlay: with .cc-link kept position:static, this absolute
+   pseudo-element resolves against the nearest positioned ancestor (.club-card),
+   making the entire card a single clickable target while keeping one real <a>. */
+.cc-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: auto;
+  background: transparent;
+}
+.club-card:has(.cc-link:focus-visible) {
+  box-shadow: inset 0 0 0 1px var(--green-light);
 }
 .cc-link:hover {
   opacity: 0.86;
@@ -1099,150 +1131,365 @@ body {
   transition: color 0.6s ease;
 }
 
-/* ---- Thesis page ---- */
-.thesis-page {
-  padding-top: 80px; /* clear the fixed topbar */
-  background: var(--bg);
-  transition: background 0.6s ease;
+/* ---- Thesis page (rebuilt, mirrors source-of-truth /thesis layout) ----
+   Structure: page-hero → stat-grid (KPIs) → asset-class outperformance →
+   thesis-takeaway → chapter-break. Scoped under .cv-page.thesis-page so the
+   shared .cv-page tokens (page-hero, section, sh-eyebrow, sh-h2) carry over.
+*/
+
+/* Per design: drop the divider between the page hero and the boxed KPIs.
+   The lifted-card stat grid that follows already establishes the visual
+   transition; an extra rule reads as cluttered. */
+.cv-page.thesis-page .page-hero {
+  border-bottom: none;
+  padding-bottom: 24px;
 }
-/* On /thesis the manifesto is the page opener — drop the top border so it
-   meets the topbar cleanly, and lighten the vertical padding slightly. */
-.thesis-page .manifesto {
-  border-top: none;
-  padding-top: 120px;
-  padding-bottom: 120px;
+.cv-page.thesis-page .section.compact {
+  padding-top: 16px;
 }
-.thesis-section {
-  padding: 110px 56px;
-  border-bottom: 1px solid var(--line);
-  background: var(--bg);
+
+/* Stat grid · 1 lead stat + 4 supporting (Thesis 001).
+   Cards use the same gradient-lifted treatment as .team-page .exp-stat
+   so the visual language stays consistent across pages. No dividing lines. */
+.cv-page .stat-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+}
+.cv-page .stat-grid .stat-cell {
+  background: linear-gradient(to right, var(--bg-card) 0%, transparent 100%);
+  border-left: 1px solid var(--green-light);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   transition: background 0.6s ease, border-color 0.6s ease;
 }
-.thesis-section-head {
-  max-width: 1400px; margin: 0 auto 64px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: 64px;
-  align-items: end;
+.cv-page .stat-grid .stat-cell.is-lead {
+  grid-row: 1 / span 2;
+  padding: 56px 44px 56px 36px;
 }
-.thesis-eyebrow {
+.cv-page .stat-grid .stat-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.20em;
+  color: var(--green-light);
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-bottom: 22px;
+  transition: color 0.6s ease;
+}
+.cv-page .stat-grid .stat-cell.is-lead .stat-num {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(80px, 8.5vw, 124px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.026em;
+  color: var(--ivory);
+  margin-bottom: 26px;
+  transition: color 0.6s ease;
+}
+.cv-page .stat-grid .stat-cell.is-lead .stat-label {
   font-family: 'Onest', sans-serif;
-  font-size: 11px; letter-spacing: 0.32em;
-  color: var(--green-light); text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.20em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--ivory-mid);
   font-weight: 500;
-  display: flex; align-items: center; gap: 14px;
+  max-width: 320px;
+  transition: color 0.6s ease;
+}
+.cv-page .stat-grid .stat-cell:not(.is-lead) {
+  padding: 28px 24px;
+}
+.cv-page .stat-grid .stat-cell:not(.is-lead) .stat-num {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(44px, 4vw, 56px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.022em;
+  color: var(--ivory);
+  margin-bottom: 14px;
+  transition: color 0.6s ease;
+}
+.cv-page .stat-grid .stat-cell:not(.is-lead) .stat-label {
+  font-family: 'Onest', sans-serif;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--ivory-mid);
+  font-weight: 500;
+  transition: color 0.6s ease;
+}
+.cv-page .stat-grid .stat-num em {
+  font-style: italic;
+  color: var(--green-light);
+  font-weight: 400;
+  transition: color 0.6s ease;
+}
+
+/* Asset class outperformance · floating-bar 2×2 grid.
+   Pills sit on a horizontal axis; sports is highlighted via .is-sports;
+   negatives use a tokenized warm-red (--neg) so day/night both resolve
+   to a readable contrast against the active bg. */
+.cv-page .ac-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px 64px;
+  margin-bottom: 24px;
+}
+.cv-page .ac-row { position: relative; }
+.cv-page .ac-row-head { margin-bottom: 28px; }
+.cv-page .ac-row-name {
+  font-family: 'Onest', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  margin-bottom: 6px;
+  transition: color 0.6s ease;
+}
+.cv-page .ac-row-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--ivory-dim);
+  letter-spacing: 0.04em;
+  font-weight: 300;
+  transition: color 0.6s ease;
+}
+.cv-page .ac-bars {
+  position: relative;
+  height: 60px;
+}
+.cv-page .ac-axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--line);
+  transition: background 0.6s ease;
+}
+.cv-page .ac-bar {
+  position: absolute;
+  transform: translateX(-50%);
+  text-align: center;
+  transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+}
+.cv-page .ac-bar:hover { transform: translateX(-50%) translateY(-2px); }
+.cv-page .ac-bar-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  min-width: 56px;
+  padding: 0 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ivory);
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  transition: background 0.3s, border-color 0.3s, color 0.6s ease;
+}
+.cv-page .ac-bar.is-sports .ac-bar-pill {
+  color: var(--green-light);
+  border-color: var(--green-light);
+  background: transparent;
+  font-weight: 600;
+}
+.cv-page .ac-bar.is-negative .ac-bar-pill {
+  color: var(--neg);
+  border-color: var(--neg-line);
+  background: var(--neg-soft);
+}
+.cv-page .ac-bar-label {
+  margin-top: 6px;
+  font-family: 'Onest', sans-serif;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  color: var(--ivory-dim);
+  text-transform: uppercase;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.6s ease;
+}
+.cv-page .ac-bar.is-sports .ac-bar-label { color: var(--green-light); }
+.cv-page .ac-source {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: var(--ivory-faint);
+  text-transform: uppercase;
+  margin-top: 24px;
+  transition: color 0.6s ease;
+}
+
+/* Thesis takeaway · closing block on /thesis.
+   Three short propositions — each with a green top-rule and label — that
+   compress the page argument before the chapter-break to /portfolio. */
+.cv-page .thesis-takeaway {
+  padding: 96px 56px 104px;
+  transition: background 0.6s ease, border-color 0.6s ease;
+}
+.cv-page .thesis-takeaway-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.cv-page .thesis-takeaway-eyebrow {
+  font-family: 'Onest', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.30em;
+  color: var(--green-light);
+  text-transform: uppercase;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-takeaway-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--green-light);
+  transition: background 0.6s ease;
+}
+.cv-page .thesis-takeaway-lede {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.2;
+  font-weight: 300;
+  letter-spacing: -0.022em;
+  color: var(--ivory);
+  margin-bottom: 80px;
+  max-width: 1000px;
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-takeaway-lede em {
+  font-style: italic;
+  color: var(--green-light);
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-takeaway-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px;
+}
+.cv-page .thesis-takeaway-prop {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 16px;
+  align-content: start;
+  padding-top: 22px;
+  border-top: 1px solid var(--green-light);
+  transition: border-color 0.6s ease;
+}
+.cv-page .thesis-takeaway-label {
+  font-family: 'Onest', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  color: var(--green-light);
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-takeaway-claim {
+  font-family: 'Newsreader', serif;
+  font-size: 19px;
+  line-height: 1.45;
+  color: var(--ivory);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-takeaway-claim em {
+  font-style: italic;
+  color: var(--green-light);
+  transition: color 0.6s ease;
+}
+
+/* Chapter break · clickable bridge from /thesis to /portfolio.
+   Shares typographic DNA with .page-hero so the voice continues seamlessly. */
+.cv-page a.chapter-break {
+  display: block;
+  padding: 88px 56px 96px;
+  background: var(--bg-deep);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: background 0.4s ease, border-color 0.6s ease;
+  text-decoration: none;
+  color: inherit;
+}
+.cv-page a.chapter-break:hover { background: var(--bg-card); }
+.cv-page .chapter-break-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 56px;
+}
+.cv-page .chapter-break-eyebrow {
+  font-family: 'Onest', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  color: var(--green-light);
+  text-transform: uppercase;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
   margin-bottom: 28px;
   transition: color 0.6s ease;
 }
-.thesis-eyebrow-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 300; letter-spacing: 0.18em;
-}
-.thesis-eyebrow-rule {
-  width: 28px; height: 1px;
+.cv-page .chapter-break-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
   background: var(--green-light);
   transition: background 0.6s ease;
 }
-.thesis-heading {
+.cv-page .chapter-break-h2 {
   font-family: 'Newsreader', serif;
+  font-size: clamp(40px, 5.6vw, 80px);
   font-weight: 300;
-  font-size: clamp(34px, 4.4vw, 56px);
-  line-height: 1.06;
-  letter-spacing: -0.022em;
+  line-height: 1.02;
+  letter-spacing: -0.026em;
   color: var(--ivory);
-  font-feature-settings: "kern", "liga", "ss01";
   transition: color 0.6s ease;
 }
-.thesis-heading em {
-  font-style: italic; font-weight: 400;
+.cv-page .chapter-break-h2 em {
+  font-style: italic;
   color: var(--green-light);
+  font-weight: 400;
   transition: color 0.6s ease;
 }
-.thesis-intro {
-  font-family: 'Onest', sans-serif;
-  font-size: 15px; line-height: 1.75;
-  color: var(--ivory-mid);
-  font-weight: 300; letter-spacing: 0.005em;
-  max-width: 520px;
-  transition: color 0.6s ease;
+.cv-page .chapter-break-arrow {
+  display: inline-block;
+  margin-left: 18px;
+  color: var(--green-light);
+  font-style: normal;
+  font-weight: 300;
+  transition: transform 0.4s cubic-bezier(.2,.8,.2,1), color 0.6s ease;
 }
-
-/* Vertical numbered rail — used for both Experience and Operating System
-   sections so the page reads with one consistent rhythm. */
-.pillar-rail {
-  list-style: none; padding: 0; margin: 0;
-  max-width: 1400px;
-  margin-left: auto; margin-right: auto;
-  border-top: 1px solid var(--line-soft);
-  transition: border-color 0.6s ease;
-}
-.pillar-rail-row {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 280px) minmax(0, 1fr);
-  gap: 40px;
-  padding: 38px 0;
-  border-bottom: 1px solid var(--line-soft);
-  align-items: baseline;
-  position: relative;
-  transition: border-color 0.6s ease;
-}
-.pillar-rail-row::before {
-  content: ''; position: absolute;
-  top: 0; left: 0; right: 0; height: 1px;
-  background: var(--green-light);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.7s cubic-bezier(.2,.8,.2,1), background 0.6s ease;
-}
-.pillar-rail-row:hover::before { transform: scaleX(1); }
-.pillar-rail-num {
+.cv-page a.chapter-break:hover .chapter-break-arrow { transform: translateX(10px); }
+.cv-page .chapter-break-meta {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; letter-spacing: 0.18em;
-  color: var(--green-light);
-  font-weight: 300;
-  transition: color 0.6s ease;
-}
-.pillar-rail-title {
-  font-family: 'Newsreader', serif;
-  font-weight: 400; font-size: 22px;
-  line-height: 1.15; letter-spacing: -0.005em;
-  color: var(--ivory);
-  font-feature-settings: "kern", "liga";
-  transition: color 0.6s ease;
-}
-.pillar-rail-body {
-  font-family: 'Onest', sans-serif;
-  font-size: 14px; line-height: 1.7;
-  color: var(--ivory-mid);
-  font-weight: 300; letter-spacing: 0.005em;
-  max-width: 640px;
-  transition: color 0.6s ease;
-}
-
-/* Thesis page CTA strip */
-.thesis-cta {
-  padding: 76px 56px 110px;
-  background: var(--bg);
-  transition: background 0.6s ease;
-}
-.thesis-cta-link {
-  display: inline-flex;
-  align-items: center; gap: 14px;
-  max-width: 1400px; margin: 0 auto;
-  font-family: 'Onest', sans-serif;
-  font-size: 13px; letter-spacing: 0.18em;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: var(--ivory-dim);
   text-transform: uppercase;
-  color: var(--ivory);
-  text-decoration: none; font-weight: 500;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--green-light);
-  transition: color 0.6s ease, border-color 0.6s ease, gap 0.4s ease;
-}
-.thesis-cta-link:hover { gap: 22px; }
-.thesis-cta-arrow {
-  font-family: 'Newsreader', serif;
-  color: var(--green-light);
-  font-size: 16px;
+  font-weight: 300;
+  text-align: right;
+  line-height: 1.6;
+  padding-bottom: 12px;
   transition: color 0.6s ease;
 }
 
@@ -1272,15 +1519,32 @@ body {
   .ps-head { grid-template-columns: 1fr; gap: 32px; }
   .ps-grid { grid-template-columns: 1fr; }
   .credentials { display: none; }
-  .thesis-section-head { grid-template-columns: 1fr; gap: 32px; align-items: start; }
-  .pillar-rail-row {
-    grid-template-columns: 48px minmax(0, 1fr);
-    grid-template-areas: "num title" ".  body";
-    row-gap: 14px;
+  /* Thesis: collapse 2×2 ac-grid earliest because each row needs ~520px to read */
+  .cv-page .ac-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+@media (max-width: 900px) {
+  /* Match the reference: collapse takeaway and chapter-break at 900px */
+  .cv-page .thesis-takeaway-grid { grid-template-columns: 1fr; gap: 40px; }
+  .cv-page .chapter-break-inner { grid-template-columns: 1fr; gap: 28px; }
+  .cv-page .chapter-break-meta { text-align: left; padding-bottom: 0; }
+}
+@media (max-width: 1000px) {
+  .cv-page .stat-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 16px;
   }
-  .pillar-rail-num { grid-area: num; }
-  .pillar-rail-title { grid-area: title; }
-  .pillar-rail-body { grid-area: body; }
+  .cv-page .stat-grid .stat-cell.is-lead {
+    grid-row: auto;
+    grid-column: 1 / -1;
+    padding: 48px 32px 48px 28px;
+  }
+  .cv-page .stat-grid .stat-cell.is-lead .stat-num {
+    font-size: clamp(72px, 11vw, 104px);
+  }
+  .cv-page .stat-grid .stat-cell:not(.is-lead) .stat-num {
+    font-size: clamp(40px, 5.5vw, 52px);
+  }
 }
 @media (max-width: 720px) {
   body { cursor: auto; }
@@ -1300,8 +1564,14 @@ body {
   .ps-head { margin-bottom: 56px; gap: 32px; }
   .manifesto { padding: 88px 22px; }
   .manifesto-headline { white-space: normal; }
-  .thesis-section { padding: 72px 22px; }
-  .thesis-cta { padding: 56px 22px 88px; }
+  /* Thesis · mobile rhythm */
+  .cv-page .stat-grid { grid-template-columns: 1fr; }
+  .cv-page .stat-grid .stat-cell.is-lead { grid-column: auto; padding: 40px 24px 40px 22px; }
+  .cv-page .stat-grid .stat-cell:not(.is-lead) { padding: 24px 22px; }
+  .cv-page .thesis-takeaway { padding: 72px 22px 80px; }
+  .cv-page .thesis-takeaway-lede { margin-bottom: 56px; }
+  .cv-page a.chapter-break { padding: 64px 22px 72px; }
+  .cv-page .ac-source { font-size: 9px; }
 }
 
 /* ===========================================================================
@@ -1501,7 +1771,8 @@ body {
   font-style: italic;
 }
 
-.team-page .page-hero {
+.team-page .page-hero,
+.cv-page.portfolio-hub .page-hero {
   border-bottom: none;
   padding-bottom: 24px;
 }
@@ -1601,13 +1872,41 @@ body {
   color: var(--ivory-faint);
   text-transform: uppercase;
 }
+/* When a real photo is present, suppress the placeholder label and the
+   green tint overlay so the portrait reads cleanly. */
+.team-page .person-photo.has-photo::after,
+.team-page .person-photo.has-photo::before {
+  content: none;
+}
 .team-page .person-photo img {
   position: relative;
   z-index: 2;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* 50% 30% works well across most professional headshots — keeps the eyeline
+     in the upper third of the frame regardless of original aspect ratio. */
+  object-position: 50% 30%;
   display: block;
+  /* Light editorial wash — the original full-grayscale duotone read as flat
+     and archival on a team page. We now keep portraits in their natural color
+     space and only apply a soft warm tonal pull (small sepia + slight saturation
+     trim) so the grid still feels cohesive against the cream/green palette
+     without scrubbing skin tones out of the photos. */
+  filter: saturate(0.95) sepia(0.06) contrast(1.03);
+  transition: filter 0.6s ease, transform 0.5s cubic-bezier(.2,.8,.2,1);
+}
+.team-page .person-card:hover .person-photo img {
+  transform: scale(1.02);
+}
+[data-theme="night"] .team-page .person-photo img {
+  filter: saturate(0.92) sepia(0.05) contrast(1.05) brightness(0.96);
+}
+/* Per-person crop overrides — the global object-position works for most
+   headshots, but a few sources are framed off-center enough that they need
+   a small horizontal nudge to keep the eyeline & face square in the tile. */
+.team-page .person-photo[data-slug="jeff-gaspin"] img {
+  object-position: 65% 30%;
 }
 .team-page .person-content { min-width: 0; }
 .team-page .person-name {
@@ -2096,8 +2395,11 @@ body {
   transform-origin: center bottom;
   display: block;
   z-index: 1;
-  /* Aged archival treatment: B&W base + sepia warmth, adheres to ivory/green palette */
-  filter: grayscale(100%) sepia(38%) contrast(0.98) brightness(0.94);
+  /* Editorial monochrome with a softened warm wash. The original sepia(38%)
+     read heavily yellow against the new near-white surfaces — pulled down to
+     ~half so the photo still feels like a tonal companion to the page (not a
+     flat B&W stamp) without re-introducing a vintage cream cast. */
+  filter: grayscale(100%) sepia(18%) contrast(1.0) brightness(0.96);
   transition: filter 0.6s ease, transform 0.8s cubic-bezier(.2,.8,.2,1);
 }
 .cv-page .deep-image.has-photo:hover .deep-image-photo {
@@ -2121,7 +2423,7 @@ body {
   z-index: 3;
   pointer-events: none;
   background:
-    linear-gradient(to bottom, rgba(244, 237, 220, 0.18) 0%, transparent 30%, transparent 70%, rgba(244, 237, 220, 0.22) 100%);
+    linear-gradient(to bottom, rgba(245, 242, 235, 0.18) 0%, transparent 30%, transparent 70%, rgba(245, 242, 235, 0.22) 100%);
   mix-blend-mode: soft-light;
 }
 [data-theme="night"] .cv-page .deep-image.has-photo::after {

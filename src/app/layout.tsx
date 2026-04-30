@@ -23,6 +23,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <div className="grain" aria-hidden="true" />
         {children}
         <SiteCursor />
       </body>

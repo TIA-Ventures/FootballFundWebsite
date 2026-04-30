@@ -1261,7 +1261,7 @@ export function ClaraVistaMap() {
           ctx.fill();
           ctx.globalAlpha = 1;
         } else {
-          ctx.fillStyle = getTheme() === "day" ? "rgba(244, 237, 220, 1)" : "rgba(6, 10, 8, 1)";
+          ctx.fillStyle = getTheme() === "day" ? "rgba(245, 242, 235, 1)" : "rgba(6, 10, 8, 1)";
           ctx.globalAlpha = ease;
           ctx.beginPath();
           ctx.arc(c.px, c.py, r, 0, Math.PI * 2);
@@ -1308,9 +1308,9 @@ export function ClaraVistaMap() {
         ctx.scale(haloRx / haloRy, 1);
         const haloGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, haloRy);
         if (isDayTheme) {
-          haloGrad.addColorStop(0, `rgba(244, 237, 220, ${0.78 * labelOpacity})`);
-          haloGrad.addColorStop(0.55, `rgba(244, 237, 220, ${0.5 * labelOpacity})`);
-          haloGrad.addColorStop(1, `rgba(244, 237, 220, 0)`);
+          haloGrad.addColorStop(0, `rgba(245, 242, 235, ${0.78 * labelOpacity})`);
+          haloGrad.addColorStop(0.55, `rgba(245, 242, 235, ${0.5 * labelOpacity})`);
+          haloGrad.addColorStop(1, `rgba(245, 242, 235, 0)`);
         } else {
           haloGrad.addColorStop(0, `rgba(6, 10, 8, ${0.92 * labelOpacity})`);
           haloGrad.addColorStop(0.55, `rgba(6, 10, 8, ${0.58 * labelOpacity})`);
@@ -1406,8 +1406,6 @@ export function ClaraVistaMap() {
 
   return (
     <div ref={wrapRef}>
-      <div className="grain" />
-
       <div className="loader" id="loader">
         <div className="loader-mark">CLARA · VISTA</div>
         <div className="loader-bar" />

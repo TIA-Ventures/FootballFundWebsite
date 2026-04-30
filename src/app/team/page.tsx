@@ -14,12 +14,20 @@ type Person = {
   name: string;
   role: string;
   bio: ReactNode;
+  /** Public path to a headshot in /public/team. Photo is rendered with the
+   *  same warm-archival duotone applied to the Ipswich crowd image so portraits
+   *  resolve consistently against the cream/green palette. */
+  photo?: string;
+  /** Optional slug used to attach per-person photo overrides in CSS (e.g. tweaking
+   *  object-position when an off-center crop reads better than the global default). */
+  slug?: string;
 };
 
 const LEADERSHIP: Person[] = [
   {
     name: "Bob Gold",
     role: "Investments",
+    photo: "/team/bob_gold.png",
     bio: (
       <>
         30+ years as a PE &amp; VC investment leader, including 13 years as fund CEO. <em>$10B of AUM.</em>
@@ -29,16 +37,20 @@ const LEADERSHIP: Person[] = [
   {
     name: "Ed Schwartz",
     role: "Real Estate",
+    photo: "/team/ed_schwartz.png",
     bio: "30+ years as an investment advisor to pensions and endowments, more recently a board member of professional sports organizations.",
   },
   {
     name: "Jeff Gaspin",
     role: "Media",
+    photo: "/team/jeff_gaspin.png",
+    slug: "jeff-gaspin",
     bio: "30+ years as an innovation-driven leader at global media and independent production companies.",
   },
   {
     name: "Wills Hapworth",
     role: "Venture",
+    photo: "/team/wills_hapworth.png",
     bio: (
       <>
         20+ years as an investor in and advisor to high-growth technology companies. <em>Founding Partner of TIA Ventures.</em>
@@ -48,26 +60,31 @@ const LEADERSHIP: Person[] = [
   {
     name: "Charlie Lambropoulos",
     role: "Technology",
+    photo: "/team/charlie_lambropoulos.png",
     bio: "20+ years scaling startups. Co-founded Lyfe Mobile (acquired by RhythmOne) and ScrumLaunch agency.",
   },
   {
     name: "Ram Parimi",
     role: "Growth",
+    photo: "/team/ram_parimi.png",
     bio: "20+ years as a founder and executive building and scaling businesses across multiple industries.",
   },
   {
     name: "Andy Greenfield",
     role: "Consumer Insights",
+    photo: "/team/andy_greenfield.png",
     bio: "30+ years as an entrepreneur building consumer research companies and delivering key consumer insights.",
   },
   {
     name: "Harry Landis",
     role: "Strategy",
+    photo: "/team/harry_landis.jpg",
     bio: "Gen-Z founder and investor with experience building and consulting on business strategy and product.",
   },
   {
     name: "Kevin Stone",
     role: "Diligence",
+    photo: "/team/kevin_stone.png",
     bio: "Investment leader focused on sourcing and evaluating opportunities and conducting diligence.",
   },
 ];
@@ -76,6 +93,7 @@ const ADVISORS: Person[] = [
   {
     name: "Mark Simonian",
     role: "TMT",
+    photo: "/team/mark_simonian.png",
     bio: (
       <>
         35+ years as an industry-shaping deal-making senior executive in <em>Technology, Media &amp; Telecommunications.</em>
@@ -85,6 +103,7 @@ const ADVISORS: Person[] = [
   {
     name: "Dan Rosensweig",
     role: "Technology",
+    photo: "/team/dan_rosensweig.png",
     bio: (
       <>
         25+ years as a leader in technology, including roles as <em>CEO of Guitar Hero</em> and <em>COO of Yahoo</em>.
@@ -94,16 +113,19 @@ const ADVISORS: Person[] = [
   {
     name: "Dan Reiss",
     role: "Media",
+    photo: "/team/dan_reiss.png",
     bio: "30+ years as a media and marketing executive, leading digital transformation and revenue growth.",
   },
   {
     name: "Charles Baker",
     role: "Sports Transactions",
+    photo: "/team/charles_baker.png",
     bio: "30+ years advising on high-stakes transactions across global sports, including team sales and media rights.",
   },
   {
     name: "Jill Stelfox",
     role: "Sports Data",
+    photo: "/team/jill_stelfox.png",
     bio: (
       <>
         30+ years at the intersection of sports and data. Led development of <em>NFL Next Gen Stats.</em>
@@ -113,9 +135,19 @@ const ADVISORS: Person[] = [
 ];
 
 function PersonCard({ person }: { person: Person }) {
+  const photoClass = person.photo ? "person-photo has-photo" : "person-photo";
   return (
     <div className="person-card">
-      <div className="person-photo" aria-hidden="true" />
+      <div
+        className={photoClass}
+        data-slug={person.slug}
+        aria-hidden={person.photo ? undefined : "true"}
+      >
+        {person.photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={person.photo} alt={`Portrait of ${person.name}`} loading="lazy" />
+        ) : null}
+      </div>
       <div className="person-content">
         <div className="person-name">{person.name}</div>
         <div className="person-role">{person.role}</div>
