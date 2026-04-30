@@ -126,7 +126,7 @@ export default function ThesisPage() {
 
         <div className="section bg-deep" style={{ borderBottom: "none" }}>
           <div className="section-inner">
-            <div className="section-head" style={{ marginBottom: 40 }}>
+            <div className="section-head" style={{ marginBottom: 72 }}>
               <div>
                 <div className="sh-eyebrow">002 · Asset class outperformance</div>
                 <h2 className="sh-h2">
