@@ -83,12 +83,14 @@ const BUNDLES_AF = [
   },
 ] as const;
 
-const BUNDLES_D1_D6 = [
-  {
-    id: "d6" as const,
-    label: "D6 · Switzer",
-    detail: "Switzer · JetBrains Mono",
-  },
+/** Site default bundle — listed first in the picker; also `readToken` / SSR default. */
+const BUNDLE_D6 = {
+  id: "d6" as const,
+  label: "D6 · Switzer",
+  detail: "Switzer · JetBrains Mono",
+} as const;
+
+const BUNDLES_D1_D5 = [
   {
     id: "d1" as const,
     label: "D1 · Geist Direct",
@@ -119,7 +121,8 @@ const BUNDLES_D1_D6 = [
 export type FontPresetId = (typeof PRESETS)[number]["id"];
 export type FontBundleId =
   | (typeof BUNDLES_AF)[number]["id"]
-  | (typeof BUNDLES_D1_D6)[number]["id"];
+  | (typeof BUNDLES_D1_D5)[number]["id"]
+  | (typeof BUNDLE_D6)["id"];
 
 /** Serialized for useSyncExternalStore — `b:a` or `p:meridian`. */
 export type FontCompareToken = `b:${FontBundleId}` | `p:${FontPresetId}`;
@@ -257,6 +260,17 @@ export function FontCompare() {
           role="listbox"
           aria-labelledby="font-compare-btn"
         >
+          <button
+            type="button"
+            role="option"
+            aria-selected={token === `b:${BUNDLE_D6.id}`}
+            className={`font-compare-option${token === `b:${BUNDLE_D6.id}` ? " is-active" : ""}`}
+            onClick={() => selectBundle(BUNDLE_D6.id)}
+          >
+            <span className="font-compare-option-label">{BUNDLE_D6.label}</span>
+            <span className="font-compare-option-detail">{BUNDLE_D6.detail}</span>
+          </button>
+          <div className="font-compare-panel-divider" aria-hidden="true" />
           {PRESETS.map((opt) => (
             <button
               key={opt.id}
@@ -285,7 +299,7 @@ export function FontCompare() {
             </button>
           ))}
           <div className="font-compare-panel-divider" aria-hidden="true" />
-          {BUNDLES_D1_D6.map((opt) => (
+          {BUNDLES_D1_D5.map((opt) => (
             <button
               key={opt.id}
               type="button"
