@@ -117,17 +117,6 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
                   <span className="npm-meta">Premier League · England</span>
                 </span>
               </Link>
-              <Link href="/portfolio/italy" role="menuitem" className="npm-item">
-                <span className="npm-flag" aria-hidden="true">
-                  <span className="npm-dot npm-dot--target" />
-                </span>
-                <span className="npm-text">
-                  <span className="npm-club">
-                    Italy <em>(target)</em>
-                  </span>
-                  <span className="npm-meta">Serie B · Italy</span>
-                </span>
-              </Link>
               <Link href="/portfolio/spain" role="menuitem" className="npm-item">
                 <span className="npm-flag" aria-hidden="true">
                   <span className="npm-dot npm-dot--target" />
@@ -137,6 +126,17 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
                     Spain <em>(target)</em>
                   </span>
                   <span className="npm-meta">La Liga · Spain</span>
+                </span>
+              </Link>
+              <Link href="/portfolio/italy" role="menuitem" className="npm-item">
+                <span className="npm-flag" aria-hidden="true">
+                  <span className="npm-dot npm-dot--target" />
+                </span>
+                <span className="npm-text">
+                  <span className="npm-club">
+                    Italy <em>(target)</em>
+                  </span>
+                  <span className="npm-meta">Serie B · Italy</span>
                 </span>
               </Link>
               <span className="npm-divider" aria-hidden="true" />
@@ -249,11 +249,11 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
               <Link href="/portfolio/ipswich" className="mm-sublink" onClick={closeMobile}>
                 Ipswich Town FC
               </Link>
-              <Link href="/portfolio/italy" className="mm-sublink" onClick={closeMobile}>
-                Italy <em>(target)</em>
-              </Link>
               <Link href="/portfolio/spain" className="mm-sublink" onClick={closeMobile}>
                 Spain <em>(target)</em>
+              </Link>
+              <Link href="/portfolio/italy" className="mm-sublink" onClick={closeMobile}>
+                Italy <em>(target)</em>
               </Link>
             </div>
           </div>

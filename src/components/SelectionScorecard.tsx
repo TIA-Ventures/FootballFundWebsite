@@ -6,7 +6,7 @@ import { useState } from "react";
  *
  * Heptagonal radar with seven selection criteria scored 0–100. The Ideal
  * Target is rendered as a green-filled heptagon at radius 100; each
- * portfolio club (Ipswich / Italy / Spain) is shown as an amber polygon at
+ * portfolio club (Ipswich / Spain / Italy) is shown as an amber polygon at
  * scaled radii. One club at a time via tabs.
  *
  * The seven axis labels and vertex dots are clickable — selecting one
@@ -82,8 +82,8 @@ const CENTER_LABEL: Record<ClubKey, [string, string]> = {
 const TABS: { key: ClubKey; label: string }[] = [
   { key: "ideal",   label: "Ideal Target" },
   { key: "ipswich", label: "Ipswich" },
-  { key: "italy",   label: "Italy" },
   { key: "spain",   label: "Spain" },
+  { key: "italy",   label: "Italy" },
 ];
 
 /* Pre-computed polygon points for each club at the published score values.
@@ -225,7 +225,7 @@ export function SelectionScorecard() {
             <polygon className="sc-outer-ring" points={HEPTAGON_POINTS} />
             <polygon className="sc-ideal-poly" points={HEPTAGON_POINTS} />
 
-            {(["ipswich", "italy", "spain"] as const).map((club) => {
+            {(["ipswich", "spain", "italy"] as const).map((club) => {
               if (activeClub !== club) return null;
               const positions = SCORE_POS[club];
               return (

@@ -390,18 +390,6 @@ export function ClaraVistaMap() {
         logo: "/ipswich-town.svg",
       },
       {
-        name: "Italy",
-        country: "IT",
-        lat: 42.6,
-        lng: 12.5,
-        label: "Italy",
-        club: "Target acquisition · active diligence",
-        league: "Serie B",
-        status: "Diligence",
-        kind: "diligence",
-        num: "02",
-      },
-      {
         name: "Spain",
         country: "ES",
         lat: 40.4,
@@ -409,6 +397,18 @@ export function ClaraVistaMap() {
         label: "Spain",
         club: "Target acquisition · active diligence",
         league: "La Liga",
+        status: "Diligence",
+        kind: "diligence",
+        num: "02",
+      },
+      {
+        name: "Italy",
+        country: "IT",
+        lat: 42.6,
+        lng: 12.5,
+        label: "Italy",
+        club: "Target acquisition · active diligence",
+        league: "Serie B",
         status: "Diligence",
         kind: "diligence",
         num: "03",
@@ -1516,18 +1516,18 @@ export function ClaraVistaMap() {
             </div>
             <div className="pp-status active" title="Active" />
           </Link>
-          <Link href="/portfolio/italy" className="pp-row" aria-label="View Italy target details">
+          <Link href="/portfolio/spain" className="pp-row" aria-label="View Spain target details">
             <div className="pp-num">02</div>
             <div className="pp-info">
-              <div className="pp-city">Italy</div>
+              <div className="pp-city">Spain</div>
               <div className="pp-club">Target · active diligence</div>
             </div>
             <div className="pp-status diligence" title="Diligence" />
           </Link>
-          <Link href="/portfolio/spain" className="pp-row" aria-label="View Spain target details">
+          <Link href="/portfolio/italy" className="pp-row" aria-label="View Italy target details">
             <div className="pp-num">03</div>
             <div className="pp-info">
-              <div className="pp-city">Spain</div>
+              <div className="pp-city">Italy</div>
               <div className="pp-club">Target · active diligence</div>
             </div>
             <div className="pp-status diligence" title="Diligence" />
@@ -1618,40 +1618,7 @@ export function ClaraVistaMap() {
           <div className="club-card">
             <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
             <div className="cc-meta">
-              <span className="cc-num">02 / Italy</span>
-              <span className="cc-status">
-                <span className="cc-dot diligence" aria-hidden="true" />
-                <span className="cc-status-text">Active diligence</span>
-              </span>
-            </div>
-            <div className="cc-name">
-              Italy <em>(target)</em>
-            </div>
-            <div className="cc-location">Italy · Serie B</div>
-            <p className="cc-note">
-              A historic Italian club with a track record of recent Serie A promotions, a modern Serie A-ready stadium, and the
-              youngest squad in Serie B. <em>Details under embargo.</em>
-            </p>
-            <div className="cc-stats">
-              <div>
-                <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">
-                  <em>under embargo</em>
-                </div>
-              </div>
-              <div>
-                <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">Serie B</div>
-              </div>
-            </div>
-            <Link href="/portfolio/italy" className="cc-link">
-              View diligence brief
-            </Link>
-          </div>
-          <div className="club-card">
-            <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
-            <div className="cc-meta">
-              <span className="cc-num">03 / Spain</span>
+              <span className="cc-num">02 / Spain</span>
               <span className="cc-status">
                 <span className="cc-dot diligence" aria-hidden="true" />
                 <span className="cc-status-text">Active diligence</span>
@@ -1679,6 +1646,39 @@ export function ClaraVistaMap() {
               </div>
             </div>
             <Link href="/portfolio/spain" className="cc-link">
+              View diligence brief
+            </Link>
+          </div>
+          <div className="club-card">
+            <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
+            <div className="cc-meta">
+              <span className="cc-num">03 / Italy</span>
+              <span className="cc-status">
+                <span className="cc-dot diligence" aria-hidden="true" />
+                <span className="cc-status-text">Active diligence</span>
+              </span>
+            </div>
+            <div className="cc-name">
+              Italy <em>(target)</em>
+            </div>
+            <div className="cc-location">Italy · Serie B</div>
+            <p className="cc-note">
+              A historic Italian club with a track record of recent Serie A promotions, a modern Serie A-ready stadium, and the
+              youngest squad in Serie B. <em>Details under embargo.</em>
+            </p>
+            <div className="cc-stats">
+              <div>
+                <div className="cc-stat-label">Founded</div>
+                <div className="cc-stat-value">
+                  <em>under embargo</em>
+                </div>
+              </div>
+              <div>
+                <div className="cc-stat-label">League</div>
+                <div className="cc-stat-value">Serie B</div>
+              </div>
+            </div>
+            <Link href="/portfolio/italy" className="cc-link">
               View diligence brief
             </Link>
           </div>

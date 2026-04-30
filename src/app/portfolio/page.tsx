@@ -17,7 +17,7 @@ type PortfolioCard = {
   href: string;
   status: ClubStatus;
   statusLabel: string;
-  /** Ipswich crest; Italy/Spain use reserved placeholder row (home club-card parity). */
+  /** Ipswich crest; Spain/Italy targets use reserved placeholder row (home club-card parity). */
   logo: "ipswich" | null;
   name: ReactNode;
   loc: string;
@@ -50,30 +50,7 @@ const CLUBS: PortfolioCard[] = [
     link: "View deep dive",
   },
   {
-    num: "02 / Italy",
-    href: "/portfolio/italy",
-    status: "diligence",
-    statusLabel: "Active diligence",
-    logo: null,
-    name: (
-      <>
-        Italy <em>(target)</em>
-      </>
-    ),
-    loc: "Italy · Serie B",
-    note: (
-      <>
-        A historic Italian club with a track record of recent Serie A promotions, modern infrastructure, and the
-        youngest squad in Serie B. <em>Details under embargo.</em>
-      </>
-    ),
-    founded: <em>under embargo</em>,
-    leagueLabel: "League",
-    leagueValue: "Serie B",
-    link: "View diligence brief",
-  },
-  {
-    num: "03 / Spain",
+    num: "02 / Spain",
     href: "/portfolio/spain",
     status: "diligence",
     statusLabel: "Active diligence",
@@ -93,6 +70,29 @@ const CLUBS: PortfolioCard[] = [
     founded: <em>under embargo</em>,
     leagueLabel: "League",
     leagueValue: "La Liga",
+    link: "View diligence brief",
+  },
+  {
+    num: "03 / Italy",
+    href: "/portfolio/italy",
+    status: "diligence",
+    statusLabel: "Active diligence",
+    logo: null,
+    name: (
+      <>
+        Italy <em>(target)</em>
+      </>
+    ),
+    loc: "Italy · Serie B",
+    note: (
+      <>
+        A historic Italian club with a track record of recent Serie A promotions, modern infrastructure, and the
+        youngest squad in Serie B. <em>Details under embargo.</em>
+      </>
+    ),
+    founded: <em>under embargo</em>,
+    leagueLabel: "League",
+    leagueValue: "Serie B",
     link: "View diligence brief",
   },
 ];
