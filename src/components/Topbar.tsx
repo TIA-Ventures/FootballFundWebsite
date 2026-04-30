@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FontCompare } from "@/components/FontCompare";
+import { ColorCompare } from "@/components/ColorCompare";
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -171,6 +172,7 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
           </svg>
         </button>
         <FontCompare />
+        <ColorCompare />
         <button
           className="theme-toggle"
           onClick={onThemeToggle}
