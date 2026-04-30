@@ -69,54 +69,56 @@ export default function ThesisPage() {
     <>
       <Topbar activeNav="thesis" />
       <main className="cv-page thesis-page">
-        <div className="page-hero">
-          <div className="page-hero-inner">
-            <div>
-              <div className="ph-eyebrow">Thesis</div>
-              <h1 className="ph-h1">
-                An asset class, <em>mispriced.</em>
-              </h1>
+        <div className="thesis-asset-banner">
+          <div className="page-hero">
+            <div className="page-hero-inner">
+              <div>
+                <div className="ph-eyebrow">Thesis</div>
+                <h1 className="ph-h1">
+                  An asset class, <em>mispriced.</em>
+                </h1>
+              </div>
+              <p className="ph-intro">
+                The <em>most-watched sport on earth</em> — and one of the few global asset classes still structurally
+                underowned by institutional capital.
+              </p>
             </div>
-            <p className="ph-intro">
-              The <em>most-watched sport on earth</em> — and one of the few global asset classes still structurally
-              underowned by institutional capital.
-            </p>
           </div>
-        </div>
 
-        <div className="section compact">
-          <div className="section-inner">
-            <div className="stat-grid">
-              <div className="stat-cell is-lead">
-                <div className="stat-eyebrow">The audience</div>
-                <div className="stat-num">
-                  3.5<em>B</em>
+          <div className="section compact">
+            <div className="section-inner">
+              <div className="stat-grid">
+                <div className="stat-cell is-lead">
+                  <div className="stat-eyebrow">The audience</div>
+                  <div className="stat-num">
+                    3.5<em>B</em>
+                  </div>
+                  <div className="stat-label">Global football fans · most-watched sport on earth</div>
                 </div>
-                <div className="stat-label">Global football fans · most-watched sport on earth</div>
-              </div>
-              <div className="stat-cell">
-                <div className="stat-num">
-                  7<em>×</em>
+                <div className="stat-cell">
+                  <div className="stat-num">
+                    7<em>×</em>
+                  </div>
+                  <div className="stat-label">Football viewership relative to American football</div>
                 </div>
-                <div className="stat-label">Football viewership relative to American football</div>
-              </div>
-              <div className="stat-cell">
-                <div className="stat-num">
-                  96<em>/100</em>
+                <div className="stat-cell">
+                  <div className="stat-num">
+                    96<em>/100</em>
+                  </div>
+                  <div className="stat-label">Top US broadcasts in 2024 were live sports</div>
                 </div>
-                <div className="stat-label">Top US broadcasts in 2024 were live sports</div>
-              </div>
-              <div className="stat-cell">
-                <div className="stat-num">
-                  $60<em>B+</em>
+                <div className="stat-cell">
+                  <div className="stat-num">
+                    $60<em>B+</em>
+                  </div>
+                  <div className="stat-label">Invested by private equity into sports since 2020</div>
                 </div>
-                <div className="stat-label">Invested by private equity into sports since 2020</div>
-              </div>
-              <div className="stat-cell">
-                <div className="stat-num">
-                  $36<em>B+</em>
+                <div className="stat-cell">
+                  <div className="stat-num">
+                    $36<em>B+</em>
+                  </div>
+                  <div className="stat-label">Projected fan engagement market by 2035</div>
                 </div>
-                <div className="stat-label">Projected fan engagement market by 2035</div>
               </div>
             </div>
           </div>
@@ -192,11 +194,10 @@ export default function ThesisPage() {
           </div>
         </div>
 
-        {/* Chapter break · framed as "Our Approach" to set up how Clara Vista
-            actually deploys the thesis (operating model, sourcing, diligence).
-            Routes to /portfolio for now since that's the live next chapter — if
-            a dedicated /approach page is added later, swap the href here. */}
-        <Link href="/portfolio" className="chapter-break">
+        {/* Chapter break · routes to /approach (Chapter 02 of the site
+            narrative). The approach page details how Clara Vista deploys the
+            thesis — selection criteria, operating pillars, and return engine. */}
+        <Link href="/approach" className="chapter-break">
           <div className="chapter-break-inner">
             <div>
               <div className="chapter-break-eyebrow">Next chapter · 02 · Approach</div>
@@ -206,7 +207,7 @@ export default function ThesisPage() {
               </h2>
             </div>
             <div className="chapter-break-meta">
-              Operating model · Sourcing · Diligence
+              We invest · We build · We win
               <br />
               How we turn the thesis into returns.
             </div>

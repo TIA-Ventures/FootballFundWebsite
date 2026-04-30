@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { FontCompare } from "@/components/FontCompare";
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-type NavKey = "home" | "thesis" | "portfolio" | "team" | null;
+type NavKey = "home" | "thesis" | "approach" | "portfolio" | "team" | null;
 
 type TopbarProps = {
   /** Which nav item to render as active (subtle underline). */
@@ -76,6 +77,9 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
           </Link>
           <Link href="/thesis" style={activeNav === "thesis" ? activeStyle : undefined}>
             Thesis
+          </Link>
+          <Link href="/approach" style={activeNav === "approach" ? activeStyle : undefined}>
+            Approach
           </Link>
           <div
             className={`nav-portfolio${activeNav === "portfolio" ? " is-active" : ""}`}
@@ -166,6 +170,7 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
             />
           </svg>
         </button>
+        <FontCompare />
         <button
           className="theme-toggle"
           onClick={onThemeToggle}
@@ -220,6 +225,14 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
             style={activeNav === "thesis" ? activeStyle : undefined}
           >
             Thesis
+          </Link>
+          <Link
+            href="/approach"
+            className="mm-link"
+            onClick={closeMobile}
+            style={activeNav === "approach" ? activeStyle : undefined}
+          >
+            Approach
           </Link>
           <div className="mm-group">
             <Link

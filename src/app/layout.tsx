@@ -7,6 +7,25 @@ export const metadata: Metadata = {
   description: "A football & technology investment fund.",
 };
 
+const FONT_PRESET_BOOT = `
+try {
+  var k = 'cv-font-preset';
+  var allow = { signal: 1, meridian: 1, pulse: 1, apex: 1, vertex: 1, ion: 1, axis: 1 };
+  var v = localStorage.getItem(k);
+  if (!v) {
+    var o = localStorage.getItem('cv-font-sans');
+    if (o === 'space-grotesk') v = 'signal';
+    else if (o === 'plus-jakarta') v = 'meridian';
+    else if (o === 'manrope') v = 'pulse';
+    if (v) {
+      localStorage.setItem(k, v);
+      localStorage.removeItem('cv-font-sans');
+    }
+  }
+  if (v && allow[v]) document.documentElement.setAttribute('data-font-preset', v);
+} catch (e) {}
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -15,10 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="day">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: FONT_PRESET_BOOT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Fraunces:ital,opsz,wght@0,72,300;0,72,400;0,72,500;0,72,600;1,72,300;1,72,400;1,72,500;1,72,600&family=IBM+Plex+Mono:wght@300;400&family=JetBrains+Mono:wght@300;400&family=Manrope:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=Onest:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fira+Mono:wght@400;500&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Literata:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600&family=Red+Hat+Mono:wght@300;400&family=Roboto+Mono:wght@300;400&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Sora:wght@300;400;500;600&family=Work+Sans:wght@300;400;500;600&display=swap"
           rel="stylesheet"
         />
       </head>

@@ -3,6 +3,12 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
+function canvasFontVar(name: "--font-sans" | "--font-serif" | "--font-mono"): string {
+  if (typeof document === "undefined") return "sans-serif";
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || "sans-serif";
+}
+
 export function ClaraVistaMap() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
@@ -1142,7 +1148,7 @@ export function ClaraVistaMap() {
 
         if (isHover) {
           ctx.fillStyle = C.labelPrimary;
-          ctx.font = "300 11px 'JetBrains Mono', monospace";
+          ctx.font = `300 11px ${canvasFontVar("--font-mono")}`;
           ctx.textAlign = "left";
           ctx.fillText(c.name.toUpperCase(), c.px + r + 8, c.py + 3.5);
         }
@@ -1186,7 +1192,7 @@ export function ClaraVistaMap() {
 
         if (isHover) {
           ctx.fillStyle = C.labelPrimary;
-          ctx.font = "400 11px 'Onest', sans-serif";
+          ctx.font = `400 11px ${canvasFontVar("--font-sans")}`;
           ctx.textAlign = "left";
           ctx.fillText(c.name, c.px + r + 8, c.py + 3.5);
         }
@@ -1289,11 +1295,11 @@ export function ClaraVistaMap() {
         ctx.textAlign = "left";
 
         // Measure label text to size a soft backdrop plate (no border).
-        ctx.font = "italic 400 12px 'Newsreader', serif";
+        ctx.font = `italic 400 12px ${canvasFontVar("--font-serif")}`;
         const numW = ctx.measureText(c.num).width;
-        ctx.font = "italic 400 17px 'Newsreader', serif";
+        ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
         const labelW = ctx.measureText(c.label).width;
-        ctx.font = "400 10px 'Onest', sans-serif";
+        ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
         const subW = ctx.measureText(subLabel).width;
 
         const isDayTheme = getTheme() === "day";
@@ -1332,19 +1338,19 @@ export function ClaraVistaMap() {
         ctx.stroke();
 
         ctx.fillStyle = isDayTheme ? `rgba(6, 93, 57, ${labelOpacity})` : `rgba(52, 194, 129, ${labelOpacity})`;
-        ctx.font = "italic 400 12px 'Newsreader', serif";
+        ctx.font = `italic 400 12px ${canvasFontVar("--font-serif")}`;
         ctx.fillText(c.num, labelX, c.py - 1);
 
         ctx.fillStyle = isDayTheme
           ? `rgba(26, 37, 32, ${labelOpacity})`
           : `rgba(242, 234, 214, ${labelOpacity})`;
-        ctx.font = "italic 400 17px 'Newsreader', serif";
+        ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
         ctx.fillText(c.label, labelX + 22, c.py - 1);
 
         ctx.fillStyle = isDayTheme
           ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
           : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
-        ctx.font = "400 10px 'Onest', sans-serif";
+        ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
         ctx.fillText(subLabel, labelX + 22, c.py + 15);
         ctx.textBaseline = "alphabetic";
         // Suppress unused-var warning for measured "01" width (kept for future use).
