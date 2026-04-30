@@ -149,7 +149,12 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
           <Link href="/team" style={activeNav === "team" ? activeStyle : undefined}>
             Team
           </Link>
-          <a href="#" className="nav-cta">
+          <a
+            href="https://login.app.carta.com/credentials/login/"
+            className="nav-cta"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             LP Access
           </a>
         </nav>
@@ -260,7 +265,13 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
           <Link href="/team" className="mm-link" onClick={closeMobile} style={activeNav === "team" ? activeStyle : undefined}>
             Team
           </Link>
-          <a href="#" className="mm-cta" onClick={closeMobile}>
+          <a
+            href="https://login.app.carta.com/credentials/login/"
+            className="mm-cta"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeMobile}
+          >
             LP Access
           </a>
         </div>
