@@ -11,7 +11,7 @@ type NavKey = "home" | "thesis" | "approach" | "portfolio" | "team" | null;
 type TopbarProps = {
   /** Which nav item to render as active (subtle underline). */
   activeNav?: NavKey;
-  /** Show the "Investment Partners · Football & Technology Fund II" tagline. Home only. */
+  /** Show the "Investment Partners · Football & Technology" tagline. Home only. */
   showTagline?: boolean;
 };
 
@@ -67,7 +67,7 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
         {showTagline ? (
           <>
             <span className="brand-divider" />
-            <span className="brand-tagline">Investment Partners · Football &amp; Technology Fund II</span>
+            <span className="brand-tagline">Investment Partners · Football &amp; Technology</span>
           </>
         ) : null}
       </Link>
