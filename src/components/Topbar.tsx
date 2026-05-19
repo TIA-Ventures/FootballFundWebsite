@@ -6,7 +6,14 @@ import { ColorCompare } from "@/components/ColorCompare";
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-type NavKey = "home" | "thesis" | "approach" | "portfolio" | "team" | null;
+type NavKey =
+  | "home"
+  | "thesis"
+  | "approach"
+  | "portfolio"
+  | "track-record"
+  | "team"
+  | null;
 
 type TopbarProps = {
   /** Which nav item to render as active (subtle underline). */
@@ -146,6 +153,12 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
               </Link>
             </div>
           </div>
+          <Link
+            href="/track-record"
+            style={activeNav === "track-record" ? activeStyle : undefined}
+          >
+            Track Record
+          </Link>
           <Link href="/team" style={activeNav === "team" ? activeStyle : undefined}>
             Team
           </Link>
@@ -262,6 +275,14 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
               </Link>
             </div>
           </div>
+          <Link
+            href="/track-record"
+            className="mm-link"
+            onClick={closeMobile}
+            style={activeNav === "track-record" ? activeStyle : undefined}
+          >
+            Track Record
+          </Link>
           <Link href="/team" className="mm-link" onClick={closeMobile} style={activeNav === "team" ? activeStyle : undefined}>
             Team
           </Link>
