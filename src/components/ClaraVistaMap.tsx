@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { TEAM_MOMENTS } from "./TeamMoments";
 
 function canvasFontVar(name: "--font-sans" | "--font-serif" | "--font-mono"): string {
   if (typeof document === "undefined") return "sans-serif";
@@ -30,6 +31,10 @@ export function ClaraVistaMap() {
     const tCountry = document.getElementById("t-country");
     const tFlow = document.getElementById("t-flow");
     const loader = document.getElementById("loader");
+    /* The Ipswich hover preview is gated by a class on the hero section.
+       We toggle it here (instead of in React state) to avoid re-rendering
+       the whole map tree every time the cursor crosses a marker. */
+    const heroSection = document.querySelector(".hero") as HTMLElement | null;
 
     const getTheme = () => (document.documentElement.dataset.theme === "day" ? "day" : "night");
     const getColors = () => {
@@ -833,9 +838,11 @@ export function ClaraVistaMap() {
       }
       // Mobile framing notes:
       // - Push Europe up so northern latitudes crop out (focus: UK/Spain/Italy triangle).
+      // - Lift further so the southern markers (Spain/Italy) clear the bottom-sheet
+      //   "DATA-DRIVEN SPORTS INVESTMENT" tagline instead of brushing it.
       // - Nudge right so Spain has left breathing room.
       const shiftX = isMobile ? 0.06 : DESKTOP_MAP_SHIFT_X;
-      const shiftY = isMobile ? -0.13 : DESKTOP_MAP_SHIFT_Y;
+      const shiftY = isMobile ? -0.19 : DESKTOP_MAP_SHIFT_Y;
       const ox = (W - drawW) / 2 + W * shiftX;
       const oy = (H - drawH) / 2 - H * 0.04 + H * shiftY;
       proj = { ox, oy, drawW, drawH };
@@ -932,13 +939,68 @@ export function ClaraVistaMap() {
     // waveBoost or computing wave ripples — large perf win when the global
     // DOTS array is ~250k+ entries but only ~10k of those animate.
     let euDotCount = 0;
+
+    // Latest stipple metrics — updated on every resize inside buildDotMap so
+    // the render loop can size context dots consistently with grid density.
+    const stippleMetrics = {
+      stepLat: 0.2,
+      stepLng: 0.28,
+      jitterEu: 1.4,
+      jitterCtx: 1.8,
+      contextDotPx: 0.96,
+    };
+
+    // Stipple grid step in degrees, derived from how many CSS pixels each
+    // degree spans at the current projection. Mobile zooms Europe to ~full
+    // viewport width (drawW ≈ W) while desktop uses ~62% width — same fixed
+    // 0.2°/0.28° step therefore packs ~2× tighter on phones. Industry
+    // pattern (Mapbox/Google density scaling): hold target screen spacing
+    // constant and widen the lat/lng step as px/degree grows.
+    function computeStippleStep() {
+      const lngRange = BOUNDS.maxLng - BOUNDS.minLng;
+      const latRange = BOUNDS.maxLat - BOUNDS.minLat;
+      const pxPerLng = proj.drawW / lngRange;
+      const pxPerLat = proj.drawH / latRange;
+
+      const isSmallMobile = W <= 400;
+      const isMobile = W <= 720;
+      const isTablet = W > 720 && W <= 1024;
+      // Center-to-center spacing (CSS px). Mobile stays a touch looser than
+      // desktop (fillRects read heavier) but close enough to feel consistent.
+      const targetSpacingPx = isSmallMobile
+        ? 6.25
+        : isMobile
+          ? 5.75
+          : isTablet
+            ? 5.1
+            : 4.75;
+
+      // Never denser than the original desktop calibration on large screens.
+      const DESKTOP_STEP_LAT = 0.2;
+      const DESKTOP_STEP_LNG = 0.28;
+
+      const stepLat = Math.max(DESKTOP_STEP_LAT, targetSpacingPx / pxPerLat);
+      const stepLng = Math.max(DESKTOP_STEP_LNG, targetSpacingPx / pxPerLng);
+
+      // When the grid coarsens, shrink jitter so dots don't visually merge.
+      const densityRatio = Math.min(1, DESKTOP_STEP_LNG / stepLng);
+      const jitterEu = 1.4 * Math.sqrt(densityRatio);
+      const jitterCtx = 1.8 * Math.sqrt(densityRatio);
+      const contextDotPx = Math.min(0.96, 0.76 + 0.2 * densityRatio);
+
+      return { stepLat, stepLng, jitterEu, jitterCtx, contextDotPx };
+    }
+
     function buildDotMap() {
       DOTS.length = 0;
 
-      // PASS 1 — Europe stipple (untouched: same step, jitter, density, alpha
-      // pipeline as before so the default view is pixel-identical).
-      const stepLat = 0.2;
-      const stepLng = 0.28;
+      const stipple = computeStippleStep();
+      const { stepLat, stepLng, jitterEu, jitterCtx, contextDotPx } = stipple;
+      stippleMetrics.stepLat = stepLat;
+      stippleMetrics.stepLng = stepLng;
+      stippleMetrics.jitterEu = jitterEu;
+      stippleMetrics.jitterCtx = jitterCtx;
+      stippleMetrics.contextDotPx = contextDotPx;
       for (let lat = 35; lat <= 71; lat += stepLat) {
         for (let lng = -12; lng <= 35; lng += stepLng) {
           const country = whichCountry(lat, lng);
@@ -951,8 +1013,8 @@ export function ClaraVistaMap() {
               isPortfolio: PORTFOLIO_COUNTRIES.has(country),
               isContext: false,
               basePhase: Math.random() * Math.PI * 2,
-              jitterX: (Math.random() - 0.5) * 1.4,
-              jitterY: (Math.random() - 0.5) * 1.4,
+              jitterX: (Math.random() - 0.5) * jitterEu,
+              jitterY: (Math.random() - 0.5) * jitterEu,
               proximity: 0,
               waveBoost: 0,
             });
@@ -965,22 +1027,13 @@ export function ClaraVistaMap() {
       // independently. Anything pushed after this line is context.
       euDotCount = DOTS.length;
 
-      // PASS 2 — World context continents. Step matches Europe (stepLat 0.2,
-      // stepLng 0.28) so context dot spacing is visually IDENTICAL to the
-      // European stipple — other continents read as the same fabric of dots,
-      // not a sparser fill. Hierarchy comes from polygon-shape precision
-      // (Europe uses detailed country outlines, context uses continent
-      // outlines) and the small CONTEXT_DIM alpha multiplier applied in the
-      // render loop, not from spacing.
+      // PASS 2 — World context continents. Uses the same adaptive step as
+      // Europe so the fabric matches at every breakpoint; hierarchy comes
+      // from polygon precision and CONTEXT_DIM, not from spacing.
       //
-      // Performance: these dots are rendered as a SINGLE batched Path2D
-      // fill in the main render loop (one fillStyle, one fill() call for
-      // the entire context layer per frame) rather than 200k+ individual
-      // ctx.arc/fill calls. They have no per-dot animation (no breath, no
-      // wave ripple, no cursor-proximity boost) — context is supporting
-      // fabric, the animation budget goes to the Europe slice.
-      const ctxStepLat = 0.2;
-      const ctxStepLng = 0.28;
+      // Performance: static fillRect batch in the render loop (see pass B).
+      const ctxStepLat = stepLat;
+      const ctxStepLng = stepLng;
       for (let lat = -55; lat <= 78; lat += ctxStepLat) {
         for (let lng = -170; lng <= 180; lng += ctxStepLng) {
           if (whichCountry(lat, lng)) continue;
@@ -994,8 +1047,8 @@ export function ClaraVistaMap() {
               isPortfolio: false,
               isContext: true,
               basePhase: Math.random() * Math.PI * 2,
-              jitterX: (Math.random() - 0.5) * 1.8,
-              jitterY: (Math.random() - 0.5) * 1.8,
+              jitterX: (Math.random() - 0.5) * jitterCtx,
+              jitterY: (Math.random() - 0.5) * jitterCtx,
               proximity: 0,
               waveBoost: 0,
             });
@@ -1636,7 +1689,7 @@ export function ClaraVistaMap() {
       // fillStyle is the fastest path here.)
       const ctxAlpha = Math.min(1, baseAlphaReg * CONTEXT_DIM * CONTEXT_ALPHA_BOOST * dotEase);
       if (ctxAlpha > 0.005 && euDotCount < DOTS.length) {
-        const ctxSize = 0.96;
+        const ctxSize = stippleMetrics.contextDotPx;
         const ctxHalfSize = ctxSize * 0.5;
         ctx.fillStyle = `rgba(${dotR},${dotG},${dotB},${ctxAlpha})`;
         for (let i = euDotCount; i < DOTS.length; i++) {
@@ -2296,6 +2349,14 @@ export function ClaraVistaMap() {
         cursor?.classList.remove("hovering-city");
       }
 
+      /* Drive the Ipswich preview from the live map hover state. classList
+         toggles are no-ops when the class is already in the right state,
+         so this is cheap to call every frame. */
+      if (heroSection) {
+        const onIpswich = showCity?.name === "Ipswich";
+        heroSection.classList.toggle("is-ipswich-hovered", !!onIpswich);
+      }
+
       rafRender = window.requestAnimationFrame(render);
     }
 
@@ -2407,7 +2468,11 @@ export function ClaraVistaMap() {
             <span>Active Portfolio</span>
             <span className="pp-label-count">01 / 03</span>
           </div>
-          <Link href="/portfolio/ipswich" className="pp-row" aria-label="View Ipswich Town FC details">
+          <Link
+            href="/portfolio/ipswich"
+            className="pp-row is-ipswich"
+            aria-label="View Ipswich Town FC details"
+          >
             <div className="pp-num">01</div>
             <div className="pp-info">
               <div className="pp-city">Ipswich</div>
@@ -2432,6 +2497,29 @@ export function ClaraVistaMap() {
             <div className="pp-status diligence" title="Diligence" />
           </Link>
         </div>
+
+        {/* Ipswich hover preview — anchored beneath the Active Portfolio panel.
+            Appears when the Ipswich row is hovered/focused, when the preview
+            itself is hovered, or when the Ipswich marker on the map is
+            hovered (driven by the `.is-ipswich-hovered` class on the hero,
+            toggled inside the render loop). Cycles through the same photos
+            used by the team page Moments strip. */}
+        <aside className="ipswich-preview" aria-hidden="true">
+          <div className="ipswich-preview-stack">
+            {TEAM_MOMENTS.map((m, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={m.src}
+                className={`ipswich-preview-img is-frame-${i + 1}`}
+                src={m.src}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+          </div>
+          <div className="ipswich-preview-cap">Behind the scenes · Ipswich</div>
+        </aside>
 
         <div className="credentials">
           <div className="cred-item">

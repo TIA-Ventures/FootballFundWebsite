@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Footer } from "@/components/Footer";
 import { OperatingPrinciples } from "@/components/OperatingPrinciples";
+import { TeamMoments } from "@/components/TeamMoments";
 import { Topbar } from "@/components/Topbar";
 
 export const metadata: Metadata = {
@@ -225,6 +226,24 @@ export default function TeamPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
+                <div className="sh-eyebrow">Interlude · On the ground</div>
+                <h2 className="sh-h2">
+                  Boardroom to <em>the field.</em>
+                </h2>
+              </div>
+              <p className="sh-deck">
+                Moments from inside the club since the initial investment — directors&apos; box, dressing room,
+                lap of honour. Hands-on, not hands-off.
+              </p>
+            </div>
+            <TeamMoments />
+          </div>
+        </div>
+
+        <div className="section bg-deep">
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
                 <div className="sh-eyebrow">002 · Advisors</div>
                 <h2 className="sh-h2">
                   Senior Advisors <em>and Experts.</em>
@@ -239,7 +258,7 @@ export default function TeamPage() {
           </div>
         </div>
 
-        <div className="section bg-deep">
+        <div className="section">
           <div className="section-inner">
             <div className="section-head">
               <div>

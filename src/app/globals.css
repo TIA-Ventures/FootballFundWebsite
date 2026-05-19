@@ -2119,6 +2119,99 @@ body {
   border: 1px solid var(--ivory-dim);
 }
 
+/* ---- Ipswich hover preview ----
+   Anchored beneath the Active Portfolio panel. Same width / right edge as
+   the panel so the two read as one column. Visibility is driven by:
+   (a) hovering the `.is-ipswich` row in the panel,
+   (b) hovering the preview itself (so users can mouse from row → photo),
+   (c) keyboard focus on the row (`:focus-visible`),
+   (d) hovering the Ipswich marker on the map (`.hero.is-ipswich-hovered`,
+       set imperatively in the render loop).
+   Photo cycle is pure CSS — animation-play-state pauses when hidden and
+   resumes from its previous position when shown, so the storytelling feels
+   continuous across hovers. */
+.ipswich-preview {
+  position: absolute;
+  top: 374px;
+  right: 56px;
+  z-index: 9;
+  width: 304px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.32s ease, transform 0.32s ease;
+}
+.ipswich-preview-stack {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: var(--bg-card);
+  border: 1px solid var(--line-soft);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 1px 0 var(--line-soft);
+}
+.ipswich-preview-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  opacity: 0;
+  filter: saturate(0.94) contrast(1.02);
+  animation: ipswichPreviewCycle 18s linear infinite;
+  animation-play-state: paused;
+}
+/* Stagger each photo's entry across the 18s cycle. With 9 photos and a 2s
+   offset, each frame holds for ~1.4s with a ~0.36s crossfade in/out. */
+.ipswich-preview-img.is-frame-1 { animation-delay: 0s; }
+.ipswich-preview-img.is-frame-2 { animation-delay: 2s; }
+.ipswich-preview-img.is-frame-3 { animation-delay: 4s; }
+.ipswich-preview-img.is-frame-4 { animation-delay: 6s; }
+.ipswich-preview-img.is-frame-5 { animation-delay: 8s; }
+.ipswich-preview-img.is-frame-6 { animation-delay: 10s; }
+.ipswich-preview-img.is-frame-7 { animation-delay: 12s; }
+.ipswich-preview-img.is-frame-8 { animation-delay: 14s; }
+.ipswich-preview-img.is-frame-9 { animation-delay: 16s; }
+@keyframes ipswichPreviewCycle {
+  0%   { opacity: 0; }
+  2%   { opacity: 1; }
+  10%  { opacity: 1; }
+  12%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+/* Caption — single line, full-width, centred with wide tracking so it
+   reads as a chapter title beneath the photograph. */
+.ipswich-preview-cap {
+  margin-top: 12px;
+  padding: 0 2px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ivory-mid);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Reveal states — any one of these makes the preview visible. */
+.hero:has(.pp-row.is-ipswich:hover) .ipswich-preview,
+.hero:has(.pp-row.is-ipswich:focus-visible) .ipswich-preview,
+.hero:has(.ipswich-preview:hover) .ipswich-preview,
+.hero.is-ipswich-hovered .ipswich-preview {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.hero:has(.pp-row.is-ipswich:hover) .ipswich-preview-img,
+.hero:has(.pp-row.is-ipswich:focus-visible) .ipswich-preview-img,
+.hero:has(.ipswich-preview:hover) .ipswich-preview-img,
+.hero.is-ipswich-hovered .ipswich-preview-img {
+  animation-play-state: running;
+}
+
+
 /* ---- Fund credentials ---- */
 .credentials {
   position: absolute;
@@ -2326,14 +2419,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 20px;
+    gap: 18px;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 10;
     padding:
-      28px 22px
+      20px 22px
       calc(22px + env(safe-area-inset-bottom, 0px));
     pointer-events: none;
     background: linear-gradient(
@@ -4366,6 +4459,7 @@ body {
     min-height: -webkit-fill-available;
   }
   .portfolio-panel { display: none; }
+  .ipswich-preview { display: none; }
   .footer { padding-left: 22px; padding-right: 22px; }
   /* Mobile: normalize section rhythm between banners */
   .portfolio-section { padding: 92px 22px 86px; }
@@ -4776,6 +4870,122 @@ body {
   font-style: italic;
   color: var(--ivory);
   font-size: 13.5px;
+}
+
+/* ---- Team moments: editorial photo strip between Leadership and Advisors.
+   Mixed portrait/landscape cards, fixed photo height, horizontal scroll
+   with snap. Same minimal scrollbar/edge-fade pattern as the timeline. */
+.team-page .team-moments {
+  position: relative;
+  margin: 4px 0 0;
+}
+.team-page .team-moments-hint {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+  margin: 0 0 14px;
+  text-align: right;
+}
+/* Scroll viewport — crisp clip at the column edge, no mask fade. The fade
+   washed photo content (NYT/Stripe Press use clean clips for the same
+   reason). The "Scroll →" hint above carries the affordance. A 48px
+   right-side padding on the track lets the last card breathe instead of
+   colliding with the column edge. */
+.team-page .team-moments-scroll {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  padding: 6px 0 18px;
+  margin: 0;
+  scrollbar-width: none;
+}
+.team-page .team-moments-scroll::-webkit-scrollbar { display: none; }
+.team-page .team-moments-scroll:focus-visible {
+  outline: 2px solid var(--green-light);
+  outline-offset: 4px;
+}
+.team-page .team-moments-track {
+  display: flex;
+  flex-wrap: nowrap;
+  list-style: none;
+  margin: 0;
+  /* Trailing inline padding gives the last card breathing room and lets
+     the strip end gracefully instead of butting into the column edge. */
+  padding: 0 32px 0 0;
+  gap: 18px;
+  align-items: flex-start;
+}
+.team-page .team-moment {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  margin: 0;
+  padding: 0;
+}
+.team-page .team-moment-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.team-page .team-moment-frame {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--line-soft);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 1px 0 var(--line-soft);
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s ease;
+}
+.team-page .team-moment-frame img {
+  display: block;
+  height: 380px;
+  width: auto;
+  /* Very mild warm pass to harmonise the bright kit blues with the
+     cream/sage palette without robbing the photos of their character. */
+  filter: saturate(0.94) contrast(1.02);
+  transition: filter 0.45s ease;
+}
+.team-page .team-moment.is-portrait .team-moment-frame img {
+  /* Portraits keep their aspect — slightly narrower card. */
+  height: 380px;
+}
+.team-page .team-moment-figure:hover .team-moment-frame,
+.team-page .team-moment-figure:focus-within .team-moment-frame {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.18), 0 1px 0 var(--line-soft);
+}
+.team-page .team-moment-figure:hover .team-moment-frame img {
+  filter: saturate(1) contrast(1.02);
+}
+.team-page .team-moment-cap {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ivory-mid);
+  line-height: 1.3;
+  padding: 0 2px;
+}
+.team-page .team-moment-cap-meta {
+  color: var(--ivory-dim);
+}
+
+@media (max-width: 1100px) {
+  .team-page .team-moment-frame img { height: 340px; }
+  .team-page .team-moment.is-portrait .team-moment-frame img { height: 340px; }
+}
+@media (max-width: 720px) {
+  .team-page .team-moments-hint { display: none; }
+  .team-page .team-moments-scroll { padding: 4px 0 16px; }
+  .team-page .team-moments-track { gap: 14px; padding-right: 22px; }
+  .team-page .team-moment-frame img { height: 280px; }
+  .team-page .team-moment.is-portrait .team-moment-frame img { height: 280px; }
+  .team-page .team-moment-figure { gap: 10px; }
+  .team-page .team-moment-cap { font-size: 9px; letter-spacing: 0.2em; }
 }
 
 .team-page .pillar-rows {
@@ -5470,6 +5680,377 @@ body {
   font-weight: 400;
 }
 
+/* ---- Ipswich revenue trajectory chart ---- */
+.cv-page .rev-chart-wrap {
+  display: grid;
+  gap: 36px;
+  margin-bottom: 56px;
+}
+.cv-page .rev-chart {
+  margin: 0;
+  padding: 28px 28px 18px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  transition: background 0.4s, border-color 0.4s;
+}
+.cv-page .rev-chart-caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.cv-page .rev-chart-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--green-light);
+  font-weight: 400;
+}
+.cv-page .rev-chart-desc {
+  display: block;
+  flex-basis: 100%;
+  order: 3;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ivory-dim);
+  margin-top: 4px;
+  font-weight: 300;
+}
+.cv-page .rev-chart-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+}
+.cv-page .rev-chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cv-page .rev-chart-legend-swatch {
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: var(--green-light);
+}
+.cv-page .rev-chart-legend-swatch.is-projected {
+  background: transparent;
+  border-top: 1.5px dashed var(--green-light);
+  height: 0;
+}
+.cv-page .rev-chart-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.cv-page .rev-baseline {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.cv-page .rev-projected-band {
+  fill: var(--green-soft);
+  opacity: 0.35;
+}
+.cv-page .rev-area { opacity: 1; }
+.cv-page .rev-area-projected { opacity: 0.55; }
+.cv-page .rev-line {
+  fill: none;
+  stroke: var(--green-light);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cv-page .rev-line-projected {
+  stroke-dasharray: 6 6;
+  opacity: 0.78;
+}
+.cv-page .rev-dot {
+  fill: var(--bg);
+  stroke: var(--green-light);
+  stroke-width: 1.8;
+}
+.cv-page .rev-dot.is-projected {
+  stroke-dasharray: 1.6 1.6;
+  opacity: 0.85;
+}
+.cv-page .rev-annot-line {
+  stroke: var(--green-light);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  opacity: 0.55;
+}
+.cv-page .rev-annot-pin { fill: var(--green-light); }
+.cv-page .rev-annot-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  fill: var(--green-light);
+  text-transform: uppercase;
+}
+.cv-page .rev-annot-label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  fill: var(--ivory);
+}
+.cv-page .rev-anchor-value {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  fill: var(--ivory);
+  font-weight: 400;
+}
+.cv-page .rev-anchor-end .rev-anchor-value {
+  fill: var(--green-light);
+  font-style: italic;
+  text-anchor: end;
+}
+.cv-page .rev-anchor-start .rev-anchor-value { text-anchor: start; }
+.cv-page .rev-anchor-meta {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  fill: var(--ivory-dim);
+}
+.cv-page .rev-anchor-end .rev-anchor-meta { text-anchor: end; }
+.cv-page .rev-anchor-start .rev-anchor-meta { text-anchor: start; }
+.cv-page .rev-x-tick {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  fill: var(--ivory-dim);
+  text-anchor: middle;
+}
+.cv-page .rev-projected-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  fill: var(--ivory-dim);
+  text-anchor: middle;
+  opacity: 0.8;
+}
+
+.cv-page .rev-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.cv-page .rev-stat {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 22px 22px 24px;
+  transition: background 0.4s, border-color 0.4s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cv-page .rev-stat:hover {
+  background: var(--bg-card);
+  border-color: var(--green-soft);
+}
+.cv-page .rev-stat-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--green-light);
+  text-transform: uppercase;
+  font-weight: 300;
+}
+.cv-page .rev-stat-headline {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--ivory);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.cv-page .rev-stat-headline em {
+  font-style: italic;
+  color: var(--green-light);
+}
+.cv-page .rev-stat-body {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ivory-mid);
+  font-weight: 300;
+  margin: 0;
+}
+.cv-page .rev-stat-body em {
+  font-style: italic;
+  color: var(--ivory);
+  font-weight: 400;
+}
+.cv-page .rev-chart-body {
+  display: grid;
+  grid-template-columns: 1fr minmax(200px, 240px);
+  gap: 16px 20px;
+  align-items: start;
+}
+.cv-page .rev-chart-plot {
+  position: relative;
+  min-width: 0;
+}
+/* Floating KPI in chart top-left — typography only. Rests muted; brightens
+   when the user is actively interacting with the chart (legend or year
+   hover). Pattern: Bloomberg / Apple Health chart overlays. */
+.cv-page .rev-chart-kpi {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  pointer-events: none;
+  max-width: min(100%, 220px);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+.cv-page .rev-chart-plot:hover .rev-chart-kpi,
+.cv-page .rev-chart-kpi:focus-within {
+  opacity: 1;
+}
+.cv-page .rev-chart-kpi-fy {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--green-light) 75%, transparent);
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+.cv-page .rev-chart-kpi-total {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 3vw, 26px);
+  font-weight: 400;
+  color: var(--ivory-mid);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  transition: color 0.3s ease;
+}
+.cv-page .rev-chart-plot:hover .rev-chart-kpi-fy {
+  color: var(--green-light);
+}
+.cv-page .rev-chart-plot:hover .rev-chart-kpi-total {
+  color: var(--ivory);
+}
+.cv-page .rev-chart-kpi-focus {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  color: var(--ivory-dim);
+  font-style: italic;
+  margin-top: 2px;
+  line-height: 1.35;
+}
+.cv-page .rev-chart-svg--stacked {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+.cv-page .rev-year-hit {
+  cursor: crosshair;
+}
+.cv-page .rev-year-hit:focus-visible {
+  outline: 2px solid var(--green-light);
+  outline-offset: -2px;
+}
+.cv-page .rev-anchor-end {
+  text-anchor: end;
+}
+.cv-page .rev-series-panel {
+  border-left: 1px solid var(--line);
+  padding-left: 16px;
+  align-self: stretch;
+}
+.cv-page .rev-series-panel-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+  margin: 0 0 12px;
+}
+.cv-page .rev-series-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.cv-page .rev-series-btn {
+  appearance: none;
+  width: 100%;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 6px 8px;
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 10px;
+  row-gap: 2px;
+  align-items: start;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s, border-color 0.2s;
+  font-family: var(--font-sans);
+}
+.cv-page .rev-series-btn:hover,
+.cv-page .rev-series-btn.is-active {
+  background: var(--bg-card);
+  border-color: var(--line);
+}
+.cv-page .rev-series-btn.is-locked {
+  border-color: var(--green-light);
+}
+.cv-page .rev-series-swatch {
+  grid-row: 1 / span 2;
+  width: 10px;
+  height: 10px;
+  border-radius: 1px;
+  margin-top: 3px;
+}
+.cv-page .rev-series-label {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--ivory-mid);
+  font-weight: 400;
+}
+.cv-page .rev-series-val {
+  grid-column: 2;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--ivory-dim);
+}
+.cv-page .rev-series-btn.is-active .rev-series-label {
+  color: var(--ivory);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---- Deal structure rows ---- */
 .cv-page .deal-rows {
   display: grid;
@@ -5520,125 +6101,355 @@ body {
   max-width: 820px;
 }
 
-/* ---- Horizontal timeline ---- */
+/* ---- Horizontal timeline (alternating, era-coded, scrollable) ---- */
 .cv-page .h-timeline {
   position: relative;
-  margin: 80px 0 56px;
-  padding: 0 12px;
+  margin: 48px 0 56px;
 }
-.cv-page .h-timeline-rail {
+
+.cv-page .h-timeline-hint {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+  margin: 0 0 8px;
+  text-align: right;
+}
+
+/* Scroll viewport with soft edge fades. Native scrollbar is hidden — wheel,
+   swipe and keyboard arrow navigation all still work. Pattern: Stripe /
+   Linear / Vercel horizontal carousels. */
+.cv-page .h-timeline-scroll {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 48px;
+  padding: 8px 0 12px;
+  margin: 0;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 56px,
+    black calc(100% - 56px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 56px,
+    black calc(100% - 56px),
+    transparent 100%
+  );
+}
+.cv-page .h-timeline-scroll::-webkit-scrollbar {
+  display: none;
+}
+.cv-page .h-timeline-scroll:focus-visible {
+  outline: 2px solid var(--green-light);
+  outline-offset: 4px;
+}
+
+/* Chapter index row — era labels live above the track in their own band so
+   they don't compete with event content for vertical space. Pattern:
+   Gantt-style headers, Linear's roadmap, FT chart chapter labels. */
+.cv-page .h-timeline-eras-row {
+  position: relative;
+  min-width: max(100%, 2580px);
+  height: 38px;
+  margin-bottom: 6px;
+}
+.cv-page .h-era-header {
   position: absolute;
-  left: 12px;
-  right: 12px;
-  top: 50px;
-  height: 1px;
-  background: var(--line);
+  top: 0;
+  bottom: 0;
+  padding: 0 18px 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 3px;
+  border-bottom: 1px solid transparent;
 }
-.cv-page .h-timeline-rail::before {
-  content: '';
+.cv-page .h-era-header.chap-founding {
+  border-bottom-color: color-mix(in srgb, var(--ivory-dim) 35%, transparent);
+}
+.cv-page .h-era-header.chap-golden {
+  border-bottom-color: color-mix(in srgb, var(--green-light) 50%, transparent);
+}
+.cv-page .h-era-header.chap-modern {
+  border-bottom-color: color-mix(in srgb, var(--green-light) 80%, transparent);
+}
+.cv-page .h-era-header-label {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--ivory);
+  letter-spacing: -0.005em;
+  line-height: 1.1;
+}
+.cv-page .h-era-header.chap-founding .h-era-header-label {
+  color: var(--ivory-mid);
+}
+.cv-page .h-era-header-years {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+  line-height: 1;
+}
+
+/* Fixed-height track lets cards alternate above/below the rail */
+.cv-page .h-timeline-track {
+  position: relative;
+  min-width: max(100%, 2580px);
+  height: 296px;
+}
+
+/* Vertical era bands — secondary chapter cue (tint only, no text). The
+   header above carries the label; the band just extends its color downward
+   through the events for visual continuity. */
+.cv-page .h-timeline-bands {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right,
-    transparent 0%,
-    var(--green-light) 8%,
-    var(--green-light) 92%,
-    transparent 100%);
-  opacity: 0.35;
+  z-index: 0;
+  pointer-events: none;
 }
+.cv-page .h-era-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.cv-page .h-era-band-fill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* Long, gentle fade so the tint dissolves into the chart background
+     instead of terminating with a perceptible edge. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 18%,
+    black 38%,
+    black 62%,
+    rgba(0, 0, 0, 0.4) 82%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 18%,
+    black 38%,
+    black 62%,
+    rgba(0, 0, 0, 0.4) 82%,
+    transparent 100%
+  );
+}
+.cv-page .h-era-band.chap-founding .h-era-band-fill {
+  background: color-mix(in srgb, var(--ivory) 2.5%, transparent);
+}
+.cv-page .h-era-band.chap-golden .h-era-band-fill {
+  background: color-mix(in srgb, var(--green-light) 6%, transparent);
+}
+.cv-page .h-era-band.chap-modern .h-era-band-fill {
+  background: color-mix(in srgb, var(--green-light) 11%, transparent);
+}
+/* Divider between bands — vertical hairline only visible in the central
+   third, fading out at top and bottom to match the soft fill termination. */
+.cv-page .h-era-band.has-divider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--ivory-faint) 55%, transparent) 35%,
+    color-mix(in srgb, var(--ivory-faint) 55%, transparent) 65%,
+    transparent 100%
+  );
+  z-index: 0;
+}
+/* Rail — vertically centered, segmented by era. Each segment fades to
+   transparent at its left/right ends so the chapter transitions are soft
+   rather than abrupt joins. */
+.cv-page .h-timeline-rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  transform: translateY(-0.75px);
+  pointer-events: none;
+  z-index: 1;
+}
+.cv-page .h-timeline-rail-seg {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    rgba(0, 0, 0, 0.4) 6%,
+    black 16%,
+    black 84%,
+    rgba(0, 0, 0, 0.4) 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    rgba(0, 0, 0, 0.4) 6%,
+    black 16%,
+    black 84%,
+    rgba(0, 0, 0, 0.4) 94%,
+    transparent 100%
+  );
+}
+.cv-page .h-timeline-rail-seg.chap-founding {
+  background: color-mix(in srgb, var(--ivory-mid) 28%, transparent);
+}
+.cv-page .h-timeline-rail-seg.chap-golden {
+  background: color-mix(in srgb, var(--green-light) 55%, transparent);
+}
+.cv-page .h-timeline-rail-seg.chap-modern {
+  background: color-mix(in srgb, var(--green-light) 85%, transparent);
+}
+
+/* Grid of events — sits above bands and rail */
 .cv-page .h-timeline-grid {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 8px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: nowrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
+
+/* Each event: 3-row grid so dot sits exactly on rail center */
 .cv-page .h-event {
+  flex: 0 0 172px;
+  scroll-snap-align: center;
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  justify-items: center;
+  padding: 0 10px;
   position: relative;
-  text-align: center;
-  padding-top: 0;
-  cursor: default;
-  transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+  transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
 }
-.cv-page .h-event-year {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  color: var(--green-light);
-  text-transform: uppercase;
-  font-weight: 300;
-  margin-bottom: 14px;
-  line-height: 1;
-  transition: color 0.6s ease;
+.cv-page .h-event:hover,
+.cv-page .h-event:focus-within {
+  transform: translateY(-2px);
+  z-index: 3;
 }
+
 .cv-page .h-event-dot {
-  width: 12px;
-  height: 12px;
+  grid-row: 2;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   border: 1.5px solid var(--green-light);
   background: var(--bg);
-  margin: 0 auto 18px;
   position: relative;
   z-index: 2;
-  transition: all 0.4s cubic-bezier(.2,.8,.2,1);
+  transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s ease;
+}
+.cv-page .h-event.chap-founding .h-event-dot { border-color: var(--ivory-dim); }
+.cv-page .h-event.chap-golden .h-event-dot {
+  border-color: color-mix(in srgb, var(--green-light) 75%, transparent);
+}
+.cv-page .h-event.chap-modern .h-event-dot { border-color: var(--green-light); }
+.cv-page .h-event.is-hero .h-event-dot {
+  width: 13px;
+  height: 13px;
+  border-width: 2px;
 }
 .cv-page .h-event.is-anchor .h-event-dot {
+  width: 12px;
+  height: 12px;
   background: var(--green-light);
+  border-color: var(--green-light);
   box-shadow: 0 0 0 4px var(--green-soft);
 }
-.cv-page .h-event:hover .h-event-dot {
-  transform: scale(1.25);
-  box-shadow: 0 0 0 6px var(--green-soft);
+.cv-page .h-event:hover .h-event-dot,
+.cv-page .h-event:focus-within .h-event-dot {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 5px var(--green-soft);
 }
+
+/* Content stack — placed above or below rail; DOM order stays year→label→detail
+   for screen readers; flex-direction: column-reverse only flips the visual order
+   for above-rail events so the year still sits closest to the dot. */
+.cv-page .h-event-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  max-width: 156px;
+}
+.cv-page .h-event.is-above .h-event-content {
+  grid-row: 1;
+  align-self: end;
+  padding-bottom: 16px;
+  flex-direction: column-reverse;
+}
+.cv-page .h-event.is-below .h-event-content {
+  grid-row: 3;
+  align-self: start;
+  padding-top: 16px;
+}
+
+.cv-page .h-event-year {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  color: var(--green-light);
+  text-transform: uppercase;
+  font-weight: 400;
+  line-height: 1;
+}
+.cv-page .h-event.chap-founding .h-event-year { color: var(--ivory-mid); }
+
 .cv-page .h-event-label {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  line-height: 1.45;
-  color: var(--ivory-mid);
-  font-weight: 300;
-  padding: 0 4px;
-  transition: color 0.6s ease;
-}
-.cv-page .h-event.is-anchor .h-event-label {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  line-height: 1.25;
   color: var(--ivory);
   font-weight: 400;
+  letter-spacing: -0.005em;
 }
 .cv-page .h-event-label em {
   font-style: italic;
-  font-family: var(--font-serif);
   color: var(--green-light);
-  font-size: 12.5px;
 }
-.cv-page .h-event-tooltip {
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-4px);
-  width: 220px;
-  padding: 12px 14px;
-  background: var(--bg-card);
-  border: 1px solid var(--line);
+.cv-page .h-event.is-hero .h-event-label {
+  font-size: 15px;
+}
+.cv-page .h-event.is-anchor .h-event-label {
+  font-style: italic;
+  color: var(--ivory);
+}
+
+.cv-page .h-event-detail {
   font-family: var(--font-sans);
   font-size: 11.5px;
-  line-height: 1.55;
-  color: var(--ivory-mid);
+  line-height: 1.5;
+  color: var(--ivory-dim);
   font-weight: 300;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s cubic-bezier(.2,.8,.2,1);
-  z-index: 10;
-  text-align: left;
+  margin: 0;
+  max-width: 156px;
 }
-.cv-page .h-event:hover .h-event-tooltip {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-.cv-page .h-event-tooltip::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border: 5px solid transparent;
-  border-bottom-color: var(--line);
+.cv-page .h-event.is-anchor .h-event-detail {
+  color: var(--ivory-mid);
 }
 
 /* ---- Bullet list ---- */
@@ -5735,21 +6546,31 @@ body {
   .cv-page .at-a-glance { grid-template-columns: repeat(3, 1fr); }
   .cv-page .glance-cell:nth-child(3n) { border-right: none; }
   .cv-page .glance-cell:nth-child(-n+3) { border-bottom: 1px solid var(--line-soft); }
-  .cv-page .h-timeline-grid { grid-template-columns: repeat(4, 1fr); row-gap: 56px; }
-  .cv-page .h-timeline-rail { display: none; }
-  .cv-page .h-event-dot::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    width: 1px;
-    height: 56px;
-    background: var(--line);
-    transform: translateX(-50%);
+  .cv-page .rev-chart-body {
+    grid-template-columns: 1fr;
   }
+  .cv-page .rev-series-panel {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+}
+@media (max-width: 1100px) {
+  .cv-page .rev-stats { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 900px) {
   .cv-page .accomp-grid { grid-template-columns: 1fr; }
+  .cv-page .rev-chart { padding: 22px 18px 14px; }
+  .cv-page .rev-chart-caption { gap: 14px; }
+  .cv-page .rev-anchor-value { font-size: 18px; }
+  .cv-page .rev-annot-label { font-size: 13px; }
+}
+@media (max-width: 640px) {
+  .cv-page .rev-stats { grid-template-columns: 1fr; }
+  /* Reduce x-axis label clutter on narrow phones: show every other year. */
+  .cv-page .rev-x-tick:nth-child(2n) { display: none; }
+  .cv-page .rev-chart-desc { font-size: 11.5px; }
 }
 @media (max-width: 720px) {
   .cv-page .deep-hero { padding: 96px 22px 40px; }
@@ -5760,7 +6581,90 @@ body {
   .cv-page .glance-cell:nth-child(2n) { border-right: none; }
   .cv-page .glance-cell:nth-child(-n+4) { border-bottom: 1px solid var(--line-soft); }
   .cv-page .deal-row { grid-template-columns: 1fr; gap: 8px; padding: 16px 0; }
-  .cv-page .h-timeline-grid { grid-template-columns: repeat(2, 1fr); }
+  /* Mobile timeline: collapse to a vertical rail with cards on the right. */
+  .cv-page .h-timeline { margin: 32px 0 48px; }
+  .cv-page .h-timeline-hint { display: none; }
+  /* Hide vertical bands and the chapter-row above; era markers appear
+     inline before each chapter's first event in the vertical layout. */
+  .cv-page .h-timeline-bands { display: none; }
+  .cv-page .h-timeline-eras-row { display: none; }
+  .cv-page .h-event.starts-era::before {
+    content: attr(data-era-label);
+    grid-column: 1 / -1;
+    grid-row: auto;
+    display: block;
+    margin: 12px 0 6px;
+    padding-left: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--green-light);
+  }
+  .cv-page .h-event:first-child.starts-era::before { margin-top: 0; }
+  .cv-page .h-timeline-scroll {
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  .cv-page .h-timeline-track {
+    min-width: 0;
+    height: auto;
+    padding: 4px 0 4px 28px;
+  }
+  .cv-page .h-timeline-rail {
+    left: 4px;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    height: auto;
+    transform: none;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--ivory-faint) 85%, transparent) 0%,
+      color-mix(in srgb, var(--ivory-faint) 85%, transparent) 13.3%,
+      color-mix(in srgb, var(--green-light) 32%, transparent) 13.3%,
+      color-mix(in srgb, var(--green-light) 32%, transparent) 60%,
+      color-mix(in srgb, var(--green-light) 55%, transparent) 60%,
+      color-mix(in srgb, var(--green-light) 55%, transparent) 100%
+    );
+  }
+  .cv-page .h-timeline-rail-seg { display: none; }
+  .cv-page .h-timeline-grid {
+    flex-direction: column;
+    gap: 22px;
+    height: auto;
+  }
+  .cv-page .h-event {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: 12px 1fr;
+    grid-template-rows: auto;
+    justify-items: start;
+    align-items: start;
+    padding: 0;
+    column-gap: 16px;
+  }
+  .cv-page .h-event-dot {
+    grid-row: 1;
+    grid-column: 1;
+    margin-top: 4px;
+  }
+  .cv-page .h-event-content {
+    grid-row: 1;
+    grid-column: 2;
+    flex-direction: column !important;
+    align-items: flex-start;
+    align-self: start;
+    text-align: left;
+    padding: 0 !important;
+    max-width: none;
+    gap: 4px;
+  }
+  .cv-page .h-event-detail { max-width: none; }
   .cv-page .embargo-banner { flex-direction: column; align-items: flex-start; gap: 16px; padding: 22px; }
   .cv-page .pclub { padding: 36px 22px; min-height: 0; }
 }

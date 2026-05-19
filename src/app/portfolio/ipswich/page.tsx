@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
+import { IpswichTimeline } from "@/components/IpswichTimeline";
+import { IpswichRevenueChart } from "@/components/IpswichRevenueChart";
 import { Topbar } from "@/components/Topbar";
 
 export const metadata: Metadata = {
@@ -12,18 +14,6 @@ export const metadata: Metadata = {
 };
 
 type GlanceCell = { label: string; value: ReactNode };
-type AccompCard = {
-  icon: ReactNode;
-  title: ReactNode;
-  when: string;
-  body: ReactNode;
-};
-type TimelineEvent = {
-  year: string;
-  label: ReactNode;
-  tooltip: string;
-  isAnchor?: boolean;
-};
 
 const GLANCE: GlanceCell[] = [
   { label: "League", value: "EFL Championship" },
@@ -32,147 +22,6 @@ const GLANCE: GlanceCell[] = [
   { label: "First close", value: "Mar 2024" },
   { label: "Stake", value: <em>Controlling</em> },
   { label: "Board seat", value: "Bob Gold" },
-];
-
-const ACCOMPLISHMENTS: AccompCard[] = [
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 21h8" />
-        <path d="M12 17v4" />
-        <path d="M7 4h10v5a5 5 0 0 1-10 0V4z" />
-        <path d="M17 5h2a2 2 0 0 1 2 2v1a3 3 0 0 1-3 3" />
-        <path d="M7 5H5a2 2 0 0 0-2 2v1a3 3 0 0 0 3 3" />
-      </svg>
-    ),
-    title: (
-      <>
-        Back-to-back <em>promotions.</em>
-      </>
-    ),
-    when: "2023 → 2024",
-    body: (
-      <>
-        From League One to the Championship, then Championship to the <em>Premier League</em> — the most valuable
-        football league in the world. Among the rarest feats in English football.
-      </>
-    ),
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <polyline points="3 17 9 11 13 15 21 7" />
-        <polyline points="14 7 21 7 21 14" />
-      </svg>
-    ),
-    title: (
-      <>
-        Outsized <em>enterprise growth.</em>
-      </>
-    ),
-    when: "Since 2023",
-    body: (
-      <>
-        <em>6×+ increase</em> in revenues and valuation since 2023. The 2024/25 season generated the highest player
-        value creation in global football — validating the recruitment and development model now being institutionalized
-        across the portfolio.
-      </>
-    ),
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="9" cy="8" r="3.2" />
-        <circle cx="17" cy="9" r="2.4" />
-        <path d="M3 19c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-        <path d="M14 19c0-2.5 2-5 5-5" />
-      </svg>
-    ),
-    title: (
-      <>
-        World-class <em>management.</em>
-      </>
-    ),
-    when: "Ongoing",
-    body: (
-      <>
-        Mark Ashton — Chairman and operating leader — focused on building Ipswich into an{" "}
-        <em>entrenched Premier League club</em> over the next 5+ years. Bob Gold joined the Gamechanger 20 board in
-        December 2025.
-      </>
-    ),
-  },
-  {
-    icon: (
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M11 13l3 3 7-7" />
-        <path d="M21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11" />
-      </svg>
-    ),
-    title: (
-      <>
-        Prominent <em>co-investors.</em>
-      </>
-    ),
-    when: "Mar 2024 → Dec 2025",
-    body: (
-      <>
-        A consortium of institutional capital alongside Clara Vista: <em>Avenue Capital Group</em>, ORG Portfolio
-        Management (a US public pension fund), the Three Lions Fund, and ownership of the Florida Panthers — partners
-        with long-term horizons matching the club&apos;s generational rebuild.
-      </>
-    ),
-  },
-];
-
-const TIMELINE: TimelineEvent[] = [
-  {
-    year: "1878",
-    label: "Club founded",
-    tooltip:
-      "Ipswich Town Football Club founded in Suffolk, England. One of the oldest clubs in the English football pyramid.",
-  },
-  {
-    year: "1962",
-    label: "First Division champions",
-    tooltip:
-      "Wins the First Division championship under Sir Alf Ramsey — the only English manager ever to win the World Cup.",
-  },
-  {
-    year: "1981",
-    label: "UEFA Cup champions",
-    tooltip: "Wins the UEFA Cup under Sir Bobby Robson, beating AZ Alkmaar across two legs.",
-  },
-  {
-    year: "2023",
-    label: "Promoted to Championship",
-    tooltip:
-      "Promoted from League One to the EFL Championship — the first step in the back-to-back run.",
-  },
-  {
-    year: "Mar 2024",
-    label: <em>Clara Vista invests</em>,
-    tooltip: "Clara Vista makes initial investment in Gamechanger 20 Ltd, the parent company of the club.",
-    isAnchor: true,
-  },
-  {
-    year: "2024",
-    label: <em>Promoted to Premier League</em>,
-    tooltip: "Back-to-back promotion to the Premier League — among the rarest feats in English football.",
-  },
-  {
-    year: "2024/25",
-    label: "Player value creation #1",
-    tooltip:
-      "Highest player value creation in global football — validating the recruitment and development model now institutionalized across Clara Vista's portfolio.",
-  },
-  {
-    year: "Dec 2025",
-    label: <em>Consortium takes control</em>,
-    tooltip:
-      "Portman Holdings LLC consortium — Clara Vista, ORG, Three Lions Fund — becomes majority shareholder. Bob Gold joins the Gamechanger 20 board.",
-    isAnchor: true,
-  },
 ];
 
 export default function IpswichPage() {
@@ -277,25 +126,12 @@ export default function IpswichPage() {
                 </h2>
               </div>
               <p className="sh-deck">
-                What&apos;s happened at Ipswich since Clara Vista&apos;s initial investment in March 2024 — on the
-                pitch, in the boardroom, and on the cap table.
+                Annual revenue trajectory since Clara Vista&apos;s March 2024 investment — and the operating proof
+                points driving it.
               </p>
             </div>
 
-            <div className="accomp-grid">
-              {ACCOMPLISHMENTS.map((a, i) => (
-                <div className="accomp-card" key={i}>
-                  <div className="accomp-head">
-                    <div className="accomp-icon" aria-hidden="true">
-                      {a.icon}
-                    </div>
-                    <div className="accomp-title">{a.title}</div>
-                  </div>
-                  <div className="accomp-when">{a.when}</div>
-                  <p className="accomp-body">{a.body}</p>
-                </div>
-              ))}
-            </div>
+            <IpswichRevenueChart />
           </div>
         </div>
 
@@ -309,24 +145,12 @@ export default function IpswichPage() {
                 </h2>
               </div>
               <p className="sh-deck">
-                147 years of Ipswich Town. Hover any milestone for full detail. Filled green markers indicate Clara
-                Vista transactions.
+                Three chapters across 147 years — foundations, the Ramsey &amp; Robson golden era, and the modern
+                rebuild. Filled markers indicate Clara Vista milestones.
               </p>
             </div>
 
-            <div className="h-timeline">
-              <div className="h-timeline-rail" aria-hidden="true" />
-              <div className="h-timeline-grid">
-                {TIMELINE.map((e) => (
-                  <div className={`h-event${e.isAnchor ? " is-anchor" : ""}`} key={e.year}>
-                    <div className="h-event-year">{e.year}</div>
-                    <div className="h-event-dot" />
-                    <div className="h-event-label">{e.label}</div>
-                    <div className="h-event-tooltip">{e.tooltip}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <IpswichTimeline />
 
             <div className="cta-row">
               <Link href="/thesis" className="cta-link">
