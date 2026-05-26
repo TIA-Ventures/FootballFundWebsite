@@ -167,7 +167,7 @@ export default function ThesisPage() {
           <div className="thesis-takeaway-inner">
             <div className="thesis-takeaway-eyebrow">003 · The takeaway</div>
             <h3 className="thesis-takeaway-lede">
-              The most-watched sport on earth, structurally underowned, trading at a{" "}
+              The most-watched sport on earth, underpenetrated by institutional investment, trading at a{" "}
               <em>fraction of US sports multiples</em>.
             </h3>
 

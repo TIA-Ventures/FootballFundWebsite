@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { FontCompare } from "@/components/FontCompare";
-import { ColorCompare } from "@/components/ColorCompare";
 import type { CSSProperties } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -83,11 +81,8 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
           <Link href="/" style={activeNav === "home" ? activeStyle : undefined}>
             Home
           </Link>
-          <Link href="/thesis" style={activeNav === "thesis" ? activeStyle : undefined}>
-            Thesis
-          </Link>
-          <Link href="/approach" style={activeNav === "approach" ? activeStyle : undefined}>
-            Approach
+          <Link href="/team" style={activeNav === "team" ? activeStyle : undefined}>
+            Team
           </Link>
           <div
             className={`nav-portfolio${activeNav === "portfolio" ? " is-active" : ""}`}
@@ -143,7 +138,7 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
                   <span className="npm-club">
                     Italy <em>(target)</em>
                   </span>
-                  <span className="npm-meta">Serie B · Italy</span>
+                  <span className="npm-meta">Serie A · Italy</span>
                 </span>
               </Link>
               <span className="npm-divider" aria-hidden="true" />
@@ -153,14 +148,11 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
               </Link>
             </div>
           </div>
-          <Link
-            href="/track-record"
-            style={activeNav === "track-record" ? activeStyle : undefined}
-          >
-            Track Record
+          <Link href="/thesis" style={activeNav === "thesis" ? activeStyle : undefined}>
+            Thesis
           </Link>
-          <Link href="/team" style={activeNav === "team" ? activeStyle : undefined}>
-            Team
+          <Link href="/approach" style={activeNav === "approach" ? activeStyle : undefined}>
+            Approach
           </Link>
           <a
             href="https://login.app.carta.com/credentials/login/"
@@ -189,8 +181,6 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
             />
           </svg>
         </button>
-        <FontCompare />
-        <ColorCompare />
         <button
           className="theme-toggle"
           onClick={onThemeToggle}
@@ -238,21 +228,8 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
           <Link href="/" className="mm-link" onClick={closeMobile} style={activeNav === "home" ? activeStyle : undefined}>
             Home
           </Link>
-          <Link
-            href="/thesis"
-            className="mm-link"
-            onClick={closeMobile}
-            style={activeNav === "thesis" ? activeStyle : undefined}
-          >
-            Thesis
-          </Link>
-          <Link
-            href="/approach"
-            className="mm-link"
-            onClick={closeMobile}
-            style={activeNav === "approach" ? activeStyle : undefined}
-          >
-            Approach
+          <Link href="/team" className="mm-link" onClick={closeMobile} style={activeNav === "team" ? activeStyle : undefined}>
+            Team
           </Link>
           <div className="mm-group">
             <Link
@@ -276,15 +253,20 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
             </div>
           </div>
           <Link
-            href="/track-record"
+            href="/thesis"
             className="mm-link"
             onClick={closeMobile}
-            style={activeNav === "track-record" ? activeStyle : undefined}
+            style={activeNav === "thesis" ? activeStyle : undefined}
           >
-            Track Record
+            Thesis
           </Link>
-          <Link href="/team" className="mm-link" onClick={closeMobile} style={activeNav === "team" ? activeStyle : undefined}>
-            Team
+          <Link
+            href="/approach"
+            className="mm-link"
+            onClick={closeMobile}
+            style={activeNav === "approach" ? activeStyle : undefined}
+          >
+            Approach
           </Link>
           <a
             href="https://login.app.carta.com/credentials/login/"

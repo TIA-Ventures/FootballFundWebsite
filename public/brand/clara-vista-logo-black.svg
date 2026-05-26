@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 28" fill="none" aria-label="Clara Vista">
+  <g transform="translate(0 3)">
+    <circle cx="11" cy="11" r="10.5" stroke="#000000" stroke-width="1"/>
+    <circle cx="11" cy="11" r="6.5" stroke="#000000" stroke-opacity="0.28" stroke-width="0.5"/>
+    <circle cx="11" cy="11" r="2" fill="#000000"/>
+  </g>
+  <text x="36" y="20" fill="#000000" font-family="JetBrains Mono, IBM Plex Mono, ui-monospace, monospace" font-size="16.5" font-weight="300" letter-spacing="5.28">CLARA VISTA</text>
+</svg>

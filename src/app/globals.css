@@ -1285,7 +1285,7 @@ body {
 .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .loader-mark {
   font-family: var(--font-mono);
-  font-weight: 300; font-size: 13px;
+  font-weight: 300; font-size: 16.5px;
   letter-spacing: 0.46em;
   color: var(--green-light);
 }
@@ -1303,7 +1303,7 @@ body {
 .loader-sub {
   font-family: var(--font-serif);
   font-style: italic; font-weight: 300;
-  font-size: 14px; letter-spacing: 0.06em;
+  font-size: 17.5px; letter-spacing: 0.06em;
   color: var(--ivory-dim);
 }
 
@@ -1364,7 +1364,7 @@ body {
 }
 .brand-wordmark {
   font-family: var(--font-mono);
-  font-weight: 300; font-size: 13px;
+  font-weight: 300; font-size: 16.5px;
   letter-spacing: 0.32em;
   color: var(--ivory);
   transition: color 0.6s ease;
@@ -1378,7 +1378,7 @@ body {
 .brand-tagline {
   font-family: var(--font-serif);
   font-style: italic; font-weight: 300;
-  font-size: 13px; letter-spacing: 0.02em;
+  font-size: 16.5px; letter-spacing: 0.02em;
   color: var(--ivory-dim);
   transition: color 0.6s ease;
 }
@@ -1455,7 +1455,7 @@ body {
   text-decoration: none;
   color: var(--ivory-mid);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 17.5px;
   font-weight: 400;
   letter-spacing: 0.01em;
   transition: background 0.3s, color 0.6s ease;
@@ -1478,7 +1478,7 @@ body {
   text-decoration: none;
   color: var(--ivory-mid);
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 16.5px;
   font-weight: 350;
   transition: background 0.3s, color 0.6s ease;
 }
@@ -1501,7 +1501,7 @@ body {
 .nav a {
   color: var(--ivory-mid); text-decoration: none;
   font-family: var(--font-sans);
-  font-size: 12px; font-weight: 400;
+  font-size: 15.5px; font-weight: 400;
   letter-spacing: 0.06em;
   transition: color 0.3s;
   white-space: nowrap;
@@ -1633,7 +1633,7 @@ body {
 .nav-portfolio-menu .npm-club {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 16.5px;
   letter-spacing: 0.02em;
   color: var(--ivory);
   line-height: 1.2;
@@ -1647,7 +1647,7 @@ body {
 }
 .nav-portfolio-menu .npm-meta {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15.5px;
   font-weight: 300;
   letter-spacing: 0.04em;
   text-transform: none;
@@ -1669,7 +1669,7 @@ body {
   padding: 11px 14px;
   border-radius: 4px;
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1685,7 +1685,7 @@ body {
 .nav-portfolio-menu .npm-arrow {
   font-family: var(--font-mono);
   font-weight: 300;
-  font-size: 14px;
+  font-size: 17.5px;
   letter-spacing: 0;
   transition: transform 0.2s cubic-bezier(.2,.8,.2,1);
 }
@@ -1744,7 +1744,7 @@ body {
 }
 .font-compare-trigger {
   font-family: var(--font-sans);
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1791,7 +1791,7 @@ body {
 }
 .font-compare-option {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-align: left;
@@ -1812,7 +1812,7 @@ body {
   letter-spacing: 0.06em;
 }
 .font-compare-option-detail {
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--ivory-dim);
@@ -1841,7 +1841,7 @@ body {
 }
 .color-compare-trigger {
   font-family: var(--font-sans);
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1881,7 +1881,7 @@ body {
 }
 .color-compare-option {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-align: left;
@@ -1920,7 +1920,7 @@ body {
   letter-spacing: 0.06em;
 }
 .color-compare-option-detail {
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--ivory-dim);
@@ -1948,10 +1948,99 @@ body {
   position: relative;
   height: 100vh; width: 100%;
   overflow: hidden;
+  background: var(--bg);
 }
+
+/* Faded promotion footage behind the stipple map (Thesis / portfolio scrim pattern). */
+.hero-video-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.home-hero .hero-headline {
+  opacity: 0;
+  animation: fadeUp 1.2s cubic-bezier(.2,.8,.2,1) 0.35s forwards;
+}
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  /* Video is the hero now — push color, slight contrast, gentle dim only
+     so the headline/panel still read against it. */
+  filter: saturate(1.18) contrast(1.10) brightness(0.94);
+  transform: scale(1.06);
+}
+.hero-video-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: background 0.6s ease;
+}
+/* Light scrim — let the video color come through. Just enough top haze
+   for topbar legibility, a faint mid pass-through, and a strong bottom
+   anchor so the headline + credentials still have a plate to read on. */
+:root[data-theme="day"] .hero-video-scrim {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg) 48%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 18%, transparent) 36%,
+    color-mix(in srgb, var(--bg) 22%, transparent) 64%,
+    color-mix(in srgb, var(--bg) 72%, transparent) 88%,
+    var(--bg) 100%
+  );
+}
+:root[data-theme="night"] .hero-video-scrim {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg) 54%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 22%, transparent) 36%,
+    color-mix(in srgb, var(--bg) 26%, transparent) 64%,
+    color-mix(in srgb, var(--bg-deep) 76%, transparent) 88%,
+    var(--bg-deep) 100%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+  .hero-video-backdrop {
+    background: url("/hero/ipswich-promotion-poster-v2.jpg") center 42% / cover no-repeat;
+    filter: saturate(1.18) contrast(1.10) brightness(0.94);
+  }
+}
+@media (max-width: 720px) {
+  .hero-video { display: none; }
+  .hero-video-backdrop {
+    background: url("/hero/ipswich-promotion-poster-v2.jpg") center 42% / cover no-repeat;
+    filter: saturate(1.18) contrast(1.10) brightness(0.94);
+  }
+}
+
+.hero-map-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  isolation: isolate;
+  pointer-events: none;
+  /* Map overlay disabled — video is the hero. The canvas and its render
+     loop are still mounted (component-managed lifecycle) but hidden so
+     dots / countries / markers / labels / leader lines are all suppressed
+     in one declaration. To bring the map back, remove this `display:none`. */
+  display: none;
+}
+
 #map-canvas {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: auto;
 }
 
 /* ---- Hero bottom chrome (headline + recenter) ----
@@ -1976,7 +2065,7 @@ body {
 }
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px; letter-spacing: 0.32em;
+  font-size: 14.5px; letter-spacing: 0.32em;
   color: var(--green-light); text-transform: uppercase;
   margin-bottom: 28px; font-weight: 500;
   display: flex; align-items: center; gap: 14px;
@@ -1988,38 +2077,82 @@ body {
 }
 .headline {
   font-family: var(--font-serif);
-  font-weight: 300;
-  font-size: clamp(34px, 4.4vw, 64px);
-  line-height: 1.04;
-  letter-spacing: -0.022em;
+  /* Weight bumped 300 → 400 so the letterforms hold their own against
+     the video without needing per-letter halos. Combined with the
+     same-color text-stroke below, it effectively reads as ~450 weight
+     for additional presence. */
+  font-weight: 400;
+  /* Size bumped ~20% (was clamp(34, 4.4vw, 64)) for more visual mass. */
+  font-size: clamp(40px, 5.2vw, 76px);
+  line-height: 1.02;
+  /* Tighter optical packing — denser cluster per word. */
+  letter-spacing: -0.028em;
   margin-bottom: 26px;
   color: var(--ivory);
-  text-shadow:
-    0 2px 18px rgba(0, 0, 0, 0.72),
-    0 0 44px rgba(0, 0, 0, 0.55);
+  /* Same-color hairline stroke — adds ~0.35px of letterform thickness
+     ringed around each glyph in the letter's own color. Reads as a
+     weight increase without creating a halo, color shift, or plate.
+     Works equally well on day (dark forest text) and night (cream). */
+  -webkit-text-stroke: 0.35px currentColor;
+  /* Legibility comes from the local backdrop-filter overlay on
+     .home-hero .hero-headline::before, not per-letter text-shadows.
+     Halos created a visible cream (day) / fog (night) plate that
+     read as "weird" against the colorful video. */
   font-feature-settings: "kern", "liga", "ss01";
   transition: color 0.6s ease;
 }
-[data-theme="day"] .headline {
-  text-shadow:
-    0 0 14px color-mix(in srgb, var(--bg) 95%, transparent),
-    0 0 32px color-mix(in srgb, var(--bg) 70%, transparent);
-}
 .headline em {
-  font-style: italic; font-weight: 400;
+  /* Italic emphasis pushed 400 → 500 to widen the weight gap between
+     "WE" and "INVEST/BUILD/WIN" — more dramatic hierarchy. */
+  font-style: italic; font-weight: 500;
   color: var(--green-light);
   transition: color 0.6s ease;
 }
 .subhead {
   font-family: var(--font-sans);
-  font-size: 14px; line-height: 1.7;
+  font-size: 17.5px; line-height: 1.7;
   color: var(--ivory-mid); max-width: 500px;
   font-weight: 300; letter-spacing: 0.005em;
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.65);
   transition: color 0.6s ease;
 }
-[data-theme="day"] .subhead {
-  text-shadow: 0 0 12px color-mix(in srgb, var(--bg) 92%, transparent);
+
+/* ---- Home hero headline scrim ----
+   Local frosted-glass backdrop confined to the headline region. Uses
+   backdrop-filter to blur + desaturate (and on night, dim) the actual
+   video pixels behind the type, then masks itself with a soft radial
+   gradient so the edges fade to transparent — no visible plate
+   boundary, no rectangle, no shade. The video stays the visual
+   surface; only a localized patch is softened to give the type a
+   reading area. (Apple TV+ / Linear / Stripe pattern.) */
+.home-hero .hero-headline::before {
+  content: "";
+  position: absolute;
+  inset: -64px -88px -48px -88px;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    ellipse 78% 84% at 36% 50%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.88) 42%,
+    rgba(0, 0, 0, 0) 96%
+  );
+  mask-image: radial-gradient(
+    ellipse 78% 84% at 36% 50%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.88) 42%,
+    rgba(0, 0, 0, 0) 96%
+  );
+  -webkit-backdrop-filter: blur(16px) saturate(0.42) brightness(0.42);
+  backdrop-filter: blur(16px) saturate(0.42) brightness(0.42);
+}
+[data-theme="day"] .home-hero .hero-headline::before {
+  /* Day theme — text is dark forest #1A2520 on bright video.
+     Near-zero saturate (kills all color confusion), brightness lift
+     above 1 + contrast boost so the underlying video reads as a
+     near-grayscale lifted patch. Dark type pops on lifted neutral.
+     No cream wash, no "white shade" — just colorless blur behind. */
+  -webkit-backdrop-filter: blur(16px) saturate(0.05) brightness(1.08) contrast(1.06);
+  backdrop-filter: blur(16px) saturate(0.05) brightness(1.08) contrast(1.06);
 }
 
 /* ---- Portfolio Panel ---- */
@@ -2045,7 +2178,7 @@ body {
 }
 .pp-label {
   font-family: var(--font-sans);
-  font-size: 10px; letter-spacing: 0.28em;
+  font-size: 13.5px; letter-spacing: 0.28em;
   color: var(--ivory-dim); text-transform: uppercase;
   font-weight: 500;
   margin-bottom: 18px;
@@ -2083,7 +2216,7 @@ body {
 .pp-row:last-child { border-bottom: none; }
 .pp-num {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14.5px;
   color: var(--green-light);
   font-weight: 300;
   letter-spacing: 0.08em;
@@ -2091,14 +2224,14 @@ body {
 .pp-info { overflow: hidden; }
 .pp-city {
   font-family: var(--font-serif);
-  font-weight: 400; font-size: 17px;
+  font-weight: 400; font-size: 19px;
   color: var(--ivory); line-height: 1.1;
   letter-spacing: -0.005em;
   transition: color 0.6s ease;
 }
 .pp-club {
   font-family: var(--font-sans);
-  font-size: 11px; color: var(--ivory-dim);
+  font-size: 14.5px; color: var(--ivory-dim);
   margin-top: 3px; font-weight: 300;
   transition: color 0.6s ease;
 }
@@ -2187,7 +2320,7 @@ body {
   margin-top: 12px;
   padding: 0 2px;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--ivory-mid);
@@ -2228,7 +2361,7 @@ body {
 }
 .cred-value {
   font-family: var(--font-serif);
-  font-weight: 400; font-size: 22px;
+  font-weight: 400; font-size: 24px;
   color: var(--ivory); line-height: 1;
   letter-spacing: -0.01em;
   transition: color 0.6s ease;
@@ -2240,7 +2373,7 @@ body {
 }
 .cred-label {
   font-family: var(--font-sans);
-  font-size: 9px; letter-spacing: 0.24em;
+  font-size: 13px; letter-spacing: 0.24em;
   color: var(--ivory-dim);
   text-transform: uppercase; font-weight: 500;
   transition: color 0.6s ease;
@@ -2276,6 +2409,8 @@ body {
 }
 
 .cv-hint {
+  /* Map affordance — hidden alongside .hero-map-layer. */
+  display: none;
   position: absolute;
   /* Bottom-centered over the map, comfortably above the credentials row
      (bottom: 36px) and the recenter button (bottom: 140px, right-aligned).
@@ -2298,7 +2433,7 @@ body {
   backdrop-filter: blur(14px) saturate(115%);
   border-radius: 1px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ivory-mid);
@@ -2323,7 +2458,7 @@ body {
 }
 .cv-hint-arrow {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 15.5px;
   color: var(--green-light);
   letter-spacing: 0;
   transition: color 0.6s ease;
@@ -2344,11 +2479,12 @@ body {
    bottom = 140px (was 92px) → ~64px clear air between the button and the
    bottom credentials row, on the 8pt vertical-rhythm grid. */
 .cv-recenter {
+  /* Map affordance — hidden alongside .hero-map-layer. */
+  display: none !important;
   position: absolute;
   bottom: 140px;
   right: 56px;
   z-index: 11;
-  display: inline-flex;
   align-items: center;
   gap: 9px;
   height: 42px;
@@ -2357,7 +2493,7 @@ body {
   background: var(--green-deep);
   border-radius: 2px;
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 13.5px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -2450,7 +2586,7 @@ body {
   }
   .hero-headline .eyebrow {
     margin-bottom: 18px;
-    font-size: 10px;
+    font-size: 13.5px;
     letter-spacing: 0.28em;
   }
   .hero-headline .headline {
@@ -2460,7 +2596,7 @@ body {
   }
   .hero-headline .subhead {
     max-width: none;
-    font-size: 15px;
+    font-size: 18.5px;
     line-height: 1.65;
     margin-bottom: 0;
   }
@@ -2482,7 +2618,7 @@ body {
     left: 50%;
     transform: translate(-50%, -8px);
     padding: 10px 16px;
-    font-size: 9px;
+    font-size: 13px;
     letter-spacing: 0.2em;
   }
   .cv-hint.is-visible {
@@ -2519,7 +2655,7 @@ body {
 }
 .tooltip-meta {
   font-family: var(--font-sans);
-  font-size: 9px; color: var(--green-light);
+  font-size: 13px; color: var(--green-light);
   letter-spacing: 0.26em; text-transform: uppercase;
   margin-bottom: 8px; font-weight: 500;
   display: flex; justify-content: space-between;
@@ -2527,14 +2663,14 @@ body {
 }
 .tooltip-city {
   font-family: var(--font-serif);
-  font-size: 22px; color: var(--ivory);
+  font-size: 24px; color: var(--ivory);
   margin-bottom: 4px; font-weight: 400;
   letter-spacing: -0.012em;
   transition: color 0.6s ease;
 }
 .tooltip-club {
   font-family: var(--font-sans);
-  font-size: 13px; color: var(--ivory-mid);
+  font-size: 16.5px; color: var(--ivory-mid);
   line-height: 1.55; font-weight: 300;
   transition: color 0.6s ease;
 }
@@ -2545,7 +2681,7 @@ body {
 }
 .tooltip-stat {
   font-family: var(--font-sans);
-  font-size: 11px; letter-spacing: 0.04em;
+  font-size: 14.5px; letter-spacing: 0.04em;
   color: var(--ivory-dim);
   display: flex; justify-content: space-between;
   align-items: baseline; font-weight: 400;
@@ -2555,7 +2691,7 @@ body {
   font-family: var(--font-mono);
   color: var(--green-light); font-weight: 300;
   letter-spacing: 0.1em;
-  font-size: 10px; text-transform: uppercase;
+  font-size: 13.5px; text-transform: uppercase;
   transition: color 0.6s ease;
 }
 
@@ -2661,7 +2797,7 @@ body {
 }
 .ps-eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px; letter-spacing: 0.3em;
+  font-size: 14.5px; letter-spacing: 0.3em;
   color: var(--green-light); text-transform: uppercase;
   margin-bottom: 24px; font-weight: 500;
   display: flex; align-items: center; gap: 14px;
@@ -2685,7 +2821,7 @@ body {
 }
 .ps-head-right {
   font-family: var(--font-sans);
-  font-size: 14px; color: var(--ivory-mid);
+  font-size: 17.5px; color: var(--ivory-mid);
   line-height: 1.7; font-weight: 300;
   max-width: 460px; padding-bottom: 6px;
   transition: color 0.6s ease;
@@ -2768,7 +2904,7 @@ body {
 .cc-logo-placeholder { background: transparent; }
 .cc-meta {
   font-family: var(--font-sans);
-  font-size: 10px; letter-spacing: 0.26em;
+  font-size: 13.5px; letter-spacing: 0.26em;
   text-transform: uppercase; font-weight: 500;
   margin-bottom: 36px;
   display: flex; justify-content: space-between;
@@ -2809,7 +2945,7 @@ body {
 }
 .cc-name {
   font-family: var(--font-serif);
-  font-size: 30px; font-weight: 400;
+  font-size: 32px; font-weight: 400;
   color: var(--ivory); margin-bottom: 6px;
   letter-spacing: -0.018em; line-height: 1.05;
   transition: color 0.6s ease;
@@ -2820,14 +2956,14 @@ body {
 }
 .cc-location {
   font-family: var(--font-sans);
-  font-size: 11px; color: var(--ivory-dim);
+  font-size: 14.5px; color: var(--ivory-dim);
   letter-spacing: 0.18em; text-transform: uppercase;
   font-weight: 500; margin-bottom: 28px;
   transition: color 0.6s ease;
 }
 .cc-note {
   font-family: var(--font-sans);
-  font-size: 13px; line-height: 1.7;
+  font-size: 16.5px; line-height: 1.7;
   color: var(--ivory-mid); font-weight: 300;
   transition: color 0.6s ease;
 }
@@ -2847,7 +2983,7 @@ body {
 .cc-note { margin-bottom: 32px; }
 .cc-stat-label {
   font-family: var(--font-sans);
-  font-size: 9px; color: var(--ivory-dim);
+  font-size: 13px; color: var(--ivory-dim);
   letter-spacing: 0.22em; text-transform: uppercase;
   font-weight: 500;
   transition: color 0.6s ease;
@@ -2855,14 +2991,14 @@ body {
 .cc-stat-value {
   font-family: var(--font-serif);
   color: var(--ivory); margin-top: 6px;
-  font-size: 16px; font-weight: 400;
+  font-size: 19px; font-weight: 400;
   letter-spacing: -0.005em;
   transition: color 0.6s ease;
 }
 .cc-stat-value em {
   font-style: italic;
   color: var(--ivory-dim);
-  font-size: 14px;
+  font-size: 17.5px;
   transition: color 0.6s ease;
 }
 /* In-card CTA — matches /portfolio .pclub-link (plain caps + arrow, no bar/button chrome).
@@ -2871,7 +3007,7 @@ body {
   margin-top: 22px;
   align-self: flex-start;
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -2922,7 +3058,7 @@ body {
 }
 .manifesto-eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px; letter-spacing: 0.32em;
+  font-size: 14.5px; letter-spacing: 0.32em;
   color: var(--green-light); text-transform: uppercase;
   font-weight: 500;
   display: flex; align-items: center; gap: 14px;
@@ -2957,7 +3093,7 @@ body {
 .manifesto-body {
   margin-top: 44px;
   font-family: var(--font-sans);
-  font-size: 15px; line-height: 1.75;
+  font-size: 18.5px; line-height: 1.75;
   color: var(--ivory-mid);
   font-weight: 300; letter-spacing: 0.005em;
   max-width: 640px;
@@ -3100,7 +3236,7 @@ body {
 }
 .cv-page .stat-grid .stat-eyebrow {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.20em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -3120,7 +3256,7 @@ body {
 }
 .cv-page .stat-grid .stat-cell.is-lead .stat-label {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15.5px;
   letter-spacing: 0.20em;
   line-height: 1.5;
   text-transform: uppercase;
@@ -3144,7 +3280,7 @@ body {
 }
 .cv-page .stat-grid .stat-cell:not(.is-lead) .stat-label {
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: 14px;
   letter-spacing: 0.18em;
   line-height: 1.5;
   text-transform: uppercase;
@@ -3173,7 +3309,7 @@ body {
 .cv-page .ac-row-head { margin-bottom: 28px; }
 .cv-page .ac-row-name {
   font-family: var(--font-sans);
-  font-size: 12.5px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -3183,7 +3319,7 @@ body {
 }
 .cv-page .ac-row-meta {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 14px;
   color: var(--ivory-dim);
   letter-spacing: 0.04em;
   font-weight: 300;
@@ -3217,7 +3353,7 @@ body {
   min-width: 56px;
   padding: 0 10px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 15.5px;
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--ivory);
@@ -3239,7 +3375,7 @@ body {
 .cv-page .ac-bar-label {
   margin-top: 6px;
   font-family: var(--font-sans);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.18em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -3250,7 +3386,7 @@ body {
 .cv-page .ac-bar.is-sports .ac-bar-label { color: var(--green-light); }
 .cv-page .ac-source {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.12em;
   color: var(--ivory-faint);
   text-transform: uppercase;
@@ -3271,7 +3407,7 @@ body {
 }
 .cv-page .thesis-takeaway-eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.30em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -3321,7 +3457,7 @@ body {
 }
 .cv-page .thesis-takeaway-label {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15.5px;
   letter-spacing: 0.24em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -3330,7 +3466,7 @@ body {
 }
 .cv-page .thesis-takeaway-claim {
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: 21px;
   line-height: 1.45;
   color: var(--ivory);
   font-weight: 400;
@@ -3366,7 +3502,7 @@ body {
 }
 .cv-page .chapter-break-eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.32em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -3410,7 +3546,7 @@ body {
 .cv-page a.chapter-break:hover .chapter-break-arrow { transform: translateX(10px); }
 .cv-page .chapter-break-meta {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 14px;
   letter-spacing: 0.18em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -3529,7 +3665,7 @@ body {
   isolation: isolate;
   align-items: stretch;
 }
-/* Stable band height when switching Ideal vs clubs (reduces cover “zoom” + fixed-clip jumps). */
+/* Stable band height when switching prospects (reduces cover “zoom” + fixed-clip jumps). */
 @media (min-width: 901px) {
   .cv-page.approach-page .approach-invest-section .scoring-block .scoring-layout {
     min-height: 560px;
@@ -3585,10 +3721,9 @@ body {
 }
 
 /* ---- Selection scorecard · Radar (Approach 001) ----
-   Heptagonal radar with seven selection criteria scored 0–100. Ideal
-   target renders as a green heptagon at radius 100; each portfolio club
-   is shown as an amber polygon at scaled radii. Layout is a 2-column
-   grid (text stack + chart). */
+   Heptagonal radar with seven selection criteria scored 0–100. Each
+   prospect is shown as an amber polygon at scaled radii. Layout is a
+   2-column grid (text stack + chart). */
 .cv-page .scoring-block {
   margin-top: 8px;
 }
@@ -3604,7 +3739,7 @@ body {
 }
 .cv-page .scoring-lede {
   font-family: var(--font-serif);
-  font-size: 16px;
+  font-size: 19px;
   line-height: 1.55;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -3631,7 +3766,7 @@ body {
   background: var(--bg);
   padding: 12px 20px;
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.20em;
   color: var(--ivory-mid);
   text-transform: uppercase;
@@ -3688,18 +3823,6 @@ body {
   opacity: 0.85;
   transition: stroke 0.6s ease;
 }
-/* Ideal polygon — only filled when the Ideal tab is active */
-.cv-page .sc-ideal-poly {
-  stroke: none;
-  fill: var(--green-light);
-  fill-opacity: 0.18;
-  transition: fill-opacity 0.4s ease, fill 0.6s ease;
-  pointer-events: none;
-}
-.cv-page .scoring-block:not([data-active="ideal"]) .sc-ideal-poly {
-  fill-opacity: 0;
-}
-
 /* Vertex dots — clickable for axis selection */
 .cv-page .sc-vertex-dot {
   stroke: var(--green-light);
@@ -3726,7 +3849,7 @@ body {
 }
 .cv-page .sc-score-num {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14.5px;
   font-weight: 500;
   fill: var(--amber);
   pointer-events: none;
@@ -3736,7 +3859,7 @@ body {
 /* Axis labels (clickable) */
 .cv-page .sc-label {
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: 14px;
   letter-spacing: 0.18em;
   fill: var(--ivory-mid);
   text-transform: uppercase;
@@ -3749,26 +3872,6 @@ body {
 .cv-page .sc-label.is-selected {
   fill: var(--green-light);
   font-weight: 600;
-}
-
-/* Ideal tab: score under each axis caption (all dimensions at 100) */
-.cv-page .sc-ideal-axis-score {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  fill: var(--green-light);
-  opacity: 0.9;
-  cursor: pointer;
-  user-select: none;
-  transition: fill 0.2s ease, opacity 0.2s ease;
-}
-.cv-page .sc-ideal-axis-score:hover {
-  opacity: 1;
-}
-.cv-page .sc-ideal-axis-score.is-selected {
-  opacity: 1;
-  font-weight: 700;
 }
 
 /* Center label (overlaid HTML for cleaner kerning) */
@@ -3785,7 +3888,7 @@ body {
 }
 .cv-page .scoring-center span {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15.5px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -3803,7 +3906,7 @@ body {
 }
 .cv-page .scoring-detail-eyebrow {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.18em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -3813,7 +3916,7 @@ body {
 }
 .cv-page .scoring-detail-name {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 16.5px;
   font-weight: 600;
   letter-spacing: 0.18em;
   color: var(--green-light);
@@ -3824,7 +3927,7 @@ body {
 }
 .cv-page .scoring-detail-score {
   font-family: var(--font-serif);
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 400;
   letter-spacing: -0.022em;
   color: var(--amber);
@@ -3834,17 +3937,14 @@ body {
 }
 .cv-page .scoring-detail-score em {
   font-style: normal;
-  font-size: 14px;
+  font-size: 17.5px;
   color: var(--ivory-dim);
   font-weight: 300;
   margin-left: 4px;
 }
-.cv-page .scoring-detail-score.is-ideal-tab {
-  color: var(--green-light);
-}
 .cv-page .scoring-detail-desc {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 16.5px;
   line-height: 1.6;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -3857,7 +3957,7 @@ body {
   gap: 24px;
   margin-bottom: 24px;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 14px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -3905,7 +4005,7 @@ body {
 }
 .cv-page .pillar-col-label {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.24em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -3916,7 +4016,7 @@ body {
 }
 .cv-page .pillar-col-desc {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.5;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -3943,7 +4043,7 @@ body {
 }
 .cv-page .pillar-kpi-label {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15.5px;
   color: var(--ivory);
   font-weight: 500;
   letter-spacing: 0.005em;
@@ -3995,7 +4095,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.02em;
   line-height: 1;
   margin-top: 2px;
@@ -4088,6 +4188,7 @@ body {
 .cv-page .return-engine {
   display: grid;
   grid-template-columns: 1fr 1fr 1.2fr;
+  grid-template-rows: auto auto auto 1fr;
   gap: 1px;
   background: var(--line);
   border: 1px solid var(--line);
@@ -4095,6 +4196,9 @@ body {
   transition: background 0.6s ease, border-color 0.6s ease;
 }
 .cv-page .re-card {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
   background: var(--bg);
   padding: 36px 32px;
   transition: background 0.4s, color 0.6s ease;
@@ -4103,7 +4207,7 @@ body {
 .cv-page .re-card.is-result { background: var(--bg-deep); }
 .cv-page .re-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.22em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -4113,7 +4217,7 @@ body {
 }
 .cv-page .re-multiplier {
   font-family: var(--font-serif);
-  font-size: 64px;
+  font-size: 66px;
   line-height: 1;
   color: var(--ivory);
   font-weight: 400;
@@ -4130,14 +4234,14 @@ body {
   transition: color 0.6s ease;
 }
 .cv-page .re-multiplier .re-x {
-  font-size: 36px;
+  font-size: 38px;
   color: var(--green-light);
   font-weight: 300;
   transition: color 0.6s ease;
 }
 .cv-page .re-name {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 24px;
   color: var(--ivory);
   font-weight: 400;
   line-height: 1.15;
@@ -4146,24 +4250,26 @@ body {
   font-style: italic;
   transition: color 0.6s ease;
 }
-/* Result card label is uppercase mono, not italic serif — distinguishes
-   the combined IRR/MOIC line from the alpha/beta names beside it. */
 .cv-page .re-name--result {
-  font-family: var(--font-sans);
-  font-style: normal;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-weight: 500;
   color: var(--green-light);
 }
 .cv-page .re-desc {
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: 17px;
   line-height: 1.65;
   color: var(--ivory-mid);
   font-weight: 300;
   transition: color 0.6s ease;
+}
+
+@supports not (grid-template-rows: subgrid) {
+  .cv-page .re-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .cv-page .re-multiplier {
+    min-height: 66px;
+  }
 }
 
 /* ---- Operating data terminal (Approach · 9 revenue lines, pages_40 layout) ----
@@ -4182,7 +4288,7 @@ body {
 }
 .cv-page .terminal-eyebrow {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.20em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -4191,7 +4297,7 @@ body {
 }
 .cv-page .terminal-desc {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.5;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -4213,7 +4319,7 @@ body {
 .cv-page .terminal-table thead th {
   text-align: left;
   padding: 12px 16px;
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.20em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -4226,7 +4332,7 @@ body {
 .cv-page .terminal-table tbody td {
   padding: 18px 16px;
   border-bottom: 1px solid var(--line-soft);
-  font-size: 12px;
+  font-size: 15.5px;
   color: var(--ivory);
   font-weight: 400;
   vertical-align: middle;
@@ -4245,7 +4351,7 @@ body {
   background: color-mix(in srgb, var(--green-soft) 55%, var(--ivory-faint));
 }
 .cv-page .terminal-table .col-num {
-  font-size: 10px;
+  font-size: 13.5px;
   color: var(--green-light);
   font-weight: 500;
   width: 36px;
@@ -4258,7 +4364,7 @@ body {
 }
 .cv-page .terminal-table .col-line {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15.5px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 600;
@@ -4268,7 +4374,7 @@ body {
 }
 .cv-page .terminal-table .col-metric {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15.5px;
   color: var(--ivory-mid);
   font-weight: 400;
   width: 22%;
@@ -4310,7 +4416,7 @@ body {
 .cv-page .revline-footnote {
   margin-top: 28px;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.10em;
   color: var(--ivory-faint);
   text-transform: uppercase;
@@ -4318,6 +4424,325 @@ body {
   line-height: 1.7;
   max-width: 880px;
   transition: color 0.6s ease;
+}
+
+/* ---- Value Engine (Approach 004) — clara-vista-value-engine_2.html ---- */
+.cv-page .value-engine {
+  margin-top: 4px;
+}
+.cv-page .ve-bands .ve-band:last-child {
+  border-bottom: 1px solid var(--line-soft);
+}
+.cv-page .value-engine[data-metric-focus="true"] .ve-cell:not(.is-active) {
+  opacity: 0.52;
+}
+.cv-page .value-engine[data-in-view="false"] .ve-cell {
+  opacity: 0;
+  animation: none;
+}
+.cv-page .ve-lede {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ivory-mid);
+  max-width: 640px;
+  margin-bottom: 26px;
+  transition: color 0.6s ease;
+}
+.cv-page .ve-lede em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--ivory);
+}
+.cv-page .ve-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+  font-weight: 300;
+  margin-bottom: 8px;
+  transition: color 0.6s ease;
+}
+.cv-page .ve-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cv-page .ve-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cv-page .ve-dot-hollow {
+  border: 1.5px solid var(--ivory-dim);
+  background: var(--bg-card);
+  transition: border-color 0.6s ease, background 0.6s ease;
+}
+.cv-page .ve-dot-fill {
+  background: var(--green-light);
+  transition: background 0.6s ease;
+}
+.cv-page .ve-band {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: auto;
+  gap: 40px;
+  padding: 42px 0 8px;
+  border-top: 1px solid var(--line-soft);
+  transition: border-color 0.6s ease, opacity 0.35s ease;
+}
+.cv-page .ve-band-label {
+  align-self: start;
+}
+.cv-page .ve-metrics-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+.cv-page .ve-band-num {
+  display: none;
+}
+.cv-page .ve-band-title {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  letter-spacing: 0.24em;
+  color: var(--green-light);
+  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 18px;
+  transition: color 0.6s ease;
+}
+.cv-page .ve-band-desc {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--ivory-mid);
+  font-weight: 300;
+  letter-spacing: -0.005em;
+  margin: 0;
+  transition: color 0.6s ease;
+}
+.cv-page .ve-band-desc em {
+  font-style: italic;
+  color: var(--ivory);
+  transition: color 0.6s ease;
+}
+.cv-page .ve-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+  gap: 34px 40px;
+  align-content: start;
+}
+.cv-page .ve-cell {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 18px 16px 14px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: ve-rise 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+  transition:
+    opacity 0.35s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+.cv-page .ve-cell:hover {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--green-light) 4%, transparent);
+}
+.cv-page .ve-cell:focus-visible {
+  outline: 2px solid var(--green-light);
+  outline-offset: 2px;
+}
+.cv-page .ve-cell.is-active {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--green-light) 35%, transparent);
+  background: color-mix(in srgb, var(--green-light) 8%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--green-light) 12%, transparent);
+}
+.cv-page .ve-cell.is-active .ve-slider-fill {
+  background: var(--green-light);
+  filter: brightness(1.08);
+}
+.cv-page .ve-cell.is-active .ve-slider-target {
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--green-light) 18%, transparent);
+}
+.cv-page .ve-cell:hover .ve-slider-target,
+.cv-page .ve-cell:focus-visible .ve-slider-target {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+.cv-page .ve-cell-hint {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ivory-faint);
+  opacity: 0;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.cv-page .ve-cell:hover .ve-cell-hint,
+.cv-page .ve-cell:focus-visible .ve-cell-hint,
+.cv-page .ve-cell.is-active .ve-cell-hint {
+  opacity: 1;
+}
+.cv-page .ve-cell.is-active .ve-cell-hint {
+  color: var(--green-light);
+}
+.cv-page .ve-arrow {
+  color: var(--ivory-faint);
+  font-size: 12px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.cv-page .ve-cell:hover .ve-arrow,
+.cv-page .ve-cell.is-active .ve-arrow {
+  color: var(--green-light);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cv-page .value-engine[data-in-view="false"] .ve-cell,
+  .cv-page .ve-cell {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+@keyframes ve-rise {
+  to { opacity: 1; transform: none; }
+}
+.cv-page .ve-m-name {
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  line-height: 1.3;
+  color: var(--ivory);
+  margin-bottom: 16px;
+  transition: color 0.6s ease;
+}
+.cv-page .ve-m-sub {
+  color: var(--ivory-dim);
+  font-weight: 400;
+}
+.cv-page .ve-slider {
+  position: relative;
+  height: 16px;
+  width: 100%;
+  margin-bottom: 11px;
+}
+.cv-page .ve-slider-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  transform: translateY(-50%);
+  background: var(--line-soft);
+  border-radius: 2px;
+  transition: background 0.6s ease;
+}
+.cv-page .ve-slider-fill {
+  position: absolute;
+  top: 50%;
+  height: 2.5px;
+  transform: translateY(-50%);
+  background: var(--green-light);
+  border-radius: 2px;
+  width: 0;
+  transition: width 0.8s cubic-bezier(0.2, 0.7, 0.3, 1), left 0.8s cubic-bezier(0.2, 0.7, 0.3, 1), background 0.6s ease;
+}
+.cv-page .ve-slider-base {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.8px solid var(--ivory-dim);
+  background: var(--bg-card);
+  transform: translate(-50%, -50%);
+  transition:
+    left 0.8s cubic-bezier(0.2, 0.7, 0.3, 1),
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+  z-index: 2;
+}
+.cv-page .ve-slider-target {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--green-light);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--green-light) 12%, transparent);
+  transform: translate(-50%, -50%);
+  transition:
+    left 0.8s cubic-bezier(0.2, 0.7, 0.3, 1),
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+  z-index: 2;
+}
+.cv-page .ve-vals {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-top: 2px;
+}
+.cv-page .ve-vals .ve-pre { margin-right: auto; }
+.cv-page .ve-vals .ve-tgt { margin-left: auto; }
+.cv-page .ve-pre {
+  color: var(--ivory-dim);
+  font-weight: 400;
+  transition: color 0.6s ease;
+}
+.cv-page .ve-tgt {
+  color: var(--green-light);
+  font-weight: 500;
+  transition: color 0.6s ease;
+}
+.cv-page .ve-disclaimer {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ivory-faint);
+  line-height: 1.7;
+  margin-top: 40px;
+  max-width: 760px;
+  transition: color 0.6s ease;
+}
+@media (max-width: 760px) {
+  .cv-page .ve-band {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 0;
+  }
+  .cv-page .ve-metrics {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px 32px;
+  }
 }
 
 /* Approach responsive — match reference breakpoints. */
@@ -4352,17 +4777,17 @@ body {
   .cv-page .pillar-col-desc {
     min-height: 0;
   }
-  .cv-page .terminal-table .col-line { font-size: 11px; letter-spacing: 0.10em; }
+  .cv-page .terminal-table .col-line { font-size: 14.5px; letter-spacing: 0.10em; }
 }
 @media (max-width: 720px) {
   .cv-page .scoring-tabs { width: 100%; }
-  .cv-page .scoring-tab { flex: 1 1 0; padding: 12px 8px; font-size: 9.5px; letter-spacing: 0.12em; }
+  .cv-page .scoring-tab { flex: 1 1 0; padding: 12px 8px; font-size: 13.5px; letter-spacing: 0.12em; }
   .cv-page .scoring-detail { padding: 24px; }
   .cv-page.approach-page .approach-invest-section .scoring-detail {
     padding: 22px 0 0;
   }
-  .cv-page .sc-label { font-size: 9px; letter-spacing: 0.10em; }
-  .cv-page .re-multiplier { font-size: 48px; }
+  .cv-page .sc-label { font-size: 13px; letter-spacing: 0.10em; }
+  .cv-page .re-multiplier { font-size: 50px; }
   .cv-page .terminal-table thead { display: none; }
   .cv-page .terminal-table tbody td { display: block; padding: 6px 0; border: none; }
   .cv-page .terminal-table tbody tr {
@@ -4401,7 +4826,7 @@ body {
   display: flex; justify-content: space-between;
   align-items: center; flex-wrap: wrap; gap: 18px;
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   color: var(--ivory-dim);
   font-weight: 400; letter-spacing: 0.02em;
   transition: color 0.6s ease;
@@ -4474,7 +4899,7 @@ body {
   .cv-page .thesis-takeaway { padding: 72px 22px 80px; }
   .cv-page .thesis-takeaway-lede { margin-bottom: 56px; }
   .cv-page a.chapter-break { padding: 64px 22px 72px; }
-  .cv-page .ac-source { font-size: 9px; }
+  .cv-page .ac-source { font-size: 13px; }
 }
 
 /* ===========================================================================
@@ -4514,7 +4939,7 @@ body {
 }
 .cv-page .ph-eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.32em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -4549,7 +4974,7 @@ body {
 }
 .cv-page .ph-intro {
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: 21px;
   line-height: 1.55;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -4593,7 +5018,7 @@ body {
 }
 .cv-page .sh-eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.30em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -4628,7 +5053,7 @@ body {
 }
 .cv-page .sh-deck {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 17.5px;
   line-height: 1.7;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -4645,7 +5070,7 @@ body {
 }
 .cv-page .cta-link {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 16.5px;
   color: var(--ivory);
   border: 1px solid var(--line);
   padding: 14px 24px;
@@ -4722,7 +5147,7 @@ body {
 }
 .team-page .exp-stat-num {
   font-family: var(--font-serif);
-  font-size: 56px;
+  font-size: 58px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.022em;
@@ -4737,7 +5162,7 @@ body {
 }
 .team-page .exp-stat-label {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.22em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -4795,7 +5220,7 @@ body {
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 13px;
   letter-spacing: 0.2em;
   color: var(--ivory-faint);
   text-transform: uppercase;
@@ -4839,7 +5264,7 @@ body {
 .team-page .person-content { min-width: 0; }
 .team-page .person-name {
   font-family: var(--font-serif);
-  font-size: 20px;
+  font-size: 22px;
   color: var(--green-light);
   font-weight: 400;
   line-height: 1.1;
@@ -4849,7 +5274,7 @@ body {
 }
 .team-page .person-role {
   font-family: var(--font-sans);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -4859,7 +5284,7 @@ body {
 }
 .team-page .person-bio {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 16.5px;
   line-height: 1.65;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -4869,7 +5294,7 @@ body {
   font-family: var(--font-serif);
   font-style: italic;
   color: var(--ivory);
-  font-size: 13.5px;
+  font-size: 17px;
 }
 
 /* ---- Team moments: editorial photo strip between Leadership and Advisors.
@@ -4881,7 +5306,7 @@ body {
 }
 .team-page .team-moments-hint {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -4963,7 +5388,7 @@ body {
 }
 .team-page .team-moment-cap {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ivory-mid);
@@ -4985,7 +5410,7 @@ body {
   .team-page .team-moment-frame img { height: 280px; }
   .team-page .team-moment.is-portrait .team-moment-frame img { height: 280px; }
   .team-page .team-moment-figure { gap: 10px; }
-  .team-page .team-moment-cap { font-size: 9px; letter-spacing: 0.2em; }
+  .team-page .team-moment-cap { font-size: 13px; letter-spacing: 0.2em; }
 }
 
 .team-page .pillar-rows {
@@ -5025,7 +5450,7 @@ body {
 .team-page .pillar-row-label {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 16.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ivory);
@@ -5035,7 +5460,7 @@ body {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.4;
   color: var(--ivory-mid);
   letter-spacing: -0.005em;
@@ -5081,7 +5506,7 @@ body {
 }
 .team-page .pillar-row-body {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: 18px;
   line-height: 1.7;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5103,8 +5528,8 @@ body {
     gap: 18px;
     padding: 22px 18px;
   }
-  .team-page .pillar-row-label { font-size: 12px; letter-spacing: 0.14em; }
-  .team-page .pillar-row-teaser { font-size: 15px; }
+  .team-page .pillar-row-label { font-size: 15.5px; letter-spacing: 0.14em; }
+  .team-page .pillar-row-teaser { font-size: 18.5px; }
   .team-page .pillar-row-body { padding-left: 226px; }
 }
 @media (max-width: 720px) {
@@ -5121,7 +5546,7 @@ body {
   .team-page .pillar-row-label { grid-column: 2 / 3; grid-row: 1 / 2; }
   .team-page .pillar-row-icon { grid-row: 1 / 2; }
   .team-page .pillar-row-chevron { grid-row: 1 / 2; }
-  .team-page .pillar-row-teaser { grid-column: 1 / -1; grid-row: 2 / 3; font-size: 14px; }
+  .team-page .pillar-row-teaser { grid-column: 1 / -1; grid-row: 2 / 3; font-size: 17.5px; }
   .team-page .pillar-row-body { padding: 0 16px 22px 16px; }
 }
 
@@ -5129,6 +5554,275 @@ body {
    Portfolio pages (/portfolio, /portfolio/[club])
    Layered on top of .cv-page primitives.
    =========================================================================== */
+
+/* GitHub main hero map (ClaraVistaMapLegacy) — portfolio hub hero underlay. */
+.portfolio-hero-banner {
+  position: relative;
+  overflow: hidden;
+  border-bottom: none;
+  /* Uniform surface — flows into cards below */
+  background: var(--bg);
+  min-height: min(98vh, 1180px);
+  /* Align map chrome with .page-hero copy column (embed bleeds ±9vw) */
+  --portfolio-map-bleed: 9vw;
+  --portfolio-gutter: 56px;
+  --portfolio-content-max: 1420px;
+  --portfolio-content-x: calc(
+    var(--portfolio-map-bleed) + var(--portfolio-gutter) +
+    max(0px, (100vw - 2 * var(--portfolio-gutter) - var(--portfolio-content-max)) / 2)
+  );
+}
+:root[data-theme="night"] .portfolio-hero-banner {
+  background: var(--bg-deep);
+}
+.portfolio-hero-banner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 42%;
+  z-index: 2;
+  pointer-events: none;
+  transition: background 0.6s ease;
+}
+.portfolio-hero-banner::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 38%;
+  z-index: 1;
+  pointer-events: none;
+  transition: background 0.6s ease;
+}
+:root[data-theme="day"] .portfolio-hero-banner::before {
+  height: 38%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--bg) 28%, transparent) 42%,
+    color-mix(in srgb, var(--bg) 72%, transparent) 72%,
+    var(--bg) 100%
+  );
+}
+:root[data-theme="night"] .portfolio-hero-banner::before {
+  height: 38%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--bg-deep) 32%, transparent) 42%,
+    color-mix(in srgb, var(--bg-deep) 78%, transparent) 72%,
+    var(--bg-deep) 100%
+  );
+}
+:root[data-theme="day"] .portfolio-hero-banner::after {
+  /* Top plate for headline legibility only */
+  background: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 92%, transparent) 14%,
+    color-mix(in srgb, var(--bg) 62%, transparent) 28%,
+    transparent 100%
+  );
+}
+:root[data-theme="night"] .portfolio-hero-banner::after {
+  background: linear-gradient(
+    to bottom,
+    var(--bg-deep) 0%,
+    color-mix(in srgb, var(--bg-deep) 92%, transparent) 14%,
+    color-mix(in srgb, var(--bg-deep) 64%, transparent) 28%,
+    transparent 100%
+  );
+}
+.portfolio-hero-banner .portfolio-map-embed {
+  position: absolute;
+  inset: 0;
+  left: -9vw;
+  right: -9vw;
+  width: calc(100% + 18vw);
+  height: 100%;
+  z-index: 1;
+  border-top: none;
+  overflow: hidden;
+}
+.portfolio-hero-banner .portfolio-map-embed > div {
+  height: 100%;
+}
+.portfolio-hero-banner .portfolio-map-embed .loader,
+.portfolio-hero-banner .portfolio-map-embed .hero-bottom .hero-headline,
+.portfolio-hero-banner .portfolio-map-embed .portfolio-panel,
+.portfolio-hero-banner .portfolio-map-embed .ipswich-preview,
+.portfolio-hero-banner .portfolio-map-embed .credentials,
+.portfolio-hero-banner .portfolio-map-embed .portfolio-section,
+.portfolio-hero-banner .portfolio-map-embed .tooltip {
+  display: none !important;
+}
+/* Keep hero-bottom as display:contents so recenter positions on .hero (GitHub main). */
+.portfolio-hero-banner .portfolio-map-embed .hero-bottom {
+  display: contents;
+}
+.portfolio-hero-banner .portfolio-map-embed .cv-hint {
+  display: inline-flex !important;
+  left: var(--portfolio-content-x);
+  right: auto;
+  bottom: clamp(96px, 13vh, 148px);
+  transform: translateY(8px);
+  z-index: 4;
+  pointer-events: none;
+}
+.portfolio-hero-banner .portfolio-map-embed .cv-hint.is-visible {
+  transform: translateY(0);
+}
+.portfolio-hero-banner .portfolio-map-embed .cv-hint.is-hidden {
+  transform: translateY(8px);
+}
+.portfolio-hero-banner .portfolio-map-embed .cv-recenter {
+  display: inline-flex !important;
+  bottom: clamp(40px, 6vh, 56px);
+  right: 56px;
+  z-index: 4;
+  pointer-events: auto;
+}
+.portfolio-hero-banner .portfolio-map-embed .hero {
+  height: 100%;
+  min-height: 100%;
+  background: transparent;
+}
+.portfolio-hero-banner .page-hero {
+  position: relative;
+  z-index: 3;
+  border-bottom: none;
+  padding-bottom: 56px;
+  pointer-events: none;
+  background: transparent;
+}
+.portfolio-hero-banner .page-hero-inner {
+  pointer-events: auto;
+  max-width: 1420px;
+}
+/* Seamless handoff from map hero into club cards */
+.cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards {
+  position: relative;
+  margin-top: -96px;
+  padding-top: 176px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0px,
+    color-mix(in srgb, var(--bg) 88%, transparent) 32px,
+    color-mix(in srgb, var(--bg-deep) 18%, var(--bg)) 88px,
+    color-mix(in srgb, var(--bg-deep) 42%, var(--bg)) 128px,
+    color-mix(in srgb, var(--bg-deep) 72%, var(--bg)) 168px,
+    var(--bg-deep) 220px,
+    var(--bg-deep) 100%
+  );
+}
+:root[data-theme="night"] .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards {
+  background: linear-gradient(
+    to bottom,
+    transparent 0px,
+    color-mix(in srgb, var(--bg-deep) 55%, transparent) 32px,
+    color-mix(in srgb, var(--bg-deep) 82%, transparent) 128px,
+    var(--bg-deep) 200px,
+    var(--bg-deep) 100%
+  );
+}
+.cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards > .section-inner {
+  position: relative;
+  z-index: 1;
+}
+.cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards .portfolio-grid {
+  border-top: none;
+  isolation: isolate;
+}
+:root[data-theme="day"] .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards .portfolio-grid {
+  box-shadow: 0 28px 72px -36px rgba(26, 37, 32, 0.10);
+}
+:root[data-theme="night"] .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards .portfolio-grid {
+  box-shadow: 0 32px 80px -36px rgba(0, 0, 0, 0.42);
+}
+:root[data-theme="day"] .cv-page.portfolio-hub .portfolio-hub-cards .pclub {
+  background: var(--bg-card);
+}
+:root[data-theme="night"] .cv-page.portfolio-hub .portfolio-hub-cards .pclub {
+  background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-elev));
+}
+.cv-page.portfolio-hub .portfolio-hub-cards .pclub:hover {
+  box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.28);
+}
+:root[data-theme="day"] .cv-page.portfolio-hub .portfolio-hub-cards .pclub:hover {
+  background: var(--bg-elev);
+}
+:root[data-theme="night"] .cv-page.portfolio-hub .portfolio-hub-cards .pclub:hover {
+  background: color-mix(in srgb, var(--bg-elev) 92%, var(--bg-card));
+}
+@media (max-width: 720px) {
+  .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards {
+    margin-top: -72px;
+    padding-top: 128px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0px,
+      color-mix(in srgb, var(--bg) 88%, transparent) 24px,
+      color-mix(in srgb, var(--bg-deep) 22%, var(--bg)) 64px,
+      color-mix(in srgb, var(--bg-deep) 55%, var(--bg)) 96px,
+      var(--bg-deep) 140px,
+      var(--bg-deep) 100%
+    );
+  }
+}
+@media (max-width: 720px) {
+  .portfolio-hero-banner {
+    min-height: min(102vh, 1080px);
+    --portfolio-map-bleed: 10vw;
+    --portfolio-gutter: 22px;
+  }
+  .portfolio-hero-banner .portfolio-map-embed {
+    left: -10vw;
+    right: -10vw;
+    width: calc(100% + 20vw);
+  }
+  .portfolio-hero-banner .page-hero {
+    padding-bottom: 36px;
+  }
+  :root[data-theme="day"] .portfolio-hero-banner::after {
+    height: 48%;
+    background: linear-gradient(
+      to bottom,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 94%, transparent) 20%,
+      color-mix(in srgb, var(--bg) 68%, transparent) 34%,
+      transparent 100%
+    );
+  }
+  :root[data-theme="night"] .portfolio-hero-banner::after {
+    height: 48%;
+    background: linear-gradient(
+      to bottom,
+      var(--bg-deep) 0%,
+      color-mix(in srgb, var(--bg-deep) 94%, transparent) 20%,
+      color-mix(in srgb, var(--bg-deep) 70%, transparent) 34%,
+      transparent 100%
+    );
+  }
+  .portfolio-hero-banner .portfolio-map-embed .cv-hint {
+    top: auto;
+    left: var(--portfolio-content-x);
+    right: auto;
+    bottom: clamp(108px, 14vh, 132px);
+    transform: translateY(8px);
+  }
+  .portfolio-hero-banner .portfolio-map-embed .cv-hint.is-visible {
+    transform: translateY(0);
+  }
+  .portfolio-hero-banner .portfolio-map-embed .cv-recenter {
+    bottom: clamp(28px, 5vh, 40px);
+    right: 22px;
+    left: 22px;
+    width: auto;
+  }
+}
 
 /* ---- Portfolio hub grid ---- */
 .cv-page .portfolio-grid {
@@ -5186,7 +5880,7 @@ body {
 }
 .cv-page .pclub-meta {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   font-weight: 500;
@@ -5226,7 +5920,7 @@ body {
 }
 .cv-page .pclub-name {
   font-family: var(--font-serif);
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 400;
   color: var(--ivory);
   letter-spacing: -0.018em;
@@ -5239,7 +5933,7 @@ body {
 }
 .cv-page .pclub-loc {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   color: var(--ivory-dim);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -5248,7 +5942,7 @@ body {
 }
 .cv-page .pclub-note {
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: 17px;
   line-height: 1.7;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5269,7 +5963,7 @@ body {
 }
 .cv-page .pclub-stat-label {
   font-family: var(--font-sans);
-  font-size: 9px;
+  font-size: 13px;
   color: var(--ivory-dim);
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -5279,19 +5973,19 @@ body {
   font-family: var(--font-serif);
   color: var(--ivory);
   margin-top: 6px;
-  font-size: 16px;
+  font-size: 19px;
   font-weight: 400;
   letter-spacing: -0.005em;
 }
 .cv-page .pclub-stat-value em {
   font-style: italic;
   color: var(--ivory-dim);
-  font-size: 13px;
+  font-size: 16.5px;
 }
 .cv-page .pclub-link {
   margin-top: 22px;
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -5315,7 +6009,7 @@ body {
 }
 .cv-page .breadcrumb {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.16em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -5363,7 +6057,7 @@ body {
 .cv-page .deep-sub {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--ivory-mid);
   font-weight: 300;
   letter-spacing: -0.005em;
@@ -5377,7 +6071,7 @@ body {
   justify-content: space-between;
   padding: 10px 0;
   border-top: 1px solid var(--line-soft);
-  font-size: 12.5px;
+  font-size: 16px;
 }
 .cv-page .deep-side-row:last-child {
   border-bottom: 1px solid var(--line-soft);
@@ -5386,7 +6080,7 @@ body {
   color: var(--ivory-dim);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 13.5px;
   font-weight: 500;
 }
 .cv-page .deep-side-row .value {
@@ -5410,7 +6104,7 @@ body {
   justify-content: center;
   color: var(--ivory-faint);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   position: relative;
@@ -5491,7 +6185,7 @@ body {
 .cv-page .glance-cell:hover { background: var(--bg-card); }
 .cv-page .glance-label {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.18em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -5500,7 +6194,7 @@ body {
 }
 .cv-page .glance-value {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 24px;
   color: var(--ivory);
   font-weight: 400;
   line-height: 1.15;
@@ -5527,7 +6221,7 @@ body {
 }
 .cv-page .prose-eyebrow {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.30em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -5544,7 +6238,7 @@ body {
 }
 .cv-page .prose-body {
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: 21px;
   line-height: 1.6;
   color: var(--ivory);
   font-weight: 300;
@@ -5585,7 +6279,7 @@ body {
 }
 .cv-page .pull-quote-attribution {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.24em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -5647,7 +6341,7 @@ body {
 }
 .cv-page .accomp-title {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 400;
   color: var(--ivory);
   line-height: 1.15;
@@ -5659,7 +6353,7 @@ body {
 }
 .cv-page .accomp-when {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.18em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -5668,7 +6362,7 @@ body {
 }
 .cv-page .accomp-body {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 17.5px;
   line-height: 1.65;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5703,7 +6397,7 @@ body {
 }
 .cv-page .rev-chart-title {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -5714,7 +6408,7 @@ body {
   flex-basis: 100%;
   order: 3;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15.5px;
   line-height: 1.55;
   color: var(--ivory-dim);
   margin-top: 4px;
@@ -5725,7 +6419,7 @@ body {
   align-items: center;
   gap: 18px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -5791,7 +6485,7 @@ body {
 .cv-page .rev-annot-pin { fill: var(--green-light); }
 .cv-page .rev-annot-eyebrow {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.22em;
   fill: var(--green-light);
   text-transform: uppercase;
@@ -5799,12 +6493,12 @@ body {
 .cv-page .rev-annot-label {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 15px;
+  font-size: 18.5px;
   fill: var(--ivory);
 }
 .cv-page .rev-anchor-value {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 24px;
   fill: var(--ivory);
   font-weight: 400;
 }
@@ -5816,7 +6510,7 @@ body {
 .cv-page .rev-anchor-start .rev-anchor-value { text-anchor: start; }
 .cv-page .rev-anchor-meta {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   fill: var(--ivory-dim);
@@ -5825,14 +6519,14 @@ body {
 .cv-page .rev-anchor-start .rev-anchor-meta { text-anchor: start; }
 .cv-page .rev-x-tick {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.08em;
   fill: var(--ivory-dim);
   text-anchor: middle;
 }
 .cv-page .rev-projected-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.28em;
   fill: var(--ivory-dim);
   text-anchor: middle;
@@ -5862,7 +6556,7 @@ body {
 }
 .cv-page .rev-stat-eyebrow {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.18em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -5870,7 +6564,7 @@ body {
 }
 .cv-page .rev-stat-headline {
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: 21px;
   font-weight: 400;
   color: var(--ivory);
   line-height: 1.2;
@@ -5882,7 +6576,7 @@ body {
 }
 .cv-page .rev-stat-body {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 16.5px;
   line-height: 1.6;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5925,7 +6619,7 @@ body {
 }
 .cv-page .rev-chart-kpi-fy {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--green-light) 75%, transparent);
@@ -5949,7 +6643,7 @@ body {
 }
 .cv-page .rev-chart-kpi-focus {
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: 14px;
   color: var(--ivory-dim);
   font-style: italic;
   margin-top: 2px;
@@ -5977,7 +6671,7 @@ body {
 }
 .cv-page .rev-series-panel-title {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -6024,7 +6718,7 @@ body {
   margin-top: 3px;
 }
 .cv-page .rev-series-label {
-  font-size: 11.5px;
+  font-size: 15px;
   line-height: 1.35;
   color: var(--ivory-mid);
   font-weight: 400;
@@ -6032,7 +6726,7 @@ body {
 .cv-page .rev-series-val {
   grid-column: 2;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.06em;
   color: var(--ivory-dim);
 }
@@ -6068,7 +6762,7 @@ body {
 }
 .cv-page .deal-row-label {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.18em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -6076,7 +6770,7 @@ body {
 }
 .cv-page .deal-row-value {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 18.5px;
   line-height: 1.6;
   color: var(--ivory);
   font-weight: 300;
@@ -6085,7 +6779,7 @@ body {
   font-style: italic;
   font-family: var(--font-serif);
   color: var(--green-light);
-  font-size: 16px;
+  font-size: 19px;
 }
 .cv-page .deal-row-value strong {
   font-weight: 500;
@@ -6109,7 +6803,7 @@ body {
 
 .cv-page .h-timeline-hint {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 13.5px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -6185,7 +6879,7 @@ body {
 }
 .cv-page .h-era-header-label {
   font-family: var(--font-serif);
-  font-size: 14px;
+  font-size: 17.5px;
   color: var(--ivory);
   letter-spacing: -0.005em;
   line-height: 1.1;
@@ -6195,7 +6889,7 @@ body {
 }
 .cv-page .h-era-header-years {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 13px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -6410,7 +7104,7 @@ body {
 
 .cv-page .h-event-year {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 14px;
   letter-spacing: 0.2em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -6421,7 +7115,7 @@ body {
 
 .cv-page .h-event-label {
   font-family: var(--font-serif);
-  font-size: 14px;
+  font-size: 17.5px;
   line-height: 1.25;
   color: var(--ivory);
   font-weight: 400;
@@ -6432,7 +7126,7 @@ body {
   color: var(--green-light);
 }
 .cv-page .h-event.is-hero .h-event-label {
-  font-size: 15px;
+  font-size: 18.5px;
 }
 .cv-page .h-event.is-anchor .h-event-label {
   font-style: italic;
@@ -6441,7 +7135,7 @@ body {
 
 .cv-page .h-event-detail {
   font-family: var(--font-sans);
-  font-size: 11.5px;
+  font-size: 15px;
   line-height: 1.5;
   color: var(--ivory-dim);
   font-weight: 300;
@@ -6460,7 +7154,7 @@ body {
 }
 .cv-page .bullet-list li {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: 18px;
   line-height: 1.7;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -6515,7 +7209,7 @@ body {
 .cv-page .embargo-text {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 18px;
+  font-size: 20px;
   color: var(--ivory);
   line-height: 1.5;
   font-weight: 300;
@@ -6525,7 +7219,7 @@ body {
   font-weight: 400;
   color: var(--green-light);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   display: block;
@@ -6563,14 +7257,14 @@ body {
   .cv-page .accomp-grid { grid-template-columns: 1fr; }
   .cv-page .rev-chart { padding: 22px 18px 14px; }
   .cv-page .rev-chart-caption { gap: 14px; }
-  .cv-page .rev-anchor-value { font-size: 18px; }
-  .cv-page .rev-annot-label { font-size: 13px; }
+  .cv-page .rev-anchor-value { font-size: 20px; }
+  .cv-page .rev-annot-label { font-size: 16.5px; }
 }
 @media (max-width: 640px) {
   .cv-page .rev-stats { grid-template-columns: 1fr; }
   /* Reduce x-axis label clutter on narrow phones: show every other year. */
   .cv-page .rev-x-tick:nth-child(2n) { display: none; }
-  .cv-page .rev-chart-desc { font-size: 11.5px; }
+  .cv-page .rev-chart-desc { font-size: 15px; }
 }
 @media (max-width: 720px) {
   .cv-page .deep-hero { padding: 96px 22px 40px; }
@@ -6596,7 +7290,7 @@ body {
     margin: 12px 0 6px;
     padding-left: 4px;
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 13.5px;
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--green-light);
@@ -6720,7 +7414,7 @@ body {
 }
 .tr-page .exp-stat-num {
   font-family: var(--font-serif);
-  font-size: 56px;
+  font-size: 58px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.022em;
@@ -6735,7 +7429,7 @@ body {
 }
 .tr-page .exp-stat-label {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.22em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -6766,7 +7460,7 @@ body {
   border: none;
   color: var(--ivory-dim);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 17.5px;
   font-weight: 400;
   letter-spacing: 0.01em;
   cursor: pointer;
@@ -6790,7 +7484,7 @@ body {
 }
 .tr-firmtab-label {
   font-family: var(--font-serif);
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: -0.014em;
   font-weight: 400;
   color: inherit;
@@ -6802,7 +7496,7 @@ body {
 }
 .tr-firmtab-sub {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -6813,7 +7507,7 @@ body {
 }
 .tr-firmtab-count {
   font-family: var(--font-mono, var(--font-sans));
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.1em;
   color: var(--ivory-dim);
 }
@@ -6845,7 +7539,7 @@ body {
   border: 1px solid var(--ivory-faint);
   color: var(--ivory-mid);
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 15.5px;
   font-weight: 500;
   letter-spacing: 0.04em;
   cursor: pointer;
@@ -6863,7 +7557,7 @@ body {
 }
 .tr-filter-count {
   font-family: var(--font-mono, var(--font-sans));
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.12em;
   color: var(--ivory-dim);
   transition: color 0.2s ease;
@@ -6875,7 +7569,7 @@ body {
 /* ----- Result count ----- */
 .tr-resultcount {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 14.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -6963,7 +7657,7 @@ body {
 /* Monogram fallback for companies without a downloaded logo. */
 .tr-card-logo-mono {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 400;
   line-height: 1;
   color: var(--green-deep);
@@ -6979,7 +7673,7 @@ body {
 }
 .tr-card-sector {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -6987,7 +7681,7 @@ body {
 }
 .tr-card-fund {
   font-family: var(--font-mono, var(--font-sans));
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -7010,7 +7704,7 @@ body {
 /* Card body */
 .tr-card-name {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: 26px;
   line-height: 1.08;
   font-weight: 400;
   letter-spacing: -0.018em;
@@ -7019,7 +7713,7 @@ body {
 }
 .tr-card-desc {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 16.5px;
   line-height: 1.55;
   font-weight: 300;
   color: var(--ivory-mid);
@@ -7046,7 +7740,7 @@ body {
   align-items: center;
   gap: 7px;
   font-family: var(--font-sans);
-  font-size: 9px;
+  font-size: 13px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   font-weight: 600;
@@ -7080,7 +7774,7 @@ body {
 }
 .tr-card-acq {
   font-family: var(--font-sans);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: 0.04em;
   color: var(--ivory-dim);
   font-style: italic;
@@ -7092,7 +7786,7 @@ body {
 }
 .tr-card-ceo-label {
   font-family: var(--font-sans);
-  font-size: 9px;
+  font-size: 13px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -7102,7 +7796,7 @@ body {
 .tr-card-ceo-name {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 13px;
+  font-size: 16.5px;
   color: var(--ivory-mid);
   font-weight: 400;
   letter-spacing: -0.005em;
@@ -7121,9 +7815,9 @@ body {
   }
   .tr-firmtabs::-webkit-scrollbar { display: none; }
   .tr-firmtab { padding: 12px 16px 14px; }
-  .tr-firmtab-label { font-size: 16px; }
+  .tr-firmtab-label { font-size: 19px; }
   .tr-filters { flex-wrap: nowrap; }
   .tr-grid { grid-template-columns: 1fr; gap: 12px; }
   .tr-card-link { padding: 20px 20px; }
-  .tr-card-name { font-size: 22px; }
+  .tr-card-name { font-size: 24px; }
 }

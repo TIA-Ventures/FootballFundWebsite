@@ -16,9 +16,29 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Site navigation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Primary menu order (desktop and mobile):
+
+1. Home — `/`
+2. Team — `/team`
+3. Portfolio — `/portfolio` (Ipswich, Spain, Italy deep-dives)
+4. Thesis — `/thesis`
+5. Approach — `/approach`
+
+Utility controls in the top bar (after nav links): theme toggle, **LP Access**.
+
+## Archived pages & tools
+
+These are **not shown in the main menu** but remain in the codebase for internal review or future restore:
+
+| Item | Access | Notes |
+|------|--------|--------|
+| Track Record | [/track-record](http://localhost:3000/track-record) | TIA Ventures portfolio grid + Clara Vista Fund I cards |
+| Fonts picker | — | `src/components/FontCompare.tsx` — re-add `<FontCompare />` in `Topbar.tsx` |
+| Colors picker | — | `src/components/ColorCompare.tsx` — re-add `<ColorCompare />` in `Topbar.tsx` |
+
+To restore a page or tool to the top bar, add it back in `src/components/Topbar.tsx`.
 
 ## Learn More
 

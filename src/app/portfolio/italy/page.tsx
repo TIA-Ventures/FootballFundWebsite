@@ -4,7 +4,7 @@ import { TbdClubPage } from "@/components/TbdClubPage";
 export const metadata: Metadata = {
   title: "Italy (target) · Portfolio · Clara Vista Investment Partners",
   description:
-    "Clara Vista is conducting diligence on a controlling interest in a historic Italian football club competing in Serie B with a credible path to Serie A.",
+    "Clara Vista is conducting diligence on a controlling interest in a historic Italian football club — a Serie A target with a credible promotion pathway.",
 };
 
 export default function ItalyPage() {
@@ -16,10 +16,10 @@ export default function ItalyPage() {
           Italy <em>(target)</em> <em className="deep-h1-accent">.</em>
         </>
       }
-      sub="Active diligence on a historic Italian club — Serie B with a credible path to Serie A."
+      sub="Active diligence on a historic Italian club — a Serie A target with a credible promotion pathway."
       sideMeta={[
         { label: "Country", value: "Italy" },
-        { label: "League", value: "Serie B" },
+        { label: "League", value: "Serie A · target" },
         { label: "Founded", value: <em>under embargo</em> },
         { label: "Stadium", value: <em>under embargo</em> },
         { label: "Stake", value: "Controlling (~80%)" },
@@ -38,10 +38,10 @@ export default function ItalyPage() {
         eyebrow: "Diligence brief",
         paragraphs: [
           <>
-            The diligence target is a historic Italian football club currently competing in <em>Serie B</em>, with three Serie A
-            promotions in the last decade and one of the youngest squads in the league. The acquisition contemplates a
-            controlling interest at approximately <strong>1.5x revenues</strong> — a structural discount to comparable
-            European clubs.
+            The diligence target is a historic Italian football club with three <em>Serie A</em> campaigns in
+            the last decade and one of the youngest squads in Italian football. The acquisition contemplates a
+            controlling interest at approximately <strong>1.5x revenues</strong> — a structural discount to
+            comparable European clubs.
           </>,
           <>
             The club operates a <em>modern Serie A-ready stadium</em> under long-dated concession, located within
@@ -68,7 +68,7 @@ export default function ItalyPage() {
           {
             strong: "Promotion economics",
             rest:
-              "Serie B → A promotion is associated with material multiple expansion and sustained revenue uplift.",
+              "Promotion to Serie A is associated with material multiple expansion and sustained revenue uplift.",
           },
           {
             strong: "Stadium modernization wave",
@@ -76,9 +76,9 @@ export default function ItalyPage() {
               "Italian football is in the early innings of a stadium investment cycle that has driven valuations elsewhere in Europe.",
           },
           {
-            strong: "Mid-table La Liga / Serie B mispricing",
+            strong: "Lower-flight mispricing",
             rest:
-              "Historically depressed valuations for non-top-flight clubs are inconsistent with media rights trajectory.",
+              "Historically depressed valuations for non-top-flight European clubs are inconsistent with media-rights trajectory.",
           },
           {
             strong: "Operating leverage",

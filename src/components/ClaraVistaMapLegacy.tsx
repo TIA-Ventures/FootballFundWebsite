@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { HeroVideoBackdrop } from "./HeroVideoBackdrop";
 import { TEAM_MOMENTS } from "./TeamMoments";
 
 function canvasFontVar(name: "--font-sans" | "--font-serif" | "--font-mono"): string {
@@ -11,7 +10,7 @@ function canvasFontVar(name: "--font-sans" | "--font-serif" | "--font-mono"): st
   return v || "sans-serif";
 }
 
-export function ClaraVistaMap() {
+export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,6 +18,8 @@ export function ClaraVistaMap() {
     const canvas = canvasRef.current;
     const wrap = wrapRef.current;
     if (!canvas || !wrap) return;
+
+    const embedWrap = wrap;
 
     const ctx = canvas.getContext("2d")!;
 
@@ -41,16 +42,16 @@ export function ClaraVistaMap() {
     const getColors = () => {
       if (getTheme() === "day") {
         return {
-          spotlight1: "rgba(220, 215, 195, 0.28)",
-          spotlight2: "rgba(244, 237, 220, 0.06)",
-          countryFill: "rgba(6, 93, 57, 0.14)",
-          countryStroke: "rgba(6, 93, 57, 0.76)",
-          countryStrokeStrong: "rgba(6, 93, 57, 0.88)",
+          spotlight1: "rgba(220, 215, 195, 0.55)",
+          spotlight2: "rgba(244, 237, 220, 0)",
+          countryFill: "rgba(6, 93, 57, 0.072)",
+          countryStroke: "rgba(6, 93, 57, 0.52)",
+          countryStrokeStrong: "rgba(6, 93, 57, 0.66)",
           particle: "rgba(26, 37, 32, 0.28)",
-          ambientCity: "rgba(26, 37, 32, 0.82)",
-          ambientCityHalo: "rgba(6, 93, 57, 0.26)",
-          worldCity: "rgba(26, 37, 32, 0.58)",
-          worldCityLit: "rgba(6, 93, 57, 0.92)",
+          ambientCity: "rgba(26, 37, 32, 0.7)",
+          ambientCityHalo: "rgba(6, 93, 57, 0.18)",
+          worldCity: "rgba(26, 37, 32, 0.45)",
+          worldCityLit: "rgba(6, 93, 57, 0.85)",
           portfolioCore: ["#34c281", "#0a7a47", "#065d39"],
           portfolioGlow: "rgba(14, 138, 85, 0.48)",
           portfolioRing: "rgba(6, 93, 57, 0.72)",
@@ -65,16 +66,16 @@ export function ClaraVistaMap() {
         };
       }
       return {
-        spotlight1: "rgba(20, 50, 36, 0.30)",
-        spotlight2: "rgba(8, 22, 14, 0.12)",
-        countryFill: "rgba(52, 194, 129, 0.09)",
-        countryStroke: "rgba(52, 194, 129, 0.48)",
-        countryStrokeStrong: "rgba(52, 194, 129, 0.62)",
+        spotlight1: "rgba(20, 50, 36, 0.45)",
+        spotlight2: "rgba(8, 22, 14, 0.20)",
+        countryFill: "rgba(52, 194, 129, 0.06)",
+        countryStroke: "rgba(52, 194, 129, 0.36)",
+        countryStrokeStrong: "rgba(52, 194, 129, 0.48)",
         particle: "rgba(242, 234, 214, 0.26)",
-        ambientCity: "rgba(242, 234, 214, 0.88)",
-        ambientCityHalo: "rgba(242, 234, 214, 0.40)",
-        worldCity: "rgba(242, 234, 214, 0.48)",
-        worldCityLit: "rgba(242, 234, 214, 0.98)",
+        ambientCity: "rgba(242, 234, 214, 0.78)",
+        ambientCityHalo: "rgba(242, 234, 214, 0.32)",
+        worldCity: "rgba(242, 234, 214, 0.34)",
+        worldCityLit: "rgba(242, 234, 214, 0.95)",
         portfolioCore: ["#7be0aa", "#34c281", "#065d39"],
         portfolioGlow: "rgba(52, 194, 129, 0.56)",
         portfolioRing: "rgba(52, 194, 129, 0.76)",
@@ -384,19 +385,11 @@ export function ClaraVistaMap() {
     // rendered into DOTS at a coarser step and dimmer alpha so Europe stays the
     // hero and the rest of the world reads as supporting context once the user
     // drags the map. Polygons are intentionally rough — the stipple density
-    // does the visual work, not vertex precision.
-    //
-    // `intensity` is a relative football-engagement weighting (≈ TV audience /
-    // per-capita interest) that scales each region's context-dot alpha. 1.0 is
-    // the historical baseline; higher = more pronounced (the football-watching
-    // world pops), lower = dimmer (sparse-population / low-engagement regions
-    // recede). Render path batches by intensity so this costs ~7 fillStyle
-    // flips per frame total. ----
+    // does the visual work, not vertex precision. ----
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const WORLD_REGIONS: any[] = [
       {
         name: "North America",
-        intensity: 0.72,
         // Coastline-accurate polygon using real anchor lat/lng for ~40
         // capes and coastal cities. Vs the previous version this fixes
         // the Hudson Bay / James Bay / Labrador stretch — earlier
@@ -455,7 +448,6 @@ export function ClaraVistaMap() {
       },
       {
         name: "Greenland",
-        intensity: 0.55,
         poly: [
           [80, -28], [82, -22], [80, -18], [74, -22], [68, -28], [62, -42],
           [60, -50], [66, -52], [72, -55], [78, -45], [80, -28],
@@ -463,7 +455,6 @@ export function ClaraVistaMap() {
       },
       {
         name: "South America",
-        intensity: 1.10,
         // Coastline-accurate polygon using real anchor lat/lng for major
         // capes and coastal cities. The previous version had a vertex at
         // [12, -60] which sits in open Caribbean ocean east of Venezuela
@@ -514,7 +505,6 @@ export function ClaraVistaMap() {
       },
       {
         name: "Africa",
-        intensity: 0.98,
         // Coastline-accurate polygon for Africa using REAL anchor lat/lng for
         // ~50 capes, ports, and coastal cities. Earlier iterations carried a
         // 1–2° artistic southward shift on the Mediterranean coast to make
@@ -589,7 +579,6 @@ export function ClaraVistaMap() {
       },
       {
         name: "Middle East",
-        intensity: 0.85,
         poly: [
           [38, 32], [38, 42], [36, 50], [34, 56], [28, 60], [22, 60],
           [16, 56], [13, 48], [14, 42], [20, 36], [28, 33], [34, 32],
@@ -598,7 +587,6 @@ export function ClaraVistaMap() {
       },
       {
         name: "Asia",
-        intensity: 0.75,
         // Western boundary pushed from lng 38 → 28 so the bleed sliver
         // immediately east of Europe (Caucasus / western Russia / Caspian,
         // ~lng 32–38) actually has dots generated for it. Points already
@@ -616,7 +604,6 @@ export function ClaraVistaMap() {
       },
       {
         name: "Oceania",
-        intensity: 0.65,
         poly: [
           [-10, 113], [-12, 130], [-14, 142], [-22, 150], [-30, 154],
           [-38, 150], [-40, 144], [-37, 138], [-34, 128], [-32, 118],
@@ -627,85 +614,11 @@ export function ClaraVistaMap() {
       },
       {
         name: "New Zealand",
-        intensity: 0.70,
         poly: [
           [-34, 172], [-36, 174], [-40, 176], [-44, 174], [-46, 168],
           [-44, 166], [-40, 170], [-34, 172],
         ],
       },
-    ];
-
-    // ---- FOOTBALL HOTSPOTS — city-cluster halos that boost local context-dot
-    // intensity on top of each continent's base value. Without these the
-    // surrounding regions render as monotone blobs (a 1,500km pan = same
-    // alpha everywhere); with them, individual fan bases pop — São Paulo,
-    // Lagos, Cairo, Tokyo, Kolkata, Mexico City etc. — and the visual story
-    // tracks where football actually has cultural mass.
-    //
-    // Each halo applies a smooth (1 - d²/r²) falloff inside its radius, so
-    // dots fade gracefully between glow zones and surrounding context.
-    // `boost` adds to the dot's intensity (post-region-base, pre-quantize).
-    // Radii in degrees (1° ≈ 111km on the equator). One-shot O(dots × hotspots)
-    // cost at buildDotMap time; render stays batched by quantized intensity.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const FOOTBALL_HOTSPOTS: any[] = [
-      // South America — football's spiritual home; the Brazil/Argentina belt
-      // is the densest fan corridor on earth.
-      { lat: -23.5, lng: -46.6, r: 6.0, boost: 0.55, name: "São Paulo" },
-      { lat: -22.9, lng: -43.2, r: 4.0, boost: 0.40, name: "Rio de Janeiro" },
-      { lat: -34.6, lng: -58.4, r: 5.5, boost: 0.55, name: "Buenos Aires" },
-      { lat: -34.9, lng: -56.2, r: 3.0, boost: 0.30, name: "Montevideo" },
-      { lat: -33.4, lng: -70.7, r: 3.5, boost: 0.30, name: "Santiago" },
-      { lat: 4.7, lng: -74.0, r: 3.5, boost: 0.30, name: "Bogotá" },
-      { lat: -12.0, lng: -77.0, r: 3.5, boost: 0.28, name: "Lima" },
-      { lat: 10.5, lng: -66.9, r: 3.0, boost: 0.25, name: "Caracas" },
-      { lat: -16.5, lng: -68.2, r: 2.8, boost: 0.22, name: "La Paz" },
-      // Africa — Maghreb + Gulf of Guinea + Egypt + South Africa
-      { lat: 6.5, lng: 3.4, r: 5.0, boost: 0.55, name: "Lagos" },
-      { lat: 30.0, lng: 31.2, r: 5.0, boost: 0.50, name: "Cairo" },
-      { lat: 33.6, lng: -7.6, r: 4.5, boost: 0.50, name: "Casablanca" },
-      { lat: 36.8, lng: 3.0, r: 3.5, boost: 0.35, name: "Algiers" },
-      { lat: 36.8, lng: 10.2, r: 3.0, boost: 0.30, name: "Tunis" },
-      { lat: 5.6, lng: -0.2, r: 3.5, boost: 0.32, name: "Accra" },
-      { lat: 5.3, lng: -4.0, r: 3.5, boost: 0.30, name: "Abidjan" },
-      { lat: 14.7, lng: -17.5, r: 3.0, boost: 0.25, name: "Dakar" },
-      { lat: -26.2, lng: 28.0, r: 4.5, boost: 0.40, name: "Johannesburg" },
-      { lat: -33.9, lng: 18.4, r: 3.0, boost: 0.25, name: "Cape Town" },
-      { lat: 9.0, lng: 38.7, r: 3.5, boost: 0.28, name: "Addis Ababa" },
-      { lat: -1.3, lng: 36.8, r: 3.5, boost: 0.28, name: "Nairobi" },
-      // Middle East — Gulf hubs + Iran/Egypt
-      { lat: 24.7, lng: 46.7, r: 4.0, boost: 0.30, name: "Riyadh" },
-      { lat: 25.3, lng: 51.5, r: 2.5, boost: 0.30, name: "Doha" },
-      { lat: 25.2, lng: 55.3, r: 2.5, boost: 0.25, name: "Dubai" },
-      { lat: 35.7, lng: 51.4, r: 4.0, boost: 0.35, name: "Tehran" },
-      { lat: 33.5, lng: 36.3, r: 3.0, boost: 0.22, name: "Damascus" },
-      { lat: 33.3, lng: 44.4, r: 3.0, boost: 0.22, name: "Baghdad" },
-      // East Asia
-      { lat: 35.7, lng: 139.7, r: 4.5, boost: 0.40, name: "Tokyo" },
-      { lat: 37.6, lng: 127.0, r: 3.5, boost: 0.30, name: "Seoul" },
-      { lat: 31.2, lng: 121.5, r: 5.0, boost: 0.30, name: "Shanghai" },
-      { lat: 39.9, lng: 116.4, r: 4.5, boost: 0.28, name: "Beijing" },
-      // South / SE Asia
-      { lat: 22.6, lng: 88.4, r: 4.0, boost: 0.35, name: "Kolkata" },
-      { lat: 28.6, lng: 77.2, r: 4.5, boost: 0.25, name: "Delhi" },
-      { lat: 19.0, lng: 72.8, r: 3.5, boost: 0.22, name: "Mumbai" },
-      { lat: 12.9, lng: 77.6, r: 3.0, boost: 0.22, name: "Bangalore" },
-      { lat: 3.1, lng: 101.7, r: 3.0, boost: 0.25, name: "Kuala Lumpur" },
-      { lat: 13.7, lng: 100.5, r: 3.5, boost: 0.22, name: "Bangkok" },
-      { lat: -6.2, lng: 106.8, r: 4.0, boost: 0.25, name: "Jakarta" },
-      { lat: 14.6, lng: 121.0, r: 3.0, boost: 0.20, name: "Manila" },
-      { lat: 10.8, lng: 106.6, r: 3.0, boost: 0.22, name: "Ho Chi Minh" },
-      // North America — Mexico is the football market here
-      { lat: 19.4, lng: -99.1, r: 5.5, boost: 0.55, name: "Mexico City" },
-      { lat: 20.7, lng: -103.4, r: 3.5, boost: 0.35, name: "Guadalajara" },
-      { lat: 25.7, lng: -100.3, r: 3.0, boost: 0.30, name: "Monterrey" },
-      { lat: 34.0, lng: -118.2, r: 3.5, boost: 0.22, name: "Los Angeles" },
-      { lat: 40.7, lng: -74.0, r: 3.5, boost: 0.22, name: "New York" },
-      { lat: 25.8, lng: -80.2, r: 3.0, boost: 0.20, name: "Miami" },
-      // Oceania
-      { lat: -33.9, lng: 151.2, r: 3.0, boost: 0.22, name: "Sydney" },
-      { lat: -37.8, lng: 144.9, r: 3.0, boost: 0.22, name: "Melbourne" },
-      { lat: -36.8, lng: 174.8, r: 2.5, boost: 0.20, name: "Auckland" },
     ];
 
     // ---- AMBER MARKET TAILWINDS — six geographic callouts on context continents.
@@ -736,12 +649,6 @@ export function ClaraVistaMap() {
         kind: "closed",
         num: "01",
         logo: "/ipswich-town.svg",
-        // Scouting-card fields:
-        cardTag: "ACTIVE · 01",
-        cardTitle: "Ipswich Town FC",
-        cardLeague: "EFL CHAMPIONSHIP · TIER 2",
-        cardMeta: "England · Founded 1878",
-        identityKind: "crest",
       },
       {
         name: "Spain",
@@ -754,11 +661,6 @@ export function ClaraVistaMap() {
         status: "Diligence",
         kind: "diligence",
         num: "02",
-        cardTag: "TARGET · 02",
-        cardTitle: "Spain",
-        cardLeague: "LA LIGA · TIER 1",
-        cardMeta: "Diligence in progress",
-        identityKind: "flag-es",
       },
       {
         name: "Italy",
@@ -771,11 +673,6 @@ export function ClaraVistaMap() {
         status: "Diligence",
         kind: "diligence",
         num: "03",
-        cardTag: "TARGET · 03",
-        cardTitle: "Italy",
-        cardLeague: "SERIE A · TIER 1",
-        cardMeta: "Diligence in progress",
-        identityKind: "flag-it",
       },
     ];
 
@@ -922,13 +819,14 @@ export function ClaraVistaMap() {
     // Camera framing:
     // - Desktop: slight right/up nudge so Europe doesn't sit under the headline.
     // - Mobile: center + zoom the Europe bounds so portfolio dots don't collapse together.
-    const DESKTOP_MAP_SHIFT_X = 0.12; // proportion of viewport width
-    const DESKTOP_MAP_SHIFT_Y = -0.02; // proportion of viewport height (negative = up)
+    const DESKTOP_MAP_SHIFT_X = embed ? 0.14 : 0.12; // proportion of viewport width
+    const DESKTOP_MAP_SHIFT_Y = embed ? 0.18 : -0.02; // proportion of viewport height (negative = up)
 
     let proj = { ox: 0, oy: 0, drawW: 0, drawH: 0 };
     function computeProjection() {
       const isMobile = W <= 720;
-      const targetWidth = isMobile ? Math.min(W * 1.06, 980) : Math.min(W * 0.62, 1100);
+      const widthFactor = embed ? (isMobile ? 0.80 : 0.60) : isMobile ? 1.06 : 0.62;
+      const targetWidth = isMobile ? Math.min(W * widthFactor, 760) : Math.min(W * widthFactor, embed ? 980 : 1100);
       const lngRange = BOUNDS.maxLng - BOUNDS.minLng;
       const latRange = BOUNDS.maxLat - BOUNDS.minLat;
       const meanLatCos = Math.cos(((BOUNDS.maxLat + BOUNDS.minLat) / 2) * Math.PI / 180);
@@ -936,7 +834,7 @@ export function ClaraVistaMap() {
 
       let drawW = targetWidth;
       let drawH = drawW / dataAspect;
-      const maxH = isMobile ? H * 0.72 : H * 0.78;
+      const maxH = isMobile ? H * (embed ? 0.62 : 0.72) : H * (embed ? 0.68 : 0.78);
       if (drawH > maxH) {
         drawH = maxH;
         drawW = drawH * dataAspect;
@@ -946,8 +844,8 @@ export function ClaraVistaMap() {
       // - Lift further so the southern markers (Spain/Italy) clear the bottom-sheet
       //   "DATA-DRIVEN SPORTS INVESTMENT" tagline instead of brushing it.
       // - Nudge right so Spain has left breathing room.
-      const shiftX = isMobile ? 0.06 : DESKTOP_MAP_SHIFT_X;
-      const shiftY = isMobile ? -0.19 : DESKTOP_MAP_SHIFT_Y;
+      const shiftX = isMobile ? (embed ? 0.10 : 0.06) : DESKTOP_MAP_SHIFT_X;
+      const shiftY = isMobile ? (embed ? 0.34 : -0.19) : DESKTOP_MAP_SHIFT_Y;
       const ox = (W - drawW) / 2 + W * shiftX;
       const oy = (H - drawH) / 2 - H * 0.04 + H * shiftY;
       proj = { ox, oy, drawW, drawH };
@@ -1052,7 +950,7 @@ export function ClaraVistaMap() {
       stepLng: 0.28,
       jitterEu: 1.4,
       jitterCtx: 1.8,
-      contextDotPx: 1.14,
+      contextDotPx: 0.96,
     };
 
     // Stipple grid step in degrees, derived from how many CSS pixels each
@@ -1091,7 +989,7 @@ export function ClaraVistaMap() {
       const densityRatio = Math.min(1, DESKTOP_STEP_LNG / stepLng);
       const jitterEu = 1.4 * Math.sqrt(densityRatio);
       const jitterCtx = 1.8 * Math.sqrt(densityRatio);
-      const contextDotPx = Math.min(1.18, 0.9 + 0.28 * densityRatio);
+      const contextDotPx = Math.min(0.96, 0.76 + 0.2 * densityRatio);
 
       return { stepLat, stepLng, jitterEu, jitterCtx, contextDotPx };
     }
@@ -1132,112 +1030,33 @@ export function ClaraVistaMap() {
       // independently. Anything pushed after this line is context.
       euDotCount = DOTS.length;
 
-      // PASS 2 — World context continents. Same adaptive step as Europe so
-      // the fabric matches at every breakpoint; hierarchy comes from
-      // (a) per-region base intensity and (b) per-dot hotspot halos that
-      // sum on top, then a quantize step that snaps the result into ~0.05
-      // buckets so the render loop still batches a small number of unique
-      // alpha values.
+      // PASS 2 — World context continents. Uses the same adaptive step as
+      // Europe so the fabric matches at every breakpoint; hierarchy comes
+      // from polygon precision and CONTEXT_DIM, not from spacing.
       //
       // Performance: static fillRect batch in the render loop (see pass B).
-      // Hotspot loop is O(dots × hotspots) one-shot at build time
-      // (~200k × ~50 ≈ 10M ops; runs once on resize). Sort is one-shot too.
-      // Render loop flips fillStyle once per unique bucket — ~12–20 flips
-      // per frame total vs the old single value, still trivial.
-      const REGION_INTENSITY: Record<string, number> = {};
-      for (const r of WORLD_REGIONS) {
-        REGION_INTENSITY[r.name] = typeof r.intensity === "number" ? r.intensity : 1.0;
-      }
-
-      // Precompute (radius²) for each hotspot so the inner loop is a single
-      // squared-distance compare; cheaper than sqrt + cmp. Bucket into a
-      // coarse lat/lng grid so each dot only checks nearby halos (~2–8)
-      // instead of all ~50.
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const HOTSPOTS = FOOTBALL_HOTSPOTS.map((h: any) => ({
-        lat: h.lat,
-        lng: h.lng,
-        r: h.r,
-        r2: h.r * h.r,
-        boost: h.boost,
-      }));
-
-      const HOTSPOT_CELL = 12;
-      const hotspotBuckets = new Map<string, typeof HOTSPOTS>();
-      for (let hi = 0; hi < HOTSPOTS.length; hi++) {
-        const hs = HOTSPOTS[hi];
-        const minLat = Math.floor((hs.lat - hs.r) / HOTSPOT_CELL);
-        const maxLat = Math.floor((hs.lat + hs.r) / HOTSPOT_CELL);
-        const minLng = Math.floor((hs.lng - hs.r) / HOTSPOT_CELL);
-        const maxLng = Math.floor((hs.lng + hs.r) / HOTSPOT_CELL);
-        for (let clat = minLat; clat <= maxLat; clat++) {
-          for (let clng = minLng; clng <= maxLng; clng++) {
-            const key = `${clat},${clng}`;
-            let bucket = hotspotBuckets.get(key);
-            if (!bucket) {
-              bucket = [];
-              hotspotBuckets.set(key, bucket);
-            }
-            bucket.push(hs);
-          }
-        }
-      }
-
       const ctxStepLat = stepLat;
       const ctxStepLng = stepLng;
       for (let lat = -55; lat <= 78; lat += ctxStepLat) {
         for (let lng = -170; lng <= 180; lng += ctxStepLng) {
           if (whichCountry(lat, lng)) continue;
           const region = whichWorldRegion(lat, lng);
-          if (!region) continue;
-
-          // Stack hotspot halo contributions with smooth (1 - d²/r²) falloff.
-          let extraBoost = 0;
-          const nearby =
-            hotspotBuckets.get(
-              `${Math.floor(lat / HOTSPOT_CELL)},${Math.floor(lng / HOTSPOT_CELL)}`,
-            ) ?? [];
-          for (let h = 0; h < nearby.length; h++) {
-            const hs = nearby[h];
-            const dy = lat - hs.lat;
-            if (Math.abs(dy) > hs.r) continue;
-            const dx = lng - hs.lng;
-            if (Math.abs(dx) > hs.r) continue;
-            const d2 = dy * dy + dx * dx;
-            if (d2 < hs.r2) {
-              extraBoost += hs.boost * (1 - d2 / hs.r2);
-            }
+          if (region) {
+            const p = project(lat, lng);
+            DOTS.push({
+              x: p.x,
+              y: p.y,
+              country: region,
+              isPortfolio: false,
+              isContext: true,
+              basePhase: Math.random() * Math.PI * 2,
+              jitterX: (Math.random() - 0.5) * jitterCtx,
+              jitterY: (Math.random() - 0.5) * jitterCtx,
+              proximity: 0,
+              waveBoost: 0,
+            });
           }
-
-          const rawIntensity = (REGION_INTENSITY[region] ?? 1.0) + extraBoost;
-          // Quantize to 0.05 buckets to cap fillStyle flips at ~20/frame.
-          const quantized = Math.round(rawIntensity * 20) / 20;
-
-          const p = project(lat, lng);
-          DOTS.push({
-            x: p.x,
-            y: p.y,
-            country: region,
-            isPortfolio: false,
-            isContext: true,
-            basePhase: Math.random() * Math.PI * 2,
-            jitterX: (Math.random() - 0.5) * jitterCtx,
-            jitterY: (Math.random() - 0.5) * jitterCtx,
-            proximity: 0,
-            waveBoost: 0,
-            contextIntensity: quantized,
-          });
         }
-      }
-
-      // Sort the context slice in-place by intensity ascending. We never
-      // index into DOTS outside the pass-B inner loop, so this is safe; it
-      // groups equal-intensity dots so each bucket renders as one fillStyle
-      // batch.
-      if (DOTS.length > euDotCount) {
-        const ctxSlice = DOTS.splice(euDotCount, DOTS.length - euDotCount);
-        ctxSlice.sort((a, b) => a.contextIntensity - b.contextIntensity);
-        for (let i = 0; i < ctxSlice.length; i++) DOTS.push(ctxSlice[i]);
       }
 
       DOTS.forEach((d) => {
@@ -1343,8 +1162,9 @@ export function ClaraVistaMap() {
     }
 
     function resize() {
-      W = window.innerWidth;
-      H = window.innerHeight;
+      const rect = embed ? embedWrap.getBoundingClientRect() : null;
+      W = embed && rect ? Math.max(1, Math.round(rect.width)) : window.innerWidth;
+      H = embed && rect ? Math.max(1, Math.round(rect.height)) : window.innerHeight;
       canvasEl.width = W * DPR;
       canvasEl.height = H * DPR;
       canvasEl.style.width = `${W}px`;
@@ -1650,6 +1470,11 @@ export function ClaraVistaMap() {
       initParticles();
     };
     window.addEventListener("resize", onResize);
+    const embedObserver =
+      embed && typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => onResize())
+        : null;
+    embedObserver?.observe(embedWrap);
     resize();
     initParticles();
 
@@ -1677,117 +1502,6 @@ export function ClaraVistaMap() {
         }
       }
       return tiles;
-    }
-
-    function roundRectPath(x: number, y: number, w: number, h: number, r: number) {
-      const rr = Math.min(r, w * 0.5, h * 0.5);
-      ctx.beginPath();
-      ctx.moveTo(x + rr, y);
-      ctx.lineTo(x + w - rr, y);
-      ctx.quadraticCurveTo(x + w, y, x + w, y + rr);
-      ctx.lineTo(x + w, y + h - rr);
-      ctx.quadraticCurveTo(x + w, y + h, x + w - rr, y + h);
-      ctx.lineTo(x + rr, y + h);
-      ctx.quadraticCurveTo(x, y + h, x, y + h - rr);
-      ctx.lineTo(x, y + rr);
-      ctx.quadraticCurveTo(x, y, x + rr, y);
-      ctx.closePath();
-    }
-
-    /** Editorial-restraint card plate — fill pulled onto the map's forest-
-     *  green / cream palette so the card reads as part of the same world,
-     *  not a foreign white tooltip pasted on top. Day = --bg-card warm
-     *  cream; night = --bg-elev with a forest-green shift. Shadow + border
-     *  also pick up subtle green tint. */
-    function drawPortfolioLabelPlate(
-      x: number,
-      y: number,
-      w: number,
-      h: number,
-      isDay: boolean,
-      opacity: number,
-    ) {
-      const radius = 6;
-      ctx.save();
-      // Forest-tinted shadow on night so it lives on the green spotlight,
-      // not the bare canvas black it used to inherit.
-      ctx.shadowColor = isDay ? "rgba(6, 30, 18, 0.16)" : "rgba(2, 14, 8, 0.62)";
-      ctx.shadowBlur = 12;
-      ctx.shadowOffsetY = 2;
-      // Day: --bg-card #FDFBF7 (warmer than the prior #FCFAF6).
-      // Night: --bg-elev #0e1a14 — explicit forest-green elevated surface.
-      ctx.fillStyle = isDay
-        ? `rgba(253, 251, 247, ${0.92 * opacity})`
-        : `rgba(14, 26, 20, ${0.86 * opacity})`;
-      roundRectPath(x, y, w, h, radius);
-      ctx.fill();
-      ctx.shadowColor = "transparent";
-      ctx.shadowBlur = 0;
-      ctx.shadowOffsetY = 0;
-
-      // Hairline border — green-tinted on night to bind the card to the
-      // map's stroke color, forest-tinted on day for the same reason.
-      ctx.strokeStyle = isDay
-        ? `rgba(6, 93, 57, ${0.18 * opacity})`
-        : `rgba(52, 194, 129, ${0.20 * opacity})`;
-      ctx.lineWidth = 0.6;
-      roundRectPath(x, y, w, h, radius);
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    /** Flag chip (circle) for non-crest portfolio entries — ES / IT.
-     *  Drawn with the actual flag stripes clipped to a circle, ringed with a
-     *  cream hairline. Internationally readable identity without revealing
-     *  the confidential target club. */
-    function drawFlagChip(
-      cx: number,
-      cy: number,
-      r: number,
-      kind: "flag-es" | "flag-it",
-      alpha: number,
-      isDay: boolean,
-    ) {
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.clip();
-
-      if (kind === "flag-es") {
-        // Spain — three horizontal bands (red / yellow / red, 1:2:1).
-        const top = cy - r;
-        const totalH = r * 2;
-        const redH = totalH * 0.25;
-        const yellowH = totalH * 0.5;
-        ctx.fillStyle = "#AA151B";
-        ctx.fillRect(cx - r, top, r * 2, redH);
-        ctx.fillStyle = "#F1BF00";
-        ctx.fillRect(cx - r, top + redH, r * 2, yellowH);
-        ctx.fillStyle = "#AA151B";
-        ctx.fillRect(cx - r, top + redH + yellowH, r * 2, redH);
-      } else {
-        // Italy — three vertical bands (green / white / red, equal width).
-        const left = cx - r;
-        const totalW = r * 2;
-        const bandW = totalW / 3;
-        ctx.fillStyle = "#008C45";
-        ctx.fillRect(left, cy - r, bandW, r * 2);
-        ctx.fillStyle = "#F4F5F0";
-        ctx.fillRect(left + bandW, cy - r, bandW, r * 2);
-        ctx.fillStyle = "#CD212A";
-        ctx.fillRect(left + bandW * 2, cy - r, bandW, r * 2);
-      }
-      ctx.restore();
-
-      // Hairline ring around the chip.
-      ctx.strokeStyle = isDay
-        ? `rgba(26, 37, 32, ${0.55 * alpha})`
-        : `rgba(242, 234, 214, ${0.65 * alpha})`;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.stroke();
     }
 
     function render(t: number) {
@@ -1821,80 +1535,15 @@ export function ClaraVistaMap() {
       ctx.save();
       ctx.translate(pan.x, pan.y);
 
-      // Background spotlight — Europe-centered, tighter falloff so the eye
-      // gets a clear destination on the canvas. Inner stop sits at 0 (peak
-      // brightness right at Europe's centroid), middle stop at 0.32 holds
-      // the core glow further out before fading to transparent by 0.78.
-      // Brighter than the original generic radial; matches "spotlight on
-      // the asset" pattern from broadcast graphics.
+      // Background spotlight
       const europeCx = proj.ox + proj.drawW * 0.5;
       const europeCy = proj.oy + proj.drawH * 0.5;
-      const spotR = Math.max(W, H) * 0.48;
-      const spotGrad = ctx.createRadialGradient(europeCx, europeCy, 0, europeCx, europeCy, spotR);
-      const spot1Boost = isDayFrame
-        ? "rgba(220, 215, 195, 0.46)"
-        : "rgba(28, 70, 50, 0.44)";
-      const spot2Boost = isDayFrame
-        ? "rgba(244, 237, 220, 0.14)"
-        : "rgba(14, 36, 24, 0.18)";
-      spotGrad.addColorStop(0, spot1Boost);
-      spotGrad.addColorStop(0.32, spot2Boost);
-      spotGrad.addColorStop(0.78, "rgba(0,0,0,0)");
+      const spotGrad = ctx.createRadialGradient(europeCx, europeCy, 60, europeCx, europeCy, Math.max(W, H) * 0.55);
+      spotGrad.addColorStop(0, C.spotlight1);
+      spotGrad.addColorStop(0.5, C.spotlight2);
       spotGrad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = spotGrad;
       ctx.fillRect(0, 0, W, H);
-
-      // ---- PORTFOLIO COUNTRY LIFT ----
-      // Draw a translucent fill + crisp outline + warm amber rim under the
-      // three asset countries (UK / Spain / Italy) so they lift off the rest
-      // of Europe before the stipple draws on top. Two-color cartography:
-      // green for "active map," amber for "this is the deal." Without this,
-      // every European country reads at the same volume and the eye has no
-      // anchor for what the portfolio is.
-      for (let ci = 0; ci < COUNTRIES.length; ci++) {
-        const country = COUNTRIES[ci];
-        if (!PORTFOLIO_COUNTRIES.has(country.name)) continue;
-        const pts = country.points as { x: number; y: number }[] | undefined;
-        if (!pts || pts.length < 3) continue;
-
-        ctx.beginPath();
-        ctx.moveTo(pts[0].x, pts[0].y);
-        for (let pi = 1; pi < pts.length; pi++) ctx.lineTo(pts[pi].x, pts[pi].y);
-        ctx.closePath();
-
-        // Translucent green plate fill — pulled back so the country reads
-        // as "noted" rather than "highlighted." Editorial cartography move:
-        // the dots inside the country do the visual work; the fill is just
-        // a faint tint to bind them together.
-        ctx.fillStyle = isDayFrame
-          ? "rgba(6, 93, 57, 0.10)"
-          : "rgba(52, 194, 129, 0.085)";
-        ctx.fill();
-
-        // Outline — single tight stroke with a tighter drop shadow than
-        // the first pass (blur 6 vs 10, offset 1 vs 2). Luxury shadows
-        // are crisp, not diffuse.
-        ctx.save();
-        ctx.shadowColor = isDayFrame ? "rgba(6, 93, 57, 0.22)" : "rgba(0, 0, 0, 0.40)";
-        ctx.shadowBlur = 6;
-        ctx.shadowOffsetY = 1;
-        ctx.strokeStyle = isDayFrame
-          ? "rgba(6, 93, 57, 0.78)"
-          : "rgba(122, 226, 170, 0.78)";
-        ctx.lineWidth = 1.05;
-        ctx.lineJoin = "round";
-        ctx.stroke();
-        ctx.restore();
-
-        // Amber glint — half the weight of the first pass. A whisper of
-        // warm color against the green-dominant scene, not a second border.
-        ctx.strokeStyle = isDayFrame
-          ? "rgba(154, 111, 48, 0.32)"
-          : "rgba(232, 197, 71, 0.30)";
-        ctx.lineWidth = 0.45;
-        ctx.lineJoin = "round";
-        ctx.stroke();
-      }
 
       // KICK-OFF WAVES — round-robin so cities never pulse on top of each other.
       if (elapsed > WAVE_FIRST_DELAY && t - lastAnyWaveTime > WAVE_GAP) {
@@ -1938,9 +1587,9 @@ export function ClaraVistaMap() {
       // HUB NETWORK
       const hubReveal = Math.min(1, Math.max(0, (elapsed - 600) / 1800));
       const hubEase = 1 - Math.pow(1 - hubReveal, 3);
-      const hubAlpha = (getTheme() === "day" ? 0.58 : 0.30) * hubEase;
+      const hubAlpha = (getTheme() === "day" ? 0.27 : 0.11) * hubEase;
       ctx.strokeStyle = getTheme() === "day" ? `rgba(6, 93, 57, ${hubAlpha})` : `rgba(52, 194, 129, ${hubAlpha})`;
-      ctx.lineWidth = getTheme() === "day" ? 0.96 : 0.78;
+      ctx.lineWidth = getTheme() === "day" ? 0.65 : 0.55;
       ctx.beginPath();
       for (let i = 0; i < HUB_LINKS.length; i++) {
         const a = CITY_INDEX[HUB_LINKS[i][0]];
@@ -1957,16 +1606,16 @@ export function ClaraVistaMap() {
       const cursorR = 150;
       const cursorR2 = cursorR * cursorR;
       const isDay = getTheme() === "day";
-      const dotR = isDay ? 0 : 52;
-      const dotG = isDay ? 34 : 194;
-      const dotB = isDay ? 21 : 129;
-      const portR = isDay ? 2 : 122;
-      const portG = isDay ? 68 : 226;
-      const portB = isDay ? 40 : 170;
-      const baseAlphaPort = isDay ? 0.98 : 0.52;
-      const baseAlphaReg = isDay ? 0.96 : 0.42;
-      const pulseAmpPort = isDay ? 0.10 : 0.072;
-      const pulseAmpReg = isDay ? 0.058 : 0.034;
+      const dotR = isDay ? 6 : 52;
+      const dotG = isDay ? 93 : 194;
+      const dotB = isDay ? 57 : 129;
+      const portR = isDay ? 4 : 122;
+      const portG = isDay ? 70 : 226;
+      const portB = isDay ? 42 : 170;
+      const baseAlphaPort = isDay ? 0.66 : 0.26;
+      const baseAlphaReg = isDay ? 0.42 : 0.15;
+      const pulseAmpPort = isDay ? 0.095 : 0.065;
+      const pulseAmpReg = isDay ? 0.048 : 0.028;
       const mx = mouse.x;
       const my = mouse.y;
       const mouseActive = mx > -1000;
@@ -1976,7 +1625,7 @@ export function ClaraVistaMap() {
       // clearly when bleeding at the viewport edge, but still below Europe's
       // animated layer (no breath / wave / cursor boost on context).
       const CONTEXT_DIM = 1.0;
-      const CONTEXT_ALPHA_BOOST = isDay ? 1.92 : 1.52;
+      const CONTEXT_ALPHA_BOOST = isDay ? 1.14 : 1.08;
 
       // -- PASS A: EUROPE STIPPLE (animated) -----------------------------
       // Per-dot breath, cursor proximity, wave ripples, size scaling. These
@@ -2012,7 +1661,7 @@ export function ClaraVistaMap() {
         const waveBoost = d.waveBoost * 0.45;
         const alpha = (baseAlpha + breath * pulseAmp + proxBoost + waveBoost) * dotEase;
 
-        const baseSize = isPort ? 1.28 : 0.96;
+        const baseSize = isPort ? 0.95 : 0.78;
         const size = baseSize + d.proximity * 1.35 + d.waveBoost * 0.85;
 
         ctx.fillStyle = isPort
@@ -2032,41 +1681,28 @@ export function ClaraVistaMap() {
         }
       }
 
-      // -- PASS B: CONTEXT CONTINENTS (static fillRect, batched by intensity) -
+      // -- PASS B: CONTEXT CONTINENTS (static fillRect) -------------------
       // The context layer is the biggest expense in the loop — 200k+ dots
       // across the world. Two key optimizations vs. the Europe pass:
-      //   1. fillStyle is set ONCE per intensity bucket (dots were sorted by
-      //      contextIntensity at buildDotMap time, so equal-intensity dots
-      //      are contiguous in DOTS). With per-region base + hotspot halos
-      //      quantized to 0.05, that's ~12–20 string-template allocs per
-      //      frame instead of 200k+.
+      //   1. ONE fillStyle set globally for the whole layer (vs per-dot
+      //      string-template alloc + re-parse on every dot).
       //   2. ctx.fillRect instead of ctx.beginPath + ctx.arc + ctx.fill
       //      (3 native calls → 1 native call per dot). At 0.78px size the
       //      visual difference between a circle and a square is sub-pixel
       //      and indistinguishable at the canvas's render resolution.
       // Trade-off: context dots are static (no breath, no cursor proximity,
-      // no wave) — visually negligible for a supporting layer at this
-      // alpha, perceptually invisible at standard viewing distance. (Tried
-      // Path2D batching; native arc/path-building cost ended up dominating,
-      // so a flat fillRect loop is the fastest path here.)
-      //
-      // Per-region intensity (set on WORLD_REGIONS, stamped on each dot)
-      // weights alpha so the football-watching world reads stronger than
-      // sparse / low-engagement regions. South America > Africa > Middle
-      // East > Asia > North America > Oceania > Greenland.
-      const ctxBaseAlpha = baseAlphaReg * CONTEXT_DIM * CONTEXT_ALPHA_BOOST * dotEase;
-      if (ctxBaseAlpha > 0.005 && euDotCount < DOTS.length) {
+      // no wave) — visually negligible for a supporting layer at
+      // CONTEXT_DIM alpha, perceptually invisible at standard viewing
+      // distance. (Tried Path2D batching; native arc/path-building cost
+      // ended up dominating, so a flat fillRect loop with a single
+      // fillStyle is the fastest path here.)
+      const ctxAlpha = Math.min(1, baseAlphaReg * CONTEXT_DIM * CONTEXT_ALPHA_BOOST * dotEase);
+      if (ctxAlpha > 0.005 && euDotCount < DOTS.length) {
         const ctxSize = stippleMetrics.contextDotPx;
         const ctxHalfSize = ctxSize * 0.5;
-        let curIntensity = -1;
+        ctx.fillStyle = `rgba(${dotR},${dotG},${dotB},${ctxAlpha})`;
         for (let i = euDotCount; i < DOTS.length; i++) {
           const d = DOTS[i];
-          if (d.contextIntensity !== curIntensity) {
-            curIntensity = d.contextIntensity;
-            const a = Math.min(1, ctxBaseAlpha * curIntensity);
-            if (a <= 0.005) continue;
-            ctx.fillStyle = `rgba(${dotR},${dotG},${dotB},${a})`;
-          }
           const baseVx = d.x + pan.x;
           if (baseVx + worldPxW < -4 || baseVx - worldPxW > W + 4) continue;
           for (let tileN = -1; tileN <= 1; tileN++) {
@@ -2301,11 +1937,11 @@ export function ClaraVistaMap() {
           const { px, py } = tiles[ti];
           const ringGrad = ctx.createRadialGradient(px, py, 0, px, py, glowR * hoverMul);
           if (getTheme() === "day") {
-            const glowAlpha = (0.36 + litBoost * 0.30) * ease;
+            const glowAlpha = (0.28 + litBoost * 0.26) * ease;
             ringGrad.addColorStop(0, `rgba(6, 93, 57, ${glowAlpha})`);
             ringGrad.addColorStop(1, "rgba(6, 93, 57, 0)");
           } else {
-            const glowAlpha = (0.36 + litBoost * 0.30) * ease;
+            const glowAlpha = (0.28 + litBoost * 0.26) * ease;
             ringGrad.addColorStop(0, `rgba(242, 234, 214, ${glowAlpha})`);
             ringGrad.addColorStop(1, "rgba(242, 234, 214, 0)");
           }
@@ -2314,10 +1950,10 @@ export function ClaraVistaMap() {
           ctx.arc(px, py, glowR * hoverMul, 0, Math.PI * 2);
           ctx.fill();
 
-          const coreAlpha = (0.52 + litBoost * 0.28) * ease;
+          const coreAlpha = (0.4 + litBoost * 0.22) * ease;
           ctx.fillStyle =
             getTheme() === "day"
-              ? `rgba(18, 28, 24, ${Math.min(1, coreAlpha)})`
+              ? `rgba(26, 37, 32, ${Math.min(1, coreAlpha)})`
               : `rgba(242, 234, 214, ${Math.min(1, coreAlpha)})`;
           ctx.beginPath();
           ctx.arc(px, py, r * (1 + litBoost * 0.2), 0, Math.PI * 2);
@@ -2482,7 +2118,7 @@ export function ClaraVistaMap() {
         const ease = 1 - Math.pow(1 - reveal, 3);
         const pulse = 0.5 + 0.5 * Math.sin((t / c.period) * Math.PI * 2 + c.phase);
         const r = (5.4 + pulse * 1.1) * ease;
-        const glowR = (c.kind === "closed" ? 44 + pulse * 14 : 26 + pulse * 7) * ease;
+        const glowR = (44 + pulse * 14) * ease;
 
         const dx = c.px + pan.x - mouse.x;
         const dy = c.py + pan.y - mouse.y;
@@ -2496,14 +2132,12 @@ export function ClaraVistaMap() {
 
         const outerGrad = ctx.createRadialGradient(c.px, c.py, 0, c.px, c.py, glowR * hoverMul);
         if (getTheme() === "day") {
-          const glowPeak = c.kind === "closed" ? 0.44 : 0.26;
-          outerGrad.addColorStop(0, `rgba(6, 93, 57, ${glowPeak * ease})`);
-          outerGrad.addColorStop(0.45, `rgba(6, 93, 57, ${glowPeak * 0.38 * ease})`);
-          outerGrad.addColorStop(1, "rgba(6, 93, 57, 0)");
+          outerGrad.addColorStop(0, `rgba(14, 138, 85, ${0.44 * ease})`);
+          outerGrad.addColorStop(0.4, `rgba(14, 138, 85, ${0.17 * ease})`);
+          outerGrad.addColorStop(1, "rgba(14, 138, 85, 0)");
         } else {
-          const glowPeak = c.kind === "closed" ? 0.56 : 0.34;
-          outerGrad.addColorStop(0, `rgba(52, 194, 129, ${glowPeak * ease})`);
-          outerGrad.addColorStop(0.45, `rgba(52, 194, 129, ${glowPeak * 0.38 * ease})`);
+          outerGrad.addColorStop(0, `rgba(52, 194, 129, ${0.56 * ease})`);
+          outerGrad.addColorStop(0.4, `rgba(52, 194, 129, ${0.2 * ease})`);
           outerGrad.addColorStop(1, "rgba(52, 194, 129, 0)");
         }
         ctx.fillStyle = outerGrad;
@@ -2547,18 +2181,15 @@ export function ClaraVistaMap() {
           ctx.fill();
           ctx.globalAlpha = 1;
         } else {
-          // Diligence targets — green ring + tint, no white fill plate.
-          ctx.fillStyle =
-            getTheme() === "day"
-              ? `rgba(6, 93, 57, ${0.38 * ease})`
-              : `rgba(52, 194, 129, ${0.32 * ease})`;
-          ctx.globalAlpha = 1;
+          ctx.fillStyle = getTheme() === "day" ? "rgba(245, 242, 235, 1)" : "rgba(6, 10, 8, 1)";
+          ctx.globalAlpha = ease;
           ctx.beginPath();
           ctx.arc(c.px, c.py, r, 0, Math.PI * 2);
           ctx.fill();
+          ctx.globalAlpha = 1;
 
           ctx.strokeStyle = C.portfolioCore[1];
-          ctx.lineWidth = 1.8;
+          ctx.lineWidth = 1.6;
           ctx.beginPath();
           ctx.arc(c.px, c.py, r, 0, Math.PI * 2);
           ctx.stroke();
@@ -2569,113 +2200,130 @@ export function ClaraVistaMap() {
           ctx.fill();
         }
 
-        // -- EDITORIAL CARD ----------------------------------------------
-        // Type-led, restrained. No left bar, no hairline rule, no status pip.
-        // The accent color travels through the status tag + dot indicator +
-        // league line — that's the entire deal-state signal. Card is squat
-        // (196 × 88), shadow is tight, fill is soft frost. Reads as a high-
-        // end editorial caption, not a tooltip.
         const labelOpacity = ease;
+        const labelOffset = 32;
+        const labelX = c.px + labelOffset;
+
+        const subLabel = c.kind === "closed" ? c.league : `${c.league} · TBD`;
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "left";
+
+        // Measure label text to size a soft backdrop plate (no border).
+        ctx.font = `italic 400 12px ${canvasFontVar("--font-serif")}`;
+        const numW = ctx.measureText(c.num).width;
+        ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
+        const labelW = ctx.measureText(c.label).width;
+        ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
+        const subW = ctx.measureText(subLabel).width;
+
+        const logoSrc = c.logo as string | undefined;
+        const logoImg = logoSrc ? portfolioLogoImages[logoSrc] : undefined;
+        const logoReady = Boolean(logoImg && logoImg.complete && logoImg.naturalWidth > 0);
+        /** Stacked crest + wordmark (broadcast / fixture-card pattern); inline row for other markers. */
+        const LOGO_STACK_H = 26;
+        const logoWStack =
+          logoReady && logoImg ? LOGO_STACK_H * (logoImg.naturalWidth / logoImg.naturalHeight) : 0;
+
+        const gapLogoTitle = 5;
+        const gapTitleSub = 5;
+        const titleLineH = 18;
+        const subLineH = 12;
+
         const isDayTheme = getTheme() === "day";
-        const isActive = c.kind === "closed";
-        const accentRGB = isDayTheme
-          ? isActive ? "6, 93, 57" : "154, 111, 48"
-          : isActive ? "52, 194, 129" : "232, 197, 71";
+        let haloCx: number;
+        let haloCy: number;
+        let haloRx: number;
+        let haloRy: number;
+        let lockupColumnX = 0;
+        let stackTop = 0;
+        const stackH =
+          LOGO_STACK_H + gapLogoTitle + titleLineH + gapTitleSub + subLineH;
 
-        const CARD_W = 196;
-        const CARD_H = 88;
-        const CARD_PAD_X = 16;
-        const CARD_PAD_TOP = 14;
-        const CARD_GAP = 22;
+        if (logoReady && logoImg) {
+          lockupColumnX = labelX + numW + 10;
+          stackTop = c.py - stackH / 2;
+          const blockW = Math.max(logoWStack, labelW, subW);
+          haloCx = lockupColumnX + blockW / 2;
+          haloCy = c.py;
+          haloRx = blockW / 2 + 56;
+          haloRy = stackH / 2 + 26;
+        } else {
+          const blockStart = labelX + 22;
+          const blockW = Math.max(labelW, subW);
+          haloCx = blockStart + blockW / 2;
+          haloCy = c.py + 5;
+          haloRx = blockW / 2 + 60;
+          haloRy = 30;
+        }
 
-        const plateX = c.px + r + CARD_GAP;
-        const plateY = c.py - CARD_H / 2;
-        const plateW = CARD_W;
-        const plateH = CARD_H;
-        const contentX = plateX + CARD_PAD_X;
+        // Soft elliptical halo behind the label: looks like a vignette, not a rectangle.
+        ctx.save();
+        ctx.translate(haloCx, haloCy);
+        ctx.scale(haloRx / haloRy, 1);
+        const haloGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, haloRy);
+        if (isDayTheme) {
+          haloGrad.addColorStop(0, `rgba(245, 242, 235, ${0.78 * labelOpacity})`);
+          haloGrad.addColorStop(0.55, `rgba(245, 242, 235, ${0.5 * labelOpacity})`);
+          haloGrad.addColorStop(1, `rgba(245, 242, 235, 0)`);
+        } else {
+          haloGrad.addColorStop(0, `rgba(6, 10, 8, ${0.92 * labelOpacity})`);
+          haloGrad.addColorStop(0.55, `rgba(6, 10, 8, ${0.58 * labelOpacity})`);
+          haloGrad.addColorStop(1, `rgba(6, 10, 8, 0)`);
+        }
+        ctx.fillStyle = haloGrad;
+        ctx.beginPath();
+        ctx.arc(0, 0, haloRy, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
 
-        drawPortfolioLabelPlate(
-          plateX,
-          plateY,
-          plateW,
-          plateH,
-          isDayTheme,
-          labelOpacity,
-        );
-
-        // Leader line — single thin hairline, no terminal node. Restraint.
-        ctx.strokeStyle = `rgba(${accentRGB}, ${0.55 * labelOpacity})`;
+        ctx.strokeStyle = isDayTheme
+          ? `rgba(6, 93, 57, ${0.5 * labelOpacity})`
+          : `rgba(52, 194, 129, ${0.5 * labelOpacity})`;
         ctx.lineWidth = 0.7;
         ctx.beginPath();
-        ctx.moveTo(c.px + r + 6, c.py);
-        ctx.lineTo(plateX, c.py);
+        ctx.moveTo(c.px + r + 7, c.py);
+        ctx.lineTo(labelX - 4, c.py);
         ctx.stroke();
 
-        // Status row — small dot (filled for active, ring for diligence)
-        // followed by the status tag. Filled vs. hollow is a refined
-        // financial-statement / Apple Health pattern: same shape, different
-        // state, no extra chrome.
-        ctx.textBaseline = "alphabetic";
-        ctx.textAlign = "left";
-        const statusBaselineY = plateY + CARD_PAD_TOP + 8;
-        const dotR = 2.6;
-        const dotX = contentX + dotR;
-        const dotY = statusBaselineY - 3;
-        if (isActive) {
-          ctx.fillStyle = `rgba(${accentRGB}, ${0.92 * labelOpacity})`;
-          ctx.beginPath();
-          ctx.arc(dotX, dotY, dotR, 0, Math.PI * 2);
-          ctx.fill();
-        } else {
-          ctx.strokeStyle = `rgba(${accentRGB}, ${0.88 * labelOpacity})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.arc(dotX, dotY, dotR - 0.3, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-        ctx.fillStyle = `rgba(${accentRGB}, ${0.92 * labelOpacity})`;
-        ctx.font = `600 9px ${canvasFontVar("--font-mono")}`;
-        ctx.fillText(c.cardTag, dotX + dotR + 7, statusBaselineY);
+        ctx.fillStyle = isDayTheme ? `rgba(6, 93, 57, ${labelOpacity})` : `rgba(52, 194, 129, ${labelOpacity})`;
+        ctx.font = `italic 400 12px ${canvasFontVar("--font-serif")}`;
+        ctx.textBaseline = "middle";
+        ctx.fillText(c.num, labelX, c.py - 1);
 
-        // Identity chip + title inline — single horizontal lockup so the
-        // crest reads with the name, not detached above it.
-        const titleRowY = plateY + 44;
-        const idR = 9;
-        const idCX = contentX + idR;
-        const idCY = titleRowY - 5;
-        if (c.identityKind === "crest") {
-          const logoSrc = c.logo as string | undefined;
-          const logoImg = logoSrc ? portfolioLogoImages[logoSrc] : undefined;
-          const logoReady = Boolean(
-            logoImg && logoImg.complete && logoImg.naturalWidth > 0,
+        if (logoReady && logoImg) {
+          ctx.globalAlpha = labelOpacity;
+          ctx.drawImage(logoImg, lockupColumnX, stackTop, logoWStack, LOGO_STACK_H);
+          ctx.globalAlpha = 1;
+          ctx.textBaseline = "top";
+          ctx.fillStyle = isDayTheme
+            ? `rgba(26, 37, 32, ${labelOpacity})`
+            : `rgba(242, 234, 214, ${labelOpacity})`;
+          ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
+          ctx.fillText(c.label, lockupColumnX, stackTop + LOGO_STACK_H + gapLogoTitle);
+          ctx.fillStyle = isDayTheme
+            ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
+            : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
+          ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
+          ctx.fillText(
+            subLabel,
+            lockupColumnX,
+            stackTop + LOGO_STACK_H + gapLogoTitle + titleLineH + gapTitleSub,
           );
-          if (logoReady && logoImg) {
-            const logoH = idR * 2;
-            const logoW = logoH * (logoImg.naturalWidth / logoImg.naturalHeight);
-            ctx.globalAlpha = labelOpacity;
-            ctx.drawImage(logoImg, idCX - logoW / 2, idCY - logoH / 2, logoW, logoH);
-            ctx.globalAlpha = 1;
-          }
-        } else if (c.identityKind === "flag-es" || c.identityKind === "flag-it") {
-          drawFlagChip(idCX, idCY, idR, c.identityKind, labelOpacity, isDayTheme);
+        } else {
+          const nameX = labelX + 22;
+          ctx.fillStyle = isDayTheme
+            ? `rgba(26, 37, 32, ${labelOpacity})`
+            : `rgba(242, 234, 214, ${labelOpacity})`;
+          ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
+          ctx.textBaseline = "middle";
+          ctx.fillText(c.label, nameX, c.py - 1);
+          ctx.fillStyle = isDayTheme
+            ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
+            : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
+          ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
+          ctx.fillText(subLabel, nameX, c.py + 15);
         }
-
-        ctx.fillStyle = isDayTheme
-          ? `rgba(10, 18, 14, ${labelOpacity})`
-          : `rgba(244, 238, 222, ${labelOpacity})`;
-        ctx.font = `italic 500 15px ${canvasFontVar("--font-serif")}`;
-        ctx.fillText(c.cardTitle, idCX + idR + 9, titleRowY);
-
-        // League + meta — stacked beneath, no rule. Spacing does the work.
-        ctx.fillStyle = `rgba(${accentRGB}, ${0.88 * labelOpacity})`;
-        ctx.font = `600 8.5px ${canvasFontVar("--font-mono")}`;
-        ctx.fillText(c.cardLeague, contentX, plateY + 66);
-
-        ctx.fillStyle = isDayTheme
-          ? `rgba(26, 37, 32, ${0.58 * labelOpacity})`
-          : `rgba(244, 238, 222, ${0.56 * labelOpacity})`;
-        ctx.font = `italic 10.5px ${canvasFontVar("--font-serif")}`;
-        ctx.fillText(c.cardMeta, contentX, plateY + 80);
+        ctx.textBaseline = "alphabetic";
       });
 
       // ---- LEAVE GEOGRAPHIC LAYER (final) ----
@@ -2737,6 +2385,7 @@ export function ClaraVistaMap() {
     return () => {
       window.removeEventListener("load", onWindowLoad);
       window.removeEventListener("resize", onResize);
+      embedObserver?.disconnect();
       document.removeEventListener("mousemove", updateMousePosition);
       document.removeEventListener("pointermove", updateMousePosition);
       document.documentElement.removeEventListener("mouseleave", onLeaveViewport);
@@ -2751,7 +2400,7 @@ export function ClaraVistaMap() {
       if (hintTimer !== undefined) window.clearTimeout(hintTimer);
       window.cancelAnimationFrame(rafRender);
     };
-  }, []);
+  }, [embed]);
 
   return (
     <div ref={wrapRef}>
@@ -2762,15 +2411,12 @@ export function ClaraVistaMap() {
       </div>
 
       <section className="hero">
-        <HeroVideoBackdrop />
-        <div className="hero-map-layer">
-          <canvas
-            id="map-canvas"
-            ref={canvasRef}
-            role="region"
-            aria-label="Global market map, draggable"
-          />
-        </div>
+        <canvas
+          id="map-canvas"
+          ref={canvasRef}
+          role="region"
+          aria-label="Global market map, draggable"
+        />
 
         <div className="cv-hint" id="cv-hint" aria-hidden="true">
           <span className="cv-hint-arrow">←</span>

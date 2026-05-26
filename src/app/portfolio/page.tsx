@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { ClaraVistaMapLegacy } from "@/components/ClaraVistaMapLegacy";
 import { Footer } from "@/components/Footer";
 import { Topbar } from "@/components/Topbar";
 
@@ -83,16 +84,16 @@ const CLUBS: PortfolioCard[] = [
         Italy <em>(target)</em>
       </>
     ),
-    loc: "Italy · Serie B",
+    loc: "Italy · Serie A",
     note: (
       <>
-        A historic Italian club with a track record of recent Serie A promotions, modern infrastructure, and the
-        youngest squad in Serie B. <em>Details under embargo.</em>
+        A historic Italian club with a track record of recent Serie A promotions, modern infrastructure, and
+        one of the youngest squads in Italian football. <em>Details under embargo.</em>
       </>
     ),
     founded: <em>under embargo</em>,
     leagueLabel: "League",
-    leagueValue: "Serie B",
+    leagueValue: "Serie A · target",
     link: "View diligence brief",
   },
 ];
@@ -102,23 +103,28 @@ export default function PortfolioPage() {
     <>
       <Topbar activeNav="portfolio" />
       <main className="cv-page portfolio-page portfolio-hub">
-        <div className="page-hero">
-          <div className="page-hero-inner">
-            <div>
-              <div className="ph-eyebrow">Portfolio</div>
-              <h1 className="ph-h1">
-                Three clubs. Three leagues. <em>One operating system.</em>
-              </h1>
+        <div className="portfolio-hero-banner">
+          <div className="page-hero">
+            <div className="page-hero-inner">
+              <div>
+                <div className="ph-eyebrow">Portfolio</div>
+                <h1 className="ph-h1">
+                  Three clubs. Three leagues. <em>One operating system.</em>
+                </h1>
+              </div>
+              <p className="ph-intro">
+                We invest in clubs with <em>untapped potential, asymmetric upside,</em> and clear pathways to
+                transformative value. A geographically diversified portfolio of European clubs, unified by a single
+                data-led operating model and disciplined capital deployment.
+              </p>
             </div>
-            <p className="ph-intro">
-              We invest in clubs with <em>untapped potential, asymmetric upside,</em> and clear pathways to
-              transformative value. A geographically diversified portfolio of European clubs, unified by a single
-              data-led operating model and disciplined capital deployment.
-            </p>
+          </div>
+          <div className="portfolio-map-embed" aria-hidden="true">
+            <ClaraVistaMapLegacy embed />
           </div>
         </div>
 
-        <div className="section">
+        <div className="section portfolio-hub-cards">
           <div className="section-inner">
             <div className="portfolio-grid">
               {CLUBS.map((c) => (
