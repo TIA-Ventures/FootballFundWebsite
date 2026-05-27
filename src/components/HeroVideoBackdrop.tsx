@@ -2,9 +2,17 @@
 
 import { useEffect, useRef } from "react";
 
-/** Active hero reel (v2): three goal clips + celebration loop (~32s, 720p). */
-const VIDEO_SRC = "/hero/ipswich-promotion-loop-v2-goals-and-celebration.mp4";
+/** Active hero reel (v2): three goal clips + celebration loop (~32s). */
+const VIDEO_DESKTOP = "/hero/ipswich-promotion-loop-v2-goals-and-celebration.mp4";
+const VIDEO_MOBILE = "/hero/ipswich-promotion-loop-v2-480p.mp4";
 const POSTER_SRC = "/hero/ipswich-promotion-poster-v2.jpg";
+
+function pickVideoSrc() {
+  if (typeof window === "undefined") return VIDEO_DESKTOP;
+  return window.matchMedia("(max-width: 720px), (pointer: coarse)").matches
+    ? VIDEO_MOBILE
+    : VIDEO_DESKTOP;
+}
 
 export function HeroVideoBackdrop() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -18,16 +26,15 @@ export function HeroVideoBackdrop() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) return;
 
-    let loaded = false;
+    let loadedSrc: string | null = null;
 
     const loadAndPlay = () => {
-      if (loaded) {
-        video.play().catch(() => {});
-        return;
+      const src = pickVideoSrc();
+      if (loadedSrc !== src) {
+        loadedSrc = src;
+        video.src = src;
+        video.load();
       }
-      loaded = true;
-      if (!video.src) video.src = VIDEO_SRC;
-      video.load();
       video.play().catch(() => {});
     };
 
@@ -58,7 +65,7 @@ export function HeroVideoBackdrop() {
 
     const onVisibility = () => {
       if (document.hidden) pauseVideo();
-      else if (loaded) video.play().catch(() => {});
+      else if (loadedSrc) video.play().catch(() => {});
     };
 
     document.addEventListener("visibilitychange", onVisibility);
@@ -70,16 +77,16 @@ export function HeroVideoBackdrop() {
 
   return (
     <div ref={wrapRef} className="hero-video-backdrop" aria-hidden="true">
+      {/* No src/preload/autoPlay on mount — poster only until JS attaches the
+          file (faststart MP4 + 480p on mobile). Avoids blocking LCP. */}
       <video
         ref={videoRef}
         className="hero-video"
-        src={VIDEO_SRC}
         poster={POSTER_SRC}
         muted
         loop
         playsInline
-        autoPlay
-        preload="metadata"
+        preload="none"
       />
       <div className="hero-video-scrim" />
     </div>
