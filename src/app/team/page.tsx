@@ -40,7 +40,7 @@ const LEADERSHIP: Person[] = [
     name: "Ed Schwartz",
     role: "Real Estate",
     photo: "/team/ed_schwartz.png",
-    bio: "30+ years as an investment advisor to pensions and endowments, more recently a board member of professional sports organizations.",
+    bio: "30+ years advising pensions and endowments, and a board member of professional sports organizations.",
   },
   {
     name: "Jeff Gaspin",
@@ -98,7 +98,7 @@ const ADVISORS: Person[] = [
     photo: "/team/mark_simonian.png",
     bio: (
       <>
-        35+ years as an industry-shaping deal-making senior executive in <em>Technology, Media &amp; Telecommunications.</em>
+        35+ years as an industry-shaping deal-making senior executive in <em>Technology, Media &amp; Telecom.</em>
       </>
     ),
   },

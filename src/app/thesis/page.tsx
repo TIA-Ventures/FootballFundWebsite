@@ -82,10 +82,6 @@ export default function ThesisPage() {
                   Sports <em>work.</em>
                 </h1>
               </div>
-              <p className="ph-intro">
-                A global asset class that has delivered <em>asymmetric, uncorrelated returns</em> — yet remains
-                structurally underallocated by institutional capital.
-              </p>
             </div>
           </div>
 

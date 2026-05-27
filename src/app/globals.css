@@ -2149,7 +2149,7 @@ body {
 }
 .subhead {
   font-family: var(--font-sans);
-  font-size: var(--type-lead); line-height: 1.7;
+  font-size: var(--type-body); line-height: 1.7;
   color: var(--ivory-mid); max-width: 500px;
   font-weight: 300; letter-spacing: 0.005em;
   transition: color 0.6s ease;
@@ -5295,7 +5295,7 @@ body {
 }
 .cv-page .ph-intro {
   font-family: var(--font-serif);
-  font-size: var(--type-prose);
+  font-size: var(--type-title);
   line-height: 1.55;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5606,8 +5606,8 @@ body {
 }
 .team-page .person-bio {
   font-family: var(--font-sans);
-  font-size: var(--type-body);
-  line-height: 1.65;
+  font-size: var(--type-ui);
+  line-height: 1.6;
   color: var(--ivory-mid);
   font-weight: 300;
   transition: color 0.6s ease;
@@ -5616,7 +5616,7 @@ body {
   font-family: var(--font-serif);
   font-style: italic;
   color: var(--ivory);
-  font-size: var(--type-body);
+  font-size: var(--type-ui);
 }
 
 /* ---- Team moments: editorial photo strip between Leadership and Advisors.
@@ -6406,7 +6406,7 @@ body {
 .cv-page .deep-sub {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: var(--type-display-sm);
+  font-size: var(--type-prose);
   color: var(--ivory-mid);
   font-weight: 300;
   letter-spacing: -0.005em;
