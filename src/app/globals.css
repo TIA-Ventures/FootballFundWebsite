@@ -5883,7 +5883,7 @@ body {
   border-bottom: none;
   /* Uniform surface — flows into cards below */
   background: var(--bg);
-  min-height: min(98vh, 1180px);
+  min-height: min(102vh, 1240px);
   /* Align map chrome with .page-hero copy column (embed bleeds ±9vw) */
   --portfolio-map-bleed: 9vw;
   --portfolio-gutter: 56px;
@@ -6123,7 +6123,7 @@ body {
 }
 @media (max-width: 720px) {
   .portfolio-hero-banner {
-    min-height: min(102vh, 1080px);
+    min-height: min(105vh, 1140px);
     --portfolio-map-bleed: 10vw;
     --portfolio-gutter: 22px;
   }
@@ -7229,20 +7229,33 @@ body {
 .cv-page .h-era-header-label {
   font-family: var(--font-serif);
   font-size: var(--type-lead);
-  color: var(--ivory);
   letter-spacing: -0.005em;
   line-height: 1.1;
 }
 .cv-page .h-era-header.chap-founding .h-era-header-label {
   color: var(--ivory-mid);
 }
+.cv-page .h-era-header.chap-golden .h-era-header-label {
+  color: color-mix(in srgb, var(--green-light) 82%, var(--ivory));
+}
+.cv-page .h-era-header.chap-modern .h-era-header-label {
+  color: var(--green-light);
+}
 .cv-page .h-era-header-years {
   font-family: var(--font-mono);
   font-size: var(--type-caption);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--ivory-dim);
   line-height: 1;
+}
+.cv-page .h-era-header.chap-founding .h-era-header-years {
+  color: var(--ivory-dim);
+}
+.cv-page .h-era-header.chap-golden .h-era-header-years {
+  color: color-mix(in srgb, var(--green-light) 52%, var(--ivory-dim));
+}
+.cv-page .h-era-header.chap-modern .h-era-header-years {
+  color: color-mix(in srgb, var(--green-light) 68%, var(--ivory-dim));
 }
 
 /* Fixed-height track lets cards alternate above/below the rail */
@@ -7252,72 +7265,9 @@ body {
   height: 296px;
 }
 
-/* Vertical era bands — secondary chapter cue (tint only, no text). The
-   header above carries the label; the band just extends its color downward
-   through the events for visual continuity. */
+/* Vertical era bands — hidden; chapter headers + rail carry era coding. */
 .cv-page .h-timeline-bands {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-.cv-page .h-era-band {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-}
-.cv-page .h-era-band-fill {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  /* Long, gentle fade so the tint dissolves into the chart background
-     instead of terminating with a perceptible edge. */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.4) 18%,
-    black 38%,
-    black 62%,
-    rgba(0, 0, 0, 0.4) 82%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.4) 18%,
-    black 38%,
-    black 62%,
-    rgba(0, 0, 0, 0.4) 82%,
-    transparent 100%
-  );
-}
-.cv-page .h-era-band.chap-founding .h-era-band-fill {
-  background: color-mix(in srgb, var(--ivory) 2.5%, transparent);
-}
-.cv-page .h-era-band.chap-golden .h-era-band-fill {
-  background: color-mix(in srgb, var(--green-light) 6%, transparent);
-}
-.cv-page .h-era-band.chap-modern .h-era-band-fill {
-  background: color-mix(in srgb, var(--green-light) 11%, transparent);
-}
-/* Divider between bands — vertical hairline only visible in the central
-   third, fading out at top and bottom to match the soft fill termination. */
-.cv-page .h-era-band.has-divider::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 1px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    color-mix(in srgb, var(--ivory-faint) 55%, transparent) 35%,
-    color-mix(in srgb, var(--ivory-faint) 55%, transparent) 65%,
-    transparent 100%
-  );
-  z-index: 0;
+  display: none;
 }
 /* Rail — vertically centered, segmented by era. Each segment fades to
    transparent at its left/right ends so the chapter transitions are soft
@@ -7436,19 +7386,20 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 6px;
+  gap: 4px;
   max-width: 156px;
+  min-height: 0;
 }
 .cv-page .h-event.is-above .h-event-content {
   grid-row: 1;
   align-self: end;
-  padding-bottom: 16px;
+  padding-bottom: 12px;
   flex-direction: column-reverse;
 }
 .cv-page .h-event.is-below .h-event-content {
   grid-row: 3;
   align-self: start;
-  padding-top: 16px;
+  padding-top: 12px;
 }
 
 .cv-page .h-event-year {
@@ -7484,8 +7435,8 @@ body {
 
 .cv-page .h-event-detail {
   font-family: var(--font-sans);
-  font-size: var(--type-label);
-  line-height: 1.5;
+  font-size: 0.8125rem;
+  line-height: 1.38;
   color: var(--ivory-dim);
   font-weight: 300;
   margin: 0;
@@ -7629,7 +7580,6 @@ body {
   .cv-page .h-timeline-hint { display: none; }
   /* Hide vertical bands and the chapter-row above; era markers appear
      inline before each chapter's first event in the vertical layout. */
-  .cv-page .h-timeline-bands { display: none; }
   .cv-page .h-timeline-eras-row { display: none; }
   .cv-page .h-event.starts-era::before {
     content: attr(data-era-label);
@@ -7642,8 +7592,12 @@ body {
     font-size: var(--type-mono);
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: var(--green-light);
   }
+  .cv-page .h-event.starts-era.chap-founding::before { color: var(--ivory-mid); }
+  .cv-page .h-event.starts-era.chap-golden::before {
+    color: color-mix(in srgb, var(--green-light) 82%, var(--ivory));
+  }
+  .cv-page .h-event.starts-era.chap-modern::before { color: var(--green-light); }
   .cv-page .h-event:first-child.starts-era::before { margin-top: 0; }
   .cv-page .h-timeline-scroll {
     overflow: visible;

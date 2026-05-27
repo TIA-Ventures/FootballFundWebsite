@@ -80,6 +80,7 @@ const LEADERSHIP: Person[] = [
   {
     name: "Harry Landis",
     role: "Strategy",
+    photo: "/team/harry_landis.jpg",
     bio: "Gen-Z founder and investor with experience building and consulting on business strategy and product.",
   },
   {

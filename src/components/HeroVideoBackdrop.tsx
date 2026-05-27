@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-/** Active hero reel (v2): three goal clips + full original celebration loop (~32s). */
+/** Active hero reel (v2): three goal clips + celebration loop (~32s, 720p). */
 const VIDEO_SRC = "/hero/ipswich-promotion-loop-v2-goals-and-celebration.mp4";
 const POSTER_SRC = "/hero/ipswich-promotion-poster-v2.jpg";
 

@@ -90,7 +90,7 @@ const CLUB_POLY: Record<ClubKey, string> = {
 const SCORE_POS: Record<ClubKey, Record<AxisKey, { x: number; y: number; anchor: "start" | "middle" | "end" }>> = {
   ipswich: {
     league:        { x: 300, y: 148, anchor: "middle" },
-    modernization: { x: 448, y: 178, anchor: "start" },
+    modernization: { x: 432, y: 192, anchor: "end" },
     history:       { x: 454, y: 334, anchor: "start" },
     fanbase:       { x: 368, y: 442, anchor: "start" },
     acquisition:   { x: 218, y: 468, anchor: "end" },
@@ -99,7 +99,7 @@ const SCORE_POS: Record<ClubKey, Record<AxisKey, { x: number; y: number; anchor:
   },
   italy: {
     league:        { x: 300, y: 128, anchor: "middle" },
-    modernization: { x: 456, y: 172, anchor: "start" },
+    modernization: { x: 440, y: 186, anchor: "end" },
     history:       { x: 444, y: 332, anchor: "start" },
     fanbase:       { x: 360, y: 424, anchor: "start" },
     acquisition:   { x: 214, y: 478, anchor: "end" },
@@ -108,7 +108,7 @@ const SCORE_POS: Record<ClubKey, Record<AxisKey, { x: number; y: number; anchor:
   },
   spain: {
     league:        { x: 300, y: 108, anchor: "middle" },
-    modernization: { x: 440, y: 184, anchor: "start" },
+    modernization: { x: 426, y: 198, anchor: "end" },
     history:       { x: 464, y: 335, anchor: "start" },
     fanbase:       { x: 372, y: 450, anchor: "start" },
     acquisition:   { x: 223, y: 460, anchor: "end" },
@@ -117,17 +117,100 @@ const SCORE_POS: Record<ClubKey, Record<AxisKey, { x: number; y: number; anchor:
   },
 };
 
-const AXIS_VERTICES: { axis: AxisKey; x: number; y: number; labelX: number; labelY: number; labelAnchor: "start" | "middle" | "end"; label: string }[] = [
-  { axis: "league",        x: 300,    y: 100,    labelX: 300, labelY:  76, labelAnchor: "middle", label: "League / Division" },
-  { axis: "modernization", x: 456.36, y: 175.30, labelX: 478, labelY: 146, labelAnchor: "start",  label: "Room for Modernization" },
-  { axis: "history",       x: 494.98, y: 344.50, labelX: 516, labelY: 349, labelAnchor: "start",  label: "History of Success" },
-  { axis: "fanbase",       x: 386.78, y: 480.18, labelX: 404, labelY: 510, labelAnchor: "start",  label: "Fanbase Size" },
-  { axis: "acquisition",   x: 213.22, y: 480.18, labelX: 195, labelY: 510, labelAnchor: "end",    label: "Acquisition Price" },
-  { axis: "stadium",       x: 105.02, y: 344.50, labelX:  84, labelY: 349, labelAnchor: "end",    label: "Stadium Ownership" },
-  { axis: "location",      x: 143.64, y: 175.30, labelX: 122, labelY: 146, labelAnchor: "end",    label: "Location / Real Estate" },
-];
-
 const HEPTAGON_POINTS = "300,100 456.36,175.30 494.98,344.50 386.78,480.18 213.22,480.18 105.02,344.50 143.64,175.30";
+
+const CHART_CX = 300;
+const CHART_CY = 300;
+/** Outward offset from each outer vertex along its spoke (px). */
+const LABEL_RADIAL = 30;
+const LABEL_LINE_EM = 1.15;
+
+type AxisVertex = {
+  axis: AxisKey;
+  x: number;
+  y: number;
+  labelX: number;
+  labelY: number;
+  labelAnchor: "start" | "middle" | "end";
+  label: string;
+  labelLines?: [string, string];
+};
+
+/** Place axis titles just outside the outer ring without overlapping spokes or dots. */
+function axisLabel(
+  axis: AxisKey,
+  x: number,
+  y: number,
+  label: string,
+  placement: "top" | "upper-right" | "lower-right" | "bottom-right" | "bottom-left" | "lower-left" | "upper-left",
+  labelLines?: [string, string],
+): AxisVertex {
+  const dx = x - CHART_CX;
+  const dy = y - CHART_CY;
+  const len = Math.hypot(dx, dy);
+  const ux = dx / len;
+  const uy = dy / len;
+  const anchorX = x + ux * LABEL_RADIAL;
+  const lineStep = 15 * LABEL_LINE_EM;
+
+  if (placement === "top") {
+    return {
+      axis,
+      x,
+      y,
+      labelX: CHART_CX,
+      labelY: y - 24 - (labelLines ? lineStep : 0),
+      labelAnchor: "middle",
+      label,
+      labelLines,
+    };
+  }
+
+  const below =
+    placement === "lower-right" ||
+    placement === "lower-left" ||
+    placement === "bottom-right" ||
+    placement === "bottom-left";
+  const right =
+    placement === "upper-right" ||
+    placement === "lower-right" ||
+    placement === "bottom-right";
+
+  let labelY: number;
+  if (below) {
+    const isBottom = placement === "bottom-right" || placement === "bottom-left";
+    labelY = y + (isBottom ? 32 : 18);
+  } else {
+    labelY = y - 18 - (labelLines ? lineStep : 0);
+  }
+
+  return {
+    axis,
+    x,
+    y,
+    labelX: right ? anchorX : anchorX,
+    labelY,
+    labelAnchor: right ? "start" : "end",
+    label,
+    labelLines,
+  };
+}
+
+const AXIS_VERTICES: AxisVertex[] = [
+  axisLabel("league", 300, 100, "League / Division", "top"),
+  axisLabel("modernization", 456.36, 175.30, "Room for Modernization", "upper-right", [
+    "Room for",
+    "Modernization",
+  ]),
+  axisLabel("history", 494.98, 344.50, "History of Success", "lower-right", ["History of", "Success"]),
+  axisLabel("fanbase", 386.78, 480.18, "Fanbase Size", "bottom-right"),
+  axisLabel("acquisition", 213.22, 480.18, "Acquisition Price", "bottom-left"),
+  axisLabel("stadium", 105.02, 344.50, "Stadium Ownership", "lower-left", ["Stadium", "Ownership"]),
+  axisLabel("location", 143.64, 175.30, "Location / Real Estate", "upper-left", [
+    "Location /",
+    "Real Estate",
+  ]),
+];
 
 export function SelectionScorecard() {
   const [activeClub, setActiveClub] = useState<ClubKey>("ipswich");
@@ -249,7 +332,18 @@ export function SelectionScorecard() {
                 data-axis={v.axis}
                 onClick={() => setActiveAxis(v.axis)}
               >
-                {v.label}
+                {v.labelLines ? (
+                  <>
+                    <tspan x={v.labelX} dy={0}>
+                      {v.labelLines[0]}
+                    </tspan>
+                    <tspan x={v.labelX} dy="1.15em">
+                      {v.labelLines[1]}
+                    </tspan>
+                  </>
+                ) : (
+                  v.label
+                )}
               </text>
             ))}
           </svg>
