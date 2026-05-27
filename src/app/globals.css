@@ -4549,8 +4549,8 @@ body {
 }
 .cv-page .re-desc {
   font-family: var(--font-sans);
-  font-size: var(--type-body);
-  line-height: 1.65;
+  font-size: var(--type-ui);
+  line-height: 1.6;
   color: var(--ivory-mid);
   font-weight: 300;
   transition: color 0.6s ease;
@@ -4824,7 +4824,7 @@ body {
 }
 .cv-page .ve-band-desc {
   font-family: var(--font-serif);
-  font-size: var(--type-title);
+  font-size: var(--type-lead);
   line-height: 1.5;
   color: var(--ivory-mid);
   font-weight: 300;
