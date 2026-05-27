@@ -4824,8 +4824,8 @@ body {
 }
 .cv-page .ve-band-desc {
   font-family: var(--font-serif);
-  font-size: var(--type-lead);
-  line-height: 1.5;
+  font-size: var(--type-ui);
+  line-height: 1.55;
   color: var(--ivory-mid);
   font-weight: 300;
   letter-spacing: -0.005em;
