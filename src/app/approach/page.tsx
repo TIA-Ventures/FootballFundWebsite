@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
-import { SelectionScorecard } from "@/components/SelectionScorecard";
-import { ValueEngine } from "@/components/ValueEngine";
 import { Topbar } from "@/components/Topbar";
+
+const SelectionScorecard = dynamic(
+  () => import("@/components/SelectionScorecard").then((m) => ({ default: m.SelectionScorecard })),
+);
+
+const ValueEngine = dynamic(
+  () => import("@/components/ValueEngine").then((m) => ({ default: m.ValueEngine })),
+);
 
 export const metadata: Metadata = {
   title: "Approach · Clara Vista Investment Partners",
@@ -19,7 +26,7 @@ export const metadata: Metadata = {
  * Per product feedback the alpha-and-beta block (the return engine) is
  * placed between the Value Engine and the chapter break. The narrative reads:
  *   001 We invest         → selection criteria (radar)
- *   004 The Value Engine   → pillar bands + metric sliders
+ *   002 The Value Engine   → pillar bands + metric sliders
  *   003 We win            → alpha + beta stacked
  *
  * Color tokens / typography mirror the rest of the site (no hardcoded
@@ -51,12 +58,12 @@ export default function ApproachPage() {
           </div>
         </div>
 
-        {/* 004 · The Value Engine — pillar bands + metric sliders. */}
+        {/* 002 · The Value Engine — pillar bands + metric sliders. */}
         <div className="section bg-card">
           <div className="section-inner">
             <div className="section-head solo" style={{ marginBottom: 40 }}>
               <div>
-                <div className="sh-eyebrow">004 · The Value Engine</div>
+                <div className="sh-eyebrow">002 · The Value Engine</div>
                 <h2 className="sh-h2">
                   Awakening the <em>&ldquo;Sleeping Giant&rdquo;</em>
                 </h2>

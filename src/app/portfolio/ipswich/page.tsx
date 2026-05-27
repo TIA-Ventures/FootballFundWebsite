@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { IpswichTimeline } from "@/components/IpswichTimeline";
-import { IpswichRevenueChart } from "@/components/IpswichRevenueChart";
 import { Topbar } from "@/components/Topbar";
+
+const IpswichRevenueChart = dynamic(
+  () => import("@/components/IpswichRevenueChart").then((m) => ({ default: m.IpswichRevenueChart })),
+);
 
 export const metadata: Metadata = {
   title: "Ipswich Town · Portfolio · Clara Vista Investment Partners",
@@ -86,7 +90,7 @@ export default function IpswichPage() {
 
             <div className="prose-body" style={{ maxWidth: 820, margin: 0 }}>
               <p>
-                Ipswich is one of only a small number of English clubs to achieve <em>back-to-back promotions</em> to
+                Ipswich is one of only a small number of English clubs to achieve <em>back-to-back promotions </em> to
                 the Premier League — among the rarest feats in English football. Under Chairman Mark Ashton&apos;s
                 leadership, the club generated the <em>highest player value creation in global football</em> in the
                 2024/25 season.

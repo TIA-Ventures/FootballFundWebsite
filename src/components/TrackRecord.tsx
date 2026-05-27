@@ -67,7 +67,7 @@ const FUND_LABEL: Record<FundSlug, string> = {
   "tia-i": "Fund I",
   "tia-ii": "Fund II",
   "tia-iii": "Fund III",
-  "cv-i": "CV Fund I",
+  "cv-i": "Fund II",
 };
 
 const FIRM_TABS: { id: "all" | Firm; label: string; sub?: string }[] = [
@@ -85,9 +85,9 @@ const INVESTMENTS: Investment[] = [
     status: "Active",
     sector: "football",
     description:
-      "Anchor investment of Fund I — back-to-back promotions to the Premier League and the highest player value creation in global football in 2024/25.",
+      "Anchor investment of Fund II — held via the Portman Holdings LLC consortium. Back-to-back promotions to the Premier League and the highest player value creation in global football in 2024/25.",
     href: "/portfolio/ipswich",
-    league: "Premier League · England",
+    league: "EFL Championship · England",
     logo: "ipswich.svg",
   },
   {

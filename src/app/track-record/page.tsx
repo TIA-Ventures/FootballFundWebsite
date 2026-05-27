@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Footer } from "@/components/Footer";
 import { Topbar } from "@/components/Topbar";
-import { TrackRecord } from "@/components/TrackRecord";
+
+const TrackRecord = dynamic(
+  () => import("@/components/TrackRecord").then((m) => ({ default: m.TrackRecord })),
+);
 
 export const metadata: Metadata = {
   title: "Track Record · Clara Vista Investment Partners",

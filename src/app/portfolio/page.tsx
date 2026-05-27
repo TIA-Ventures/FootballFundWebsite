@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { ClaraVistaMapLegacy } from "@/components/ClaraVistaMapLegacy";
 import { Footer } from "@/components/Footer";
+import { PortfolioMapEmbed } from "@/components/PortfolioMapEmbed";
 import { Topbar } from "@/components/Topbar";
 
 export const metadata: Metadata = {
@@ -120,7 +120,7 @@ export default function PortfolioPage() {
             </div>
           </div>
           <div className="portfolio-map-embed" aria-hidden="true">
-            <ClaraVistaMapLegacy embed />
+            <PortfolioMapEmbed />
           </div>
         </div>
 

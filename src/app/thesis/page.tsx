@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
+import { ThesisFootballRows } from "@/components/ThesisFootballRows";
 import { Topbar } from "@/components/Topbar";
 
 export const metadata: Metadata = {
   title: "Thesis · Clara Vista Investment Partners",
   description:
-    "The most-watched sport on earth — and one of the few global asset classes still structurally underowned by institutional capital. Football is mispriced.",
+    "Sports as an asset class — reliable, uncorrelated, and accelerating. Global football offers asymmetric returns, deep cultural scale, and a structural discount to US sports.",
 };
 
-/* Asset-class outperformance · 2×2 floating-bar layout (Variant A from the
-   source-of-truth). Each row is one performance dimension; the data sits on a
-   horizontal axis with sports highlighted and negative bars tokenized as `is-negative`. */
 type AcBar = { value: string; label: string; left: string; tone?: "sports" | "negative" };
 type AcRow = { name: string; meta: string; bars: AcBar[] };
 
@@ -28,7 +26,7 @@ const AC_ROWS: AcRow[] = [
   },
   {
     name: "Outperformance during downturns",
-    meta: "Avg. return during Global Financial Crisis · 2007–2009",
+    meta: "Avg. return during the Great Financial Recession · 2007–2009",
     bars: [
       { value: "-22%", label: "S&P 500", left: "14%", tone: "negative" },
       { value: "-16%", label: "NASDAQ", left: "38%", tone: "negative" },
@@ -58,6 +56,12 @@ const AC_ROWS: AcRow[] = [
   },
 ];
 
+const HERO_PROOF = [
+  { value: "18", suffix: "%", label: "Sports annualized return · last 10 yrs" },
+  { value: "4", suffix: "%", label: "Correlation to the S&P 500 · last 10 yrs" },
+  { value: "+4", suffix: "%", label: "Sports return during the Great Financial Recession · 2007–2009" },
+];
+
 function toneClass(tone?: "sports" | "negative") {
   if (tone === "sports") return "ac-bar is-sports";
   if (tone === "negative") return "ac-bar is-negative";
@@ -75,63 +79,46 @@ export default function ThesisPage() {
               <div>
                 <div className="ph-eyebrow">Thesis</div>
                 <h1 className="ph-h1">
-                  An asset class, <em>mispriced.</em>
+                  Sports <em>work.</em>
                 </h1>
               </div>
               <p className="ph-intro">
-                The <em>most-watched sport on earth</em> — and one of the few global asset classes still structurally
-                underowned by institutional capital.
+                A global asset class that has delivered <em>asymmetric, uncorrelated returns</em> — yet remains
+                structurally underallocated by institutional capital.
               </p>
             </div>
           </div>
 
-          <div className="section compact">
+          <div className="thesis-hero-proof-wrap">
             <div className="section-inner">
-              <div className="stat-grid">
-                <div className="stat-cell is-lead">
-                  <div className="stat-eyebrow">The audience</div>
-                  <div className="stat-num">
-                    3.5<em>B</em>
+              <div className="thesis-hairline-grid thesis-hairline-grid--hero" aria-label="Sports asset class highlights">
+                {HERO_PROOF.map((item) => (
+                  <div key={item.label} className="thesis-hairline-cell">
+                    <div className="thesis-hairline-num">
+                      {item.value}
+                      <em>{item.suffix}</em>
+                    </div>
+                    <div className="thesis-hairline-label">{item.label}</div>
                   </div>
-                  <div className="stat-label">Global football fans · most-watched sport on earth</div>
-                </div>
-                <div className="stat-cell">
-                  <div className="stat-num">
-                    7<em>×</em>
-                  </div>
-                  <div className="stat-label">Football viewership relative to American football</div>
-                </div>
-                <div className="stat-cell">
-                  <div className="stat-num">
-                    96<em>/100</em>
-                  </div>
-                  <div className="stat-label">Top US broadcasts in 2024 were live sports</div>
-                </div>
-                <div className="stat-cell">
-                  <div className="stat-num">
-                    $60<em>B+</em>
-                  </div>
-                  <div className="stat-label">Invested by private equity into sports since 2020</div>
-                </div>
-                <div className="stat-cell">
-                  <div className="stat-num">
-                    $36<em>B+</em>
-                  </div>
-                  <div className="stat-label">Projected fan engagement market by 2035</div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="section bg-deep" style={{ borderBottom: "none" }}>
+        {/* 001 · Why sports work */}
+        <div className="section bg-deep">
           <div className="section-inner">
-            <div className="section-head" style={{ marginBottom: 72 }}>
+            <div className="section-head solo">
               <div>
-                <div className="sh-eyebrow">002 · Asset class outperformance</div>
+                <div className="sh-eyebrow">001 · Why sports work</div>
                 <h2 className="sh-h2">
                   Reliable. <em>Uncorrelated.</em> Resilient.
                 </h2>
+                <p className="sh-deck">
+                  Relative to public equities and traditional private equity, sports has delivered superior
+                  risk-adjusted returns across every dimension measured below.
+                </p>
               </div>
             </div>
 
@@ -163,40 +150,62 @@ export default function ThesisPage() {
           </div>
         </div>
 
-        <div className="thesis-takeaway">
-          <div className="thesis-takeaway-inner">
-            <div className="thesis-takeaway-eyebrow">003 · The takeaway</div>
-            <h3 className="thesis-takeaway-lede">
-              The most-watched sport on earth, underpenetrated by institutional investment, trading at a{" "}
-              <em>fraction of US sports multiples</em>.
-            </h3>
-
-            <div className="thesis-takeaway-grid">
-              <div className="thesis-takeaway-prop">
-                <div className="thesis-takeaway-label">Scale</div>
-                <div className="thesis-takeaway-claim">
-                  A global asset class with <em>150-year clubs</em> as inventory and 3.5 billion fans as audience.
-                </div>
-              </div>
-              <div className="thesis-takeaway-prop">
-                <div className="thesis-takeaway-label">Mispricing</div>
-                <div className="thesis-takeaway-claim">
-                  Global clubs trade at <em>2–6× revenues</em> versus <em>5–15×</em> for US franchises.
-                </div>
-              </div>
-              <div className="thesis-takeaway-prop">
-                <div className="thesis-takeaway-label">Path to value</div>
-                <div className="thesis-takeaway-claim">
-                  Multiple expansion at the league level, <em>operational alpha</em> at the club level.
-                </div>
+        {/* 002 · Tailwinds */}
+        <div className="section">
+          <div className="section-inner">
+            <div className="section-head solo">
+              <div>
+                <div className="sh-eyebrow">002 · Tailwinds</div>
+                <h2 className="sh-h2">
+                  Capital is flowing. <em>Attention is fixed on live sport.</em>
+                </h2>
+                <p className="sh-deck">
+                  Institutional capital and live audience are converging on sport as a durable, monetizable
+                  consumption category.
+                </p>
               </div>
             </div>
+
+            <div className="thesis-hairline-grid thesis-hairline-grid--tailwinds">
+              <div className="thesis-hairline-cell is-lead">
+                <div className="thesis-hairline-num">
+                  96<em>/100</em>
+                </div>
+                <div className="thesis-hairline-label">Top US broadcasts in 2024 were live sports</div>
+              </div>
+              <div className="thesis-hairline-cell">
+                <div className="thesis-hairline-num">
+                  $60<em>B+</em>
+                </div>
+                <div className="thesis-hairline-label">Private equity invested in sports since 2020</div>
+              </div>
+              <div className="thesis-hairline-cell">
+                <div className="thesis-hairline-num">
+                  $36<em>B+</em>
+                </div>
+                <div className="thesis-hairline-label">Projected fan engagement market by 2035</div>
+              </div>
+            </div>
+            <p className="ac-source">Sources · Nielsen · PitchBook · industry estimates</p>
           </div>
         </div>
 
-        {/* Chapter break · routes to /approach (Chapter 02 of the site
-            narrative). The approach page details how Clara Vista deploys the
-            thesis — selection criteria, operating pillars, and return engine. */}
+        {/* 003 · Why football */}
+        <div className="section thesis-football-section">
+          <div className="section-inner">
+            <div className="section-head solo">
+              <div>
+                <div className="sh-eyebrow">003 · Why football</div>
+                <h2 className="sh-h2">
+                  Global football at scale. <em>Our focus.</em>
+                </h2>
+              </div>
+            </div>
+
+            <ThesisFootballRows />
+          </div>
+        </div>
+
         <Link href="/approach" className="chapter-break">
           <div className="chapter-break-inner">
             <div>

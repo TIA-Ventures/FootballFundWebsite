@@ -6,44 +6,70 @@ import { useEffect, useRef } from "react";
 const VIDEO_SRC = "/hero/ipswich-promotion-loop-v2-goals-and-celebration.mp4";
 const POSTER_SRC = "/hero/ipswich-promotion-poster-v2.jpg";
 
-/** Previous reel (v1): promotion celebration only (~18s). To restore:
- *  VIDEO_SRC = "/hero/ipswich-promotion-loop-v1-celebration-only.mp4"
- *  POSTER_SRC = "/hero/ipswich-promotion-poster-v1.jpg"
- */
-
 export function HeroVideoBackdrop() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    const wrap = wrapRef.current;
+    if (!video || !wrap) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion) {
-      video.pause();
-      video.removeAttribute("src");
-      return;
-    }
+    if (reducedMotion) return;
 
-    const play = () => {
-      video.play().catch(() => {
-        /* Autoplay blocked — poster remains visible. */
-      });
+    let loaded = false;
+
+    const loadAndPlay = () => {
+      if (loaded) {
+        video.play().catch(() => {});
+        return;
+      }
+      loaded = true;
+      if (!video.src) video.src = VIDEO_SRC;
+      video.load();
+      video.play().catch(() => {});
     };
 
-    play();
+    const pauseVideo = () => {
+      video.pause();
+    };
+
+    // Mobile: hero fills the viewport on load — start immediately (iOS is
+    // picky about deferred src + intersection-gated autoplay).
+    const coarsePointer = window.matchMedia("(max-width: 720px), (pointer: coarse)").matches;
+
+    const observer =
+      !coarsePointer && typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) loadAndPlay();
+              else pauseVideo();
+            },
+            { threshold: 0.08 },
+          )
+        : null;
+
+    if (observer) {
+      observer.observe(wrap);
+    } else {
+      loadAndPlay();
+    }
 
     const onVisibility = () => {
-      if (document.hidden) video.pause();
-      else play();
+      if (document.hidden) pauseVideo();
+      else if (loaded) video.play().catch(() => {});
     };
 
     document.addEventListener("visibilitychange", onVisibility);
-    return () => document.removeEventListener("visibilitychange", onVisibility);
+    return () => {
+      observer?.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, []);
 
   return (
-    <div className="hero-video-backdrop" aria-hidden="true">
+    <div ref={wrapRef} className="hero-video-backdrop" aria-hidden="true">
       <video
         ref={videoRef}
         className="hero-video"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { OperatingPrinciples } from "@/components/OperatingPrinciples";
 import { TeamMoments } from "@/components/TeamMoments";
@@ -79,7 +80,6 @@ const LEADERSHIP: Person[] = [
   {
     name: "Harry Landis",
     role: "Strategy",
-    photo: "/team/harry_landis.jpg",
     bio: "Gen-Z founder and investor with experience building and consulting on business strategy and product.",
   },
   {
@@ -276,9 +276,9 @@ export default function TeamPage() {
             <OperatingPrinciples />
 
             <div className="cta-row">
-              <a href="/thesis" className="cta-link">
+              <Link href="/thesis" className="cta-link">
                 Read the thesis
-              </a>
+              </Link>
               <a href="#" className="cta-link">
                 Fund II terms
               </a>

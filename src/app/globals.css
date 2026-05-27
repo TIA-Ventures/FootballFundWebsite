@@ -1261,11 +1261,34 @@ html[data-fonts="d6"] {
   --font-sans: var(--font-body);
 }
 
+/* ============================================================
+   TYPE SCALE — single source of truth (16px root).
+   Body floor 17px · deck/intro 18px · captions 14px minimum.
+   Display sizes stay in clamp() per breakpoint.
+   ============================================================ */
+html {
+  font-size: 16px;
+  --type-caption: 0.875rem;   /* 14px · sources, footnotes, chart meta */
+  --type-mono: 0.875rem;      /* 14px · mono eyebrows, stat labels */
+  --type-label: 0.9375rem;    /* 15px · section eyebrows, UI labels */
+  --type-ui: 1rem;            /* 16px · nav, buttons, compact UI */
+  --type-body: 1.0625rem;     /* 17px · body copy, card notes */
+  --type-lead: 1.125rem;      /* 18px · deck, subhead, bios */
+  --type-lead-lg: 1.1875rem;  /* 19px · pillar teasers, stat values */
+  --type-title: 1.25rem;      /* 20px · card titles, emphasis */
+  --type-prose: 1.375rem;    /* 22px · page intro, fact claims */
+  --type-display-sm: 1.5rem; /* 24px · card names, section titles */
+  --type-display-sm-lg: 1.625rem; /* 26px · card headlines */
+  --type-display-md: 2rem;   /* 32px · stat callouts */
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg); transition: background-color 0.6s ease; }
 body {
   color: var(--ivory);
   font-family: var(--font-sans);
+  font-size: var(--type-body);
+  line-height: 1.5;
   overflow-x: hidden;
   cursor: none;
   min-height: 100vh;
@@ -1285,7 +1308,7 @@ body {
 .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .loader-mark {
   font-family: var(--font-mono);
-  font-weight: 300; font-size: 16.5px;
+  font-weight: 300; font-size: var(--type-body);
   letter-spacing: 0.46em;
   color: var(--green-light);
 }
@@ -1303,7 +1326,7 @@ body {
 .loader-sub {
   font-family: var(--font-serif);
   font-style: italic; font-weight: 300;
-  font-size: 17.5px; letter-spacing: 0.06em;
+  font-size: var(--type-lead); letter-spacing: 0.06em;
   color: var(--ivory-dim);
 }
 
@@ -1364,7 +1387,7 @@ body {
 }
 .brand-wordmark {
   font-family: var(--font-mono);
-  font-weight: 300; font-size: 16.5px;
+  font-weight: 300; font-size: var(--type-body);
   letter-spacing: 0.32em;
   color: var(--ivory);
   transition: color 0.6s ease;
@@ -1378,7 +1401,7 @@ body {
 .brand-tagline {
   font-family: var(--font-serif);
   font-style: italic; font-weight: 300;
-  font-size: 16.5px; letter-spacing: 0.02em;
+  font-size: var(--type-body); letter-spacing: 0.02em;
   color: var(--ivory-dim);
   transition: color 0.6s ease;
 }
@@ -1455,7 +1478,7 @@ body {
   text-decoration: none;
   color: var(--ivory-mid);
   font-family: var(--font-sans);
-  font-size: 17.5px;
+  font-size: var(--type-lead);
   font-weight: 400;
   letter-spacing: 0.01em;
   transition: background 0.3s, color 0.6s ease;
@@ -1478,7 +1501,7 @@ body {
   text-decoration: none;
   color: var(--ivory-mid);
   font-family: var(--font-sans);
-  font-size: 16.5px;
+  font-size: var(--type-body);
   font-weight: 350;
   transition: background 0.3s, color 0.6s ease;
 }
@@ -1501,7 +1524,7 @@ body {
 .nav a {
   color: var(--ivory-mid); text-decoration: none;
   font-family: var(--font-sans);
-  font-size: 15.5px; font-weight: 400;
+  font-size: var(--type-ui); font-weight: 400;
   letter-spacing: 0.06em;
   transition: color 0.3s;
   white-space: nowrap;
@@ -1633,7 +1656,7 @@ body {
 .nav-portfolio-menu .npm-club {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 16.5px;
+  font-size: var(--type-body);
   letter-spacing: 0.02em;
   color: var(--ivory);
   line-height: 1.2;
@@ -1647,7 +1670,7 @@ body {
 }
 .nav-portfolio-menu .npm-meta {
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   font-weight: 300;
   letter-spacing: 0.04em;
   text-transform: none;
@@ -1669,7 +1692,7 @@ body {
   padding: 11px 14px;
   border-radius: 4px;
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1685,7 +1708,7 @@ body {
 .nav-portfolio-menu .npm-arrow {
   font-family: var(--font-mono);
   font-weight: 300;
-  font-size: 17.5px;
+  font-size: var(--type-lead);
   letter-spacing: 0;
   transition: transform 0.2s cubic-bezier(.2,.8,.2,1);
 }
@@ -1744,7 +1767,7 @@ body {
 }
 .font-compare-trigger {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: var(--type-caption);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1791,7 +1814,7 @@ body {
 }
 .font-compare-option {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   font-weight: 500;
   letter-spacing: 0.04em;
   text-align: left;
@@ -1812,7 +1835,7 @@ body {
   letter-spacing: 0.06em;
 }
 .font-compare-option-detail {
-  font-size: 13px;
+  font-size: var(--type-caption);
   font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--ivory-dim);
@@ -1841,7 +1864,7 @@ body {
 }
 .color-compare-trigger {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: var(--type-caption);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1881,7 +1904,7 @@ body {
 }
 .color-compare-option {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   font-weight: 500;
   letter-spacing: 0.04em;
   text-align: left;
@@ -1920,7 +1943,7 @@ body {
   letter-spacing: 0.06em;
 }
 .color-compare-option-detail {
-  font-size: 13px;
+  font-size: var(--type-caption);
   font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--ivory-dim);
@@ -1962,6 +1985,7 @@ body {
 .home-hero .hero-headline {
   opacity: 0;
   animation: fadeUp 1.2s cubic-bezier(.2,.8,.2,1) 0.35s forwards;
+  isolation: isolate;
 }
 .hero-video {
   position: absolute;
@@ -1995,6 +2019,28 @@ body {
     var(--bg) 100%
   );
 }
+/* Home hero — bottom anchor only; headline vignette handles local legibility.
+   No left-side cream wash (that read as an obvious glass rectangle). */
+:root[data-theme="day"] .home-hero .hero-video-scrim {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg) 36%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 10%, transparent) 28%,
+    color-mix(in srgb, var(--bg) 18%, transparent) 52%,
+    color-mix(in srgb, var(--bg) 62%, transparent) 82%,
+    var(--bg) 100%
+  );
+}
+:root[data-theme="night"] .home-hero .hero-video-scrim {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg) 42%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 14%, transparent) 28%,
+    color-mix(in srgb, var(--bg) 20%, transparent) 52%,
+    color-mix(in srgb, var(--bg-deep) 68%, transparent) 82%,
+    var(--bg-deep) 100%
+  );
+}
 :root[data-theme="night"] .hero-video-scrim {
   background: linear-gradient(
     to bottom,
@@ -2006,13 +2052,6 @@ body {
   );
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-video { display: none; }
-  .hero-video-backdrop {
-    background: url("/hero/ipswich-promotion-poster-v2.jpg") center 42% / cover no-repeat;
-    filter: saturate(1.18) contrast(1.10) brightness(0.94);
-  }
-}
-@media (max-width: 720px) {
   .hero-video { display: none; }
   .hero-video-backdrop {
     background: url("/hero/ipswich-promotion-poster-v2.jpg") center 42% / cover no-repeat;
@@ -2065,7 +2104,7 @@ body {
 }
 .eyebrow {
   font-family: var(--font-sans);
-  font-size: 14.5px; letter-spacing: 0.32em;
+  font-size: var(--type-label); letter-spacing: 0.32em;
   color: var(--green-light); text-transform: uppercase;
   margin-bottom: 28px; font-weight: 500;
   display: flex; align-items: center; gap: 14px;
@@ -2110,7 +2149,7 @@ body {
 }
 .subhead {
   font-family: var(--font-sans);
-  font-size: 17.5px; line-height: 1.7;
+  font-size: var(--type-lead); line-height: 1.7;
   color: var(--ivory-mid); max-width: 500px;
   font-weight: 300; letter-spacing: 0.005em;
   transition: color 0.6s ease;
@@ -2127,32 +2166,88 @@ body {
 .home-hero .hero-headline::before {
   content: "";
   position: absolute;
-  inset: -64px -88px -48px -88px;
+  inset: -160px -380px -140px -120px;
   z-index: -1;
   pointer-events: none;
-  -webkit-mask-image: radial-gradient(
-    ellipse 78% 84% at 36% 50%,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.88) 42%,
-    rgba(0, 0, 0, 0) 96%
-  );
-  mask-image: radial-gradient(
-    ellipse 78% 84% at 36% 50%,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.88) 42%,
-    rgba(0, 0, 0, 0) 96%
-  );
-  -webkit-backdrop-filter: blur(16px) saturate(0.42) brightness(0.42);
-  backdrop-filter: blur(16px) saturate(0.42) brightness(0.42);
+  background: transparent;
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse 48% 64% at 12% 54%,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.48) 10%,
+      rgba(0, 0, 0, 0.24) 18%,
+      rgba(0, 0, 0, 0.1) 26%,
+      rgba(0, 0, 0, 0.04) 32%,
+      rgba(0, 0, 0, 0.01) 38%,
+      rgba(0, 0, 0, 0) 44%
+    );
+  mask-image:
+    radial-gradient(
+      ellipse 48% 64% at 12% 54%,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.48) 10%,
+      rgba(0, 0, 0, 0.24) 18%,
+      rgba(0, 0, 0, 0.1) 26%,
+      rgba(0, 0, 0, 0.04) 32%,
+      rgba(0, 0, 0, 0.01) 38%,
+      rgba(0, 0, 0, 0) 44%
+    );
+  -webkit-backdrop-filter: blur(14px) saturate(0.28) brightness(0.52);
+  backdrop-filter: blur(14px) saturate(0.28) brightness(0.52);
 }
 [data-theme="day"] .home-hero .hero-headline::before {
-  /* Day theme — text is dark forest #1A2520 on bright video.
-     Near-zero saturate (kills all color confusion), brightness lift
-     above 1 + contrast boost so the underlying video reads as a
-     near-grayscale lifted patch. Dark type pops on lifted neutral.
-     No cream wash, no "white shade" — just colorless blur behind. */
-  -webkit-backdrop-filter: blur(16px) saturate(0.05) brightness(1.08) contrast(1.06);
-  backdrop-filter: blur(16px) saturate(0.05) brightness(1.08) contrast(1.06);
+  -webkit-backdrop-filter: blur(14px) saturate(0.04) brightness(1.03) contrast(1.02);
+  backdrop-filter: blur(14px) saturate(0.04) brightness(1.03) contrast(1.02);
+}
+
+/* Home hero type — deeper greens, cream glow, full-weight subhead. */
+.home-hero .eyebrow {
+  color: var(--green-deep);
+  font-weight: 600;
+  /* Match subhead measure — eyebrow text runs to the same right edge. */
+  max-width: 520px;
+  font-size: var(--type-body);
+  letter-spacing: 0.37em;
+}
+.home-hero .eyebrow::before {
+  background: var(--green-deep);
+}
+.home-hero .headline {
+  font-weight: 500;
+  text-shadow:
+    0 0 20px color-mix(in srgb, var(--bg) 82%, transparent),
+    0 0 56px color-mix(in srgb, var(--bg) 52%, transparent),
+    0 0 96px color-mix(in srgb, var(--bg) 28%, transparent);
+}
+.home-hero .headline em {
+  color: var(--green-deep);
+  font-weight: 600;
+}
+.home-hero .subhead {
+  color: var(--ivory);
+  font-weight: 400;
+  max-width: 520px;
+  text-shadow:
+    0 0 18px color-mix(in srgb, var(--bg) 80%, transparent),
+    0 0 44px color-mix(in srgb, var(--bg) 46%, transparent),
+    0 0 72px color-mix(in srgb, var(--bg) 24%, transparent);
+}
+:root[data-theme="night"] .home-hero .eyebrow {
+  color: var(--green-light);
+}
+:root[data-theme="night"] .home-hero .eyebrow::before {
+  background: var(--green-light);
+}
+:root[data-theme="night"] .home-hero .headline {
+  text-shadow: 0 0 56px color-mix(in srgb, var(--bg-deep) 68%, transparent);
+}
+:root[data-theme="night"] .home-hero .headline em {
+  color: var(--green-light);
+}
+:root[data-theme="night"] .home-hero .subhead {
+  color: var(--ivory);
+  opacity: 0.92;
+  text-shadow: 0 0 44px color-mix(in srgb, var(--bg-deep) 62%, transparent);
 }
 
 /* ---- Portfolio Panel ---- */
@@ -2178,7 +2273,7 @@ body {
 }
 .pp-label {
   font-family: var(--font-sans);
-  font-size: 13.5px; letter-spacing: 0.28em;
+  font-size: var(--type-mono); letter-spacing: 0.28em;
   color: var(--ivory-dim); text-transform: uppercase;
   font-weight: 500;
   margin-bottom: 18px;
@@ -2216,7 +2311,7 @@ body {
 .pp-row:last-child { border-bottom: none; }
 .pp-num {
   font-family: var(--font-mono);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   color: var(--green-light);
   font-weight: 300;
   letter-spacing: 0.08em;
@@ -2224,14 +2319,14 @@ body {
 .pp-info { overflow: hidden; }
 .pp-city {
   font-family: var(--font-serif);
-  font-weight: 400; font-size: 19px;
+  font-weight: 400; font-size: var(--type-title);
   color: var(--ivory); line-height: 1.1;
   letter-spacing: -0.005em;
   transition: color 0.6s ease;
 }
 .pp-club {
   font-family: var(--font-sans);
-  font-size: 14.5px; color: var(--ivory-dim);
+  font-size: var(--type-label); color: var(--ivory-dim);
   margin-top: 3px; font-weight: 300;
   transition: color 0.6s ease;
 }
@@ -2320,7 +2415,7 @@ body {
   margin-top: 12px;
   padding: 0 2px;
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--ivory-mid);
@@ -2361,7 +2456,7 @@ body {
 }
 .cred-value {
   font-family: var(--font-serif);
-  font-weight: 400; font-size: 24px;
+  font-weight: 400; font-size: var(--type-display-sm);
   color: var(--ivory); line-height: 1;
   letter-spacing: -0.01em;
   transition: color 0.6s ease;
@@ -2373,7 +2468,7 @@ body {
 }
 .cred-label {
   font-family: var(--font-sans);
-  font-size: 13px; letter-spacing: 0.24em;
+  font-size: var(--type-caption); letter-spacing: 0.24em;
   color: var(--ivory-dim);
   text-transform: uppercase; font-weight: 500;
   transition: color 0.6s ease;
@@ -2433,7 +2528,7 @@ body {
   backdrop-filter: blur(14px) saturate(115%);
   border-radius: 1px;
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ivory-mid);
@@ -2458,7 +2553,7 @@ body {
 }
 .cv-hint-arrow {
   font-family: var(--font-mono);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   color: var(--green-light);
   letter-spacing: 0;
   transition: color 0.6s ease;
@@ -2493,7 +2588,7 @@ body {
   background: var(--green-deep);
   border-radius: 2px;
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -2586,7 +2681,7 @@ body {
   }
   .hero-headline .eyebrow {
     margin-bottom: 18px;
-    font-size: 13.5px;
+    font-size: var(--type-mono);
     letter-spacing: 0.28em;
   }
   .hero-headline .headline {
@@ -2596,7 +2691,7 @@ body {
   }
   .hero-headline .subhead {
     max-width: none;
-    font-size: 18.5px;
+    font-size: var(--type-lead-lg);
     line-height: 1.65;
     margin-bottom: 0;
   }
@@ -2618,7 +2713,7 @@ body {
     left: 50%;
     transform: translate(-50%, -8px);
     padding: 10px 16px;
-    font-size: 13px;
+    font-size: var(--type-caption);
     letter-spacing: 0.2em;
   }
   .cv-hint.is-visible {
@@ -2655,7 +2750,7 @@ body {
 }
 .tooltip-meta {
   font-family: var(--font-sans);
-  font-size: 13px; color: var(--green-light);
+  font-size: var(--type-caption); color: var(--green-light);
   letter-spacing: 0.26em; text-transform: uppercase;
   margin-bottom: 8px; font-weight: 500;
   display: flex; justify-content: space-between;
@@ -2663,14 +2758,14 @@ body {
 }
 .tooltip-city {
   font-family: var(--font-serif);
-  font-size: 24px; color: var(--ivory);
+  font-size: var(--type-display-sm); color: var(--ivory);
   margin-bottom: 4px; font-weight: 400;
   letter-spacing: -0.012em;
   transition: color 0.6s ease;
 }
 .tooltip-club {
   font-family: var(--font-sans);
-  font-size: 16.5px; color: var(--ivory-mid);
+  font-size: var(--type-body); color: var(--ivory-mid);
   line-height: 1.55; font-weight: 300;
   transition: color 0.6s ease;
 }
@@ -2681,7 +2776,7 @@ body {
 }
 .tooltip-stat {
   font-family: var(--font-sans);
-  font-size: 14.5px; letter-spacing: 0.04em;
+  font-size: var(--type-label); letter-spacing: 0.04em;
   color: var(--ivory-dim);
   display: flex; justify-content: space-between;
   align-items: baseline; font-weight: 400;
@@ -2691,7 +2786,7 @@ body {
   font-family: var(--font-mono);
   color: var(--green-light); font-weight: 300;
   letter-spacing: 0.1em;
-  font-size: 13.5px; text-transform: uppercase;
+  font-size: var(--type-mono); text-transform: uppercase;
   transition: color 0.6s ease;
 }
 
@@ -2740,7 +2835,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url('/portfolio-stadium-bg_upscaled2.png');
+  background-image: url('/portfolio-stadium-bg.webp');
   background-size: cover;
   background-position: center 38%;
   background-repeat: no-repeat;
@@ -2797,7 +2892,7 @@ body {
 }
 .ps-eyebrow {
   font-family: var(--font-sans);
-  font-size: 14.5px; letter-spacing: 0.3em;
+  font-size: var(--type-label); letter-spacing: 0.3em;
   color: var(--green-light); text-transform: uppercase;
   margin-bottom: 24px; font-weight: 500;
   display: flex; align-items: center; gap: 14px;
@@ -2821,7 +2916,7 @@ body {
 }
 .ps-head-right {
   font-family: var(--font-sans);
-  font-size: 17.5px; color: var(--ivory-mid);
+  font-size: var(--type-lead); color: var(--ivory-mid);
   line-height: 1.7; font-weight: 300;
   max-width: 460px; padding-bottom: 6px;
   transition: color 0.6s ease;
@@ -2904,7 +2999,7 @@ body {
 .cc-logo-placeholder { background: transparent; }
 .cc-meta {
   font-family: var(--font-sans);
-  font-size: 13.5px; letter-spacing: 0.26em;
+  font-size: var(--type-mono); letter-spacing: 0.26em;
   text-transform: uppercase; font-weight: 500;
   margin-bottom: 36px;
   display: flex; justify-content: space-between;
@@ -2945,7 +3040,7 @@ body {
 }
 .cc-name {
   font-family: var(--font-serif);
-  font-size: 32px; font-weight: 400;
+  font-size: var(--type-display-md); font-weight: 400;
   color: var(--ivory); margin-bottom: 6px;
   letter-spacing: -0.018em; line-height: 1.05;
   transition: color 0.6s ease;
@@ -2956,14 +3051,14 @@ body {
 }
 .cc-location {
   font-family: var(--font-sans);
-  font-size: 14.5px; color: var(--ivory-dim);
+  font-size: var(--type-label); color: var(--ivory-dim);
   letter-spacing: 0.18em; text-transform: uppercase;
   font-weight: 500; margin-bottom: 28px;
   transition: color 0.6s ease;
 }
 .cc-note {
   font-family: var(--font-sans);
-  font-size: 16.5px; line-height: 1.7;
+  font-size: var(--type-body); line-height: 1.7;
   color: var(--ivory-mid); font-weight: 300;
   transition: color 0.6s ease;
 }
@@ -2983,7 +3078,7 @@ body {
 .cc-note { margin-bottom: 32px; }
 .cc-stat-label {
   font-family: var(--font-sans);
-  font-size: 13px; color: var(--ivory-dim);
+  font-size: var(--type-caption); color: var(--ivory-dim);
   letter-spacing: 0.22em; text-transform: uppercase;
   font-weight: 500;
   transition: color 0.6s ease;
@@ -2991,14 +3086,14 @@ body {
 .cc-stat-value {
   font-family: var(--font-serif);
   color: var(--ivory); margin-top: 6px;
-  font-size: 19px; font-weight: 400;
+  font-size: var(--type-title); font-weight: 400;
   letter-spacing: -0.005em;
   transition: color 0.6s ease;
 }
 .cc-stat-value em {
   font-style: italic;
   color: var(--ivory-dim);
-  font-size: 17.5px;
+  font-size: var(--type-lead);
   transition: color 0.6s ease;
 }
 /* In-card CTA — matches /portfolio .pclub-link (plain caps + arrow, no bar/button chrome).
@@ -3007,7 +3102,7 @@ body {
   margin-top: 22px;
   align-self: flex-start;
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -3058,7 +3153,7 @@ body {
 }
 .manifesto-eyebrow {
   font-family: var(--font-sans);
-  font-size: 14.5px; letter-spacing: 0.32em;
+  font-size: var(--type-label); letter-spacing: 0.32em;
   color: var(--green-light); text-transform: uppercase;
   font-weight: 500;
   display: flex; align-items: center; gap: 14px;
@@ -3093,37 +3188,30 @@ body {
 .manifesto-body {
   margin-top: 44px;
   font-family: var(--font-sans);
-  font-size: 18.5px; line-height: 1.75;
+  font-size: var(--type-lead-lg); line-height: 1.75;
   color: var(--ivory-mid);
   font-weight: 300; letter-spacing: 0.005em;
   max-width: 640px;
   transition: color 0.6s ease;
 }
 
-/* ---- Thesis page (rebuilt, mirrors source-of-truth /thesis layout) ----
-   Structure: page-hero → stat-grid (KPIs) → asset-class outperformance →
-   thesis-takeaway → chapter-break. Scoped under .cv-page.thesis-page so the
-   shared .cv-page tokens (page-hero, section, sh-eyebrow, sh-h2) carry over.
-*/
+/* ---- Thesis page ----
+   Rhythm mirrors team / approach: photo banner → proof strip → alternating
+   bg-deep / default sections → chapter-break. */
 
-/* Per design: drop the divider between the page hero and the boxed KPIs.
-   The lifted-card stat grid that follows already establishes the visual
-   transition; an extra rule reads as cluttered. */
 .cv-page.thesis-page .page-hero {
   border-bottom: none;
   padding-bottom: 24px;
 }
-.cv-page.thesis-page .section.compact {
-  padding-top: 16px;
-}
 
-/* Full-bleed match photography behind thesis headline + KPI grid (same layering
-   idea as home .portfolio-section: photo → scrim → content). Stat cells pick
-   up a light frosted treatment so type stays legible over the pitch. */
+/* Full-bleed match photography behind thesis headline + hero proof strip */
 .cv-page.thesis-page .thesis-asset-banner {
   position: relative;
   overflow: hidden;
   border-bottom: 1px solid var(--line);
+  min-height: clamp(560px, 58vh, 740px);
+  display: flex;
+  flex-direction: column;
   transition: border-color 0.6s ease;
 }
 .cv-page.thesis-page .thesis-asset-banner::before {
@@ -3133,7 +3221,7 @@ body {
   z-index: 0;
   background-image: url('/thesis-asset-banner-bg.png');
   background-size: cover;
-  background-position: center 40%;
+  background-position: center 36%;
   background-repeat: no-repeat;
   filter: saturate(0.85) brightness(0.68);
   transform: scale(1.04);
@@ -3151,12 +3239,11 @@ body {
   transition: background 0.6s ease;
 }
 :root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner::after {
-  /* Match home .portfolio-section — lighter scrim so the pitch stays visible */
   background: linear-gradient(
     to bottom,
     color-mix(in srgb, var(--bg) 68%, transparent) 0%,
     color-mix(in srgb, var(--bg) 56%, transparent) 45%,
-    rgba(234, 229, 218, 0.64) 100%
+    color-mix(in srgb, var(--bg-deep) 64%, transparent) 100%
   );
 }
 :root[data-theme="night"] .cv-page.thesis-page .thesis-asset-banner::after {
@@ -3171,50 +3258,254 @@ body {
   position: relative;
   z-index: 1;
 }
-.cv-page.thesis-page .thesis-asset-banner .page-hero {
-  border-bottom: none;
+.cv-page.thesis-page .thesis-hero-proof-wrap {
+  padding: 48px 0 72px;
+  margin-top: auto;
 }
-.cv-page.thesis-page .thesis-asset-banner .section.compact {
-  border-bottom: none;
-  background: transparent;
+.cv-page.thesis-page .thesis-hero-proof-wrap .section-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 56px;
 }
-/* Thesis KPI strip: flush panels — same language as homepage .ps-grid / .club-card
-   (1px hairline gutters, square corners, solid frosted fills, no backdrop-filter). */
-.cv-page.thesis-page .thesis-asset-banner .stat-grid {
+
+/* Section rhythm — match global 72px head gap; tighter when no deck */
+.cv-page.thesis-page .section-head {
+  margin-bottom: 72px;
+}
+.cv-page.thesis-page .section-head.solo:not(:has(.sh-deck)) {
+  margin-bottom: 56px;
+}
+.cv-page.thesis-page .section-head .sh-deck {
+  margin-top: 20px;
+  max-width: 560px;
+}
+.cv-page.thesis-page .ac-grid {
+  margin-bottom: 0;
+}
+
+/* Hairline stat grid — same flush-panel language as .ps-grid / .club-card */
+.cv-page .thesis-hairline-grid {
+  display: grid;
   gap: 1px;
   background: var(--line);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   isolation: isolate;
+  transition: background 0.6s ease, border-color 0.6s ease;
 }
-.cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell {
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  border-radius: 0;
-  border: none;
-  box-shadow: none;
-  position: relative;
-  transition: background 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+.cv-page .thesis-hairline-grid--hero {
+  grid-template-columns: repeat(3, 1fr);
 }
-:root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell {
+.cv-page .thesis-hairline-grid--tailwinds {
+  grid-template-columns: 1.45fr 1fr 1fr;
+}
+.cv-page .thesis-hairline-cell {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+.cv-page .thesis-hairline-cell.is-lead {
+  padding: 36px 32px 40px;
+}
+:root[data-theme="day"] .cv-page .thesis-hairline-cell {
   background: color-mix(in srgb, var(--bg) 84%, transparent);
 }
-:root[data-theme="night"] .cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell {
+:root[data-theme="night"] .cv-page .thesis-hairline-cell {
   background: rgba(10, 18, 14, 0.68);
 }
-.cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell:hover {
-  transform: none;
+:root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner .thesis-hairline-cell {
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+}
+:root[data-theme="night"] .cv-page.thesis-page .thesis-asset-banner .thesis-hairline-cell {
+  background: rgba(10, 18, 14, 0.68);
+}
+.cv-page .thesis-hairline-cell:hover {
   box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.35);
 }
-:root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell:hover {
+:root[data-theme="day"] .cv-page .thesis-hairline-cell:hover {
   background: rgba(251, 248, 241, 0.92);
 }
-:root[data-theme="night"] .cv-page.thesis-page .thesis-asset-banner .stat-grid .stat-cell:hover {
+:root[data-theme="night"] .cv-page .thesis-hairline-cell:hover {
   background: rgba(14, 26, 20, 0.78);
 }
+.cv-page .thesis-hairline-num {
+  font-family: var(--font-serif);
+  font-size: clamp(44px, 4.2vw, 56px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.022em;
+  color: var(--ivory);
+  margin-bottom: 14px;
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-hairline-cell.is-lead .thesis-hairline-num {
+  font-size: clamp(64px, 7vw, 96px);
+  margin-bottom: 20px;
+}
+.cv-page .thesis-hairline-num em {
+  font-style: italic;
+  color: var(--green-light);
+  font-weight: 400;
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-hairline-label {
+  font-family: var(--font-sans);
+  font-size: var(--type-label);
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--ivory-mid);
+  font-weight: 500;
+  max-width: 320px;
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-hairline-cell.is-lead .thesis-hairline-label {
+  font-size: var(--type-ui);
+  letter-spacing: 0.20em;
+}
 
-/* Stat grid · 1 lead stat + 4 supporting (Thesis 001 only). On /thesis banner,
-   cells use the same flush panel treatment as homepage .club-card (see above). */
+/* 003 · Football — label + claim rows */
+.cv-page .thesis-fact-rows {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: border-color 0.6s ease;
+}
+.cv-page .thesis-fact-row {
+  display: grid;
+  grid-template-columns: 176px 1fr;
+  gap: 40px;
+  width: 100%;
+  padding: 34px 28px;
+  border: none;
+  border-bottom: 1px solid var(--line-soft);
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  align-items: baseline;
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    color 0.6s ease;
+}
+.cv-page .thesis-fact-row:last-child {
+  border-bottom: none;
+}
+.cv-page .thesis-fact-row:hover {
+  background: color-mix(in srgb, var(--bg-card) 55%, transparent);
+}
+.cv-page .thesis-fact-row.is-active {
+  background: color-mix(in srgb, var(--bg-card) 82%, transparent);
+  box-shadow: inset 3px 0 0 var(--green-light);
+}
+.cv-page .thesis-fact-row:focus-visible {
+  outline: 2px solid var(--green-light);
+  outline-offset: -2px;
+}
+.cv-page.thesis-page .thesis-football-section .thesis-fact-row:hover {
+  background: color-mix(in srgb, var(--bg-deep) 62%, var(--bg-card) 38%);
+}
+.cv-page.thesis-page .thesis-football-section .thesis-fact-row.is-active {
+  background: color-mix(in srgb, var(--bg-deep) 48%, var(--bg-card) 52%);
+  box-shadow: inset 3px 0 0 var(--green-light);
+}
+.cv-page.thesis-page .thesis-football-section .thesis-fact-row.is-active .thesis-fact-label,
+.cv-page.thesis-page .thesis-football-section .thesis-fact-row.is-active .thesis-fact-claim {
+  color: var(--ivory);
+}
+.cv-page .thesis-fact-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  letter-spacing: 0.22em;
+  color: var(--green-light);
+  text-transform: uppercase;
+  font-weight: 300;
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-fact-claim {
+  font-family: var(--font-serif);
+  font-size: var(--type-prose);
+  line-height: 1.5;
+  color: var(--ivory);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  max-width: 560px;
+  transition: color 0.6s ease;
+}
+.cv-page .thesis-fact-claim em {
+  font-style: italic;
+  color: var(--green-light);
+  transition: color 0.6s ease;
+}
+
+/* 003 · Why football — turf photography + scrim (mirrors thesis hero banner) */
+.cv-page.thesis-page .thesis-football-section {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--line);
+  padding-top: 104px;
+  padding-bottom: 112px;
+}
+.cv-page.thesis-page .thesis-football-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('/thesis-football-section-bg.png');
+  background-size: cover;
+  background-position: 72% 28%;
+  background-repeat: no-repeat;
+  filter: saturate(0.88) brightness(0.72);
+  transform: scale(1.06);
+  transition: filter 0.6s ease;
+}
+:root[data-theme="day"] .cv-page.thesis-page .thesis-football-section::before {
+  filter: saturate(0.85) brightness(0.82);
+}
+.cv-page.thesis-page .thesis-football-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transition: background 0.6s ease;
+}
+:root[data-theme="day"] .cv-page.thesis-page .thesis-football-section::after {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg-deep) 90%, transparent) 0%,
+    color-mix(in srgb, var(--bg-deep) 82%, transparent) 38%,
+    color-mix(in srgb, var(--bg-deep) 74%, transparent) 100%
+  );
+}
+:root[data-theme="night"] .cv-page.thesis-page .thesis-football-section::after {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--bg-deep) 92%, transparent) 0%,
+    color-mix(in srgb, var(--bg-deep) 84%, transparent) 42%,
+    rgba(3, 6, 4, 0.78) 100%
+  );
+}
+.cv-page.thesis-page .thesis-football-section > .section-inner {
+  position: relative;
+  z-index: 1;
+}
+.cv-page.thesis-page .thesis-football-section .section-head.solo {
+  margin-bottom: 64px;
+}
+.cv-page.thesis-page .thesis-football-section .thesis-fact-rows {
+  background: color-mix(in srgb, var(--bg-deep) 65%, transparent);
+}
+.cv-page.thesis-page .thesis-football-section .thesis-fact-claim {
+  max-width: none;
+}
+
+/* Legacy stat-grid (non-thesis pages) · gradient variant */
 .cv-page .stat-grid {
   display: grid;
   grid-template-columns: 1.55fr 1fr 1fr;
@@ -3236,7 +3527,7 @@ body {
 }
 .cv-page .stat-grid .stat-eyebrow {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.20em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -3256,7 +3547,7 @@ body {
 }
 .cv-page .stat-grid .stat-cell.is-lead .stat-label {
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   letter-spacing: 0.20em;
   line-height: 1.5;
   text-transform: uppercase;
@@ -3267,6 +3558,9 @@ body {
 }
 .cv-page .stat-grid .stat-cell:not(.is-lead) {
   padding: 28px 24px;
+}
+.cv-page .stat-grid .stat-cell:not(.is-lead) .stat-eyebrow {
+  margin-bottom: 13px;
 }
 .cv-page .stat-grid .stat-cell:not(.is-lead) .stat-num {
   font-family: var(--font-serif);
@@ -3280,7 +3574,7 @@ body {
 }
 .cv-page .stat-grid .stat-cell:not(.is-lead) .stat-label {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--type-label);
   letter-spacing: 0.18em;
   line-height: 1.5;
   text-transform: uppercase;
@@ -3309,7 +3603,7 @@ body {
 .cv-page .ac-row-head { margin-bottom: 28px; }
 .cv-page .ac-row-name {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--type-ui);
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -3319,7 +3613,7 @@ body {
 }
 .cv-page .ac-row-meta {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: var(--type-label);
   color: var(--ivory-dim);
   letter-spacing: 0.04em;
   font-weight: 300;
@@ -3353,7 +3647,7 @@ body {
   min-width: 56px;
   padding: 0 10px;
   font-family: var(--font-mono);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--ivory);
@@ -3375,7 +3669,7 @@ body {
 .cv-page .ac-bar-label {
   margin-top: 6px;
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.18em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -3386,7 +3680,7 @@ body {
 .cv-page .ac-bar.is-sports .ac-bar-label { color: var(--green-light); }
 .cv-page .ac-source {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.12em;
   color: var(--ivory-faint);
   text-transform: uppercase;
@@ -3407,7 +3701,7 @@ body {
 }
 .cv-page .thesis-takeaway-eyebrow {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.30em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -3457,7 +3751,7 @@ body {
 }
 .cv-page .thesis-takeaway-label {
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   letter-spacing: 0.24em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -3466,7 +3760,7 @@ body {
 }
 .cv-page .thesis-takeaway-claim {
   font-family: var(--font-serif);
-  font-size: 21px;
+  font-size: var(--type-prose);
   line-height: 1.45;
   color: var(--ivory);
   font-weight: 400;
@@ -3502,7 +3796,7 @@ body {
 }
 .cv-page .chapter-break-eyebrow {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.32em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -3546,7 +3840,7 @@ body {
 .cv-page a.chapter-break:hover .chapter-break-arrow { transform: translateX(10px); }
 .cv-page .chapter-break-meta {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: var(--type-label);
   letter-spacing: 0.18em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -3691,7 +3985,7 @@ body {
 }
 :root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-text-col:hover,
 :root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-chart:hover {
-  background: rgba(251, 248, 241, 0.92);
+  background: color-mix(in srgb, var(--bg-deep) 92%, transparent);
 }
 :root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-text-col:hover,
 :root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-chart:hover {
@@ -3739,7 +4033,7 @@ body {
 }
 .cv-page .scoring-lede {
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: var(--type-title);
   line-height: 1.55;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -3766,7 +4060,7 @@ body {
   background: var(--bg);
   padding: 12px 20px;
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.20em;
   color: var(--ivory-mid);
   text-transform: uppercase;
@@ -3849,7 +4143,7 @@ body {
 }
 .cv-page .sc-score-num {
   font-family: var(--font-mono);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   font-weight: 500;
   fill: var(--amber);
   pointer-events: none;
@@ -3859,7 +4153,7 @@ body {
 /* Axis labels (clickable) */
 .cv-page .sc-label {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--type-label);
   letter-spacing: 0.18em;
   fill: var(--ivory-mid);
   text-transform: uppercase;
@@ -3888,7 +4182,7 @@ body {
 }
 .cv-page .scoring-center span {
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -3906,7 +4200,7 @@ body {
 }
 .cv-page .scoring-detail-eyebrow {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.18em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -3916,7 +4210,7 @@ body {
 }
 .cv-page .scoring-detail-name {
   font-family: var(--font-sans);
-  font-size: 16.5px;
+  font-size: var(--type-body);
   font-weight: 600;
   letter-spacing: 0.18em;
   color: var(--green-light);
@@ -3937,14 +4231,14 @@ body {
 }
 .cv-page .scoring-detail-score em {
   font-style: normal;
-  font-size: 17.5px;
+  font-size: var(--type-lead);
   color: var(--ivory-dim);
   font-weight: 300;
   margin-left: 4px;
 }
 .cv-page .scoring-detail-desc {
   font-family: var(--font-sans);
-  font-size: 16.5px;
+  font-size: var(--type-body);
   line-height: 1.6;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -3957,7 +4251,7 @@ body {
   gap: 24px;
   margin-bottom: 24px;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: var(--type-label);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -4005,7 +4299,7 @@ body {
 }
 .cv-page .pillar-col-label {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.24em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -4016,7 +4310,7 @@ body {
 }
 .cv-page .pillar-col-desc {
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: var(--type-title);
   line-height: 1.5;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -4043,7 +4337,7 @@ body {
 }
 .cv-page .pillar-kpi-label {
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   color: var(--ivory);
   font-weight: 500;
   letter-spacing: 0.005em;
@@ -4095,7 +4389,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.02em;
   line-height: 1;
   margin-top: 2px;
@@ -4165,7 +4459,7 @@ body {
     to bottom,
     color-mix(in srgb, var(--bg) 86%, transparent) 0%,
     color-mix(in srgb, var(--bg) 76%, transparent) 50%,
-    rgba(234, 229, 218, 0.84) 100%
+    color-mix(in srgb, var(--bg-deep) 84%, transparent) 100%
   );
 }
 :root[data-theme="night"] .cv-page.approach-page .return-engine-section::after {
@@ -4207,7 +4501,7 @@ body {
 .cv-page .re-card.is-result { background: var(--bg-deep); }
 .cv-page .re-label {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.22em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -4241,7 +4535,7 @@ body {
 }
 .cv-page .re-name {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: var(--type-display-sm);
   color: var(--ivory);
   font-weight: 400;
   line-height: 1.15;
@@ -4255,7 +4549,7 @@ body {
 }
 .cv-page .re-desc {
   font-family: var(--font-sans);
-  font-size: 17px;
+  font-size: var(--type-body);
   line-height: 1.65;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -4288,7 +4582,7 @@ body {
 }
 .cv-page .terminal-eyebrow {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.20em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -4297,7 +4591,7 @@ body {
 }
 .cv-page .terminal-desc {
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: var(--type-title);
   line-height: 1.5;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -4319,7 +4613,7 @@ body {
 .cv-page .terminal-table thead th {
   text-align: left;
   padding: 12px 16px;
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.20em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -4332,7 +4626,7 @@ body {
 .cv-page .terminal-table tbody td {
   padding: 18px 16px;
   border-bottom: 1px solid var(--line-soft);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   color: var(--ivory);
   font-weight: 400;
   vertical-align: middle;
@@ -4351,7 +4645,7 @@ body {
   background: color-mix(in srgb, var(--green-soft) 55%, var(--ivory-faint));
 }
 .cv-page .terminal-table .col-num {
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   color: var(--green-light);
   font-weight: 500;
   width: 36px;
@@ -4364,7 +4658,7 @@ body {
 }
 .cv-page .terminal-table .col-line {
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 600;
@@ -4374,7 +4668,7 @@ body {
 }
 .cv-page .terminal-table .col-metric {
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   color: var(--ivory-mid);
   font-weight: 400;
   width: 22%;
@@ -4416,7 +4710,7 @@ body {
 .cv-page .revline-footnote {
   margin-top: 28px;
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.10em;
   color: var(--ivory-faint);
   text-transform: uppercase;
@@ -4442,7 +4736,7 @@ body {
 }
 .cv-page .ve-lede {
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: var(--type-lead);
   line-height: 1.55;
   color: var(--ivory-mid);
   max-width: 640px;
@@ -4460,7 +4754,7 @@ body {
   gap: 24px;
   align-items: center;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: var(--type-label);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -4483,6 +4777,14 @@ body {
   border: 1.5px solid var(--ivory-dim);
   background: var(--bg-card);
   transition: border-color 0.6s ease, background 0.6s ease;
+}
+.cv-page .section.bg-card .ve-dot-hollow,
+.cv-page .section.bg-card .ve-slider-base {
+  background: var(--bg-card);
+}
+.cv-page .section.bg-deep .ve-dot-hollow,
+.cv-page .section.bg-deep .ve-slider-base {
+  background: var(--bg-deep);
 }
 .cv-page .ve-dot-fill {
   background: var(--green-light);
@@ -4511,7 +4813,7 @@ body {
 }
 .cv-page .ve-band-title {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.24em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -4522,7 +4824,7 @@ body {
 }
 .cv-page .ve-band-desc {
   font-family: var(--font-serif);
-  font-size: 19px;
+  font-size: var(--type-title);
   line-height: 1.5;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -4591,7 +4893,7 @@ body {
   display: block;
   margin-top: 10px;
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: var(--type-caption);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ivory-faint);
@@ -4608,7 +4910,7 @@ body {
 }
 .cv-page .ve-arrow {
   color: var(--ivory-faint);
-  font-size: 12px;
+  font-size: var(--type-caption);
   transition: color 0.25s ease, transform 0.25s ease;
 }
 .cv-page .ve-cell:hover .ve-arrow,
@@ -4628,7 +4930,7 @@ body {
 }
 .cv-page .ve-m-name {
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   font-weight: 500;
   letter-spacing: 0.005em;
   line-height: 1.3;
@@ -4705,7 +5007,7 @@ body {
   align-items: center;
   gap: 8px;
   font-family: var(--font-mono);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.02em;
   line-height: 1;
   margin-top: 2px;
@@ -4724,7 +5026,7 @@ body {
 }
 .cv-page .ve-disclaimer {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ivory-faint);
@@ -4777,16 +5079,16 @@ body {
   .cv-page .pillar-col-desc {
     min-height: 0;
   }
-  .cv-page .terminal-table .col-line { font-size: 14.5px; letter-spacing: 0.10em; }
+  .cv-page .terminal-table .col-line { font-size: var(--type-label); letter-spacing: 0.10em; }
 }
 @media (max-width: 720px) {
   .cv-page .scoring-tabs { width: 100%; }
-  .cv-page .scoring-tab { flex: 1 1 0; padding: 12px 8px; font-size: 13.5px; letter-spacing: 0.12em; }
+  .cv-page .scoring-tab { flex: 1 1 0; padding: 12px 8px; font-size: var(--type-mono); letter-spacing: 0.12em; }
   .cv-page .scoring-detail { padding: 24px; }
   .cv-page.approach-page .approach-invest-section .scoring-detail {
     padding: 22px 0 0;
   }
-  .cv-page .sc-label { font-size: 13px; letter-spacing: 0.10em; }
+  .cv-page .sc-label { font-size: var(--type-caption); letter-spacing: 0.10em; }
   .cv-page .re-multiplier { font-size: 50px; }
   .cv-page .terminal-table thead { display: none; }
   .cv-page .terminal-table tbody td { display: block; padding: 6px 0; border: none; }
@@ -4826,7 +5128,7 @@ body {
   display: flex; justify-content: space-between;
   align-items: center; flex-wrap: wrap; gap: 18px;
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   color: var(--ivory-dim);
   font-weight: 400; letter-spacing: 0.02em;
   transition: color 0.6s ease;
@@ -4844,8 +5146,15 @@ body {
   .cv-page .ac-grid { grid-template-columns: 1fr; gap: 48px; }
 }
 @media (max-width: 900px) {
-  /* Match the reference: collapse takeaway and chapter-break at 900px */
-  .cv-page .thesis-takeaway-grid { grid-template-columns: 1fr; gap: 40px; }
+  .cv-page .thesis-hairline-grid--hero,
+  .cv-page .thesis-hairline-grid--tailwinds {
+    grid-template-columns: 1fr;
+  }
+  .cv-page .thesis-fact-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 28px 22px;
+  }
   .cv-page .chapter-break-inner { grid-template-columns: 1fr; gap: 28px; }
   .cv-page .chapter-break-meta { text-align: left; padding-bottom: 0; }
 }
@@ -4854,9 +5163,6 @@ body {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     gap: 16px;
-  }
-  .cv-page.thesis-page .thesis-asset-banner .stat-grid {
-    gap: 1px;
   }
   .cv-page .stat-grid .stat-cell.is-lead {
     grid-row: auto;
@@ -4893,13 +5199,28 @@ body {
   .manifesto-headline { white-space: normal; }
   /* Thesis · mobile rhythm */
   .cv-page .stat-grid { grid-template-columns: 1fr; }
-  .cv-page.thesis-page .thesis-asset-banner .stat-grid { gap: 1px; }
-  .cv-page .stat-grid .stat-cell.is-lead { grid-column: auto; padding: 40px 24px 40px 22px; }
-  .cv-page .stat-grid .stat-cell:not(.is-lead) { padding: 24px 22px; }
-  .cv-page .thesis-takeaway { padding: 72px 22px 80px; }
-  .cv-page .thesis-takeaway-lede { margin-bottom: 56px; }
+  .cv-page.thesis-page .thesis-asset-banner {
+    min-height: clamp(480px, 52vh, 620px);
+  }
+  .cv-page.thesis-page .thesis-hero-proof-wrap {
+    padding: 28px 0 40px;
+  }
+  .cv-page.thesis-page .thesis-hero-proof-wrap .section-inner { padding: 0 22px; }
+  .cv-page .thesis-hairline-cell.is-lead .thesis-hairline-num {
+    font-size: clamp(56px, 14vw, 72px);
+  }
+  .cv-page.thesis-page .section-head { margin-bottom: 48px; }
+  .cv-page.thesis-page .section-head.solo:not(:has(.sh-deck)) { margin-bottom: 40px; }
+  .cv-page.thesis-page .thesis-football-section {
+    padding-top: 72px;
+    padding-bottom: 80px;
+  }
+  .cv-page.thesis-page .thesis-football-section .section-head.solo {
+    margin-bottom: 48px;
+  }
+  .cv-page .thesis-fact-row { padding: 24px 22px; }
   .cv-page a.chapter-break { padding: 64px 22px 72px; }
-  .cv-page .ac-source { font-size: 13px; }
+  .cv-page .ac-source { font-size: var(--type-caption); }
 }
 
 /* ===========================================================================
@@ -4939,7 +5260,7 @@ body {
 }
 .cv-page .ph-eyebrow {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.32em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -4974,7 +5295,7 @@ body {
 }
 .cv-page .ph-intro {
   font-family: var(--font-serif);
-  font-size: 21px;
+  font-size: var(--type-prose);
   line-height: 1.55;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5018,7 +5339,7 @@ body {
 }
 .cv-page .sh-eyebrow {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.30em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -5053,7 +5374,7 @@ body {
 }
 .cv-page .sh-deck {
   font-family: var(--font-sans);
-  font-size: 17.5px;
+  font-size: var(--type-lead);
   line-height: 1.7;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5070,7 +5391,7 @@ body {
 }
 .cv-page .cta-link {
   font-family: var(--font-sans);
-  font-size: 16.5px;
+  font-size: var(--type-body);
   color: var(--ivory);
   border: 1px solid var(--line);
   padding: 14px 24px;
@@ -5101,7 +5422,8 @@ body {
 }
 
 .team-page .page-hero,
-.cv-page.portfolio-hub .page-hero {
+.cv-page.portfolio-hub .page-hero,
+.cv-page.thesis-page .thesis-asset-banner .page-hero {
   border-bottom: none;
   padding-bottom: 24px;
 }
@@ -5162,7 +5484,7 @@ body {
 }
 .team-page .exp-stat-label {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.22em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -5220,7 +5542,7 @@ body {
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--type-caption);
   letter-spacing: 0.2em;
   color: var(--ivory-faint);
   text-transform: uppercase;
@@ -5264,7 +5586,7 @@ body {
 .team-page .person-content { min-width: 0; }
 .team-page .person-name {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: var(--type-prose);
   color: var(--green-light);
   font-weight: 400;
   line-height: 1.1;
@@ -5274,7 +5596,7 @@ body {
 }
 .team-page .person-role {
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -5284,7 +5606,7 @@ body {
 }
 .team-page .person-bio {
   font-family: var(--font-sans);
-  font-size: 16.5px;
+  font-size: var(--type-body);
   line-height: 1.65;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5294,7 +5616,7 @@ body {
   font-family: var(--font-serif);
   font-style: italic;
   color: var(--ivory);
-  font-size: 17px;
+  font-size: var(--type-body);
 }
 
 /* ---- Team moments: editorial photo strip between Leadership and Advisors.
@@ -5306,7 +5628,7 @@ body {
 }
 .team-page .team-moments-hint {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -5388,7 +5710,7 @@ body {
 }
 .team-page .team-moment-cap {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ivory-mid);
@@ -5410,7 +5732,7 @@ body {
   .team-page .team-moment-frame img { height: 280px; }
   .team-page .team-moment.is-portrait .team-moment-frame img { height: 280px; }
   .team-page .team-moment-figure { gap: 10px; }
-  .team-page .team-moment-cap { font-size: 13px; letter-spacing: 0.2em; }
+  .team-page .team-moment-cap { font-size: var(--type-caption); letter-spacing: 0.2em; }
 }
 
 .team-page .pillar-rows {
@@ -5450,7 +5772,7 @@ body {
 .team-page .pillar-row-label {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 16.5px;
+  font-size: var(--type-body);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ivory);
@@ -5460,7 +5782,7 @@ body {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 300;
-  font-size: 19px;
+  font-size: var(--type-title);
   line-height: 1.4;
   color: var(--ivory-mid);
   letter-spacing: -0.005em;
@@ -5506,7 +5828,7 @@ body {
 }
 .team-page .pillar-row-body {
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: var(--type-lead);
   line-height: 1.7;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5528,8 +5850,8 @@ body {
     gap: 18px;
     padding: 22px 18px;
   }
-  .team-page .pillar-row-label { font-size: 15.5px; letter-spacing: 0.14em; }
-  .team-page .pillar-row-teaser { font-size: 18.5px; }
+  .team-page .pillar-row-label { font-size: var(--type-ui); letter-spacing: 0.14em; }
+  .team-page .pillar-row-teaser { font-size: var(--type-lead-lg); }
   .team-page .pillar-row-body { padding-left: 226px; }
 }
 @media (max-width: 720px) {
@@ -5546,7 +5868,7 @@ body {
   .team-page .pillar-row-label { grid-column: 2 / 3; grid-row: 1 / 2; }
   .team-page .pillar-row-icon { grid-row: 1 / 2; }
   .team-page .pillar-row-chevron { grid-row: 1 / 2; }
-  .team-page .pillar-row-teaser { grid-column: 1 / -1; grid-row: 2 / 3; font-size: 17.5px; }
+  .team-page .pillar-row-teaser { grid-column: 1 / -1; grid-row: 2 / 3; font-size: var(--type-lead); }
   .team-page .pillar-row-body { padding: 0 16px 22px 16px; }
 }
 
@@ -5555,7 +5877,6 @@ body {
    Layered on top of .cv-page primitives.
    =========================================================================== */
 
-/* GitHub main hero map (ClaraVistaMapLegacy) — portfolio hub hero underlay. */
 .portfolio-hero-banner {
   position: relative;
   overflow: hidden;
@@ -5571,6 +5892,28 @@ body {
     var(--portfolio-map-bleed) + var(--portfolio-gutter) +
     max(0px, (100vw - 2 * var(--portfolio-gutter) - var(--portfolio-content-max)) / 2)
   );
+}
+.portfolio-map-skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--bg-deep);
+  overflow: hidden;
+}
+.portfolio-map-skeleton-shimmer {
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    color-mix(in srgb, var(--green-light) 8%, transparent) 50%,
+    transparent 60%
+  );
+  animation: portfolio-map-shimmer 1.8s ease-in-out infinite;
+}
+@keyframes portfolio-map-shimmer {
+  from { transform: translateX(-30%); }
+  to { transform: translateX(30%); }
 }
 :root[data-theme="night"] .portfolio-hero-banner {
   background: var(--bg-deep);
@@ -5680,10 +6023,16 @@ body {
 }
 .portfolio-hero-banner .portfolio-map-embed .cv-recenter {
   display: inline-flex !important;
-  bottom: clamp(40px, 6vh, 56px);
-  right: 56px;
+  bottom: clamp(108px, 14vh, 148px);
+  right: var(--portfolio-content-x);
   z-index: 4;
   pointer-events: auto;
+}
+.portfolio-hero-banner .portfolio-map-embed #map-canvas {
+  background: var(--bg);
+}
+:root[data-theme="night"] .portfolio-hero-banner .portfolio-map-embed #map-canvas {
+  background: var(--bg-deep);
 }
 .portfolio-hero-banner .portfolio-map-embed .hero {
   height: 100%;
@@ -5817,9 +6166,9 @@ body {
     transform: translateY(0);
   }
   .portfolio-hero-banner .portfolio-map-embed .cv-recenter {
-    bottom: clamp(28px, 5vh, 40px);
-    right: 22px;
-    left: 22px;
+    bottom: clamp(108px, 14vh, 132px);
+    right: var(--portfolio-content-x);
+    left: var(--portfolio-content-x);
     width: auto;
   }
 }
@@ -5880,7 +6229,7 @@ body {
 }
 .cv-page .pclub-meta {
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.26em;
   text-transform: uppercase;
   font-weight: 500;
@@ -5933,7 +6282,7 @@ body {
 }
 .cv-page .pclub-loc {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   color: var(--ivory-dim);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -5942,7 +6291,7 @@ body {
 }
 .cv-page .pclub-note {
   font-family: var(--font-sans);
-  font-size: 17px;
+  font-size: var(--type-body);
   line-height: 1.7;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -5963,7 +6312,7 @@ body {
 }
 .cv-page .pclub-stat-label {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: var(--type-caption);
   color: var(--ivory-dim);
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -5973,19 +6322,19 @@ body {
   font-family: var(--font-serif);
   color: var(--ivory);
   margin-top: 6px;
-  font-size: 19px;
+  font-size: var(--type-title);
   font-weight: 400;
   letter-spacing: -0.005em;
 }
 .cv-page .pclub-stat-value em {
   font-style: italic;
   color: var(--ivory-dim);
-  font-size: 16.5px;
+  font-size: var(--type-body);
 }
 .cv-page .pclub-link {
   margin-top: 22px;
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -6009,7 +6358,7 @@ body {
 }
 .cv-page .breadcrumb {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.16em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -6057,7 +6406,7 @@ body {
 .cv-page .deep-sub {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 24px;
+  font-size: var(--type-display-sm);
   color: var(--ivory-mid);
   font-weight: 300;
   letter-spacing: -0.005em;
@@ -6071,7 +6420,7 @@ body {
   justify-content: space-between;
   padding: 10px 0;
   border-top: 1px solid var(--line-soft);
-  font-size: 16px;
+  font-size: var(--type-ui);
 }
 .cv-page .deep-side-row:last-child {
   border-bottom: 1px solid var(--line-soft);
@@ -6080,7 +6429,7 @@ body {
   color: var(--ivory-dim);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   font-weight: 500;
 }
 .cv-page .deep-side-row .value {
@@ -6104,7 +6453,7 @@ body {
   justify-content: center;
   color: var(--ivory-faint);
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   position: relative;
@@ -6185,7 +6534,7 @@ body {
 .cv-page .glance-cell:hover { background: var(--bg-card); }
 .cv-page .glance-label {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.18em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -6194,7 +6543,7 @@ body {
 }
 .cv-page .glance-value {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: var(--type-display-sm);
   color: var(--ivory);
   font-weight: 400;
   line-height: 1.15;
@@ -6221,7 +6570,7 @@ body {
 }
 .cv-page .prose-eyebrow {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.30em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -6238,7 +6587,7 @@ body {
 }
 .cv-page .prose-body {
   font-family: var(--font-serif);
-  font-size: 21px;
+  font-size: var(--type-prose);
   line-height: 1.6;
   color: var(--ivory);
   font-weight: 300;
@@ -6279,7 +6628,7 @@ body {
 }
 .cv-page .pull-quote-attribution {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.24em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -6341,7 +6690,7 @@ body {
 }
 .cv-page .accomp-title {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: var(--type-display-sm);
   font-weight: 400;
   color: var(--ivory);
   line-height: 1.15;
@@ -6353,7 +6702,7 @@ body {
 }
 .cv-page .accomp-when {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.18em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -6362,7 +6711,7 @@ body {
 }
 .cv-page .accomp-body {
   font-family: var(--font-sans);
-  font-size: 17.5px;
+  font-size: var(--type-lead);
   line-height: 1.65;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -6397,7 +6746,7 @@ body {
 }
 .cv-page .rev-chart-title {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -6408,7 +6757,7 @@ body {
   flex-basis: 100%;
   order: 3;
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   line-height: 1.55;
   color: var(--ivory-dim);
   margin-top: 4px;
@@ -6419,7 +6768,7 @@ body {
   align-items: center;
   gap: 18px;
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -6485,7 +6834,7 @@ body {
 .cv-page .rev-annot-pin { fill: var(--green-light); }
 .cv-page .rev-annot-eyebrow {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.22em;
   fill: var(--green-light);
   text-transform: uppercase;
@@ -6493,12 +6842,12 @@ body {
 .cv-page .rev-annot-label {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 18.5px;
+  font-size: var(--type-lead-lg);
   fill: var(--ivory);
 }
 .cv-page .rev-anchor-value {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: var(--type-display-sm);
   fill: var(--ivory);
   font-weight: 400;
 }
@@ -6510,7 +6859,7 @@ body {
 .cv-page .rev-anchor-start .rev-anchor-value { text-anchor: start; }
 .cv-page .rev-anchor-meta {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   fill: var(--ivory-dim);
@@ -6519,14 +6868,14 @@ body {
 .cv-page .rev-anchor-start .rev-anchor-meta { text-anchor: start; }
 .cv-page .rev-x-tick {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.08em;
   fill: var(--ivory-dim);
   text-anchor: middle;
 }
 .cv-page .rev-projected-label {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.28em;
   fill: var(--ivory-dim);
   text-anchor: middle;
@@ -6556,7 +6905,7 @@ body {
 }
 .cv-page .rev-stat-eyebrow {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.18em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -6564,7 +6913,7 @@ body {
 }
 .cv-page .rev-stat-headline {
   font-family: var(--font-serif);
-  font-size: 21px;
+  font-size: var(--type-prose);
   font-weight: 400;
   color: var(--ivory);
   line-height: 1.2;
@@ -6576,7 +6925,7 @@ body {
 }
 .cv-page .rev-stat-body {
   font-family: var(--font-sans);
-  font-size: 16.5px;
+  font-size: var(--type-body);
   line-height: 1.6;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -6619,7 +6968,7 @@ body {
 }
 .cv-page .rev-chart-kpi-fy {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--green-light) 75%, transparent);
@@ -6643,7 +6992,7 @@ body {
 }
 .cv-page .rev-chart-kpi-focus {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--type-label);
   color: var(--ivory-dim);
   font-style: italic;
   margin-top: 2px;
@@ -6671,7 +7020,7 @@ body {
 }
 .cv-page .rev-series-panel-title {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -6718,7 +7067,7 @@ body {
   margin-top: 3px;
 }
 .cv-page .rev-series-label {
-  font-size: 15px;
+  font-size: var(--type-label);
   line-height: 1.35;
   color: var(--ivory-mid);
   font-weight: 400;
@@ -6726,7 +7075,7 @@ body {
 .cv-page .rev-series-val {
   grid-column: 2;
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.06em;
   color: var(--ivory-dim);
 }
@@ -6762,7 +7111,7 @@ body {
 }
 .cv-page .deal-row-label {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.18em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -6770,7 +7119,7 @@ body {
 }
 .cv-page .deal-row-value {
   font-family: var(--font-sans);
-  font-size: 18.5px;
+  font-size: var(--type-lead-lg);
   line-height: 1.6;
   color: var(--ivory);
   font-weight: 300;
@@ -6779,7 +7128,7 @@ body {
   font-style: italic;
   font-family: var(--font-serif);
   color: var(--green-light);
-  font-size: 19px;
+  font-size: var(--type-title);
 }
 .cv-page .deal-row-value strong {
   font-weight: 500;
@@ -6803,7 +7152,7 @@ body {
 
 .cv-page .h-timeline-hint {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -6879,7 +7228,7 @@ body {
 }
 .cv-page .h-era-header-label {
   font-family: var(--font-serif);
-  font-size: 17.5px;
+  font-size: var(--type-lead);
   color: var(--ivory);
   letter-spacing: -0.005em;
   line-height: 1.1;
@@ -6889,7 +7238,7 @@ body {
 }
 .cv-page .h-era-header-years {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--type-caption);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -7104,7 +7453,7 @@ body {
 
 .cv-page .h-event-year {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: var(--type-label);
   letter-spacing: 0.2em;
   color: var(--green-light);
   text-transform: uppercase;
@@ -7115,7 +7464,7 @@ body {
 
 .cv-page .h-event-label {
   font-family: var(--font-serif);
-  font-size: 17.5px;
+  font-size: var(--type-lead);
   line-height: 1.25;
   color: var(--ivory);
   font-weight: 400;
@@ -7126,7 +7475,7 @@ body {
   color: var(--green-light);
 }
 .cv-page .h-event.is-hero .h-event-label {
-  font-size: 18.5px;
+  font-size: var(--type-lead-lg);
 }
 .cv-page .h-event.is-anchor .h-event-label {
   font-style: italic;
@@ -7135,7 +7484,7 @@ body {
 
 .cv-page .h-event-detail {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: var(--type-label);
   line-height: 1.5;
   color: var(--ivory-dim);
   font-weight: 300;
@@ -7154,7 +7503,7 @@ body {
 }
 .cv-page .bullet-list li {
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: var(--type-lead);
   line-height: 1.7;
   color: var(--ivory-mid);
   font-weight: 300;
@@ -7209,7 +7558,7 @@ body {
 .cv-page .embargo-text {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 20px;
+  font-size: var(--type-title);
   color: var(--ivory);
   line-height: 1.5;
   font-weight: 300;
@@ -7219,7 +7568,7 @@ body {
   font-weight: 400;
   color: var(--green-light);
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.24em;
   text-transform: uppercase;
   display: block;
@@ -7257,14 +7606,14 @@ body {
   .cv-page .accomp-grid { grid-template-columns: 1fr; }
   .cv-page .rev-chart { padding: 22px 18px 14px; }
   .cv-page .rev-chart-caption { gap: 14px; }
-  .cv-page .rev-anchor-value { font-size: 20px; }
-  .cv-page .rev-annot-label { font-size: 16.5px; }
+  .cv-page .rev-anchor-value { font-size: var(--type-title); }
+  .cv-page .rev-annot-label { font-size: var(--type-body); }
 }
 @media (max-width: 640px) {
   .cv-page .rev-stats { grid-template-columns: 1fr; }
   /* Reduce x-axis label clutter on narrow phones: show every other year. */
   .cv-page .rev-x-tick:nth-child(2n) { display: none; }
-  .cv-page .rev-chart-desc { font-size: 15px; }
+  .cv-page .rev-chart-desc { font-size: var(--type-label); }
 }
 @media (max-width: 720px) {
   .cv-page .deep-hero { padding: 96px 22px 40px; }
@@ -7290,7 +7639,7 @@ body {
     margin: 12px 0 6px;
     padding-left: 4px;
     font-family: var(--font-mono);
-    font-size: 13.5px;
+    font-size: var(--type-mono);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--green-light);
@@ -7429,7 +7778,7 @@ body {
 }
 .tr-page .exp-stat-label {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.22em;
   color: var(--ivory-dim);
   text-transform: uppercase;
@@ -7460,7 +7809,7 @@ body {
   border: none;
   color: var(--ivory-dim);
   font-family: var(--font-sans);
-  font-size: 17.5px;
+  font-size: var(--type-lead);
   font-weight: 400;
   letter-spacing: 0.01em;
   cursor: pointer;
@@ -7484,7 +7833,7 @@ body {
 }
 .tr-firmtab-label {
   font-family: var(--font-serif);
-  font-size: 20px;
+  font-size: var(--type-title);
   letter-spacing: -0.014em;
   font-weight: 400;
   color: inherit;
@@ -7496,7 +7845,7 @@ body {
 }
 .tr-firmtab-sub {
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -7507,7 +7856,7 @@ body {
 }
 .tr-firmtab-count {
   font-family: var(--font-mono, var(--font-sans));
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.1em;
   color: var(--ivory-dim);
 }
@@ -7539,7 +7888,7 @@ body {
   border: 1px solid var(--ivory-faint);
   color: var(--ivory-mid);
   font-family: var(--font-sans);
-  font-size: 15.5px;
+  font-size: var(--type-ui);
   font-weight: 500;
   letter-spacing: 0.04em;
   cursor: pointer;
@@ -7557,7 +7906,7 @@ body {
 }
 .tr-filter-count {
   font-family: var(--font-mono, var(--font-sans));
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.12em;
   color: var(--ivory-dim);
   transition: color 0.2s ease;
@@ -7569,7 +7918,7 @@ body {
 /* ----- Result count ----- */
 .tr-resultcount {
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: var(--type-label);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -7657,7 +8006,7 @@ body {
 /* Monogram fallback for companies without a downloaded logo. */
 .tr-card-logo-mono {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: var(--type-display-sm);
   font-weight: 400;
   line-height: 1;
   color: var(--green-deep);
@@ -7673,7 +8022,7 @@ body {
 }
 .tr-card-sector {
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--green-light);
@@ -7681,7 +8030,7 @@ body {
 }
 .tr-card-fund {
   font-family: var(--font-mono, var(--font-sans));
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -7704,7 +8053,7 @@ body {
 /* Card body */
 .tr-card-name {
   font-family: var(--font-serif);
-  font-size: 26px;
+  font-size: var(--type-display-sm-lg);
   line-height: 1.08;
   font-weight: 400;
   letter-spacing: -0.018em;
@@ -7713,7 +8062,7 @@ body {
 }
 .tr-card-desc {
   font-family: var(--font-sans);
-  font-size: 16.5px;
+  font-size: var(--type-body);
   line-height: 1.55;
   font-weight: 300;
   color: var(--ivory-mid);
@@ -7740,7 +8089,7 @@ body {
   align-items: center;
   gap: 7px;
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: var(--type-caption);
   letter-spacing: 0.26em;
   text-transform: uppercase;
   font-weight: 600;
@@ -7774,7 +8123,7 @@ body {
 }
 .tr-card-acq {
   font-family: var(--font-sans);
-  font-size: 13.5px;
+  font-size: var(--type-mono);
   letter-spacing: 0.04em;
   color: var(--ivory-dim);
   font-style: italic;
@@ -7786,7 +8135,7 @@ body {
 }
 .tr-card-ceo-label {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: var(--type-caption);
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--ivory-dim);
@@ -7796,7 +8145,7 @@ body {
 .tr-card-ceo-name {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 16.5px;
+  font-size: var(--type-body);
   color: var(--ivory-mid);
   font-weight: 400;
   letter-spacing: -0.005em;
@@ -7815,9 +8164,9 @@ body {
   }
   .tr-firmtabs::-webkit-scrollbar { display: none; }
   .tr-firmtab { padding: 12px 16px 14px; }
-  .tr-firmtab-label { font-size: 19px; }
+  .tr-firmtab-label { font-size: var(--type-title); }
   .tr-filters { flex-wrap: nowrap; }
   .tr-grid { grid-template-columns: 1fr; gap: 12px; }
   .tr-card-link { padding: 20px 20px; }
-  .tr-card-name { font-size: 24px; }
+  .tr-card-name { font-size: var(--type-display-sm); }
 }

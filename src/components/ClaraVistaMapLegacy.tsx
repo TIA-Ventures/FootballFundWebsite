@@ -39,6 +39,35 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
     const heroSection = document.querySelector(".hero") as HTMLElement | null;
 
     const getTheme = () => (document.documentElement.dataset.theme === "day" ? "day" : "night");
+    const getPageBg = (): string => {
+      const pick = (el: Element | null) => {
+        if (!el) return "";
+        const bg = getComputedStyle(el).backgroundColor;
+        if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") return bg;
+        return "";
+      };
+      if (embed) {
+        const fromBanner = pick(document.querySelector(".portfolio-hero-banner"));
+        if (fromBanner) return fromBanner;
+      }
+      const fromHero = pick(document.querySelector(".hero"));
+      if (fromHero) return fromHero;
+      const fromRoot = pick(document.documentElement);
+      if (fromRoot) return fromRoot;
+      return getTheme() === "day" ? "rgb(249, 247, 243)" : "rgb(3, 6, 4)";
+    };
+    let cachedPageBg = "";
+    let pageBgDirty = true;
+    function invalidatePageBg() {
+      pageBgDirty = true;
+    }
+    function readPageBg() {
+      if (pageBgDirty) {
+        cachedPageBg = getPageBg();
+        pageBgDirty = false;
+      }
+      return cachedPageBg;
+    }
     const getColors = () => {
       if (getTheme() === "day") {
         return {
@@ -994,8 +1023,124 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       return { stepLat, stepLng, jitterEu, jitterCtx, contextDotPx };
     }
 
+    const EU_STIPPLE_LAT_MIN = 35;
+    const EU_STIPPLE_LAT_MAX = 71;
+    const EU_STIPPLE_LNG_MIN = -12;
+    const EU_STIPPLE_LNG_MAX = 35;
+
+    let contextBuildToken = 0;
+    let contextBuildIdleId: number | undefined;
+
+    function finalizeDotJitter(fromIndex: number) {
+      for (let i = fromIndex; i < DOTS.length; i++) {
+        const d = DOTS[i];
+        d.x += d.jitterX;
+        d.y += d.jitterY;
+      }
+    }
+
+    function buildEuropeDots(
+      stepLat: number,
+      stepLng: number,
+      jitterEu: number,
+    ) {
+      for (let lat = EU_STIPPLE_LAT_MIN; lat <= EU_STIPPLE_LAT_MAX; lat += stepLat) {
+        for (let lng = EU_STIPPLE_LNG_MIN; lng <= EU_STIPPLE_LNG_MAX; lng += stepLng) {
+          const country = whichCountry(lat, lng);
+          if (!country) continue;
+          const p = project(lat, lng);
+          DOTS.push({
+            x: p.x,
+            y: p.y,
+            country,
+            isPortfolio: PORTFOLIO_COUNTRIES.has(country),
+            isContext: false,
+            basePhase: Math.random() * Math.PI * 2,
+            jitterX: (Math.random() - 0.5) * jitterEu,
+            jitterY: (Math.random() - 0.5) * jitterEu,
+            proximity: 0,
+            waveBoost: 0,
+          });
+        }
+      }
+      euDotCount = DOTS.length;
+      finalizeDotJitter(0);
+    }
+
+    function buildContextDots(
+      stepLat: number,
+      stepLng: number,
+      jitterCtx: number,
+    ) {
+      const start = DOTS.length;
+      for (let lat = -55; lat <= 78; lat += stepLat) {
+        for (let lng = -170; lng <= 180; lng += stepLng) {
+          // Europe dots are built in pass 1 — only run the expensive country
+          // scan inside the Europe stipple bbox; elsewhere skip straight to
+          // world-region lookup (~95% fewer polygon tests on the context pass).
+          if (
+            lat >= EU_STIPPLE_LAT_MIN &&
+            lat <= EU_STIPPLE_LAT_MAX &&
+            lng >= EU_STIPPLE_LNG_MIN &&
+            lng <= EU_STIPPLE_LNG_MAX &&
+            whichCountry(lat, lng)
+          ) {
+            continue;
+          }
+          const region = whichWorldRegion(lat, lng);
+          if (!region) continue;
+          const p = project(lat, lng);
+          DOTS.push({
+            x: p.x,
+            y: p.y,
+            country: region,
+            isPortfolio: false,
+            isContext: true,
+            basePhase: Math.random() * Math.PI * 2,
+            jitterX: (Math.random() - 0.5) * jitterCtx,
+            jitterY: (Math.random() - 0.5) * jitterCtx,
+            proximity: 0,
+            waveBoost: 0,
+          });
+        }
+      }
+      finalizeDotJitter(start);
+    }
+
+    function cancelContextBuild() {
+      contextBuildToken++;
+      if (contextBuildIdleId !== undefined) {
+        if (typeof cancelIdleCallback !== "undefined") {
+          cancelIdleCallback(contextBuildIdleId);
+        } else {
+          window.clearTimeout(contextBuildIdleId);
+        }
+        contextBuildIdleId = undefined;
+      }
+    }
+
+    function scheduleContextDots(
+      stepLat: number,
+      stepLng: number,
+      jitterCtx: number,
+    ) {
+      const token = contextBuildToken;
+      const run = () => {
+        contextBuildIdleId = undefined;
+        if (token !== contextBuildToken) return;
+        buildContextDots(stepLat, stepLng, jitterCtx);
+      };
+      if (typeof requestIdleCallback !== "undefined") {
+        contextBuildIdleId = requestIdleCallback(run, { timeout: 150 });
+      } else {
+        contextBuildIdleId = window.setTimeout(run, 0);
+      }
+    }
+
     function buildDotMap() {
+      cancelContextBuild();
       DOTS.length = 0;
+      euDotCount = 0;
 
       const stipple = computeStippleStep();
       const { stepLat, stepLng, jitterEu, jitterCtx, contextDotPx } = stipple;
@@ -1004,65 +1149,9 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       stippleMetrics.jitterEu = jitterEu;
       stippleMetrics.jitterCtx = jitterCtx;
       stippleMetrics.contextDotPx = contextDotPx;
-      for (let lat = 35; lat <= 71; lat += stepLat) {
-        for (let lng = -12; lng <= 35; lng += stepLng) {
-          const country = whichCountry(lat, lng);
-          if (country) {
-            const p = project(lat, lng);
-            DOTS.push({
-              x: p.x,
-              y: p.y,
-              country,
-              isPortfolio: PORTFOLIO_COUNTRIES.has(country),
-              isContext: false,
-              basePhase: Math.random() * Math.PI * 2,
-              jitterX: (Math.random() - 0.5) * jitterEu,
-              jitterY: (Math.random() - 0.5) * jitterEu,
-              proximity: 0,
-              waveBoost: 0,
-            });
-          }
-        }
-      }
 
-      // Record the end-of-Europe boundary in DOTS so the render loop can
-      // process the animated Europe slice and the static context slice
-      // independently. Anything pushed after this line is context.
-      euDotCount = DOTS.length;
-
-      // PASS 2 — World context continents. Uses the same adaptive step as
-      // Europe so the fabric matches at every breakpoint; hierarchy comes
-      // from polygon precision and CONTEXT_DIM, not from spacing.
-      //
-      // Performance: static fillRect batch in the render loop (see pass B).
-      const ctxStepLat = stepLat;
-      const ctxStepLng = stepLng;
-      for (let lat = -55; lat <= 78; lat += ctxStepLat) {
-        for (let lng = -170; lng <= 180; lng += ctxStepLng) {
-          if (whichCountry(lat, lng)) continue;
-          const region = whichWorldRegion(lat, lng);
-          if (region) {
-            const p = project(lat, lng);
-            DOTS.push({
-              x: p.x,
-              y: p.y,
-              country: region,
-              isPortfolio: false,
-              isContext: true,
-              basePhase: Math.random() * Math.PI * 2,
-              jitterX: (Math.random() - 0.5) * jitterCtx,
-              jitterY: (Math.random() - 0.5) * jitterCtx,
-              proximity: 0,
-              waveBoost: 0,
-            });
-          }
-        }
-      }
-
-      DOTS.forEach((d) => {
-        d.x += d.jitterX;
-        d.y += d.jitterY;
-      });
+      buildEuropeDots(stepLat, stepLng, jitterEu);
+      scheduleContextDots(stepLat, stepLng, jitterCtx);
     }
 
     // Globe-wrap horizontal tile width — set by recomputeProjection. This is
@@ -1170,6 +1259,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       canvasEl.style.width = `${W}px`;
       canvasEl.style.height = `${H}px`;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      invalidatePageBg();
       recomputeProjection();
     }
 
@@ -1465,9 +1555,14 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
     });
 
     // ---- RESIZE ----
+    let resizeRaf = 0;
     const onResize = () => {
-      resize();
-      initParticles();
+      if (resizeRaf) window.cancelAnimationFrame(resizeRaf);
+      resizeRaf = window.requestAnimationFrame(() => {
+        resizeRaf = 0;
+        resize();
+        initParticles();
+      });
     };
     window.addEventListener("resize", onResize);
     const embedObserver =
@@ -1475,16 +1570,57 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
         ? new ResizeObserver(() => onResize())
         : null;
     embedObserver?.observe(embedWrap);
+    const themeObserver =
+      typeof MutationObserver !== "undefined"
+        ? new MutationObserver(() => invalidatePageBg())
+        : null;
+    themeObserver?.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
     resize();
     initParticles();
 
     // ---- RENDER LOOP ----
     let firstFrame = performance.now();
+    let loaderHidden = false;
+    function hideLoader() {
+      if (loaderHidden) return;
+      loaderHidden = true;
+      loader?.classList.add("hidden");
+    }
     let lastBroadcastTime = [-Infinity, -Infinity, -Infinity];
     // Slow broadcast ripples too (they radiate from the same 3 portfolio towns).
     const BROADCAST_INTERVAL = [26000, 28500, 27200];
     let lastTransferTime = -Infinity;
     let rafRender = 0;
+    let mapVisible = true;
+
+    const pauseMapIfHidden = () => {
+      if (!mapVisible && rafRender) {
+        window.cancelAnimationFrame(rafRender);
+        rafRender = 0;
+      }
+    };
+
+    const resumeMapIfVisible = () => {
+      if (mapVisible && !rafRender) {
+        rafRender = window.requestAnimationFrame(render);
+      }
+    };
+
+    const visibilityObserver =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            ([entry]) => {
+              mapVisible = entry.isIntersecting;
+              if (mapVisible) resumeMapIfVisible();
+              else pauseMapIfHidden();
+            },
+            { root: null, threshold: 0.05 },
+          )
+        : null;
+    visibilityObserver?.observe(embedWrap);
 
     // Globe-wrap helper for map markers. Dots already tile at
     // [-worldPxW, 0, +worldPxW]; markers must do the same or cities on
@@ -1505,6 +1641,10 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
     }
 
     function render(t: number) {
+      if (!mapVisible) {
+        rafRender = 0;
+        return;
+      }
       const elapsed = t - firstFrame;
       const C = getColors();
       const isDayFrame = getTheme() === "day";
@@ -1512,6 +1652,12 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       const broadcastBaseAlpha = parseFloat((C.broadcast.match(/[\d.]+(?=\))/) ?? ["0"])[0]);
       const broadcastStrokeRGB = isDayFrame ? "6, 93, 57" : "52, 194, 129";
       ctx.clearRect(0, 0, W, H);
+
+      const pageBg = readPageBg();
+      ctx.fillStyle = pageBg;
+      ctx.fillRect(0, 0, W, H);
+
+      if (euDotCount > 0) hideLoader();
 
       // Ease pan toward target every frame so released drags + Recenter settle
       // smoothly. Snap immediately for reduced-motion users.
@@ -1535,15 +1681,19 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       ctx.save();
       ctx.translate(pan.x, pan.y);
 
-      // Background spotlight
-      const europeCx = proj.ox + proj.drawW * 0.5;
-      const europeCy = proj.oy + proj.drawH * 0.5;
-      const spotGrad = ctx.createRadialGradient(europeCx, europeCy, 60, europeCx, europeCy, Math.max(W, H) * 0.55);
-      spotGrad.addColorStop(0, C.spotlight1);
-      spotGrad.addColorStop(0.5, C.spotlight2);
-      spotGrad.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = spotGrad;
-      ctx.fillRect(0, 0, W, H);
+      // Background spotlight — full-bleed map uses a Europe vignette; embed
+      // skips it so panning never reveals a moving sepia plate against --bg.
+      if (!embed) {
+        const europeCx = proj.ox + proj.drawW * 0.5;
+        const europeCy = proj.oy + proj.drawH * 0.5;
+        const spotGrad = ctx.createRadialGradient(europeCx, europeCy, 60, europeCx, europeCy, Math.max(W, H) * 0.55);
+        spotGrad.addColorStop(0, C.spotlight1);
+        spotGrad.addColorStop(0.5, C.spotlight2);
+        spotGrad.addColorStop(1, pageBg);
+        ctx.fillStyle = spotGrad;
+        const pad = Math.max(W, H);
+        ctx.fillRect(proj.ox - pad, proj.oy - pad, proj.drawW + pad * 2, proj.drawH + pad * 2);
+      }
 
       // KICK-OFF WAVES — round-robin so cities never pulse on top of each other.
       if (elapsed > WAVE_FIRST_DELAY && t - lastAnyWaveTime > WAVE_GAP) {
@@ -1962,7 +2112,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
 
         if (isHover) {
           ctx.fillStyle = C.labelPrimary;
-          ctx.font = `300 11px ${canvasFontVar("--font-mono")}`;
+          ctx.font = `300 13px ${canvasFontVar("--font-mono")}`;
           ctx.textAlign = "left";
           ctx.fillText(c.name.toUpperCase(), hoverPx + r + 8, hoverPy + 3.5);
         }
@@ -2019,7 +2169,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
 
         if (isHover) {
           ctx.fillStyle = C.labelPrimary;
-          ctx.font = `400 11px ${canvasFontVar("--font-sans")}`;
+          ctx.font = `400 13px ${canvasFontVar("--font-sans")}`;
           ctx.textAlign = "left";
           ctx.fillText(c.name, hoverPx + r + 8, hoverPy + 3.5);
         }
@@ -2094,16 +2244,16 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
           ctx.arc(px, py, 3.5, 0, Math.PI * 2);
           ctx.fill();
 
-          // Fact (serif italic, 14px). Drawn above the dot.
+          // Fact (serif italic). Drawn above the dot.
           ctx.textBaseline = "alphabetic";
           ctx.textAlign = "center";
           ctx.fillStyle = amberFactColor;
-          ctx.font = `italic 400 14px ${canvasFontVar("--font-serif")}`;
+          ctx.font = `italic 400 15px ${canvasFontVar("--font-serif")}`;
           ctx.fillText(m.fact, px, py - 22);
 
-          // Label (mono uppercase, 9.5px, wide tracking).
+          // Label (mono uppercase, wide tracking).
           ctx.fillStyle = amberLabelColor;
-          ctx.font = `400 9.5px ${canvasFontVar("--font-mono")}`;
+          ctx.font = `400 12px ${canvasFontVar("--font-mono")}`;
           ctx.fillText(m.label.toUpperCase(), px, py + 26);
 
           ctx.globalAlpha = 1;
@@ -2209,11 +2359,11 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
         ctx.textAlign = "left";
 
         // Measure label text to size a soft backdrop plate (no border).
-        ctx.font = `italic 400 12px ${canvasFontVar("--font-serif")}`;
+        ctx.font = `italic 400 14px ${canvasFontVar("--font-serif")}`;
         const numW = ctx.measureText(c.num).width;
         ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
         const labelW = ctx.measureText(c.label).width;
-        ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
+        ctx.font = `400 12px ${canvasFontVar("--font-sans")}`;
         const subW = ctx.measureText(subLabel).width;
 
         const logoSrc = c.logo as string | undefined;
@@ -2286,7 +2436,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
         ctx.stroke();
 
         ctx.fillStyle = isDayTheme ? `rgba(6, 93, 57, ${labelOpacity})` : `rgba(52, 194, 129, ${labelOpacity})`;
-        ctx.font = `italic 400 12px ${canvasFontVar("--font-serif")}`;
+        ctx.font = `italic 400 14px ${canvasFontVar("--font-serif")}`;
         ctx.textBaseline = "middle";
         ctx.fillText(c.num, labelX, c.py - 1);
 
@@ -2303,7 +2453,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
           ctx.fillStyle = isDayTheme
             ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
             : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
-          ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
+          ctx.font = `400 12px ${canvasFontVar("--font-sans")}`;
           ctx.fillText(
             subLabel,
             lockupColumnX,
@@ -2320,7 +2470,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
           ctx.fillStyle = isDayTheme
             ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
             : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
-          ctx.font = `400 10px ${canvasFontVar("--font-sans")}`;
+          ctx.font = `400 12px ${canvasFontVar("--font-sans")}`;
           ctx.fillText(subLabel, nameX, c.py + 15);
         }
         ctx.textBaseline = "alphabetic";
@@ -2371,21 +2521,13 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
 
     rafRender = window.requestAnimationFrame(render);
 
-    // Hide loader
-    const onWindowLoad = () => {
-      setTimeout(() => {
-        loader?.classList.add("hidden");
-      }, 400);
-    };
-    window.addEventListener("load", onWindowLoad);
-    // In Next.js client navigation, the window 'load' event may have already fired.
-    // Match v5_3 behavior by also triggering the hide on mount.
-    onWindowLoad();
-
     return () => {
-      window.removeEventListener("load", onWindowLoad);
+      cancelContextBuild();
+      if (resizeRaf) window.cancelAnimationFrame(resizeRaf);
+      themeObserver?.disconnect();
       window.removeEventListener("resize", onResize);
       embedObserver?.disconnect();
+      visibilityObserver?.disconnect();
       document.removeEventListener("mousemove", updateMousePosition);
       document.removeEventListener("pointermove", updateMousePosition);
       document.documentElement.removeEventListener("mouseleave", onLeaveViewport);
@@ -2402,27 +2544,79 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
     };
   }, [embed]);
 
+  const recenterButton = (
+    <button
+      type="button"
+      id="cv-recenter"
+      className="cv-recenter"
+      aria-label="Recenter map on Europe"
+    >
+      <svg
+        className="cv-recenter-icon"
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        aria-hidden="true"
+      >
+        <path
+          d="M11 7H4M6 4L3 7l3 3"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="11" cy="7" r="1.4" fill="currentColor" />
+      </svg>
+      <span>Recenter Europe</span>
+    </button>
+  );
+
+  const mapCanvas = (
+    <canvas
+      id="map-canvas"
+      ref={canvasRef}
+      role="region"
+      aria-label="Global market map, draggable"
+    />
+  );
+
+  const dragHint = (
+    <div className="cv-hint" id="cv-hint" aria-hidden="true">
+      <span className="cv-hint-arrow">←</span>
+      <span className="cv-hint-text">Drag to explore</span>
+      <span className="cv-hint-arrow">→</span>
+    </div>
+  );
+
+  const loader = (
+    <div className="loader" id="loader">
+      <div className="loader-mark">CLARA · VISTA</div>
+      <div className="loader-bar" />
+      <div className="loader-sub">Tracing Europe&apos;s pitch</div>
+    </div>
+  );
+
+  if (embed) {
+    return (
+      <div ref={wrapRef}>
+        {loader}
+        <section className="hero">
+          {mapCanvas}
+          {dragHint}
+          <div className="hero-bottom">{recenterButton}</div>
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div ref={wrapRef}>
-      <div className="loader" id="loader">
-        <div className="loader-mark">CLARA · VISTA</div>
-        <div className="loader-bar" />
-        <div className="loader-sub">Tracing Europe&apos;s pitch</div>
-      </div>
+      {loader}
 
       <section className="hero">
-        <canvas
-          id="map-canvas"
-          ref={canvasRef}
-          role="region"
-          aria-label="Global market map, draggable"
-        />
-
-        <div className="cv-hint" id="cv-hint" aria-hidden="true">
-          <span className="cv-hint-arrow">←</span>
-          <span className="cv-hint-text">Drag to explore</span>
-          <span className="cv-hint-arrow">→</span>
-        </div>
+        {mapCanvas}
+        {dragHint}
 
         <div className="hero-bottom">
           <div className="hero-headline">
@@ -2441,36 +2635,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
             </p>
           </div>
 
-          <button
-            type="button"
-            id="cv-recenter"
-            className="cv-recenter"
-            aria-label="Recenter map on Europe"
-          >
-            <svg
-              className="cv-recenter-icon"
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              aria-hidden="true"
-            >
-              <path
-                d="M11 7H4M6 4L3 7l3 3"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle
-                cx="11"
-                cy="7"
-                r="1.4"
-                fill="currentColor"
-              />
-            </svg>
-            <span>Recenter Europe</span>
-          </button>
+          {recenterButton}
         </div>
 
         <div className="portfolio-panel">
@@ -2587,9 +2752,9 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
             <div className="cc-name">Ipswich Town</div>
             <div className="cc-location">Ipswich · England</div>
             <p className="cc-note">
-              Anchor investment of Fund I, with Clara Vista leading the $140M SPV to controlling interest in Q1 2026. Back-to-back
-              promotions to the Premier League — one of the rarest feats in English football, and the highest player value creation
-              in global football in 2024/25.
+              Anchor investment of Fund II. Held via the <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio
+              Management and the Three Lions Fund. Back-to-back promotions to the Premier League — among the highest
+              player value creation in global football in 2024/25.
             </p>
             <div className="cc-stats">
               <div>

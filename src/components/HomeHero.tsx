@@ -53,9 +53,9 @@ export function HomeHero() {
             <div className="cc-name">Ipswich Town</div>
             <div className="cc-location">Ipswich · England</div>
             <p className="cc-note">
-              Anchor investment of Fund I, with Clara Vista leading the $140M SPV to controlling interest in Q1 2026. Back-to-back
-              promotions to the Premier League — one of the rarest feats in English football, and the highest player value creation
-              in global football in 2024/25.
+              Anchor investment of Fund II. Held via the <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio
+              Management and the Three Lions Fund. Back-to-back promotions to the Premier League — among the highest
+              player value creation in global football in 2024/25.
             </p>
             <div className="cc-stats">
               <div>
@@ -64,7 +64,7 @@ export function HomeHero() {
               </div>
               <div>
                 <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">Championship</div>
+                <div className="cc-stat-value">EFL Championship</div>
               </div>
             </div>
             <Link href="/portfolio/ipswich" className="cc-link">
