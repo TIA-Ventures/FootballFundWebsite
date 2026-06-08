@@ -78,7 +78,7 @@ const LEADERSHIP: Person[] = [
   },
   {
     name: "Andy Greenfield",
-    role: "Consumer Insights",
+    role: "Insights",
     photo: "/team/andy_greenfield.webp",
     linkedin: "https://www.linkedin.com/in/andy-greenfield-404a829/",
     bio: "30+ years as entrepreneur and investor building consumer research companies.",
