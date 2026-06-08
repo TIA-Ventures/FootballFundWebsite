@@ -73,49 +73,49 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
         return {
           spotlight1: "rgba(220, 215, 195, 0.55)",
           spotlight2: "rgba(244, 237, 220, 0)",
-          countryFill: "rgba(6, 93, 57, 0.072)",
-          countryStroke: "rgba(6, 93, 57, 0.52)",
-          countryStrokeStrong: "rgba(6, 93, 57, 0.66)",
+          countryFill: "rgba(115, 90, 52, 0.072)",
+          countryStroke: "rgba(115, 90, 52, 0.52)",
+          countryStrokeStrong: "rgba(115, 90, 52, 0.66)",
           particle: "rgba(26, 37, 32, 0.28)",
           ambientCity: "rgba(26, 37, 32, 0.7)",
-          ambientCityHalo: "rgba(6, 93, 57, 0.18)",
+          ambientCityHalo: "rgba(115, 90, 52, 0.18)",
           worldCity: "rgba(26, 37, 32, 0.45)",
-          worldCityLit: "rgba(6, 93, 57, 0.85)",
-          portfolioCore: ["#34c281", "#0a7a47", "#065d39"],
-          portfolioGlow: "rgba(14, 138, 85, 0.48)",
-          portfolioRing: "rgba(6, 93, 57, 0.72)",
-          portfolioPulse: "rgba(6, 93, 57, 0.45)",
-          broadcast: "rgba(6, 93, 57, 0.38)",
-          broadcastInner: "rgba(6, 93, 57, 0.17)",
+          worldCityLit: "rgba(115, 90, 52, 0.85)",
+          portfolioCore: ["#a88648", "#7f6335", "#634d2c"],
+          portfolioGlow: "rgba(166, 131, 74, 0.48)",
+          portfolioRing: "rgba(115, 90, 52, 0.72)",
+          portfolioPulse: "rgba(115, 90, 52, 0.45)",
+          broadcast: "rgba(115, 90, 52, 0.38)",
+          broadcastInner: "rgba(115, 90, 52, 0.17)",
           transferLine: "rgba(154, 111, 48, 0.34)",
           transferGlow: "rgba(154, 111, 48, 0.85)",
           labelPrimary: "#1A2520",
           labelSecondary: "rgba(26, 37, 32, 0.62)",
-          labelAccent: "#065d39",
+          labelAccent: "#a88648",
         };
       }
       return {
         spotlight1: "rgba(20, 50, 36, 0.45)",
         spotlight2: "rgba(8, 22, 14, 0.20)",
-        countryFill: "rgba(52, 194, 129, 0.06)",
-        countryStroke: "rgba(52, 194, 129, 0.36)",
-        countryStrokeStrong: "rgba(52, 194, 129, 0.48)",
+        countryFill: "rgba(168, 134, 72, 0.06)",
+        countryStroke: "rgba(168, 134, 72, 0.36)",
+        countryStrokeStrong: "rgba(168, 134, 72, 0.48)",
         particle: "rgba(242, 234, 214, 0.26)",
         ambientCity: "rgba(242, 234, 214, 0.78)",
         ambientCityHalo: "rgba(242, 234, 214, 0.32)",
         worldCity: "rgba(242, 234, 214, 0.34)",
         worldCityLit: "rgba(242, 234, 214, 0.95)",
-        portfolioCore: ["#7be0aa", "#34c281", "#065d39"],
-        portfolioGlow: "rgba(52, 194, 129, 0.56)",
-        portfolioRing: "rgba(52, 194, 129, 0.76)",
-        portfolioPulse: "rgba(52, 194, 129, 0.45)",
-        broadcast: "rgba(52, 194, 129, 0.22)",
-        broadcastInner: "rgba(52, 194, 129, 0.10)",
+        portfolioCore: ["#c4a876", "#a88648", "#634d2c"],
+        portfolioGlow: "rgba(168, 134, 72, 0.56)",
+        portfolioRing: "rgba(168, 134, 72, 0.76)",
+        portfolioPulse: "rgba(168, 134, 72, 0.45)",
+        broadcast: "rgba(168, 134, 72, 0.22)",
+        broadcastInner: "rgba(168, 134, 72, 0.10)",
         transferLine: "rgba(212, 168, 106, 0.26)",
         transferGlow: "rgba(232, 197, 71, 0.85)",
         labelPrimary: "#F2EAD6",
         labelSecondary: "rgba(242, 234, 214, 0.62)",
-        labelAccent: "#34c281",
+        labelAccent: "#a88648",
       };
     };
 
@@ -673,7 +673,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
         lng: 1.16,
         label: "Ipswich",
         club: "Ipswich Town FC · founded 1878",
-        league: "EFL Championship",
+        league: "Premier League",
         status: "Active",
         kind: "closed",
         num: "01",
@@ -692,16 +692,17 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
         num: "02",
       },
       {
-        name: "Italy",
+        name: "Frosinone",
         country: "IT",
-        lat: 42.6,
-        lng: 12.5,
-        label: "Italy",
-        club: "Target acquisition · active diligence",
+        lat: 41.64,
+        lng: 13.35,
+        label: "Frosinone",
+        club: "Frosinone Calcio · founded 1928",
         league: "Serie A",
-        status: "Diligence",
-        kind: "diligence",
+        status: "Active",
+        kind: "closed",
         num: "03",
+        logo: "/frosinone-calcio.png",
       },
     ];
 
@@ -1650,7 +1651,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       const isDayFrame = getTheme() === "day";
       // Pre-parse the broadcast color base alpha once per frame (regex was running per ripple).
       const broadcastBaseAlpha = parseFloat((C.broadcast.match(/[\d.]+(?=\))/) ?? ["0"])[0]);
-      const broadcastStrokeRGB = isDayFrame ? "6, 93, 57" : "52, 194, 129";
+      const broadcastStrokeRGB = isDayFrame ? "99, 77, 44" : "168, 134, 72";
       ctx.clearRect(0, 0, W, H);
 
       const pageBg = readPageBg();
@@ -1738,7 +1739,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       const hubReveal = Math.min(1, Math.max(0, (elapsed - 600) / 1800));
       const hubEase = 1 - Math.pow(1 - hubReveal, 3);
       const hubAlpha = (getTheme() === "day" ? 0.27 : 0.11) * hubEase;
-      ctx.strokeStyle = getTheme() === "day" ? `rgba(6, 93, 57, ${hubAlpha})` : `rgba(52, 194, 129, ${hubAlpha})`;
+      ctx.strokeStyle = getTheme() === "day" ? `rgba(99, 77, 44, ${hubAlpha})` : `rgba(168, 134, 72, ${hubAlpha})`;
       ctx.lineWidth = getTheme() === "day" ? 0.65 : 0.55;
       ctx.beginPath();
       for (let i = 0; i < HUB_LINKS.length; i++) {
@@ -1875,11 +1876,11 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       if (mouseActive) {
         const haloGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 180);
         if (isDay) {
-          haloGrad.addColorStop(0, "rgba(6, 93, 57, 0.08)");
-          haloGrad.addColorStop(1, "rgba(6, 93, 57, 0)");
+          haloGrad.addColorStop(0, "rgba(115, 90, 52, 0.08)");
+          haloGrad.addColorStop(1, "rgba(115, 90, 52, 0)");
         } else {
-          haloGrad.addColorStop(0, "rgba(52, 194, 129, 0.08)");
-          haloGrad.addColorStop(1, "rgba(52, 194, 129, 0)");
+          haloGrad.addColorStop(0, "rgba(168, 134, 72, 0.08)");
+          haloGrad.addColorStop(1, "rgba(168, 134, 72, 0)");
         }
         ctx.fillStyle = haloGrad;
         ctx.beginPath();
@@ -2088,8 +2089,8 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
           const ringGrad = ctx.createRadialGradient(px, py, 0, px, py, glowR * hoverMul);
           if (getTheme() === "day") {
             const glowAlpha = (0.28 + litBoost * 0.26) * ease;
-            ringGrad.addColorStop(0, `rgba(6, 93, 57, ${glowAlpha})`);
-            ringGrad.addColorStop(1, "rgba(6, 93, 57, 0)");
+            ringGrad.addColorStop(0, `rgba(115, 90, 52, ${glowAlpha})`);
+            ringGrad.addColorStop(1, "rgba(115, 90, 52, 0)");
           } else {
             const glowAlpha = (0.28 + litBoost * 0.26) * ease;
             ringGrad.addColorStop(0, `rgba(242, 234, 214, ${glowAlpha})`);
@@ -2150,8 +2151,8 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
           const { px, py } = tiles[ti];
           const ringGrad = ctx.createRadialGradient(px, py, 0, px, py, glowR * hoverMul);
           if (getTheme() === "day") {
-            ringGrad.addColorStop(0, `rgba(6, 93, 57, ${0.44 * ease})`);
-            ringGrad.addColorStop(1, "rgba(6, 93, 57, 0)");
+            ringGrad.addColorStop(0, `rgba(115, 90, 52, ${0.44 * ease})`);
+            ringGrad.addColorStop(1, "rgba(115, 90, 52, 0)");
           } else {
             ringGrad.addColorStop(0, `rgba(242, 234, 214, ${0.5 * ease})`);
             ringGrad.addColorStop(1, "rgba(242, 234, 214, 0)");
@@ -2282,13 +2283,13 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
 
         const outerGrad = ctx.createRadialGradient(c.px, c.py, 0, c.px, c.py, glowR * hoverMul);
         if (getTheme() === "day") {
-          outerGrad.addColorStop(0, `rgba(14, 138, 85, ${0.44 * ease})`);
-          outerGrad.addColorStop(0.4, `rgba(14, 138, 85, ${0.17 * ease})`);
-          outerGrad.addColorStop(1, "rgba(14, 138, 85, 0)");
+          outerGrad.addColorStop(0, `rgba(166, 131, 74, ${0.44 * ease})`);
+          outerGrad.addColorStop(0.4, `rgba(166, 131, 74, ${0.17 * ease})`);
+          outerGrad.addColorStop(1, "rgba(166, 131, 74, 0)");
         } else {
-          outerGrad.addColorStop(0, `rgba(52, 194, 129, ${0.56 * ease})`);
-          outerGrad.addColorStop(0.4, `rgba(52, 194, 129, ${0.2 * ease})`);
-          outerGrad.addColorStop(1, "rgba(52, 194, 129, 0)");
+          outerGrad.addColorStop(0, `rgba(168, 134, 72, ${0.56 * ease})`);
+          outerGrad.addColorStop(0.4, `rgba(168, 134, 72, ${0.2 * ease})`);
+          outerGrad.addColorStop(1, "rgba(168, 134, 72, 0)");
         }
         ctx.fillStyle = outerGrad;
         ctx.beginPath();
@@ -2427,15 +2428,15 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
         ctx.restore();
 
         ctx.strokeStyle = isDayTheme
-          ? `rgba(6, 93, 57, ${0.5 * labelOpacity})`
-          : `rgba(52, 194, 129, ${0.5 * labelOpacity})`;
+          ? `rgba(115, 90, 52, ${0.5 * labelOpacity})`
+          : `rgba(168, 134, 72, ${0.5 * labelOpacity})`;
         ctx.lineWidth = 0.7;
         ctx.beginPath();
         ctx.moveTo(c.px + r + 7, c.py);
         ctx.lineTo(labelX - 4, c.py);
         ctx.stroke();
 
-        ctx.fillStyle = isDayTheme ? `rgba(6, 93, 57, ${labelOpacity})` : `rgba(52, 194, 129, ${labelOpacity})`;
+        ctx.fillStyle = isDayTheme ? `rgba(99, 77, 44, ${labelOpacity})` : `rgba(168, 134, 72, ${labelOpacity})`;
         ctx.font = `italic 400 14px ${canvasFontVar("--font-serif")}`;
         ctx.textBaseline = "middle";
         ctx.fillText(c.num, labelX, c.py - 1);
@@ -2663,13 +2664,13 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
             </div>
             <div className="pp-status diligence" title="Diligence" />
           </Link>
-          <Link href="/portfolio/italy" className="pp-row" aria-label="View Italy target details">
+          <Link href="/portfolio/frosinone" className="pp-row" aria-label="View Frosinone Calcio details">
             <div className="pp-num">03</div>
             <div className="pp-info">
-              <div className="pp-city">Italy</div>
-              <div className="pp-club">Target · active diligence</div>
+              <div className="pp-city">Frosinone</div>
+              <div className="pp-club">Frosinone Calcio · Italy</div>
             </div>
-            <div className="pp-status diligence" title="Diligence" />
+            <div className="pp-status active" title="Active" />
           </Link>
         </div>
 
@@ -2763,7 +2764,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
               </div>
               <div>
                 <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">Championship</div>
+                <div className="cc-stat-value">Premier League</div>
               </div>
             </div>
             <Link href="/portfolio/ipswich" className="cc-link">
@@ -2805,36 +2806,35 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
             </Link>
           </div>
           <div className="club-card">
-            <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
+            <div className="cc-logo">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/frosinone-calcio.png" alt="Frosinone Calcio crest" className="frosinone-crest" />
+            </div>
             <div className="cc-meta">
-              <span className="cc-num">03 / Italy</span>
+              <span className="cc-num">03 / Frosinone Calcio</span>
               <span className="cc-status">
-                <span className="cc-dot diligence" aria-hidden="true" />
-                <span className="cc-status-text">Active diligence</span>
+                <span className="cc-dot active" aria-hidden="true" />
+                <span className="cc-status-text">Active</span>
               </span>
             </div>
-            <div className="cc-name">
-              Italy <em>(target)</em>
-            </div>
-            <div className="cc-location">Italy · Serie A</div>
+            <div className="cc-name">Frosinone Calcio</div>
+            <div className="cc-location">Frosinone · Italy · Serie A</div>
             <p className="cc-note">
-              A historic Italian club with a track record of recent Serie A promotions, a modern Serie A stadium, and one
-              of the youngest squads in Serie A. <em>Details under embargo.</em>
+              Controlling investment via Clara Vista Frosinone SPV I. Promoted to Serie A in 2025/26 — a modern
+              16,227-seat stadium and three top-flight promotions in the last decade — positioned one hour from Rome.
             </p>
             <div className="cc-stats">
               <div>
                 <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">
-                  <em>under embargo</em>
-                </div>
+                <div className="cc-stat-value">1928</div>
               </div>
               <div>
                 <div className="cc-stat-label">League</div>
                 <div className="cc-stat-value">Serie A</div>
               </div>
             </div>
-            <Link href="/portfolio/italy" className="cc-link">
-              View diligence brief
+            <Link href="/portfolio/frosinone" className="cc-link">
+              View deep dive
             </Link>
           </div>
         </div>

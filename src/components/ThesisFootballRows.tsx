@@ -1,6 +1,4 @@
-"use client";
-
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type FootballRow = {
   id: string;
@@ -49,34 +47,14 @@ const ROWS: FootballRow[] = [
 ];
 
 export function ThesisFootballRows() {
-  const [active, setActive] = useState<Set<string>>(() => new Set());
-
-  const toggle = (id: string) => {
-    setActive((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
   return (
     <div className="thesis-fact-rows">
-      {ROWS.map((row) => {
-        const isActive = active.has(row.id);
-        return (
-          <button
-            key={row.id}
-            type="button"
-            className={`thesis-fact-row${isActive ? " is-active" : ""}`}
-            aria-pressed={isActive}
-            onClick={() => toggle(row.id)}
-          >
-            <span className="thesis-fact-label">{row.label}</span>
-            <span className="thesis-fact-claim">{row.claim}</span>
-          </button>
-        );
-      })}
+      {ROWS.map((row) => (
+        <div key={row.id} className="thesis-fact-row">
+          <span className="thesis-fact-label">{row.label}</span>
+          <span className="thesis-fact-claim">{row.claim}</span>
+        </div>
+      ))}
     </div>
   );
 }

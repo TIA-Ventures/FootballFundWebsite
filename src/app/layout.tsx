@@ -7,6 +7,15 @@ export const metadata: Metadata = {
   description: "A football & technology investment fund.",
 };
 
+const THEME_BOOT = `
+try {
+  var t = localStorage.getItem('cv-theme');
+  if (t === 'day' || t === 'night') {
+    document.documentElement.setAttribute('data-theme', t);
+  }
+} catch (e) {}
+`;
+
 const FONT_PRESET_BOOT = `
 try {
   var bundleKey = 'cv-font-bundle';
@@ -31,8 +40,9 @@ try {
       }
     }
     if (v === 'clara-vista') {
-      document.documentElement.setAttribute('data-font-preset', 'clara-vista');
-      document.documentElement.removeAttribute('data-fonts');
+      document.documentElement.setAttribute('data-fonts', 'd6');
+      document.documentElement.removeAttribute('data-font-preset');
+      localStorage.removeItem(k);
     } else if (v && allow[v]) {
       document.documentElement.setAttribute('data-font-preset', v);
       document.documentElement.removeAttribute('data-fonts');
@@ -65,14 +75,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="day" data-fonts="d6" suppressHydrationWarning>
+    <html lang="en" data-theme="night" data-fonts="d6" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
         <script dangerouslySetInnerHTML={{ __html: FONT_PRESET_BOOT }} />
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link rel="preconnect" href="https://cdn.fontshare.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        {/* Default bundle (d6): Switzer + JetBrains Mono — only blocking fonts */}
+        {/* Default: Switzer (institutional sans) + JetBrains Mono for labels/stats */}
         <link
           href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800&display=swap"
           rel="stylesheet"

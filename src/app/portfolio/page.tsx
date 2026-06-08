@@ -18,8 +18,8 @@ type PortfolioCard = {
   href: string;
   status: ClubStatus;
   statusLabel: string;
-  /** Ipswich crest; Spain/Italy targets use reserved placeholder row (home club-card parity). */
-  logo: "ipswich" | null;
+  /** Club crest asset key; null for embargoed / undisclosed targets. */
+  logo: "ipswich" | "frosinone" | null;
   name: ReactNode;
   loc: string;
   note: ReactNode;
@@ -37,7 +37,7 @@ const CLUBS: PortfolioCard[] = [
     statusLabel: "Active",
     logo: "ipswich",
     name: "Ipswich Town",
-    loc: "Ipswich · England · EFL Championship",
+    loc: "Ipswich · England · Premier League",
     note: (
       <>
         Anchor investment of Fund II. Held via the <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio
@@ -74,27 +74,23 @@ const CLUBS: PortfolioCard[] = [
     link: "View diligence brief",
   },
   {
-    num: "03 / Italy",
-    href: "/portfolio/italy",
-    status: "diligence",
-    statusLabel: "Active diligence",
-    logo: null,
-    name: (
-      <>
-        Italy <em>(target)</em>
-      </>
-    ),
-    loc: "Italy · Serie A",
+    num: "03 / Frosinone Calcio",
+    href: "/portfolio/frosinone",
+    status: "active",
+    statusLabel: "Active",
+    logo: "frosinone",
+    name: "Frosinone Calcio",
+    loc: "Frosinone · Italy · Serie A",
     note: (
       <>
-        A historic Italian club with a track record of recent Serie A promotions, modern infrastructure, and
-        one of the youngest squads in Italian football. <em>Details under embargo.</em>
+        Controlling investment via Clara Vista Frosinone SPV I. Promoted to Serie A in 2025/26 — a modern 16,227-seat
+        stadium with concession through 2061, and three top-flight promotions in the last decade — one hour from Rome.
       </>
     ),
-    founded: <em>under embargo</em>,
+    founded: "1928",
     leagueLabel: "League",
-    leagueValue: "Serie A · target",
-    link: "View diligence brief",
+    leagueValue: "Serie A",
+    link: "View deep dive",
   },
 ];
 
@@ -124,42 +120,47 @@ export default function PortfolioPage() {
           </div>
         </div>
 
-        <div className="section portfolio-hub-cards">
+        <div className="section bg-deep portfolio-hub-cards">
           <div className="section-inner">
-            <div className="portfolio-grid">
+            <div className="ps-grid">
               {CLUBS.map((c) => (
-                <Link key={c.num} href={c.href} className="pclub">
+                <div key={c.num} className="club-card">
                   <div
-                    className={`pclub-logo${c.logo ? "" : " pclub-logo-placeholder"}`}
+                    className={`cc-logo${c.logo ? "" : " cc-logo-placeholder"}`}
                     aria-hidden={c.logo ? undefined : true}
                   >
                     {c.logo === "ipswich" ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src="/ipswich-town.svg" alt="Ipswich Town FC crest" />
+                    ) : c.logo === "frosinone" ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src="/frosinone-calcio.png" alt="Frosinone Calcio crest" className="frosinone-crest" />
                     ) : null}
                   </div>
-                  <div className="pclub-meta">
-                    <span className="pclub-num">{c.num}</span>
-                    <span className="pclub-status">
-                      <span className={`pclub-dot ${c.status}`} />
-                      {c.statusLabel}
+                  <div className="cc-meta">
+                    <span className="cc-num">{c.num}</span>
+                    <span className="cc-status">
+                      <span className={`cc-dot ${c.status}`} aria-hidden="true" />
+                      <span className="cc-status-text">{c.statusLabel}</span>
                     </span>
                   </div>
-                  <div className="pclub-name">{c.name}</div>
-                  <div className="pclub-loc">{c.loc}</div>
-                  <p className="pclub-note">{c.note}</p>
-                  <div className="pclub-stats">
+                  <div className="cc-name">{c.name}</div>
+                  <div className="cc-location">{c.loc}</div>
+                  <p className="cc-note">{c.note}</p>
+                  <div className="cc-stats">
                     <div>
-                      <div className="pclub-stat-label">Founded</div>
-                      <div className="pclub-stat-value">{c.founded}</div>
+                      <div className="cc-stat-label">Founded</div>
+                      <div className="cc-stat-value">{c.founded}</div>
                     </div>
                     <div>
-                      <div className="pclub-stat-label">{c.leagueLabel}</div>
-                      <div className="pclub-stat-value">{c.leagueValue}</div>
+                      <div className="cc-stat-label">{c.leagueLabel}</div>
+                      <div className="cc-stat-value">{c.leagueValue}</div>
                     </div>
                   </div>
-                  <div className="pclub-link">{c.link}</div>
-                </Link>
+                  <Link href={c.href} className="cc-link">
+                    {c.link}
+                  </Link>
+                </div>
               ))}
             </div>
 

@@ -16,18 +16,22 @@ type NavKey =
 type TopbarProps = {
   /** Which nav item to render as active (subtle underline). */
   activeNav?: NavKey;
-  /** Show the "Investment Partners · Football & Technology" tagline. Home only. */
-  showTagline?: boolean;
 };
 
-export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
+export function Topbar({ activeNav = null }: TopbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const toggleRef = useRef<HTMLButtonElement | null>(null);
 
   const onThemeToggle = () => {
-    const cur = document.documentElement.dataset.theme || "day";
-    document.documentElement.dataset.theme = cur === "day" ? "night" : "day";
+    const cur = document.documentElement.dataset.theme || "night";
+    const next = cur === "day" ? "night" : "day";
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem("cv-theme", next);
+    } catch {
+      /* ignore */
+    }
   };
 
   const activeStyle: CSSProperties = { color: "var(--ivory)" };
@@ -63,18 +67,14 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
   }, [mobileOpen]);
 
   return (
-    <header className="topbar">
+    <header className="topbar topbar--home">
       <Link href="/" className="brand" aria-label="Clara Vista — Home">
         <span className="brand-mark" />
         <span className="brand-wordmark">
           CLARA <span>VISTA</span>
         </span>
-        {showTagline ? (
-          <>
-            <span className="brand-divider" />
-            <span className="brand-tagline">Investment Partners · Football &amp; Technology</span>
-          </>
-        ) : null}
+        <span className="brand-divider" />
+        <span className="brand-tagline">Investment Partners · Football &amp; Technology</span>
       </Link>
       <div className="nav-area">
         <nav className="nav">
@@ -130,14 +130,12 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
                   <span className="npm-meta">La Liga · Spain</span>
                 </span>
               </Link>
-              <Link href="/portfolio/italy" role="menuitem" className="npm-item">
+              <Link href="/portfolio/frosinone" role="menuitem" className="npm-item">
                 <span className="npm-flag" aria-hidden="true">
-                  <span className="npm-dot npm-dot--target" />
+                  <span className="npm-dot" />
                 </span>
                 <span className="npm-text">
-                  <span className="npm-club">
-                    Italy <em>(target)</em>
-                  </span>
+                  <span className="npm-club">Frosinone Calcio</span>
                   <span className="npm-meta">Serie A · Italy</span>
                 </span>
               </Link>
@@ -247,8 +245,8 @@ export function Topbar({ activeNav = null, showTagline = false }: TopbarProps) {
               <Link href="/portfolio/spain" className="mm-sublink" onClick={closeMobile}>
                 Spain <em>(target)</em>
               </Link>
-              <Link href="/portfolio/italy" className="mm-sublink" onClick={closeMobile}>
-                Italy <em>(target)</em>
+              <Link href="/portfolio/frosinone" className="mm-sublink" onClick={closeMobile}>
+                Frosinone Calcio
               </Link>
             </div>
           </div>

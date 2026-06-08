@@ -21,9 +21,15 @@ export function HomeHero() {
             </h1>
             <p className="subhead">
               Owning exceptional football clubs in the world&apos;s most valuable leagues.
-              We invest behind strong tailwinds and partner with winning organizations to achieve excellence across every dimension of
-              performance.
             </p>
+            <div className="hero-actions">
+              <Link href="/approach" className="hero-cta hero-cta--primary">
+                Our Approach
+              </Link>
+              <Link href="#portfolio" className="hero-cta hero-cta--secondary">
+                View Portfolio
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -64,7 +70,7 @@ export function HomeHero() {
               </div>
               <div>
                 <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">EFL Championship</div>
+                <div className="cc-stat-value">Premier League</div>
               </div>
             </div>
             <Link href="/portfolio/ipswich" className="cc-link">
@@ -106,36 +112,35 @@ export function HomeHero() {
             </Link>
           </div>
           <div className="club-card">
-            <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
+            <div className="cc-logo">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/frosinone-calcio.png" alt="Frosinone Calcio crest" className="frosinone-crest" />
+            </div>
             <div className="cc-meta">
-              <span className="cc-num">03 / Italy</span>
+              <span className="cc-num">03 / Frosinone Calcio</span>
               <span className="cc-status">
-                <span className="cc-dot diligence" aria-hidden="true" />
-                <span className="cc-status-text">Active diligence</span>
+                <span className="cc-dot active" aria-hidden="true" />
+                <span className="cc-status-text">Active</span>
               </span>
             </div>
-            <div className="cc-name">
-              Italy <em>(target)</em>
-            </div>
-            <div className="cc-location">Italy · Serie A</div>
+            <div className="cc-name">Frosinone Calcio</div>
+            <div className="cc-location">Frosinone · Italy · Serie A</div>
             <p className="cc-note">
-              A historic Italian club with a track record of recent Serie A promotions, a modern Serie A stadium, and one
-              of the youngest squads in Serie A. <em>Details under embargo.</em>
+              Controlling investment via Clara Vista Frosinone SPV I. Promoted to Serie A in 2025/26 — a modern
+              16,227-seat stadium and three top-flight promotions in the last decade — positioned one hour from Rome.
             </p>
             <div className="cc-stats">
               <div>
                 <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">
-                  <em>under embargo</em>
-                </div>
+                <div className="cc-stat-value">1928</div>
               </div>
               <div>
                 <div className="cc-stat-label">League</div>
                 <div className="cc-stat-value">Serie A</div>
               </div>
             </div>
-            <Link href="/portfolio/italy" className="cc-link">
-              View diligence brief
+            <Link href="/portfolio/frosinone" className="cc-link">
+              View deep dive
             </Link>
           </div>
         </div>

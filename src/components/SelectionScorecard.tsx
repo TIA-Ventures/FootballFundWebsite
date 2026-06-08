@@ -13,7 +13,7 @@ import { useState } from "react";
  * prospect's score on the criterion. Center label swaps per tab.
  */
 
-type ClubKey = "ipswich" | "italy" | "spain";
+type ClubKey = "ipswich" | "frosinone" | "spain";
 type AxisKey =
   | "league"
   | "modernization"
@@ -64,26 +64,26 @@ const CRITERION: Record<AxisKey, Criterion> = {
 };
 
 const CLUB_SCORES: Record<ClubKey, Record<AxisKey, number>> = {
-  ipswich: { league:  70, modernization:  90, history:  75, fanbase:  70, acquisition:  85, stadium:  80, location:  65 },
-  italy:   { league:  80, modernization:  95, history:  70, fanbase:  60, acquisition:  90, stadium:  50, location:  90 },
+  ipswich: { league:  92, modernization:  90, history:  75, fanbase:  70, acquisition:  85, stadium:  80, location:  65 },
+  frosinone: { league:  88, modernization:  95, history:  70, fanbase:  60, acquisition:  95, stadium:  95, location:  90 },
   spain:   { league:  90, modernization:  85, history:  80, fanbase:  75, acquisition:  80, stadium:  70, location:  85 },
 };
 
 const CENTER_LABEL: Record<ClubKey, [string, string]> = {
   ipswich: ["Prospect", "A"],
   spain:   ["Prospect", "B"],
-  italy:   ["Prospect", "C"],
+  frosinone: ["Frosinone", "Calcio"],
 };
 
 const TABS: { key: ClubKey; label: string }[] = [
   { key: "ipswich", label: "Prospect A" },
   { key: "spain",   label: "Prospect B" },
-  { key: "italy",   label: "Prospect C" },
+  { key: "frosinone", label: "Frosinone" },
 ];
 
 const CLUB_POLY: Record<ClubKey, string> = {
   ipswich: "300,160 440.72,187.77 446.24,333.38 360.75,426.13 226.24,453.15 144.02,335.60 198.37,218.94",
-  italy:   "300,140 448.54,181.54 436.49,331.15 352.07,408.11 221.90,462.16 202.51,322.25 159.28,187.77",
+  frosinone: "300,140 448.54,181.54 436.49,331.15 352.07,408.11 221.90,462.16 202.51,322.25 159.28,187.77",
   spain:   "300,120 432.91,194.01 455.98,335.60 365.08,435.13 230.57,444.14 163.51,331.15 167.09,194.01",
 };
 
@@ -97,7 +97,7 @@ const SCORE_POS: Record<ClubKey, Record<AxisKey, { x: number; y: number; anchor:
     stadium:       { x: 136, y: 335, anchor: "end" },
     location:      { x: 190, y: 208, anchor: "end" },
   },
-  italy: {
+  frosinone: {
     league:        { x: 300, y: 128, anchor: "middle" },
     modernization: { x: 440, y: 186, anchor: "end" },
     history:       { x: 444, y: 332, anchor: "start" },

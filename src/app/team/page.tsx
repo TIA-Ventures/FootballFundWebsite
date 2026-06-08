@@ -32,7 +32,7 @@ const LEADERSHIP: Person[] = [
     photo: "/team/bob_gold.png",
     bio: (
       <>
-        30+ years as a PE &amp; VC investment leader, including 13 years as fund CEO. <em>$10B of AUM.</em>
+        30+ years as a PE &amp; VC investment leader, including 13 years as fund CEO. $10B of AUM.
       </>
     ),
   },
@@ -53,11 +53,7 @@ const LEADERSHIP: Person[] = [
     name: "Wills Hapworth",
     role: "Venture",
     photo: "/team/wills_hapworth.png",
-    bio: (
-      <>
-        20+ years as an investor in and advisor to high-growth technology companies. <em>Founding Partner of TIA Ventures.</em>
-      </>
-    ),
+    bio: "20+ years as investor and advisor to high-growth tech companies. Founding Partner of TIA Ventures.",
   },
   {
     name: "Charlie Lambropoulos",

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 type GlanceCell = { label: string; value: ReactNode };
 
 const GLANCE: GlanceCell[] = [
-  { label: "League", value: "EFL Championship" },
+  { label: "League", value: "Premier League" },
   { label: "Founded", value: "1878" },
   { label: "Stadium", value: "Portman Road" },
   { label: "First close", value: "Mar 2024" },

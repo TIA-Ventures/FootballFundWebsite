@@ -3,24 +3,25 @@
    THEME PALETTES — toggle via data-theme on <html>
    ============================================================ */
 :root[data-theme="night"] {
-  --bg: #060a08;
-  --bg-deep: #030604;
-  --bg-card: #0c1612;
-  --bg-elev: #0e1a14;
-  --green-deep: #065d39;
-  --green-mid: #0e8a55;
-  --green: #14a368;
-  --green-light: #34c281;
-  --green-glow: rgba(52, 194, 129, 0.55);
-  --green-soft: rgba(6, 93, 57, 0.18);
+  /* Surface stack — wider spread so --bg vs --bg-deep bands read clearly in dark UI */
+  --bg: #141f1a;
+  --bg-deep: #020504;
+  --bg-card: #1e2f26;
+  --bg-elev: #283d32;
+  --green-deep: #634d2c;
+  --green-mid: #7f6335;
+  --green: #957841;
+  --green-light: #a88648;
+  --green-glow: rgba(168, 134, 72, 0.55);
+  --green-soft: rgba(168, 134, 72, 0.18);
   --amber: #d4a86a;
   --amber-glow: rgba(232, 197, 71, 0.85);
   --ivory: #F2EAD6;
   --ivory-mid: rgba(242, 234, 214, 0.72);
-  --ivory-dim: rgba(242, 234, 214, 0.42);
+  --ivory-dim: rgba(242, 234, 214, 0.55);
   --ivory-faint: rgba(242, 234, 214, 0.18);
-  --line: rgba(52, 194, 129, 0.12);
-  --line-soft: rgba(242, 234, 214, 0.10);
+  --line: rgba(168, 134, 72, 0.18);
+  --line-soft: rgba(242, 234, 214, 0.14);
   /* Negative / loss accent — used by /thesis ac-bars to mark drawdowns
      against the green-led palette without introducing a new design language. */
   --neg: #d87575;
@@ -28,47 +29,40 @@
   --neg-soft: rgba(216, 117, 117, 0.06);
   --grain-opacity: 0.05;
   --grain-blend: overlay;
+  /* Gold roles — display for large/logo/em; ui for eyebrows/labels (AA on surfaces) */
+  --accent-display: var(--green-light);
+  --accent-ui: var(--green-mid);
 }
 :root[data-theme="day"] {
-  /* Modern warm-neutral palette.
-     Previous values (#F4EDDC / #EAE2CC / #FBF5E5) sat at ~HSL(43°, 60–73%) and
-     read as a heavy sepia cream — perceptually closer to a vintage editorial
-     stock than a forward-looking tech brand. Pulling saturation down to ~8–12%
-     and nudging lightness up keeps a faint warm undertone (so the page never
-     feels clinical or sterile) while letting the surfaces read as near-white
-     paper at a glance. */
-  --bg: #F9F7F3;
-  --bg-deep: #EFEBE3;
-  --bg-card: #FDFBF7;
-  --bg-elev: #FDFBF7;
-  --green-deep: #044228;
-  --green-mid: #055130;
-  --green: #065d39;
-  --green-light: #065d39;
-  --green-glow: rgba(6, 93, 57, 0.4);
-  --green-soft: rgba(6, 93, 57, 0.14);
-  /* Amber darkened from #9a6f30 (~4.2:1) to #8B6324 (~5.0:1) so the secondary
-     accent clears WCAG AA body contrast on the new near-white --bg without
-     losing the warm "trophy gold" register institutional brands rely on. */
+  /* Institutional light palette — true white primary surfaces; recessed bands use
+     warm parchment (not neutral #F5F5F5 gray). Cool gray + gold reads fintech-generic;
+     a faint warm undertone matches PE/luxury-institutional sites and keeps section
+     rhythm visible without sepia heaviness. */
+  --bg: #FFFFFF;
+  --bg-deep: #F6F2EB;
+  --bg-card: #FAFAF8;
+  --bg-elev: #FFFFFF;
+  --green-deep: #634d2c;
+  --green-mid: #7f6335;
+  --green: #957841;
+  --green-light: #a88648;
+  --green-glow: rgba(168, 134, 72, 0.4);
+  --green-soft: rgba(168, 134, 72, 0.10);
   --amber: #8B6324;
   --amber-glow: rgba(139, 99, 36, 0.7);
-  --ivory: #1A2520;
-  --ivory-mid: rgba(26, 37, 32, 0.72);
-  /* --ivory-dim lifted 0.46 → 0.50 to keep tertiary copy ≥3:1 on the lighter
-     paper; --ivory-faint raised 0.18 → 0.22 so decorative hairlines clear the
-     ≥1.5:1 visibility floor without reading like body text. */
-  --ivory-dim: rgba(26, 37, 32, 0.50);
-  --ivory-faint: rgba(26, 37, 32, 0.22);
-  --line: rgba(6, 93, 57, 0.16);
-  --line-soft: rgba(26, 37, 32, 0.10);
+  --ivory: #111111;
+  --ivory-mid: rgba(17, 17, 17, 0.72);
+  --ivory-dim: rgba(17, 17, 17, 0.60);
+  --ivory-faint: rgba(17, 17, 17, 0.24);
+  --line: rgba(17, 17, 17, 0.11);
+  --line-soft: rgba(17, 17, 17, 0.06);
   --neg: #a23939;
   --neg-line: rgba(162, 57, 57, 0.45);
   --neg-soft: rgba(162, 57, 57, 0.08);
-  /* Lighter grain wash in day mode — 0.07 multiply on the old saturated cream
-     amplified the yellow; against the new near-white base 0.04 keeps just
-     enough texture to avoid plasticky flat color without re-introducing tint. */
-  --grain-opacity: 0.04;
+  --grain-opacity: 0;
   --grain-blend: multiply;
+  --accent-display: var(--green-light);
+  --accent-ui: var(--green-mid);
 }
 
 /* ============================================================
@@ -1011,118 +1005,7 @@
   --neg-soft: rgba(184, 24, 96, 0.08);
 }
 
-/* Topbar background gradients reuse --bg, so retint per scheme to keep
-   the blur layer matched to the new base color. */
-:root[data-color-scheme="pitch"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(5, 9, 7, 0.88), rgba(5, 9, 7, 0.42));
-}
-:root[data-color-scheme="pitch"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(244, 251, 246, 0.92), rgba(244, 251, 246, 0.55));
-}
-:root[data-color-scheme="volt"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(12, 12, 16, 0.88), rgba(12, 12, 16, 0.42));
-}
-:root[data-color-scheme="volt"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(246, 246, 242, 0.92), rgba(246, 246, 242, 0.55));
-}
-:root[data-color-scheme="aurora"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(10, 16, 32, 0.88), rgba(10, 16, 32, 0.42));
-}
-:root[data-color-scheme="aurora"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(242, 246, 251, 0.92), rgba(242, 246, 251, 0.55));
-}
-:root[data-color-scheme="ember"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(14, 11, 11, 0.88), rgba(14, 11, 11, 0.42));
-}
-:root[data-color-scheme="ember"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(251, 245, 240, 0.92), rgba(251, 245, 240, 0.55));
-}
-:root[data-color-scheme="quartz"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(11, 14, 20, 0.88), rgba(11, 14, 20, 0.42));
-}
-:root[data-color-scheme="quartz"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(244, 246, 251, 0.92), rgba(244, 246, 251, 0.55));
-}
-:root[data-color-scheme="plasma"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(13, 11, 20, 0.88), rgba(13, 11, 20, 0.42));
-}
-:root[data-color-scheme="plasma"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(248, 244, 251, 0.92), rgba(248, 244, 251, 0.55));
-}
-:root[data-color-scheme="cipher"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(4, 6, 5, 0.90), rgba(4, 6, 5, 0.45));
-}
-:root[data-color-scheme="cipher"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(244, 248, 244, 0.92), rgba(244, 248, 244, 0.55));
-}
-:root[data-color-scheme="nova"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(10, 10, 12, 0.88), rgba(10, 10, 12, 0.42));
-}
-:root[data-color-scheme="nova"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(247, 247, 241, 0.92), rgba(247, 247, 241, 0.55));
-}
-:root[data-color-scheme="halo"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(10, 20, 38, 0.88), rgba(10, 20, 38, 0.42));
-}
-:root[data-color-scheme="halo"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(244, 247, 251, 0.92), rgba(244, 247, 251, 0.55));
-}
-:root[data-color-scheme="citrine"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(10, 9, 7, 0.90), rgba(10, 9, 7, 0.45));
-}
-:root[data-color-scheme="citrine"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(251, 247, 238, 0.92), rgba(251, 247, 238, 0.55));
-}
-:root[data-color-scheme="reactor"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(11, 13, 10, 0.88), rgba(11, 13, 10, 0.42));
-}
-:root[data-color-scheme="reactor"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(246, 248, 240, 0.92), rgba(246, 248, 240, 0.55));
-}
-:root[data-color-scheme="vector"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(11, 12, 14, 0.88), rgba(11, 12, 14, 0.42));
-}
-:root[data-color-scheme="vector"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(247, 245, 242, 0.92), rgba(247, 245, 242, 0.55));
-}
-:root[data-color-scheme="solar"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(26, 16, 4, 0.90), rgba(26, 16, 4, 0.45));
-}
-:root[data-color-scheme="solar"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(255, 184, 0, 0.94), rgba(255, 184, 0, 0.62));
-}
-:root[data-color-scheme="mint"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(4, 32, 26, 0.90), rgba(4, 32, 26, 0.45));
-}
-:root[data-color-scheme="mint"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(168, 240, 212, 0.94), rgba(168, 240, 212, 0.62));
-}
-:root[data-color-scheme="ultra"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(5, 11, 38, 0.90), rgba(5, 11, 38, 0.45));
-}
-:root[data-color-scheme="ultra"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(31, 77, 214, 0.94), rgba(31, 77, 214, 0.62));
-}
-:root[data-color-scheme="stadium"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(4, 19, 12, 0.90), rgba(4, 19, 12, 0.45));
-}
-:root[data-color-scheme="stadium"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(10, 107, 57, 0.94), rgba(10, 107, 57, 0.62));
-}
-:root[data-color-scheme="oxide"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(26, 14, 7, 0.90), rgba(26, 14, 7, 0.45));
-}
-:root[data-color-scheme="oxide"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(168, 67, 26, 0.94), rgba(168, 67, 26, 0.62));
-}
-:root[data-color-scheme="atomic"][data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.92), rgba(5, 5, 5, 0.50));
-}
-:root[data-color-scheme="atomic"][data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, rgba(250, 250, 250, 0.94), rgba(250, 250, 250, 0.62));
-}
-
-/* Font stacks · default = D6 / Switzer; Clara Vista is explicit (data-font-preset). */
+/* Font stacks · default = D6 / Switzer institutional sans sitewide. */
 html {
   --font-display: 'Switzer', system-ui, sans-serif;
   --font-body: 'Switzer', system-ui, sans-serif;
@@ -1130,9 +1013,11 @@ html {
   --font-serif: var(--font-display);
   --font-sans: var(--font-body);
 }
+/* Legacy preset id — maps to Switzer so saved localStorage still matches site theme. */
 html[data-font-preset="clara-vista"] {
-  --font-sans: 'Onest', system-ui, sans-serif;
-  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-display: 'Switzer', system-ui, sans-serif;
+  --font-sans: 'Switzer', system-ui, sans-serif;
+  --font-serif: 'Switzer', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 html[data-font-preset="signal"] {
@@ -1282,6 +1167,21 @@ html {
   --type-display-md: 2rem;   /* 32px · stat callouts */
 }
 
+/* Display headings — gold emphasis matches home hero (upright Switzer 700). */
+.headline em,
+.manifesto-headline em,
+.ps-head h2 em,
+.cv-page .ph-h1 em,
+.cv-page .sh-h2 em,
+.cv-page .chapter-break-h2 em,
+.cv-page .thesis-hairline-num em,
+.cv-page .thesis-takeaway-lede em,
+.cv-page .accomp-title em,
+.cv-page .pclub-name em {
+  font-style: normal;
+  font-weight: 700;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg); transition: background-color 0.6s ease; }
 body {
@@ -1324,9 +1224,9 @@ body {
 }
 @keyframes load { to { left: 100%; } }
 .loader-sub {
-  font-family: var(--font-serif);
-  font-style: italic; font-weight: 300;
-  font-size: var(--type-lead); letter-spacing: 0.06em;
+  font-family: var(--font-sans);
+  font-style: normal; font-weight: 400;
+  font-size: var(--type-lead); letter-spacing: 0.02em;
   color: var(--ivory-dim);
 }
 
@@ -1345,14 +1245,46 @@ body {
   padding: 24px 44px;
   display: flex; justify-content: space-between; align-items: center;
   border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(20px);
+  background: var(--bg);
   transition: border-color 0.6s ease, background 0.6s ease;
 }
-:root[data-theme="night"] .topbar {
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 88%, transparent), color-mix(in srgb, var(--bg) 42%, transparent));
+/* Home hero — near-black nav chrome over video (night) */
+:root[data-theme="night"] .topbar--home {
+  background: #070707;
+  border-bottom-color: rgba(242, 234, 214, 0.07);
 }
+/* Day mode — black topbar on every page */
 :root[data-theme="day"] .topbar {
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 92%, transparent), color-mix(in srgb, var(--bg) 55%, transparent));
+  background: #070707;
+  border-bottom-color: rgba(242, 234, 214, 0.07);
+}
+:root[data-theme="day"] .topbar .brand-wordmark {
+  color: #F2EAD6;
+}
+:root[data-theme="day"] .topbar .brand-tagline {
+  color: rgba(242, 234, 214, 0.72);
+}
+:root[data-theme="day"] .topbar .brand-divider {
+  background: rgba(242, 234, 214, 0.14);
+}
+:root[data-theme="day"] .topbar .nav a {
+  color: rgba(242, 234, 214, 0.72);
+}
+:root[data-theme="day"] .topbar .nav a[style] {
+  color: #F2EAD6 !important;
+}
+:root[data-theme="day"] .topbar .nav-cta {
+  color: #F2EAD6 !important;
+  border-color: rgba(242, 234, 214, 0.18);
+}
+:root[data-theme="day"] .topbar .theme-toggle,
+:root[data-theme="day"] .topbar .mobile-menu-toggle {
+  color: rgba(242, 234, 214, 0.72);
+  border-color: rgba(242, 234, 214, 0.18);
+}
+:root[data-theme="day"] .topbar .font-compare-trigger {
+  color: rgba(242, 234, 214, 0.72);
+  border-color: rgba(242, 234, 214, 0.18);
 }
 .brand {
   display: flex; align-items: center; gap: 14px;
@@ -1386,22 +1318,23 @@ body {
   50% { opacity: 1; }
 }
 .brand-wordmark {
-  font-family: var(--font-mono);
-  font-weight: 300; font-size: var(--type-body);
-  letter-spacing: 0.32em;
+  font-family: 'Switzer', var(--font-sans), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.0625rem;
+  letter-spacing: 0.055em;
   color: var(--ivory);
   transition: color 0.6s ease;
 }
-.brand-wordmark span { color: var(--green-light); }
+.brand-wordmark span { color: var(--accent-display); }
 .brand-divider {
   width: 1px; height: 18px;
   background: var(--line);
   margin: 0 4px;
 }
 .brand-tagline {
-  font-family: var(--font-serif);
-  font-style: italic; font-weight: 300;
-  font-size: var(--type-body); letter-spacing: 0.02em;
+  font-family: var(--font-sans);
+  font-style: normal; font-weight: 400;
+  font-size: var(--type-body); letter-spacing: 0.01em;
   color: var(--ivory-dim);
   transition: color 0.6s ease;
 }
@@ -1485,7 +1418,7 @@ body {
 }
 .mm-link:hover,
 .mm-cta:hover {
-  background: rgba(52, 194, 129, 0.08);
+  background: color-mix(in srgb, var(--green-light) 8%, transparent);
   color: var(--ivory);
 }
 .mm-group { margin-top: 6px; }
@@ -1507,7 +1440,7 @@ body {
 }
 .mm-sublink em { font-style: italic; }
 .mm-sublink:hover {
-  background: rgba(52, 194, 129, 0.08);
+  background: color-mix(in srgb, var(--green-light) 8%, transparent);
   color: var(--ivory);
 }
 .mm-cta {
@@ -1524,8 +1457,9 @@ body {
 .nav a {
   color: var(--ivory-mid); text-decoration: none;
   font-family: var(--font-sans);
-  font-size: var(--type-ui); font-weight: 400;
-  letter-spacing: 0.06em;
+  font-size: var(--type-ui); font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   transition: color 0.3s;
   white-space: nowrap;
 }
@@ -1600,7 +1534,7 @@ body {
   background: color-mix(in srgb, var(--bg) 86%, transparent);
   box-shadow:
     0 24px 60px -22px rgba(0, 0, 0, 0.65),
-    0 1px 0 rgba(52, 194, 129, 0.06) inset;
+    0 1px 0 color-mix(in srgb, var(--green-light) 6%, transparent) inset;
 }
 .nav-portfolio:hover .nav-portfolio-menu,
 .nav-portfolio:focus-within .nav-portfolio-menu {
@@ -1725,12 +1659,13 @@ body {
   color: var(--ivory) !important;
   border: 1px solid var(--line);
   padding: 8px 18px;
-  border-radius: 1px;
+  border-radius: 0;
+  font-weight: 600;
   transition: all 0.3s;
 }
 .nav-cta:hover {
   background: var(--green-light);
-  color: var(--bg) !important;
+  color: #111 !important;
   border-color: var(--green-light);
 }
 
@@ -2019,27 +1954,24 @@ body {
     var(--bg) 100%
   );
 }
-/* Home hero — bottom anchor only; headline vignette handles local legibility.
-   No left-side cream wash (that read as an obvious glass rectangle). */
-:root[data-theme="day"] .home-hero .hero-video-scrim {
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--bg) 36%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 10%, transparent) 28%,
-    color-mix(in srgb, var(--bg) 18%, transparent) 52%,
-    color-mix(in srgb, var(--bg) 62%, transparent) 82%,
-    var(--bg) 100%
-  );
-}
+/* Home hero — top scrim only (tagline + topbar legibility); bottom-left
+   vignette so gold headline accents read against the pitch. */
+:root[data-theme="day"] .home-hero .hero-video-scrim,
 :root[data-theme="night"] .home-hero .hero-video-scrim {
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--bg) 42%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 14%, transparent) 28%,
-    color-mix(in srgb, var(--bg) 20%, transparent) 52%,
-    color-mix(in srgb, var(--bg-deep) 68%, transparent) 82%,
-    var(--bg-deep) 100%
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(7, 7, 7, 0.62) 0%,
+      rgba(7, 7, 7, 0.32) 16%,
+      rgba(7, 7, 7, 0.08) 32%,
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse 88% 72% at 14% 92%,
+      rgba(7, 7, 7, 0.78) 0%,
+      rgba(7, 7, 7, 0.42) 42%,
+      transparent 72%
+    );
 }
 :root[data-theme="night"] .hero-video-scrim {
   background: linear-gradient(
@@ -2093,10 +2025,10 @@ body {
 .hero-headline {
   position: absolute;
   bottom: 100px; left: 56px;
-  z-index: 10; max-width: 600px;
+  z-index: 10; max-width: 640px;
   pointer-events: none;
   opacity: 0;
-  animation: fadeUp 1.6s cubic-bezier(.2,.8,.2,1) 1.6s forwards;
+  animation: fadeUp 1.2s cubic-bezier(.2,.8,.2,1) 0.35s forwards;
 }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(22px); }
@@ -2105,149 +2037,141 @@ body {
 .eyebrow {
   font-family: var(--font-sans);
   font-size: var(--type-label); letter-spacing: 0.32em;
-  color: var(--green-light); text-transform: uppercase;
+  color: var(--accent-ui); text-transform: uppercase;
   margin-bottom: 28px; font-weight: 500;
   display: flex; align-items: center; gap: 14px;
   transition: color 0.6s ease;
 }
 .eyebrow::before {
-  content: ''; width: 28px; height: 1px; background: var(--green-light);
+  content: ''; width: 28px; height: 1px; background: var(--accent-ui);
   transition: background 0.6s ease;
 }
 .headline {
-  font-family: var(--font-serif);
-  /* Weight bumped 300 → 400 so the letterforms hold their own against
-     the video without needing per-letter halos. Combined with the
-     same-color text-stroke below, it effectively reads as ~450 weight
-     for additional presence. */
-  font-weight: 400;
-  /* Size bumped ~20% (was clamp(34, 4.4vw, 64)) for more visual mass. */
+  font-family: var(--font-sans);
+  font-weight: 600;
   font-size: clamp(40px, 5.2vw, 76px);
   line-height: 1.02;
-  /* Tighter optical packing — denser cluster per word. */
-  letter-spacing: -0.028em;
+  letter-spacing: -0.03em;
   margin-bottom: 26px;
   color: var(--ivory);
-  /* Same-color hairline stroke — adds ~0.35px of letterform thickness
-     ringed around each glyph in the letter's own color. Reads as a
-     weight increase without creating a halo, color shift, or plate.
-     Works equally well on day (dark forest text) and night (cream). */
-  -webkit-text-stroke: 0.35px currentColor;
-  /* Legibility comes from the local backdrop-filter overlay on
-     .home-hero .hero-headline::before, not per-letter text-shadows.
-     Halos created a visible cream (day) / fog (night) plate that
-     read as "weird" against the colorful video. */
+  -webkit-text-stroke: 0;
   font-feature-settings: "kern", "liga", "ss01";
   transition: color 0.6s ease;
 }
 .headline em {
-  /* Italic emphasis pushed 400 → 500 to widen the weight gap between
-     "WE" and "INVEST/BUILD/WIN" — more dramatic hierarchy. */
-  font-style: italic; font-weight: 500;
-  color: var(--green-light);
+  color: var(--accent-display);
   transition: color 0.6s ease;
 }
 .subhead {
   font-family: var(--font-sans);
-  font-size: var(--type-body); line-height: 1.7;
-  color: var(--ivory-mid); max-width: 500px;
-  font-weight: 300; letter-spacing: 0.005em;
+  font-size: var(--type-body); line-height: 1.55;
+  color: var(--ivory-mid); max-width: 480px;
+  font-weight: 400; letter-spacing: 0;
   transition: color 0.6s ease;
 }
 
-/* ---- Home hero headline scrim ----
-   Local frosted-glass backdrop confined to the headline region. Uses
-   backdrop-filter to blur + desaturate (and on night, dim) the actual
-   video pixels behind the type, then masks itself with a soft radial
-   gradient so the edges fade to transparent — no visible plate
-   boundary, no rectangle, no shade. The video stays the visual
-   surface; only a localized patch is softened to give the type a
-   reading area. (Apple TV+ / Linear / Stripe pattern.) */
+/* Home hero — institutional sans headline, gold accent words, no frosted plate. */
 .home-hero .hero-headline::before {
-  content: "";
-  position: absolute;
-  inset: -160px -380px -140px -120px;
-  z-index: -1;
-  pointer-events: none;
-  background: transparent;
-  -webkit-mask-image:
-    radial-gradient(
-      ellipse 48% 64% at 12% 54%,
-      rgba(0, 0, 0, 0.78) 0%,
-      rgba(0, 0, 0, 0.48) 10%,
-      rgba(0, 0, 0, 0.24) 18%,
-      rgba(0, 0, 0, 0.1) 26%,
-      rgba(0, 0, 0, 0.04) 32%,
-      rgba(0, 0, 0, 0.01) 38%,
-      rgba(0, 0, 0, 0) 44%
-    );
-  mask-image:
-    radial-gradient(
-      ellipse 48% 64% at 12% 54%,
-      rgba(0, 0, 0, 0.78) 0%,
-      rgba(0, 0, 0, 0.48) 10%,
-      rgba(0, 0, 0, 0.24) 18%,
-      rgba(0, 0, 0, 0.1) 26%,
-      rgba(0, 0, 0, 0.04) 32%,
-      rgba(0, 0, 0, 0.01) 38%,
-      rgba(0, 0, 0, 0) 44%
-    );
-  -webkit-backdrop-filter: blur(14px) saturate(0.28) brightness(0.52);
-  backdrop-filter: blur(14px) saturate(0.28) brightness(0.52);
+  display: none;
 }
-[data-theme="day"] .home-hero .hero-headline::before {
-  -webkit-backdrop-filter: blur(14px) saturate(0.04) brightness(1.03) contrast(1.02);
-  backdrop-filter: blur(14px) saturate(0.04) brightness(1.03) contrast(1.02);
-}
-
-/* Home hero type — deeper greens, cream glow, full-weight subhead. */
 .home-hero .eyebrow {
-  color: var(--green-deep);
+  color: var(--ivory);
   font-weight: 600;
-  /* Match subhead measure — eyebrow text runs to the same right edge. */
   max-width: 520px;
-  font-size: var(--type-body);
-  letter-spacing: 0.37em;
+  font-size: var(--type-label);
+  letter-spacing: 0.14em;
+  margin-bottom: 20px;
 }
 .home-hero .eyebrow::before {
-  background: var(--green-deep);
+  background: var(--accent-display);
+  width: 24px;
 }
 .home-hero .headline {
-  font-weight: 500;
-  text-shadow:
-    0 0 20px color-mix(in srgb, var(--bg) 82%, transparent),
-    0 0 56px color-mix(in srgb, var(--bg) 52%, transparent),
-    0 0 96px color-mix(in srgb, var(--bg) 28%, transparent);
-}
-.home-hero .headline em {
-  color: var(--green-deep);
+  font-family: 'Switzer', var(--font-sans), system-ui, sans-serif;
   font-weight: 600;
-}
-.home-hero .subhead {
-  color: var(--ivory);
-  font-weight: 400;
-  max-width: 520px;
-  text-shadow:
-    0 0 18px color-mix(in srgb, var(--bg) 80%, transparent),
-    0 0 44px color-mix(in srgb, var(--bg) 46%, transparent),
-    0 0 72px color-mix(in srgb, var(--bg) 24%, transparent);
-}
-:root[data-theme="night"] .home-hero .eyebrow {
-  color: var(--green-light);
-}
-:root[data-theme="night"] .home-hero .eyebrow::before {
-  background: var(--green-light);
+  font-size: clamp(42px, 5.4vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  color: #FFFFFF;
 }
 :root[data-theme="night"] .home-hero .headline {
-  text-shadow: 0 0 56px color-mix(in srgb, var(--bg-deep) 68%, transparent);
+  color: var(--ivory);
 }
-:root[data-theme="night"] .home-hero .headline em {
+.home-hero .headline em {
+  color: var(--accent-display);
+  font-weight: 700;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.72),
+    0 6px 28px rgba(0, 0, 0, 0.55);
+}
+.home-hero .subhead {
+  color: var(--ivory-mid);
+  font-weight: 400;
+  max-width: 440px;
+  text-shadow: none;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+  pointer-events: auto;
+}
+.hero-cta {
+  font-family: var(--font-sans);
+  font-size: var(--type-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 13px 22px;
+  border-radius: 0;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+.hero-cta--primary {
+  background: var(--green-light);
+  color: #111;
+  border: 1px solid var(--green-light);
+}
+.hero-cta--primary:hover {
+  background: var(--green);
+  border-color: var(--green);
+  color: #111;
+}
+.hero-cta--secondary {
+  background: transparent;
+  color: var(--ivory);
+  border: 1px solid color-mix(in srgb, var(--ivory) 28%, transparent);
+}
+.hero-cta--secondary:hover {
+  border-color: var(--green-light);
   color: var(--green-light);
 }
+:root[data-theme="day"] .home-hero .subhead {
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.28);
+}
+:root[data-theme="day"] .home-hero .hero-cta--secondary {
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.52);
+}
+:root[data-theme="day"] .home-hero .hero-cta--secondary:hover {
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
+}
+:root[data-theme="day"] .home-hero .eyebrow {
+  color: #FFFFFF;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.28);
+}
+:root[data-theme="night"] .home-hero .eyebrow::before {
+  background: var(--accent-display);
+}
 :root[data-theme="night"] .home-hero .subhead {
-  color: var(--ivory);
-  opacity: 0.92;
-  text-shadow: 0 0 44px color-mix(in srgb, var(--bg-deep) 62%, transparent);
+  color: var(--ivory-mid);
 }
 
 /* ---- Portfolio Panel ---- */
@@ -2301,7 +2225,7 @@ body {
   transition: border-color 0.6s ease;
 }
 .pp-row:hover {
-  background: rgba(52, 194, 129, 0.06);
+  background: color-mix(in srgb, var(--green-light) 6%, transparent);
 }
 .pp-row:focus-visible {
   outline: 2px solid var(--green-light);
@@ -2565,7 +2489,7 @@ body {
 /* Recenter-Europe button — primary CTA pattern.
    Industry-standard "dark-fill + white-text" CTA (Stripe / Linear / Vercel
    model). Uses --green-deep as the fill so #FFFFFF text passes WCAG AA on
-   both themes (day #065d39 → 8.3:1; night #007a44 → 5.5:1) — the brighter
+   both themes use the gold accent scale (--green-light #a88648) — the brighter
    --green token doesn't pass AA against white at this font size and would
    force a dark text color, which the user (and a11y guidance) doesn't
    want. Hover brightens to --green for a clear state change while text
@@ -2691,9 +2615,16 @@ body {
   }
   .hero-headline .subhead {
     max-width: none;
-    font-size: var(--type-lead-lg);
-    line-height: 1.65;
+    font-size: var(--type-body);
+    line-height: 1.55;
     margin-bottom: 0;
+  }
+  .hero-actions {
+    margin-top: 20px;
+  }
+  .hero-cta {
+    padding: 12px 18px;
+    font-size: var(--type-caption);
   }
   .cv-recenter {
     position: static;
@@ -2806,7 +2737,7 @@ body {
 .cursor.hovering-city {
   width: 64px; height: 64px;
   border-color: var(--green-light);
-  background: rgba(52, 194, 129, 0.06);
+  background: transparent;
 }
 .cursor-dot {
   position: fixed; pointer-events: none;
@@ -2814,7 +2745,7 @@ body {
   background: var(--green-light);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 1001;
 }
 
 /* ---- Below: Portfolio detail (home · Active Portfolio) ----
@@ -2839,12 +2770,9 @@ body {
   background-size: cover;
   background-position: center 38%;
   background-repeat: no-repeat;
-  filter: saturate(0.85) brightness(0.68);
+  filter: saturate(0.85) brightness(0.56);
   transform: scale(1.04);
   transition: filter 0.6s ease;
-}
-:root[data-theme="day"] .portfolio-section::before {
-  filter: saturate(0.80) brightness(0.80);
 }
 .portfolio-section::after {
   content: '';
@@ -2854,25 +2782,36 @@ body {
   pointer-events: none;
   transition: background 0.6s ease;
 }
+:root[data-theme="day"] .portfolio-section::before {
+  filter: saturate(0.76) brightness(0.62);
+}
 :root[data-theme="day"] .portfolio-section::after {
   background: linear-gradient(
     to bottom,
-    var(--bg) 0%,
-    color-mix(in srgb, var(--bg) 88%, transparent) 5%,
-    color-mix(in srgb, var(--bg) 68%, transparent) 14%,
-    color-mix(in srgb, var(--bg) 56%, transparent) 45%,
-    color-mix(in srgb, var(--bg-deep) 64%, transparent) 100%
+    color-mix(in srgb, var(--bg) 96%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 90%, transparent) 6%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 16%,
+    color-mix(in srgb, var(--bg) 68%, transparent) 42%,
+    color-mix(in srgb, var(--bg-deep) 82%, transparent) 100%
   );
 }
 :root[data-theme="night"] .portfolio-section::after {
-  background: linear-gradient(
-    to bottom,
-    var(--bg) 0%,
-    color-mix(in srgb, var(--bg) 88%, transparent) 5%,
-    color-mix(in srgb, var(--bg) 66%, transparent) 14%,
-    color-mix(in srgb, var(--bg) 58%, transparent) 50%,
-    color-mix(in srgb, var(--bg-deep) 64%, transparent) 100%
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(2, 5, 4, 0.24) 0%,
+      rgba(2, 5, 4, 0.38) 55%,
+      rgba(2, 5, 4, 0.48) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg) 98%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 92%, transparent) 8%,
+      color-mix(in srgb, var(--bg) 84%, transparent) 20%,
+      color-mix(in srgb, var(--bg) 68%, transparent) 46%,
+      color-mix(in srgb, var(--bg-deep) 88%, transparent) 78%,
+      var(--bg-deep) 100%
+    );
 }
 /* Stack headline + grid above photo layers */
 .portfolio-section > * {
@@ -2892,26 +2831,26 @@ body {
 }
 .ps-eyebrow {
   font-family: var(--font-sans);
-  font-size: var(--type-label); letter-spacing: 0.3em;
-  color: var(--green-light); text-transform: uppercase;
-  margin-bottom: 24px; font-weight: 500;
+  font-size: var(--type-label); letter-spacing: 0.14em;
+  color: var(--accent-ui); text-transform: uppercase;
+  margin-bottom: 20px; font-weight: 600;
   display: flex; align-items: center; gap: 14px;
   transition: color 0.6s ease;
 }
 .ps-eyebrow::before {
-  content: ''; width: 28px; height: 1px; background: var(--green-light);
+  content: ''; width: 28px; height: 1px; background: var(--accent-ui);
   transition: background 0.6s ease;
 }
 .ps-head h2 {
-  font-family: var(--font-serif);
-  font-size: clamp(30px, 3.2vw, 48px);
-  font-weight: 300; line-height: 1.06;
-  letter-spacing: -0.024em;
+  font-family: var(--font-sans);
+  font-size: clamp(32px, 3.4vw, 52px);
+  font-weight: 600; line-height: 1.08;
+  letter-spacing: -0.03em;
   color: var(--ivory);
   transition: color 0.6s ease;
 }
 .ps-head h2 em {
-  font-style: italic; color: var(--green-light); font-weight: 400;
+  color: var(--accent-display);
   transition: color 0.6s ease;
 }
 .ps-head-right {
@@ -2932,50 +2871,72 @@ body {
   transition: background 0.6s ease, border-color 0.6s ease;
   isolation: isolate;
 }
-/* Cards: solid frosted fills only — backdrop-filter blurs resample on scroll and
-   cause shifting “hairlines” inside each panel. */
+:root[data-theme="day"] .ps-grid {
+  gap: 20px;
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
+}
+:root[data-theme="night"] .ps-grid {
+  gap: 20px;
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
+}
+/* Cards: day uses solid panels; night portfolio cards use frosted white over the stadium photo. */
 .club-card {
-  padding: 44px 36px 38px;
-  transition: background 0.5s, color 0.6s ease, box-shadow 0.5s ease;
+  padding: 40px 32px 36px;
+  transition: background 0.35s, color 0.6s ease, box-shadow 0.35s ease, border-color 0.35s ease;
   cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
 }
 :root[data-theme="day"] .club-card {
-  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  background: var(--bg-card);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--line);
 }
 :root[data-theme="night"] .club-card {
-  background: rgba(10, 18, 14, 0.68);
+  background: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 14px 44px -18px rgba(0, 0, 0, 0.32);
 }
 .club-card:hover {
-  box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
 }
 :root[data-theme="day"] .club-card:hover {
-  background: rgba(251, 248, 241, 0.92);
+  background: var(--bg-card);
+  border-color: color-mix(in srgb, var(--green-light) 35%, var(--line));
 }
 :root[data-theme="night"] .club-card:hover {
-  background: rgba(14, 26, 20, 0.78);
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 22px 52px -20px rgba(0, 0, 0, 0.4);
+}
+/* Night · frosted white cards — dark type; section head stays cream */
+:root[data-theme="night"] .club-card .cc-name { color: #111111; }
+:root[data-theme="night"] .club-card .cc-name em { color: rgba(17, 17, 17, 0.52); }
+:root[data-theme="night"] .club-card .cc-location { color: rgba(17, 17, 17, 0.52); }
+:root[data-theme="night"] .club-card .cc-note { color: rgba(17, 17, 17, 0.72); }
+:root[data-theme="night"] .club-card .cc-note em { color: #111111; }
+:root[data-theme="night"] .club-card .cc-stat-label { color: rgba(17, 17, 17, 0.52); }
+:root[data-theme="night"] .club-card .cc-stat-value { color: #111111; }
+:root[data-theme="night"] .club-card .cc-stat-value em { color: rgba(17, 17, 17, 0.52); }
+:root[data-theme="night"] .club-card .cc-status-text { color: rgba(17, 17, 17, 0.52); }
+:root[data-theme="night"] .club-card .cc-dot.diligence { border-color: rgba(17, 17, 17, 0.35); }
+:root[data-theme="night"] .club-card .cc-stats { border-top-color: rgba(17, 17, 17, 0.08); }
+:root[data-theme="night"] .club-card .cc-logo img {
+  filter: drop-shadow(0 4px 10px rgba(26, 37, 32, 0.12));
 }
 .club-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--green-light);
-  pointer-events: none;
-  opacity: 0;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition:
-    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
-    opacity 0.15s ease;
-}
-.club-card:hover::before {
-  opacity: 1;
-  transform: scaleX(1);
+  display: none;
 }
 .cc-logo {
   height: 48px;
@@ -3006,9 +2967,9 @@ body {
   align-items: center;
 }
 .cc-num {
-  color: var(--green-light);
+  color: var(--accent-ui);
   font-family: var(--font-mono);
-  font-weight: 300; letter-spacing: 0.1em;
+  font-weight: 500; letter-spacing: 0.08em;
   transition: color 0.6s ease;
 }
 .cc-status {
@@ -3039,14 +3000,14 @@ body {
   transition: color 0.6s ease;
 }
 .cc-name {
-  font-family: var(--font-serif);
-  font-size: var(--type-display-md); font-weight: 400;
+  font-family: var(--font-sans);
+  font-size: var(--type-display-md); font-weight: 600;
   color: var(--ivory); margin-bottom: 6px;
-  letter-spacing: -0.018em; line-height: 1.05;
+  letter-spacing: -0.02em; line-height: 1.08;
   transition: color 0.6s ease;
 }
 .cc-name em {
-  font-style: italic; color: var(--green-light);
+  font-style: normal; color: var(--ivory-dim); font-weight: 500;
   transition: color 0.6s ease;
 }
 .cc-location {
@@ -3058,13 +3019,15 @@ body {
 }
 .cc-note {
   font-family: var(--font-sans);
-  font-size: var(--type-body); line-height: 1.7;
-  color: var(--ivory-mid); font-weight: 300;
+  font-size: var(--type-body); line-height: 1.6;
+  color: var(--ivory-mid); font-weight: 400;
   transition: color 0.6s ease;
 }
 .cc-note em {
-  font-family: var(--font-serif);
-  font-style: italic; color: var(--ivory);
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ivory);
   transition: color 0.6s ease;
 }
 .cc-stats {
@@ -3084,10 +3047,10 @@ body {
   transition: color 0.6s ease;
 }
 .cc-stat-value {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   color: var(--ivory); margin-top: 6px;
-  font-size: var(--type-title); font-weight: 400;
-  letter-spacing: -0.005em;
+  font-size: var(--type-title); font-weight: 600;
+  letter-spacing: -0.01em;
   transition: color 0.6s ease;
 }
 .cc-stat-value em {
@@ -3103,10 +3066,10 @@ body {
   align-self: flex-start;
   font-family: var(--font-sans);
   font-size: var(--type-label);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--green-light);
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   transition: opacity 0.3s ease, color 0.6s ease;
 }
@@ -3154,7 +3117,7 @@ body {
 .manifesto-eyebrow {
   font-family: var(--font-sans);
   font-size: var(--type-label); letter-spacing: 0.32em;
-  color: var(--green-light); text-transform: uppercase;
+  color: var(--accent-ui); text-transform: uppercase;
   font-weight: 500;
   display: flex; align-items: center; gap: 14px;
   margin-bottom: 44px;
@@ -3166,23 +3129,22 @@ body {
 }
 .manifesto-eyebrow-rule {
   width: 28px; height: 1px;
-  background: var(--green-light);
+  background: var(--accent-ui);
   transition: background 0.6s ease;
 }
 .manifesto-headline {
-  font-family: var(--font-serif);
-  font-weight: 300;
+  font-family: var(--font-sans);
+  font-weight: 600;
   font-size: clamp(28px, 5.8vw, 92px);
   line-height: 1.05;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   color: var(--ivory);
   font-feature-settings: "kern", "liga", "ss01";
   transition: color 0.6s ease;
   white-space: nowrap;
 }
 .manifesto-headline em {
-  font-style: italic; font-weight: 400;
-  color: var(--green-light);
+  color: var(--accent-display);
   transition: color 0.6s ease;
 }
 .manifesto-body {
@@ -3190,7 +3152,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--type-lead-lg); line-height: 1.75;
   color: var(--ivory-mid);
-  font-weight: 300; letter-spacing: 0.005em;
+  font-weight: 400; letter-spacing: 0;
   max-width: 640px;
   transition: color 0.6s ease;
 }
@@ -3223,12 +3185,12 @@ body {
   background-size: cover;
   background-position: center 36%;
   background-repeat: no-repeat;
-  filter: saturate(0.85) brightness(0.68);
+  filter: saturate(0.85) brightness(0.56);
   transform: scale(1.04);
   transition: filter 0.6s ease;
 }
 :root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner::before {
-  filter: saturate(0.80) brightness(0.80);
+  filter: saturate(0.78) brightness(0.66);
 }
 .cv-page.thesis-page .thesis-asset-banner::after {
   content: '';
@@ -3241,18 +3203,24 @@ body {
 :root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner::after {
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--bg) 68%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 56%, transparent) 45%,
-    color-mix(in srgb, var(--bg-deep) 64%, transparent) 100%
+    color-mix(in srgb, var(--bg) 84%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 72%, transparent) 45%,
+    color-mix(in srgb, var(--bg-deep) 78%, transparent) 100%
   );
 }
 :root[data-theme="night"] .cv-page.thesis-page .thesis-asset-banner::after {
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--bg) 66%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 58%, transparent) 50%,
-    rgba(3, 6, 4, 0.64) 100%
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(2, 5, 4, 0.28) 0%,
+      rgba(2, 5, 4, 0.42) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg) 88%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 72%, transparent) 38%,
+      color-mix(in srgb, var(--bg-deep) 94%, transparent) 100%
+    );
 }
 .cv-page.thesis-page .thesis-asset-banner > * {
   position: relative;
@@ -3309,33 +3277,27 @@ body {
 .cv-page .thesis-hairline-cell.is-lead {
   padding: 36px 32px 40px;
 }
-:root[data-theme="day"] .cv-page .thesis-hairline-cell {
-  background: color-mix(in srgb, var(--bg) 84%, transparent);
-}
+:root[data-theme="day"] .cv-page .thesis-hairline-cell,
 :root[data-theme="night"] .cv-page .thesis-hairline-cell {
-  background: rgba(10, 18, 14, 0.68);
+  background: var(--bg-card);
 }
-:root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner .thesis-hairline-cell {
-  background: color-mix(in srgb, var(--bg) 84%, transparent);
-}
+:root[data-theme="day"] .cv-page.thesis-page .thesis-asset-banner .thesis-hairline-cell,
 :root[data-theme="night"] .cv-page.thesis-page .thesis-asset-banner .thesis-hairline-cell {
-  background: rgba(10, 18, 14, 0.68);
+  background: var(--bg-card);
 }
 .cv-page .thesis-hairline-cell:hover {
   box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.35);
 }
-:root[data-theme="day"] .cv-page .thesis-hairline-cell:hover {
-  background: rgba(251, 248, 241, 0.92);
-}
+:root[data-theme="day"] .cv-page .thesis-hairline-cell:hover,
 :root[data-theme="night"] .cv-page .thesis-hairline-cell:hover {
-  background: rgba(14, 26, 20, 0.78);
+  background: var(--bg-elev);
 }
 .cv-page .thesis-hairline-num {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(44px, 4.2vw, 56px);
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.022em;
+  letter-spacing: -0.03em;
   color: var(--ivory);
   margin-bottom: 14px;
   transition: color 0.6s ease;
@@ -3345,9 +3307,7 @@ body {
   margin-bottom: 20px;
 }
 .cv-page .thesis-hairline-num em {
-  font-style: italic;
-  color: var(--green-light);
-  font-weight: 400;
+  color: var(--ivory);
   transition: color 0.6s ease;
 }
 .cv-page .thesis-hairline-label {
@@ -3384,7 +3344,8 @@ body {
   text-align: left;
   font: inherit;
   color: inherit;
-  cursor: pointer;
+  cursor: default;
+  user-select: none;
   align-items: baseline;
   transition:
     background 0.35s ease,
@@ -3398,33 +3359,20 @@ body {
 .cv-page .thesis-fact-row:hover {
   background: color-mix(in srgb, var(--bg-card) 55%, transparent);
 }
-.cv-page .thesis-fact-row.is-active {
-  background: color-mix(in srgb, var(--bg-card) 82%, transparent);
-  box-shadow: inset 3px 0 0 var(--green-light);
-}
-.cv-page .thesis-fact-row:focus-visible {
-  outline: 2px solid var(--green-light);
-  outline-offset: -2px;
-}
 .cv-page.thesis-page .thesis-football-section .thesis-fact-row:hover {
   background: color-mix(in srgb, var(--bg-deep) 62%, var(--bg-card) 38%);
-}
-.cv-page.thesis-page .thesis-football-section .thesis-fact-row.is-active {
-  background: color-mix(in srgb, var(--bg-deep) 48%, var(--bg-card) 52%);
-  box-shadow: inset 3px 0 0 var(--green-light);
-}
-.cv-page.thesis-page .thesis-football-section .thesis-fact-row.is-active .thesis-fact-label,
-.cv-page.thesis-page .thesis-football-section .thesis-fact-row.is-active .thesis-fact-claim {
-  color: var(--ivory);
 }
 .cv-page .thesis-fact-label {
   font-family: var(--font-mono);
   font-size: var(--type-mono);
   letter-spacing: 0.22em;
-  color: var(--green-light);
+  color: var(--ivory-dim);
   text-transform: uppercase;
   font-weight: 300;
   transition: color 0.6s ease;
+}
+.cv-page .thesis-fact-row:hover .thesis-fact-label {
+  color: var(--green-light);
 }
 .cv-page .thesis-fact-claim {
   font-family: var(--font-serif);
@@ -3438,8 +3386,11 @@ body {
 }
 .cv-page .thesis-fact-claim em {
   font-style: italic;
-  color: var(--green-light);
+  color: var(--ivory);
   transition: color 0.6s ease;
+}
+.cv-page .thesis-fact-row:hover .thesis-fact-claim em {
+  color: var(--green-light);
 }
 
 /* 003 · Why football — turf photography + scrim (mirrors thesis hero banner) */
@@ -3460,12 +3411,12 @@ body {
   background-size: cover;
   background-position: 72% 28%;
   background-repeat: no-repeat;
-  filter: saturate(0.88) brightness(0.72);
+  filter: saturate(0.88) brightness(0.60);
   transform: scale(1.06);
   transition: filter 0.6s ease;
 }
 :root[data-theme="day"] .cv-page.thesis-page .thesis-football-section::before {
-  filter: saturate(0.85) brightness(0.82);
+  filter: saturate(0.82) brightness(0.66);
 }
 .cv-page.thesis-page .thesis-football-section::after {
   content: '';
@@ -3478,18 +3429,25 @@ body {
 :root[data-theme="day"] .cv-page.thesis-page .thesis-football-section::after {
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--bg-deep) 90%, transparent) 0%,
-    color-mix(in srgb, var(--bg-deep) 82%, transparent) 38%,
-    color-mix(in srgb, var(--bg-deep) 74%, transparent) 100%
+    color-mix(in srgb, var(--bg-deep) 96%, transparent) 0%,
+    color-mix(in srgb, var(--bg-deep) 88%, transparent) 38%,
+    color-mix(in srgb, var(--bg-deep) 82%, transparent) 100%
   );
 }
 :root[data-theme="night"] .cv-page.thesis-page .thesis-football-section::after {
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--bg-deep) 92%, transparent) 0%,
-    color-mix(in srgb, var(--bg-deep) 84%, transparent) 42%,
-    rgba(3, 6, 4, 0.78) 100%
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(2, 5, 4, 0.26) 0%,
+      rgba(2, 5, 4, 0.44) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      var(--bg-deep) 0%,
+      color-mix(in srgb, var(--bg-deep) 92%, transparent) 22%,
+      color-mix(in srgb, var(--bg-deep) 72%, transparent) 58%,
+      color-mix(in srgb, var(--bg) 52%, transparent) 100%
+    );
 }
 .cv-page.thesis-page .thesis-football-section > .section-inner {
   position: relative;
@@ -3500,6 +3458,12 @@ body {
 }
 .cv-page.thesis-page .thesis-football-section .thesis-fact-rows {
   background: color-mix(in srgb, var(--bg-deep) 65%, transparent);
+}
+:root[data-theme="day"] .cv-page.thesis-page .thesis-football-section .thesis-fact-rows {
+  background: var(--bg);
+}
+:root[data-theme="day"] .cv-page.thesis-page .thesis-football-section .thesis-fact-row:hover {
+  background: var(--bg-card);
 }
 .cv-page.thesis-page .thesis-football-section .thesis-fact-claim {
   max-width: none;
@@ -3703,7 +3667,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--type-label);
   letter-spacing: 0.30em;
-  color: var(--green-light);
+  color: var(--accent-ui);
   text-transform: uppercase;
   font-weight: 500;
   display: flex;
@@ -3716,23 +3680,22 @@ body {
   content: '';
   width: 28px;
   height: 1px;
-  background: var(--green-light);
+  background: var(--accent-ui);
   transition: background 0.6s ease;
 }
 .cv-page .thesis-takeaway-lede {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(28px, 3vw, 42px);
   line-height: 1.2;
-  font-weight: 300;
-  letter-spacing: -0.022em;
+  font-weight: 600;
+  letter-spacing: -0.03em;
   color: var(--ivory);
   margin-bottom: 80px;
   max-width: 1000px;
   transition: color 0.6s ease;
 }
 .cv-page .thesis-takeaway-lede em {
-  font-style: italic;
-  color: var(--green-light);
+  color: var(--accent-display);
   transition: color 0.6s ease;
 }
 .cv-page .thesis-takeaway-grid {
@@ -3798,7 +3761,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--type-label);
   letter-spacing: 0.32em;
-  color: var(--green-light);
+  color: var(--accent-ui);
   text-transform: uppercase;
   font-weight: 500;
   display: flex;
@@ -3811,28 +3774,26 @@ body {
   content: '';
   width: 28px;
   height: 1px;
-  background: var(--green-light);
+  background: var(--accent-ui);
   transition: background 0.6s ease;
 }
 .cv-page .chapter-break-h2 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(40px, 5.6vw, 80px);
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1.02;
-  letter-spacing: -0.026em;
+  letter-spacing: -0.03em;
   color: var(--ivory);
   transition: color 0.6s ease;
 }
 .cv-page .chapter-break-h2 em {
-  font-style: italic;
-  color: var(--green-light);
-  font-weight: 400;
+  color: var(--accent-display);
   transition: color 0.6s ease;
 }
 .cv-page .chapter-break-arrow {
   display: inline-block;
   margin-left: 18px;
-  color: var(--green-light);
+  color: var(--accent-display);
   font-style: normal;
   font-weight: 300;
   transition: transform 0.4s cubic-bezier(.2,.8,.2,1), color 0.6s ease;
@@ -3887,7 +3848,7 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: scroll;
-  filter: saturate(0.85) brightness(0.68);
+  filter: saturate(0.85) brightness(0.56);
   transition: filter 0.6s ease;
 }
 /* Viewport-fixed on desktop: plate scrolls over the photo so the image shifts as you scroll.
@@ -3898,7 +3859,7 @@ body {
   }
 }
 :root[data-theme="day"] .cv-page.approach-page .approach-invest-banner::before {
-  filter: saturate(0.80) brightness(0.80);
+  filter: saturate(0.78) brightness(0.66);
 }
 .cv-page.approach-page .approach-invest-banner::after {
   content: '';
@@ -3909,25 +3870,30 @@ body {
   transition: background 0.6s ease;
 }
 :root[data-theme="day"] .cv-page.approach-page .approach-invest-banner::after {
-  /* Lighter at top for hero; fade to heavy cream on bottom half so “001” block reads */
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--bg) 57%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 58%, transparent) 28%,
-    color-mix(in srgb, var(--bg) 72%, transparent) 48%,
-    color-mix(in srgb, var(--bg) 86%, transparent) 68%,
-    color-mix(in srgb, var(--bg) 93%, transparent) 100%
+    color-mix(in srgb, var(--bg) 72%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 74%, transparent) 28%,
+    color-mix(in srgb, var(--bg) 84%, transparent) 48%,
+    color-mix(in srgb, var(--bg) 92%, transparent) 68%,
+    color-mix(in srgb, var(--bg) 96%, transparent) 100%
   );
 }
 :root[data-theme="night"] .cv-page.approach-page .approach-invest-banner::after {
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--bg) 52%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 62%, transparent) 32%,
-    color-mix(in srgb, var(--bg) 76%, transparent) 55%,
-    rgba(3, 6, 4, 0.86) 78%,
-    rgba(3, 6, 4, 0.9) 100%
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(2, 5, 4, 0.26) 0%,
+      rgba(2, 5, 4, 0.40) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg) 76%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 82%, transparent) 26%,
+      color-mix(in srgb, var(--bg) 90%, transparent) 46%,
+      color-mix(in srgb, var(--bg-deep) 82%, transparent) 72%,
+      var(--bg-deep) 100%
+    );
 }
 .cv-page.approach-page .approach-invest-banner > * {
   position: relative;
@@ -3972,24 +3938,20 @@ body {
   transition: background 0.5s ease, box-shadow 0.5s ease;
 }
 :root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-text-col,
-:root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-chart {
-  background: color-mix(in srgb, var(--bg) 84%, transparent);
-}
+:root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-chart,
 :root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-text-col,
 :root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-chart {
-  background: rgba(10, 18, 14, 0.68);
+  background: var(--bg-card);
 }
 .cv-page.approach-page .approach-invest-section .scoring-text-col:hover,
 .cv-page.approach-page .approach-invest-section .scoring-chart:hover {
   box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.35);
 }
 :root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-text-col:hover,
-:root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-chart:hover {
-  background: color-mix(in srgb, var(--bg-deep) 92%, transparent);
-}
+:root[data-theme="day"] .cv-page.approach-page .approach-invest-section .scoring-chart:hover,
 :root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-text-col:hover,
 :root[data-theme="night"] .cv-page.approach-page .approach-invest-section .scoring-chart:hover {
-  background: rgba(14, 26, 20, 0.78);
+  background: var(--bg-elev);
 }
 .cv-page.approach-page .approach-invest-section .scoring-chart {
   display: flex;
@@ -4032,17 +3994,18 @@ body {
   flex-direction: column;
 }
 .cv-page .scoring-lede {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--type-title);
   line-height: 1.55;
   color: var(--ivory-mid);
-  font-weight: 300;
-  letter-spacing: -0.005em;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   margin-bottom: 32px;
   transition: color 0.6s ease;
 }
 .cv-page .scoring-lede em {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 600;
   color: var(--ivory);
   transition: color 0.6s ease;
 }
@@ -4439,12 +4402,12 @@ body {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  filter: saturate(0.82) brightness(0.62);
+  filter: saturate(0.82) brightness(0.52);
   transform: scale(1.04);
   transition: filter 0.6s ease;
 }
 :root[data-theme="day"] .cv-page.approach-page .return-engine-section::before {
-  filter: saturate(0.78) brightness(0.88);
+  filter: saturate(0.76) brightness(0.70);
 }
 .cv-page.approach-page .return-engine-section::after {
   content: '';
@@ -4457,18 +4420,24 @@ body {
 :root[data-theme="day"] .cv-page.approach-page .return-engine-section::after {
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--bg) 86%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 76%, transparent) 50%,
-    color-mix(in srgb, var(--bg-deep) 84%, transparent) 100%
+    color-mix(in srgb, var(--bg) 92%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 84%, transparent) 50%,
+    color-mix(in srgb, var(--bg-deep) 90%, transparent) 100%
   );
 }
 :root[data-theme="night"] .cv-page.approach-page .return-engine-section::after {
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--bg) 80%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 72%, transparent) 50%,
-    rgba(3, 6, 4, 0.78) 100%
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(2, 5, 4, 0.30) 0%,
+      rgba(2, 5, 4, 0.46) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--bg) 94%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 78%, transparent) 42%,
+      color-mix(in srgb, var(--bg-deep) 96%, transparent) 100%
+    );
 }
 .cv-page.approach-page .return-engine-section > .section-inner {
   position: relative;
@@ -5238,10 +5207,9 @@ body {
   z-index: 1;
 }
 
-/* Match home .portfolio-section warmth (cream gradient in day, layered depth in night).
-   Scoped to the hub only — deep-dive pages keep the default --bg. */
+/* Portfolio hub — white map hero; sepia reserved for .portfolio-hub-cards below. */
 .cv-page.portfolio-hub {
-  background: linear-gradient(to bottom, var(--bg-deep), var(--bg));
+  background: var(--bg);
   transition: background 0.6s ease;
 }
 
@@ -5262,7 +5230,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--type-label);
   letter-spacing: 0.32em;
-  color: var(--green-light);
+  color: var(--accent-ui);
   text-transform: uppercase;
   font-weight: 500;
   display: flex;
@@ -5275,36 +5243,35 @@ body {
   content: '';
   width: 28px;
   height: 1px;
-  background: var(--green-light);
+  background: var(--accent-ui);
   transition: background 0.6s ease;
 }
 .cv-page .ph-h1 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(40px, 5vw, 76px);
-  font-weight: 300;
-  line-height: 1.0;
-  letter-spacing: -0.026em;
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   color: var(--ivory);
   transition: color 0.6s ease;
 }
 .cv-page .ph-h1 em {
-  font-style: italic;
-  color: var(--green-light);
-  font-weight: 400;
+  color: var(--accent-display);
   transition: color 0.6s ease;
 }
 .cv-page .ph-intro {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--type-title);
   line-height: 1.55;
   color: var(--ivory-mid);
-  font-weight: 300;
-  letter-spacing: -0.005em;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   padding-bottom: 6px;
   transition: color 0.6s ease;
 }
 .cv-page .ph-intro em {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 600;
   color: var(--ivory);
   transition: color 0.6s ease;
 }
@@ -5312,6 +5279,7 @@ body {
 .cv-page .section {
   padding: 96px 56px;
   border-bottom: 1px solid var(--line);
+  background: var(--bg);
   transition: border-color 0.6s ease, background-color 0.6s ease;
 }
 .cv-page .section:last-of-type { border-bottom: none; }
@@ -5341,7 +5309,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--type-label);
   letter-spacing: 0.30em;
-  color: var(--green-light);
+  color: var(--accent-ui);
   text-transform: uppercase;
   font-weight: 500;
   display: flex;
@@ -5354,22 +5322,20 @@ body {
   content: '';
   width: 28px;
   height: 1px;
-  background: var(--green-light);
+  background: var(--accent-ui);
   transition: background 0.6s ease;
 }
 .cv-page .sh-h2 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: clamp(30px, 3.4vw, 50px);
-  font-weight: 300;
-  line-height: 1.04;
-  letter-spacing: -0.024em;
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
   color: var(--ivory);
   transition: color 0.6s ease;
 }
 .cv-page .sh-h2 em {
-  font-style: italic;
-  color: var(--green-light);
-  font-weight: 400;
+  color: var(--accent-display);
   transition: color 0.6s ease;
 }
 .cv-page .sh-deck {
@@ -5450,37 +5416,32 @@ body {
   box-shadow: none;
   transition: background 0.5s ease, box-shadow 0.5s ease;
 }
-:root[data-theme="day"] .team-page .exp-stat {
-  background: color-mix(in srgb, var(--bg) 84%, transparent);
-}
+:root[data-theme="day"] .team-page .exp-stat,
 :root[data-theme="night"] .team-page .exp-stat {
-  background: rgba(10, 18, 14, 0.68);
+  background: var(--bg-card);
 }
 .team-page .exp-stat:hover {
   transform: none;
   border-color: transparent;
   box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.35);
 }
-:root[data-theme="day"] .team-page .exp-stat:hover {
-  background: rgba(251, 248, 241, 0.92);
-}
+:root[data-theme="day"] .team-page .exp-stat:hover,
 :root[data-theme="night"] .team-page .exp-stat:hover {
-  background: rgba(14, 26, 20, 0.78);
+  background: var(--bg-elev);
 }
 .team-page .exp-stat-num {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 58px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.022em;
-  color: var(--green-light);
+  letter-spacing: -0.03em;
+  color: var(--ivory);
   margin-bottom: 14px;
   transition: color 0.6s ease;
 }
 .team-page .exp-stat-num em {
-  font-style: italic;
-  color: var(--green-light);
-  font-weight: 400;
+  color: var(--ivory);
+  font-weight: 700;
 }
 .team-page .exp-stat-label {
   font-family: var(--font-sans);
@@ -5526,13 +5487,13 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(135deg, rgba(52, 194, 129, 0.20) 0%, rgba(52, 194, 129, 0.06) 50%, rgba(52, 194, 129, 0.18) 100%),
-    radial-gradient(circle at 30% 25%, rgba(52, 194, 129, 0.18) 0%, transparent 60%);
+    linear-gradient(135deg, color-mix(in srgb, var(--green-light) 20%, transparent) 0%, color-mix(in srgb, var(--green-light) 6%, transparent) 50%, color-mix(in srgb, var(--green-light) 18%, transparent) 100%),
+    radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--green-light) 18%, transparent) 0%, transparent 60%);
 }
 [data-theme="day"] .team-page .person-photo::before {
   background:
-    linear-gradient(135deg, rgba(6, 93, 57, 0.18) 0%, rgba(6, 93, 57, 0.05) 50%, rgba(6, 93, 57, 0.16) 100%),
-    radial-gradient(circle at 30% 25%, rgba(6, 93, 57, 0.16) 0%, transparent 60%);
+    linear-gradient(135deg, color-mix(in srgb, var(--green-light) 18%, transparent) 0%, color-mix(in srgb, var(--green-light) 5%, transparent) 50%, color-mix(in srgb, var(--green-light) 16%, transparent) 100%),
+    radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--green-light) 16%, transparent) 0%, transparent 60%);
 }
 .team-page .person-photo::after {
   content: 'PHOTO';
@@ -5585,12 +5546,12 @@ body {
 }
 .team-page .person-content { min-width: 0; }
 .team-page .person-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--type-prose);
-  color: var(--green-light);
-  font-weight: 400;
+  color: var(--accent-display);
+  font-weight: 600;
   line-height: 1.1;
-  letter-spacing: -0.008em;
+  letter-spacing: -0.02em;
   margin-bottom: 8px;
   transition: color 0.6s ease;
 }
@@ -5609,14 +5570,15 @@ body {
   font-size: var(--type-ui);
   line-height: 1.6;
   color: var(--ivory-mid);
-  font-weight: 300;
+  font-weight: 400;
   transition: color 0.6s ease;
 }
 .team-page .person-bio em {
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 600;
   color: var(--ivory);
-  font-size: var(--type-ui);
+  transition: color 0.6s ease;
 }
 
 /* ---- Team moments: editorial photo strip between Leadership and Advisors.
@@ -5897,7 +5859,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: var(--bg-deep);
+  background: var(--bg);
   overflow: hidden;
 }
 .portfolio-map-skeleton-shimmer {
@@ -5914,9 +5876,6 @@ body {
 @keyframes portfolio-map-shimmer {
   from { transform: translateX(-30%); }
   to { transform: translateX(30%); }
-}
-:root[data-theme="night"] .portfolio-hero-banner {
-  background: var(--bg-deep);
 }
 .portfolio-hero-banner::after {
   content: "";
@@ -5940,42 +5899,25 @@ body {
   pointer-events: none;
   transition: background 0.6s ease;
 }
-:root[data-theme="day"] .portfolio-hero-banner::before {
-  height: 38%;
+:root[data-theme="day"] .portfolio-hero-banner::before,
+:root[data-theme="night"] .portfolio-hero-banner::before {
+  height: 44%;
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    color-mix(in srgb, var(--bg) 28%, transparent) 42%,
-    color-mix(in srgb, var(--bg) 72%, transparent) 72%,
+    color-mix(in srgb, var(--bg) 18%, transparent) 28%,
+    color-mix(in srgb, var(--bg) 48%, transparent) 52%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 76%,
     var(--bg) 100%
   );
 }
-:root[data-theme="night"] .portfolio-hero-banner::before {
-  height: 38%;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    color-mix(in srgb, var(--bg-deep) 32%, transparent) 42%,
-    color-mix(in srgb, var(--bg-deep) 78%, transparent) 72%,
-    var(--bg-deep) 100%
-  );
-}
-:root[data-theme="day"] .portfolio-hero-banner::after {
-  /* Top plate for headline legibility only */
-  background: linear-gradient(
-    to bottom,
-    var(--bg) 0%,
-    color-mix(in srgb, var(--bg) 92%, transparent) 14%,
-    color-mix(in srgb, var(--bg) 62%, transparent) 28%,
-    transparent 100%
-  );
-}
+:root[data-theme="day"] .portfolio-hero-banner::after,
 :root[data-theme="night"] .portfolio-hero-banner::after {
   background: linear-gradient(
     to bottom,
-    var(--bg-deep) 0%,
-    color-mix(in srgb, var(--bg-deep) 92%, transparent) 14%,
-    color-mix(in srgb, var(--bg-deep) 64%, transparent) 28%,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 96%, transparent) 14%,
+    color-mix(in srgb, var(--bg) 74%, transparent) 28%,
     transparent 100%
   );
 }
@@ -6031,9 +5973,6 @@ body {
 .portfolio-hero-banner .portfolio-map-embed #map-canvas {
   background: var(--bg);
 }
-:root[data-theme="night"] .portfolio-hero-banner .portfolio-map-embed #map-canvas {
-  background: var(--bg-deep);
-}
 .portfolio-hero-banner .portfolio-map-embed .hero {
   height: 100%;
   min-height: 100%;
@@ -6051,7 +5990,7 @@ body {
   pointer-events: auto;
   max-width: 1420px;
 }
-/* Seamless handoff from map hero into club cards */
+/* Handoff from white map hero into sepia cards band */
 .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards {
   position: relative;
   margin-top: -96px;
@@ -6059,52 +5998,106 @@ body {
   background: linear-gradient(
     to bottom,
     transparent 0px,
-    color-mix(in srgb, var(--bg) 88%, transparent) 32px,
-    color-mix(in srgb, var(--bg-deep) 18%, var(--bg)) 88px,
-    color-mix(in srgb, var(--bg-deep) 42%, var(--bg)) 128px,
-    color-mix(in srgb, var(--bg-deep) 72%, var(--bg)) 168px,
-    var(--bg-deep) 220px,
+    color-mix(in srgb, var(--bg) 55%, transparent) 48px,
+    color-mix(in srgb, var(--bg-deep) 12%, var(--bg)) 96px,
+    color-mix(in srgb, var(--bg-deep) 32%, var(--bg)) 140px,
+    color-mix(in srgb, var(--bg-deep) 58%, var(--bg)) 184px,
+    color-mix(in srgb, var(--bg-deep) 82%, var(--bg)) 228px,
+    var(--bg-deep) 280px,
     var(--bg-deep) 100%
   );
 }
-:root[data-theme="night"] .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards {
+.cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 240px;
+  z-index: 0;
+  pointer-events: none;
   background: linear-gradient(
     to bottom,
-    transparent 0px,
-    color-mix(in srgb, var(--bg-deep) 55%, transparent) 32px,
-    color-mix(in srgb, var(--bg-deep) 82%, transparent) 128px,
-    var(--bg-deep) 200px,
-    var(--bg-deep) 100%
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 22%,
+    color-mix(in srgb, var(--bg) 42%, transparent) 48%,
+    color-mix(in srgb, var(--bg-deep) 18%, transparent) 72%,
+    transparent 100%
   );
 }
 .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards > .section-inner {
   position: relative;
   z-index: 1;
 }
-.cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards .portfolio-grid {
+.cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards .ps-grid {
   border-top: none;
   isolation: isolate;
+  max-width: none;
 }
-:root[data-theme="day"] .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards .portfolio-grid {
-  box-shadow: 0 28px 72px -36px rgba(26, 37, 32, 0.10);
+:root[data-theme="day"] .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards .ps-grid,
+:root[data-theme="night"] .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards .ps-grid {
+  box-shadow: none;
 }
-:root[data-theme="night"] .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards .portfolio-grid {
-  box-shadow: 0 32px 80px -36px rgba(0, 0, 0, 0.42);
+/* Solid lifted panels on sepia hub — same language as home .club-card (day). */
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card {
+  background: #FAFAF8;
+  border: 1px solid rgba(17, 17, 17, 0.11);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
-:root[data-theme="day"] .cv-page.portfolio-hub .portfolio-hub-cards .pclub {
-  background: var(--bg-card);
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card:hover {
+  background: #FFFFFF;
+  border-color: color-mix(in srgb, var(--green-light) 35%, rgba(17, 17, 17, 0.11));
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
 }
-:root[data-theme="night"] .cv-page.portfolio-hub .portfolio-hub-cards .pclub {
-  background: color-mix(in srgb, var(--bg-card) 88%, var(--bg-elev));
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-name {
+  color: #111111;
 }
-.cv-page.portfolio-hub .portfolio-hub-cards .pclub:hover {
-  box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.28);
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-name em {
+  color: rgba(17, 17, 17, 0.52);
 }
-:root[data-theme="day"] .cv-page.portfolio-hub .portfolio-hub-cards .pclub:hover {
-  background: var(--bg-elev);
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-location,
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-stat-label,
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-status-text {
+  color: rgba(17, 17, 17, 0.52);
 }
-:root[data-theme="night"] .cv-page.portfolio-hub .portfolio-hub-cards .pclub:hover {
-  background: color-mix(in srgb, var(--bg-elev) 92%, var(--bg-card));
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-note {
+  color: rgba(17, 17, 17, 0.72);
+}
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-note em {
+  color: #111111;
+}
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-stat-value {
+  color: #111111;
+}
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-stat-value em {
+  color: rgba(17, 17, 17, 0.52);
+}
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-dot.diligence {
+  border-color: rgba(17, 17, 17, 0.35);
+}
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-stats {
+  border-top-color: rgba(17, 17, 17, 0.08);
+}
+.cv-page.portfolio-hub .portfolio-hub-cards .club-card .cc-logo img {
+  filter: drop-shadow(0 4px 10px rgba(26, 37, 32, 0.12));
+}
+.cv-page.portfolio-hub .portfolio-hub-cards.section {
+  background: var(--bg-deep);
+}
+.cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards.section {
+  background: linear-gradient(
+    to bottom,
+    transparent 0px,
+    color-mix(in srgb, var(--bg) 55%, transparent) 48px,
+    color-mix(in srgb, var(--bg-deep) 12%, var(--bg)) 96px,
+    color-mix(in srgb, var(--bg-deep) 32%, var(--bg)) 140px,
+    color-mix(in srgb, var(--bg-deep) 58%, var(--bg)) 184px,
+    color-mix(in srgb, var(--bg-deep) 82%, var(--bg)) 228px,
+    var(--bg-deep) 280px,
+    var(--bg-deep) 100%
+  );
 }
 @media (max-width: 720px) {
   .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards {
@@ -6113,10 +6106,26 @@ body {
     background: linear-gradient(
       to bottom,
       transparent 0px,
-      color-mix(in srgb, var(--bg) 88%, transparent) 24px,
-      color-mix(in srgb, var(--bg-deep) 22%, var(--bg)) 64px,
-      color-mix(in srgb, var(--bg-deep) 55%, var(--bg)) 96px,
-      var(--bg-deep) 140px,
+      color-mix(in srgb, var(--bg) 55%, transparent) 32px,
+      color-mix(in srgb, var(--bg-deep) 18%, var(--bg)) 72px,
+      color-mix(in srgb, var(--bg-deep) 42%, var(--bg)) 108px,
+      color-mix(in srgb, var(--bg-deep) 68%, var(--bg)) 144px,
+      var(--bg-deep) 180px,
+      var(--bg-deep) 100%
+    );
+  }
+  .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards::before {
+    height: 180px;
+  }
+  .cv-page.portfolio-hub .portfolio-hero-banner + .portfolio-hub-cards.section {
+    background: linear-gradient(
+      to bottom,
+      transparent 0px,
+      color-mix(in srgb, var(--bg) 55%, transparent) 32px,
+      color-mix(in srgb, var(--bg-deep) 18%, var(--bg)) 72px,
+      color-mix(in srgb, var(--bg-deep) 42%, var(--bg)) 108px,
+      color-mix(in srgb, var(--bg-deep) 68%, var(--bg)) 144px,
+      var(--bg-deep) 180px,
       var(--bg-deep) 100%
     );
   }
@@ -6135,23 +6144,14 @@ body {
   .portfolio-hero-banner .page-hero {
     padding-bottom: 36px;
   }
-  :root[data-theme="day"] .portfolio-hero-banner::after {
+  :root[data-theme="day"] .portfolio-hero-banner::after,
+  :root[data-theme="night"] .portfolio-hero-banner::after {
     height: 48%;
     background: linear-gradient(
       to bottom,
       var(--bg) 0%,
       color-mix(in srgb, var(--bg) 94%, transparent) 20%,
       color-mix(in srgb, var(--bg) 68%, transparent) 34%,
-      transparent 100%
-    );
-  }
-  :root[data-theme="night"] .portfolio-hero-banner::after {
-    height: 48%;
-    background: linear-gradient(
-      to bottom,
-      var(--bg-deep) 0%,
-      color-mix(in srgb, var(--bg-deep) 94%, transparent) 20%,
-      color-mix(in srgb, var(--bg-deep) 70%, transparent) 34%,
       transparent 100%
     );
   }
@@ -6350,7 +6350,8 @@ body {
 .cv-page .deep-hero {
   padding: 120px 56px 48px;
   border-bottom: 1px solid var(--line);
-  transition: border-color 0.6s ease;
+  background: var(--bg);
+  transition: border-color 0.6s ease, background-color 0.6s ease;
 }
 .cv-page .deep-hero-inner {
   max-width: 1280px;
@@ -6466,6 +6467,30 @@ body {
   background: radial-gradient(ellipse at center, var(--green-soft), transparent 70%);
 }
 
+.cv-page .deep-image.has-logo {
+  background: linear-gradient(160deg, #0a2f6e 0%, #061a3d 100%);
+  isolation: isolate;
+}
+.cv-page .deep-image-logo {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  height: min(52%, 240px);
+  object-fit: contain;
+  filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.35));
+}
+.cv-page .deep-image.has-logo::before {
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08), transparent 68%);
+}
+.cc-logo img.frosinone-crest {
+  height: 52px;
+  width: auto;
+}
+.pclub-logo img.frosinone-crest {
+  height: 52px;
+  width: auto;
+}
+
 /* When deep-image holds an actual photograph */
 .cv-page .deep-image.has-photo {
   background: var(--bg-card);
@@ -6493,11 +6518,11 @@ body {
 /* Lift the corner vignette above the photo */
 .cv-page .deep-image.has-photo::before {
   z-index: 2;
-  background: radial-gradient(ellipse at center, transparent 38%, rgba(6, 93, 57, 0.22) 100%);
+  background: radial-gradient(ellipse at center, transparent 38%, color-mix(in srgb, var(--green-light) 22%, transparent) 100%);
   mix-blend-mode: multiply;
 }
 [data-theme="night"] .cv-page .deep-image.has-photo::before {
-  background: radial-gradient(ellipse at center, transparent 38%, rgba(8, 22, 14, 0.55) 100%);
+  background: radial-gradient(ellipse at center, transparent 38%, color-mix(in srgb, var(--bg-deep) 72%, transparent) 100%);
   mix-blend-mode: normal;
 }
 /* Subtle ivory/parchment top-edge fade so the photo feels embedded in the page */
@@ -6530,8 +6555,12 @@ body {
   border-right: 1px solid var(--line-soft);
   transition: background 0.4s;
 }
+.cv-page .glance-cell:nth-child(4) {
+  background: var(--bg-deep);
+}
 .cv-page .glance-cell:last-child { border-right: none; }
 .cv-page .glance-cell:hover { background: var(--bg-card); }
+.cv-page .glance-cell:nth-child(4):hover { background: var(--bg-card); }
 .cv-page .glance-label {
   font-family: var(--font-mono);
   font-size: var(--type-mono);
@@ -6542,16 +6571,17 @@ body {
   font-weight: 300;
 }
 .cv-page .glance-value {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--type-display-sm);
   color: var(--ivory);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.15;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 .cv-page .glance-value em {
   font-style: italic;
-  color: var(--green-light);
+  color: var(--accent-display);
+  font-weight: 500;
 }
 
 /* ---- Prose body ---- */
@@ -6639,7 +6669,7 @@ body {
 /* ---- Accomplishments grid ---- */
 .cv-page .accomp-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-bottom: 56px;
 }
@@ -6671,6 +6701,7 @@ body {
   justify-content: center;
   color: var(--green-light);
   flex-shrink: 0;
+  margin-bottom: 24px;
   transition: background 0.4s;
 }
 .cv-page .accomp-icon svg {
@@ -6683,22 +6714,22 @@ body {
   stroke-linejoin: round;
 }
 [data-theme="night"] .cv-page .accomp-card:hover .accomp-icon {
-  background: rgba(52, 194, 129, 0.16);
+  background: color-mix(in srgb, var(--green-light) 16%, transparent);
 }
 [data-theme="day"] .cv-page .accomp-card:hover .accomp-icon {
-  background: rgba(6, 93, 57, 0.18);
+  background: color-mix(in srgb, var(--green-light) 18%, transparent);
 }
 .cv-page .accomp-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--type-display-sm);
-  font-weight: 400;
+  font-weight: 600;
   color: var(--ivory);
   line-height: 1.15;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
 }
 .cv-page .accomp-title em {
-  font-style: italic;
-  color: var(--green-light);
+  color: var(--accent-display);
 }
 .cv-page .accomp-when {
   font-family: var(--font-mono);
@@ -6714,13 +6745,13 @@ body {
   font-size: var(--type-lead);
   line-height: 1.65;
   color: var(--ivory-mid);
-  font-weight: 300;
+  font-weight: 400;
   margin: 0;
 }
 .cv-page .accomp-body em {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 600;
   color: var(--ivory);
-  font-weight: 400;
 }
 
 /* ---- Ipswich revenue trajectory chart ---- */
@@ -7553,6 +7584,9 @@ body {
 @media (max-width: 1100px) {
   .cv-page .rev-stats { grid-template-columns: repeat(2, 1fr); }
 }
+@media (max-width: 1100px) {
+  .cv-page .accomp-grid { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 900px) {
   .cv-page .accomp-grid { grid-template-columns: 1fr; }
   .cv-page .rev-chart { padding: 22px 18px 14px; }
@@ -7698,22 +7732,18 @@ body {
   box-shadow: none;
   transition: background 0.5s ease, box-shadow 0.5s ease;
 }
-:root[data-theme="day"] .tr-page .exp-stat {
-  background: color-mix(in srgb, var(--bg) 84%, transparent);
-}
+:root[data-theme="day"] .tr-page .exp-stat,
 :root[data-theme="night"] .tr-page .exp-stat {
-  background: rgba(10, 18, 14, 0.68);
+  background: var(--bg-card);
 }
 .tr-page .exp-stat:hover {
   transform: none;
   border-color: transparent;
   box-shadow: 0 20px 48px -28px rgba(0, 0, 0, 0.35);
 }
-:root[data-theme="day"] .tr-page .exp-stat:hover {
-  background: rgba(251, 248, 241, 0.92);
-}
+:root[data-theme="day"] .tr-page .exp-stat:hover,
 :root[data-theme="night"] .tr-page .exp-stat:hover {
-  background: rgba(14, 26, 20, 0.78);
+  background: var(--bg-elev);
 }
 .tr-page .exp-stat-num {
   font-family: var(--font-serif);
@@ -7908,11 +7938,9 @@ body {
   transition: border-color 0.25s ease, background 0.4s ease,
     box-shadow 0.4s ease, transform 0.25s ease;
 }
-:root[data-theme="day"] .tr-card-link {
-  background: color-mix(in srgb, var(--bg) 78%, transparent);
-}
+:root[data-theme="day"] .tr-card-link,
 :root[data-theme="night"] .tr-card-link {
-  background: rgba(10, 18, 14, 0.55);
+  background: var(--bg-card);
 }
 .tr-card-link--static { cursor: default; }
 .tr-card-link:not(.tr-card-link--static):hover {
@@ -7920,11 +7948,9 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 22px 48px -32px rgba(0, 0, 0, 0.45);
 }
-:root[data-theme="day"] .tr-card-link:not(.tr-card-link--static):hover {
-  background: rgba(251, 248, 241, 0.94);
-}
+:root[data-theme="day"] .tr-card-link:not(.tr-card-link--static):hover,
 :root[data-theme="night"] .tr-card-link:not(.tr-card-link--static):hover {
-  background: rgba(14, 26, 20, 0.85);
+  background: var(--bg-elev);
 }
 
 /* Card head — logo (top-left) + external link arrow (top-right) */

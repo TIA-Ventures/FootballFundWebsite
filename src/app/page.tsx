@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <Topbar activeNav="home" showTagline />
+      <Topbar activeNav="home" />
       <main id="main">
         <HomeHero />
       </main>

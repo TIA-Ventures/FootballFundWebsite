@@ -2,11 +2,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 28" fill="none" aria-label="Clara Vista">
   <rect width="236" height="28" fill="#1A2520"/>
   <g transform="translate(0 3)">
-    <circle cx="11" cy="11" r="10.5" stroke="#34C281" stroke-opacity="0.55" stroke-width="1"/>
-    <circle cx="11" cy="11" r="6.5" stroke="#065D39" stroke-opacity="0.18" stroke-width="0.5"/>
-    <circle cx="11" cy="11" r="2" fill="#34C281"/>
+    <circle cx="11" cy="11" r="10.5" stroke="#B89455" stroke-opacity="0.55" stroke-width="1"/>
+    <circle cx="11" cy="11" r="6.5" stroke="#735A34" stroke-opacity="0.18" stroke-width="0.5"/>
+    <circle cx="11" cy="11" r="2" fill="#B89455"/>
   </g>
   <text x="36" y="20" font-family="JetBrains Mono, IBM Plex Mono, ui-monospace, monospace" font-size="16.5" font-weight="300" letter-spacing="5.28">
-    <tspan fill="#F2EAD6">CLARA </tspan><tspan fill="#34C281">VISTA</tspan>
+    <tspan fill="#F2EAD6">CLARA </tspan><tspan fill="#B89455">VISTA</tspan>
   </text>
 </svg>

@@ -10,7 +10,7 @@ const SCHEMES = [
     id: "clara-vista" as const,
     label: "Clara Vista",
     detail: "Emerald · Amber · Ivory — institutional default",
-    swatches: ["#34c281", "#d4a86a", "#F2EAD6"],
+    swatches: ["#a88648", "#d4a86a", "#F2EAD6"],
   },
   {
     id: "pitch" as const,

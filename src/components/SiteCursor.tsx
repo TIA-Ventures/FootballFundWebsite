@@ -13,27 +13,14 @@ export function SiteCursor() {
     const dot = dotRef.current;
     if (!cursor || !dot) return;
 
-    let mx = -100;
-    let my = -100;
-    let cx = -100;
-    let cy = -100;
-    let raf = 0;
-
     const onMove = (e: MouseEvent) => {
-      mx = e.clientX;
-      my = e.clientY;
-      dot.style.left = `${mx}px`;
-      dot.style.top = `${my}px`;
+      const x = `${e.clientX}px`;
+      const y = `${e.clientY}px`;
+      cursor.style.left = x;
+      cursor.style.top = y;
+      dot.style.left = x;
+      dot.style.top = y;
     };
-
-    const loop = () => {
-      cx += (mx - cx) * 0.18;
-      cy += (my - cy) * 0.18;
-      cursor.style.left = `${cx}px`;
-      cursor.style.top = `${cy}px`;
-      raf = window.requestAnimationFrame(loop);
-    };
-    raf = window.requestAnimationFrame(loop);
 
     const onOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
@@ -58,7 +45,6 @@ export function SiteCursor() {
     document.addEventListener("mouseout", onOut, { passive: true });
 
     return () => {
-      window.cancelAnimationFrame(raf);
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);

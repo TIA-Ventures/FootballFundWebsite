@@ -87,7 +87,7 @@ const INVESTMENTS: Investment[] = [
     description:
       "Anchor investment of Fund II — held via the Portman Holdings LLC consortium. Back-to-back promotions to the Premier League and the highest player value creation in global football in 2024/25.",
     href: "/portfolio/ipswich",
-    league: "EFL Championship · England",
+    league: "Premier League · England",
     logo: "ipswich.svg",
   },
   {
@@ -102,15 +102,16 @@ const INVESTMENTS: Investment[] = [
     league: "La Liga · Spain",
   },
   {
-    name: "Italy (target)",
+    name: "Frosinone Calcio",
     firm: "ClaraVista",
     funds: ["cv-i"],
-    status: "Diligence",
+    status: "Active",
     sector: "football",
     description:
-      "A historic Italian club with a track record of recent Serie A promotions and a modern stadium. Details under embargo.",
-    href: "/portfolio/italy",
+      "Controlling investment via Clara Vista Frosinone SPV I — promoted to Serie A in 2025/26, modern Serie A-ready stadium, and three top-flight promotions in the last decade.",
+    href: "/portfolio/frosinone",
     league: "Serie A · Italy",
+    logo: "frosinone-calcio.png",
   },
 
   // ---------- TIA Ventures — VC, alphabetical ----------

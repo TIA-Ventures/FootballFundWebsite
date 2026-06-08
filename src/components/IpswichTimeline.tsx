@@ -1,15 +1,10 @@
-import type { ReactNode } from "react";
+import {
+  ClubTimeline,
+  type TimelineChapterBand,
+  type TimelineEvent,
+} from "./ClubTimeline";
 
-export type TimelineChapter = "founding" | "golden" | "modern";
-
-export type TimelineEvent = {
-  year: string;
-  label: ReactNode;
-  detail: string;
-  chapter: TimelineChapter;
-  isAnchor?: boolean;
-  hero?: boolean;
-};
+export type { TimelineChapter, TimelineEvent } from "./ClubTimeline";
 
 export const IPSWICH_TIMELINE: TimelineEvent[] = [
   {
@@ -142,13 +137,7 @@ export const IPSWICH_TIMELINE: TimelineEvent[] = [
   },
 ];
 
-const CHAPTER_BANDS: {
-  chapter: TimelineChapter;
-  label: string;
-  years: string;
-  start: number;
-  end: number;
-}[] = [
+const IPSWICH_CHAPTER_BANDS: TimelineChapterBand[] = [
   { chapter: "founding", label: "Foundations", years: "1878 — 1936", start: 0, end: 2 },
   { chapter: "golden", label: "Golden Era", years: "1955 — 1982", start: 2, end: 9 },
   { chapter: "modern", label: "Modern Rebuild", years: "2018 — present", start: 9, end: 15 },
@@ -159,97 +148,11 @@ type IpswichTimelineProps = {
 };
 
 export function IpswichTimeline({ events = IPSWICH_TIMELINE }: IpswichTimelineProps) {
-  const n = events.length;
-
   return (
-    <div className="h-timeline h-timeline--scroll">
-      <p className="h-timeline-hint" aria-hidden="true">
-        Scroll →
-      </p>
-
-      <div
-        className="h-timeline-scroll"
-        tabIndex={0}
-        role="region"
-        aria-label="Ipswich Town club history timeline"
-      >
-        {/* Chapter index row — era labels sit above the track in their own
-            dedicated band so they don't compete with event text for space. */}
-        <div className="h-timeline-eras-row" aria-hidden="true">
-          {CHAPTER_BANDS.map((band) => {
-            const leftPct = (band.start / n) * 100;
-            const widthPct = ((band.end - band.start) / n) * 100;
-            return (
-              <div
-                key={band.chapter}
-                className={`h-era-header chap-${band.chapter}`}
-                style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
-              >
-                <span className="h-era-header-label">{band.label}</span>
-                <span className="h-era-header-years">{band.years}</span>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="h-timeline-track">
-          {/* Vertical era bands sit behind the rail and events. Fill is
-              masked top/bottom so the tint blends into the chart background. */}
-          <div className="h-timeline-bands" aria-hidden="true">
-            {CHAPTER_BANDS.map((band, bi) => {
-              const leftPct = (band.start / n) * 100;
-              const widthPct = ((band.end - band.start) / n) * 100;
-              return (
-                <div
-                  key={band.chapter}
-                  className={`h-era-band chap-${band.chapter}${bi > 0 ? " has-divider" : ""}`}
-                  style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
-                >
-                  <div className="h-era-band-fill" />
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="h-timeline-rail" aria-hidden="true">
-            {CHAPTER_BANDS.map((band) => {
-              const leftPct = (band.start / n) * 100;
-              const widthPct = ((band.end - band.start) / n) * 100;
-              return (
-                <span
-                  key={band.chapter}
-                  className={`h-timeline-rail-seg chap-${band.chapter}`}
-                  style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
-                />
-              );
-            })}
-          </div>
-
-          <ol className="h-timeline-grid">
-            {events.map((e, i) => {
-              const startsEra = i === 0 || events[i - 1].chapter !== e.chapter;
-              const band = CHAPTER_BANDS.find((b) => b.chapter === e.chapter);
-              return (
-                <li
-                  key={e.year}
-                  className={`h-event chap-${e.chapter}${e.isAnchor ? " is-anchor" : ""}${
-                    e.hero ? " is-hero" : ""
-                  } ${i % 2 === 0 ? "is-above" : "is-below"}${startsEra ? " starts-era" : ""}`}
-                  data-era-label={startsEra && band ? band.label : undefined}
-                  data-era-years={startsEra && band ? band.years : undefined}
-                >
-                  <div className="h-event-dot" aria-hidden="true" />
-                  <div className="h-event-content">
-                    <div className="h-event-year">{e.year}</div>
-                    <div className="h-event-label">{e.label}</div>
-                    <p className="h-event-detail">{e.detail}</p>
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-      </div>
-    </div>
+    <ClubTimeline
+      events={events}
+      chapterBands={IPSWICH_CHAPTER_BANDS}
+      ariaLabel="Ipswich Town club history timeline"
+    />
   );
 }
