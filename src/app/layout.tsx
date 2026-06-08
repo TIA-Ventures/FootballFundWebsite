@@ -12,6 +12,8 @@ try {
   var t = localStorage.getItem('cv-theme');
   if (t === 'day' || t === 'night') {
     document.documentElement.setAttribute('data-theme', t);
+  } else {
+    document.documentElement.setAttribute('data-theme', 'day');
   }
 } catch (e) {}
 `;
@@ -75,17 +77,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="night" data-fonts="d6" suppressHydrationWarning>
+    <html lang="en" data-theme="day" data-fonts="d6" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
         <script dangerouslySetInnerHTML={{ __html: FONT_PRESET_BOOT }} />
+        <link rel="preload" as="image" href="/hero/ipswich-promotion-poster-v2.webp" type="image/webp" fetchPriority="high" />
         <link rel="preconnect" href="https://api.fontshare.com" />
         <link rel="preconnect" href="https://cdn.fontshare.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/* Default: Switzer (institutional sans) + JetBrains Mono for labels/stats */}
         <link
-          href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800&display=swap"
+          href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap"
           rel="stylesheet"
         />
         <link

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 export type TimelineChapter = "founding" | "golden" | "modern";
 
@@ -88,21 +88,31 @@ export function ClubTimeline({ events, chapterBands, ariaLabel }: ClubTimelinePr
               const startsEra = i === 0 || events[i - 1].chapter !== e.chapter;
               const band = chapterBands.find((b) => b.chapter === e.chapter);
               return (
-                <li
-                  key={`${e.year}-${i}`}
-                  className={`h-event chap-${e.chapter}${e.isAnchor ? " is-anchor" : ""}${
-                    e.hero ? " is-hero" : ""
-                  } ${i % 2 === 0 ? "is-above" : "is-below"}${startsEra ? " starts-era" : ""}`}
-                  data-era-label={startsEra && band ? band.label : undefined}
-                  data-era-years={startsEra && band ? band.years : undefined}
-                >
-                  <div className="h-event-dot" aria-hidden="true" />
-                  <div className="h-event-content">
-                    <div className="h-event-year">{e.year}</div>
-                    <div className="h-event-label">{e.label}</div>
-                    <p className="h-event-detail">{e.detail}</p>
-                  </div>
-                </li>
+                <Fragment key={`${e.year}-${i}`}>
+                  {startsEra && band ? (
+                    <li
+                      className={`h-era-divider chap-${e.chapter}${i === 0 ? " is-first" : ""}`}
+                      aria-label={`${band.label}, ${band.years}`}
+                    >
+                      <div className="h-era-divider-inner">
+                        <span className="h-era-divider-label">{band.label}</span>
+                        <span className="h-era-divider-years">{band.years}</span>
+                      </div>
+                    </li>
+                  ) : null}
+                  <li
+                    className={`h-event chap-${e.chapter}${e.isAnchor ? " is-anchor" : ""}${
+                      e.hero ? " is-hero" : ""
+                    } ${i % 2 === 0 ? "is-above" : "is-below"}${startsEra ? " starts-era" : ""}`}
+                  >
+                    <div className="h-event-dot" aria-hidden="true" />
+                    <div className="h-event-content">
+                      <div className="h-event-year">{e.year}</div>
+                      <div className="h-event-label">{e.label}</div>
+                      <p className="h-event-detail">{e.detail}</p>
+                    </div>
+                  </li>
+                </Fragment>
               );
             })}
           </ol>

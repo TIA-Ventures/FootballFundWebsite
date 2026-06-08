@@ -13,13 +13,32 @@ export function SiteCursor() {
     const dot = dotRef.current;
     if (!cursor || !dot) return;
 
+    const coarsePointer = window.matchMedia("(max-width: 720px), (pointer: coarse)").matches;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (coarsePointer || reducedMotion) {
+      cursor.style.display = "none";
+      dot.style.display = "none";
+      return;
+    }
+
+    let raf = 0;
+    let x = -100;
+    let y = -100;
+
+    const paint = () => {
+      raf = 0;
+      const posX = `${x}px`;
+      const posY = `${y}px`;
+      cursor.style.left = posX;
+      cursor.style.top = posY;
+      dot.style.left = posX;
+      dot.style.top = posY;
+    };
+
     const onMove = (e: MouseEvent) => {
-      const x = `${e.clientX}px`;
-      const y = `${e.clientY}px`;
-      cursor.style.left = x;
-      cursor.style.top = y;
-      dot.style.left = x;
-      dot.style.top = y;
+      x = e.clientX;
+      y = e.clientY;
+      if (!raf) raf = window.requestAnimationFrame(paint);
     };
 
     const onOver = (e: MouseEvent) => {
@@ -45,6 +64,7 @@ export function SiteCursor() {
     document.addEventListener("mouseout", onOut, { passive: true });
 
     return () => {
+      if (raf) window.cancelAnimationFrame(raf);
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);

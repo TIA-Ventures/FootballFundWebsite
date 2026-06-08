@@ -119,6 +119,15 @@ export function Topbar({ activeNav = null }: TopbarProps) {
                   <span className="npm-meta">Premier League · England</span>
                 </span>
               </Link>
+              <Link href="/portfolio/frosinone" role="menuitem" className="npm-item">
+                <span className="npm-flag" aria-hidden="true">
+                  <span className="npm-dot" />
+                </span>
+                <span className="npm-text">
+                  <span className="npm-club">Frosinone Calcio</span>
+                  <span className="npm-meta">Serie A · Italy</span>
+                </span>
+              </Link>
               <Link href="/portfolio/spain" role="menuitem" className="npm-item">
                 <span className="npm-flag" aria-hidden="true">
                   <span className="npm-dot npm-dot--target" />
@@ -128,15 +137,6 @@ export function Topbar({ activeNav = null }: TopbarProps) {
                     Spain <em>(target)</em>
                   </span>
                   <span className="npm-meta">La Liga · Spain</span>
-                </span>
-              </Link>
-              <Link href="/portfolio/frosinone" role="menuitem" className="npm-item">
-                <span className="npm-flag" aria-hidden="true">
-                  <span className="npm-dot" />
-                </span>
-                <span className="npm-text">
-                  <span className="npm-club">Frosinone Calcio</span>
-                  <span className="npm-meta">Serie A · Italy</span>
                 </span>
               </Link>
               <span className="npm-divider" aria-hidden="true" />
@@ -242,11 +242,11 @@ export function Topbar({ activeNav = null }: TopbarProps) {
               <Link href="/portfolio/ipswich" className="mm-sublink" onClick={closeMobile}>
                 Ipswich Town FC
               </Link>
-              <Link href="/portfolio/spain" className="mm-sublink" onClick={closeMobile}>
-                Spain <em>(target)</em>
-              </Link>
               <Link href="/portfolio/frosinone" className="mm-sublink" onClick={closeMobile}>
                 Frosinone Calcio
+              </Link>
+              <Link href="/portfolio/spain" className="mm-sublink" onClick={closeMobile}>
+                Spain <em>(target)</em>
               </Link>
             </div>
           </div>

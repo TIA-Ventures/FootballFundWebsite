@@ -91,17 +91,6 @@ const INVESTMENTS: Investment[] = [
     logo: "ipswich.svg",
   },
   {
-    name: "Spain (target)",
-    firm: "ClaraVista",
-    funds: ["cv-i"],
-    status: "Diligence",
-    sector: "football",
-    description:
-      "A historic Spanish club in active diligence — La Liga is the second-most valuable football league in the world. Details under embargo.",
-    href: "/portfolio/spain",
-    league: "La Liga · Spain",
-  },
-  {
     name: "Frosinone Calcio",
     firm: "ClaraVista",
     funds: ["cv-i"],
@@ -112,6 +101,17 @@ const INVESTMENTS: Investment[] = [
     href: "/portfolio/frosinone",
     league: "Serie A · Italy",
     logo: "frosinone-calcio.png",
+  },
+  {
+    name: "Spain (target)",
+    firm: "ClaraVista",
+    funds: ["cv-i"],
+    status: "Diligence",
+    sector: "football",
+    description:
+      "A historic Spanish club in active diligence — La Liga is the second-most valuable football league in the world. Details under embargo.",
+    href: "/portfolio/spain",
+    league: "La Liga · Spain",
   },
 
   // ---------- TIA Ventures — VC, alphabetical ----------

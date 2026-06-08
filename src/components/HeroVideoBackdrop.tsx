@@ -5,13 +5,21 @@ import { useEffect, useRef } from "react";
 /** Active hero reel (v2): three goal clips + celebration loop (~32s). */
 const VIDEO_DESKTOP = "/hero/ipswich-promotion-loop-v2-goals-and-celebration.mp4";
 const VIDEO_MOBILE = "/hero/ipswich-promotion-loop-v2-480p.mp4";
-const POSTER_SRC = "/hero/ipswich-promotion-poster-v2.jpg";
+const POSTER_WEBP = "/hero/ipswich-promotion-poster-v2.webp";
+const POSTER_JPG = "/hero/ipswich-promotion-poster-v2.jpg";
 
 function pickVideoSrc() {
-  if (typeof window === "undefined") return VIDEO_DESKTOP;
-  return window.matchMedia("(max-width: 720px), (pointer: coarse)").matches
-    ? VIDEO_MOBILE
-    : VIDEO_DESKTOP;
+  if (typeof window === "undefined") return VIDEO_MOBILE;
+  const narrow = window.matchMedia("(max-width: 1280px), (pointer: coarse)").matches;
+  return narrow ? VIDEO_MOBILE : VIDEO_DESKTOP;
+}
+
+function deferNonCritical(task: () => void) {
+  if (typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(task, { timeout: 2200 });
+  } else {
+    window.setTimeout(task, 350);
+  }
 }
 
 export function HeroVideoBackdrop() {
@@ -27,8 +35,10 @@ export function HeroVideoBackdrop() {
     if (reducedMotion) return;
 
     let loadedSrc: string | null = null;
+    let cancelled = false;
 
     const loadAndPlay = () => {
+      if (cancelled) return;
       const src = pickVideoSrc();
       if (loadedSrc !== src) {
         loadedSrc = src;
@@ -42,25 +52,23 @@ export function HeroVideoBackdrop() {
       video.pause();
     };
 
-    // Mobile: hero fills the viewport on load — start immediately (iOS is
-    // picky about deferred src + intersection-gated autoplay).
     const coarsePointer = window.matchMedia("(max-width: 720px), (pointer: coarse)").matches;
 
     const observer =
       !coarsePointer && typeof IntersectionObserver !== "undefined"
         ? new IntersectionObserver(
             ([entry]) => {
-              if (entry.isIntersecting) loadAndPlay();
+              if (entry.isIntersecting) deferNonCritical(loadAndPlay);
               else pauseVideo();
             },
-            { threshold: 0.08 },
+            { threshold: 0.08, rootMargin: "120px 0px" },
           )
         : null;
 
     if (observer) {
       observer.observe(wrap);
     } else {
-      loadAndPlay();
+      deferNonCritical(loadAndPlay);
     }
 
     const onVisibility = () => {
@@ -70,6 +78,7 @@ export function HeroVideoBackdrop() {
 
     document.addEventListener("visibilitychange", onVisibility);
     return () => {
+      cancelled = true;
       observer?.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
     };
@@ -77,18 +86,20 @@ export function HeroVideoBackdrop() {
 
   return (
     <div ref={wrapRef} className="hero-video-backdrop" aria-hidden="true">
-      {/* No src/preload/autoPlay on mount — poster only until JS attaches the
-          file (faststart MP4 + 480p on mobile). Avoids blocking LCP. */}
       <video
         ref={videoRef}
         className="hero-video"
-        poster={POSTER_SRC}
+        poster={POSTER_WEBP}
         muted
         loop
         playsInline
         preload="none"
       />
       <div className="hero-video-scrim" />
+      {/* JPG fallback for browsers without WebP poster support */}
+      <noscript>
+        <style>{`.hero-video { background: url("${POSTER_JPG}") center 42% / cover no-repeat; }`}</style>
+      </noscript>
     </div>
   );
 }

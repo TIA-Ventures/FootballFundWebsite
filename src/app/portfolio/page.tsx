@@ -40,7 +40,7 @@ const CLUBS: PortfolioCard[] = [
     loc: "Ipswich · England · Premier League",
     note: (
       <>
-        Anchor investment of Fund II. Held via the <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio
+        Controlling shareholder, Ipswich is the anchor investment of Fund II. Held via the <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio
         Management and the Three Lions Fund. Bob Gold sits on the board of Gamechanger 20 Ltd, the parent company of the
         club.
       </>
@@ -51,7 +51,26 @@ const CLUBS: PortfolioCard[] = [
     link: "View deep dive",
   },
   {
-    num: "02 / Spain",
+    num: "02 / Frosinone Calcio",
+    href: "/portfolio/frosinone",
+    status: "active",
+    statusLabel: "Active",
+    logo: "frosinone",
+    name: "Frosinone Calcio",
+    loc: "Frosinone · Italy · Serie A",
+    note: (
+      <>
+        Controlling investment via Clara Vista Frosinone SPV I. Promoted to Serie A in 2025/26 — a modern 16,227-seat
+        stadium with concession through 2061, and three top-flight promotions in the last decade — located an hour from Rome.
+      </>
+    ),
+    founded: "1928",
+    leagueLabel: "League",
+    leagueValue: "Serie A",
+    link: "View deep dive",
+  },
+  {
+    num: "03 / Spain",
     href: "/portfolio/spain",
     status: "diligence",
     statusLabel: "Active diligence",
@@ -72,25 +91,6 @@ const CLUBS: PortfolioCard[] = [
     leagueLabel: "League",
     leagueValue: "La Liga",
     link: "View diligence brief",
-  },
-  {
-    num: "03 / Frosinone Calcio",
-    href: "/portfolio/frosinone",
-    status: "active",
-    statusLabel: "Active",
-    logo: "frosinone",
-    name: "Frosinone Calcio",
-    loc: "Frosinone · Italy · Serie A",
-    note: (
-      <>
-        Controlling investment via Clara Vista Frosinone SPV I. Promoted to Serie A in 2025/26 — a modern 16,227-seat
-        stadium with concession through 2061, and three top-flight promotions in the last decade — one hour from Rome.
-      </>
-    ),
-    founded: "1928",
-    leagueLabel: "League",
-    leagueValue: "Serie A",
-    link: "View deep dive",
   },
 ];
 

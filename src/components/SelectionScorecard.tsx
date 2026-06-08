@@ -71,14 +71,14 @@ const CLUB_SCORES: Record<ClubKey, Record<AxisKey, number>> = {
 
 const CENTER_LABEL: Record<ClubKey, [string, string]> = {
   ipswich: ["Prospect", "A"],
-  spain:   ["Prospect", "B"],
-  frosinone: ["Frosinone", "Calcio"],
+  frosinone: ["Prospect", "B"],
+  spain:   ["Prospect", "C"],
 };
 
 const TABS: { key: ClubKey; label: string }[] = [
   { key: "ipswich", label: "Prospect A" },
-  { key: "spain",   label: "Prospect B" },
-  { key: "frosinone", label: "Frosinone" },
+  { key: "frosinone", label: "Prospect B" },
+  { key: "spain",   label: "Prospect C" },
 ];
 
 const CLUB_POLY: Record<ClubKey, string> = {
@@ -87,35 +87,39 @@ const CLUB_POLY: Record<ClubKey, string> = {
   spain:   "300,120 432.91,194.01 455.98,335.60 365.08,435.13 230.57,444.14 163.51,331.15 167.09,194.01",
 };
 
-const SCORE_POS: Record<ClubKey, Record<AxisKey, { x: number; y: number; anchor: "start" | "middle" | "end" }>> = {
-  ipswich: {
-    league:        { x: 300, y: 148, anchor: "middle" },
-    modernization: { x: 432, y: 192, anchor: "end" },
-    history:       { x: 454, y: 334, anchor: "start" },
-    fanbase:       { x: 368, y: 442, anchor: "start" },
-    acquisition:   { x: 218, y: 468, anchor: "end" },
-    stadium:       { x: 136, y: 335, anchor: "end" },
-    location:      { x: 190, y: 208, anchor: "end" },
-  },
-  frosinone: {
-    league:        { x: 300, y: 128, anchor: "middle" },
-    modernization: { x: 440, y: 186, anchor: "end" },
-    history:       { x: 444, y: 332, anchor: "start" },
-    fanbase:       { x: 360, y: 424, anchor: "start" },
-    acquisition:   { x: 214, y: 478, anchor: "end" },
-    stadium:       { x: 194, y: 322, anchor: "end" },
-    location:      { x: 151, y: 178, anchor: "end" },
-  },
-  spain: {
-    league:        { x: 300, y: 108, anchor: "middle" },
-    modernization: { x: 426, y: 198, anchor: "end" },
-    history:       { x: 464, y: 335, anchor: "start" },
-    fanbase:       { x: 372, y: 450, anchor: "start" },
-    acquisition:   { x: 223, y: 460, anchor: "end" },
-    stadium:       { x: 155, y: 331, anchor: "end" },
-    location:      { x: 159, y: 184, anchor: "end" },
-  },
-};
+const AXIS_ORDER: AxisKey[] = [
+  "league",
+  "modernization",
+  "history",
+  "fanbase",
+  "acquisition",
+  "stadium",
+  "location",
+];
+
+/** Inset score labels along each spoke so they sit inside the polygon, away from axis titles. */
+function scorePositionsForClub(
+  poly: string,
+  inset = 22,
+): Record<AxisKey, { x: number; y: number; anchor: "start" | "middle" | "end" }> {
+  const verts = poly.trim().split(/\s+/).map((pt) => {
+    const [x, y] = pt.split(",").map(Number);
+    return { x, y };
+  });
+
+  const out = {} as Record<AxisKey, { x: number; y: number; anchor: "start" | "middle" | "end" }>;
+  AXIS_ORDER.forEach((axis, i) => {
+    const { x: vx, y: vy } = verts[i];
+    const dx = vx - CHART_CX;
+    const dy = vy - CHART_CY;
+    const len = Math.hypot(dx, dy) || 1;
+    const x = vx - (dx / len) * inset;
+    const y = vy - (dy / len) * inset;
+    const anchor = Math.abs(dx) < 28 ? "middle" : dx > 0 ? "start" : "end";
+    out[axis] = { x, y, anchor };
+  });
+  return out;
+}
 
 const HEPTAGON_POINTS = "300,100 456.36,175.30 494.98,344.50 386.78,480.18 213.22,480.18 105.02,344.50 143.64,175.30";
 
@@ -149,7 +153,6 @@ function axisLabel(
   const dy = y - CHART_CY;
   const len = Math.hypot(dx, dy);
   const ux = dx / len;
-  const uy = dy / len;
   const anchorX = x + ux * LABEL_RADIAL;
   const lineStep = 15 * LABEL_LINE_EM;
 
@@ -219,7 +222,7 @@ export function SelectionScorecard() {
   const detail = CRITERION[activeAxis];
   const score = CLUB_SCORES[activeClub][activeAxis];
   const center = CENTER_LABEL[activeClub];
-  const positions = SCORE_POS[activeClub];
+  const positions = scorePositionsForClub(CLUB_POLY[activeClub]);
 
   return (
     <div
@@ -304,6 +307,7 @@ export function SelectionScorecard() {
                     y={p.y}
                     className="sc-score-num"
                     textAnchor={p.anchor}
+                    dominantBaseline="middle"
                   >
                     {CLUB_SCORES[activeClub][axis]}
                   </text>

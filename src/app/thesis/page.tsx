@@ -59,7 +59,7 @@ const AC_ROWS: AcRow[] = [
 const HERO_PROOF = [
   { value: "18", suffix: "%", label: "Sports annualized return · last 10 yrs" },
   { value: "4", suffix: "%", label: "Correlation to the S&P 500 · last 10 yrs" },
-  { value: "+4", suffix: "%", label: "Sports return during the Great Financial Recession · 2007–2009" },
+  { value: "+4", suffix: "%", label: "Sports return during the 2008 Recession" },
 ];
 
 function toneClass(tone?: "sports" | "negative") {

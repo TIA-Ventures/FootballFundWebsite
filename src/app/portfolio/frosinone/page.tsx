@@ -10,6 +10,10 @@ const FrosinoneTimeline = dynamic(
   () => import("@/components/FrosinoneTimeline").then((m) => ({ default: m.FrosinoneTimeline })),
 );
 
+const FrosinoneRevenueChart = dynamic(
+  () => import("@/components/FrosinoneRevenueChart").then((m) => ({ default: m.FrosinoneRevenueChart })),
+);
+
 export const metadata: Metadata = {
   title: "Frosinone Calcio · Portfolio · Clara Vista Investment Partners",
   description:
@@ -155,6 +159,8 @@ export default function FrosinonePage() {
                 powered by Clara Vista&apos;s data-first operating model.
               </p>
             </div>
+
+            <FrosinoneRevenueChart />
 
             <div className="accomp-grid">
               {ROADMAP.map((step) => (

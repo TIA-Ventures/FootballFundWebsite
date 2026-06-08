@@ -1332,13 +1332,16 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
     const WAVE_GAP = 16000; // ms between consecutive city pulses (any city)
     let nextWaveCityIdx = 0;
     let lastAnyWaveTime = -Infinity;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function emitWave(city: any, startT: number) {
       WAVES.push({ cx: city.px, cy: city.py, start: startT, duration: 9000 });
     }
 
     // ---- MOUSE ----
     const mouse = { x: -9999, y: -9999, clientX: 0, clientY: 0 };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let pinned: any = null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let hoveredCity: any = null;
 
     function updateMousePosition(e: MouseEvent | PointerEvent) {
@@ -1518,6 +1521,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       const a = portfolioBias
         ? PORTFOLIO[Math.floor(Math.random() * PORTFOLIO.length)]
         : ALL_EU[Math.floor(Math.random() * ALL_EU.length)];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let b: any;
       let tries = 0;
       while (tries < 12) {
@@ -1537,6 +1541,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const BROADCASTS: any[] = [];
     const portfolioBroadcastTimers = PORTFOLIO.map((_, i) => 3000 + i * 1700);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function emitBroadcast(city: any, startT: number) {
       BROADCASTS.push({ cx: city.px, cy: city.py, start: startT, duration: 6500 });
     }
@@ -1583,14 +1588,14 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
     initParticles();
 
     // ---- RENDER LOOP ----
-    let firstFrame = performance.now();
+    const firstFrame = performance.now();
     let loaderHidden = false;
     function hideLoader() {
       if (loaderHidden) return;
       loaderHidden = true;
       loader?.classList.add("hidden");
     }
-    let lastBroadcastTime = [-Infinity, -Infinity, -Infinity];
+    const lastBroadcastTime = [-Infinity, -Infinity, -Infinity];
     // Slow broadcast ripples too (they radiate from the same 3 portfolio towns).
     const BROADCAST_INTERVAL = [26000, 28500, 27200];
     let lastTransferTime = -Infinity;
@@ -2656,21 +2661,21 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
             </div>
             <div className="pp-status active" title="Active" />
           </Link>
-          <Link href="/portfolio/spain" className="pp-row" aria-label="View Spain target details">
-            <div className="pp-num">02</div>
-            <div className="pp-info">
-              <div className="pp-city">Spain</div>
-              <div className="pp-club">Target · active diligence</div>
-            </div>
-            <div className="pp-status diligence" title="Diligence" />
-          </Link>
           <Link href="/portfolio/frosinone" className="pp-row" aria-label="View Frosinone Calcio details">
-            <div className="pp-num">03</div>
+            <div className="pp-num">02</div>
             <div className="pp-info">
               <div className="pp-city">Frosinone</div>
               <div className="pp-club">Frosinone Calcio · Italy</div>
             </div>
             <div className="pp-status active" title="Active" />
+          </Link>
+          <Link href="/portfolio/spain" className="pp-row" aria-label="View Spain target details">
+            <div className="pp-num">03</div>
+            <div className="pp-info">
+              <div className="pp-city">Spain</div>
+              <div className="pp-club">Target · active diligence</div>
+            </div>
+            <div className="pp-status diligence" title="Diligence" />
           </Link>
         </div>
 
@@ -2753,7 +2758,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
             <div className="cc-name">Ipswich Town</div>
             <div className="cc-location">Ipswich · England</div>
             <p className="cc-note">
-              Anchor investment of Fund II. Held via the <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio
+              Controlling shareholder, Ipswich is the anchor investment of Fund II. Held via the <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio
               Management and the Three Lions Fund. Back-to-back promotions to the Premier League — among the highest
               player value creation in global football in 2024/25.
             </p>
@@ -2772,9 +2777,41 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
             </Link>
           </div>
           <div className="club-card">
+            <div className="cc-logo">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/frosinone-calcio.png" alt="Frosinone Calcio crest" className="frosinone-crest" />
+            </div>
+            <div className="cc-meta">
+              <span className="cc-num">02 / Frosinone Calcio</span>
+              <span className="cc-status">
+                <span className="cc-dot active" aria-hidden="true" />
+                <span className="cc-status-text">Active</span>
+              </span>
+            </div>
+            <div className="cc-name">Frosinone Calcio</div>
+            <div className="cc-location">Frosinone · Italy · Serie A</div>
+            <p className="cc-note">
+              Controlling investment via Clara Vista Frosinone SPV I. Promoted to Serie A in 2025/26 — a modern
+              16,227-seat stadium and three top-flight promotions in the last decade — located an hour from Rome.
+            </p>
+            <div className="cc-stats">
+              <div>
+                <div className="cc-stat-label">Founded</div>
+                <div className="cc-stat-value">1928</div>
+              </div>
+              <div>
+                <div className="cc-stat-label">League</div>
+                <div className="cc-stat-value">Serie A</div>
+              </div>
+            </div>
+            <Link href="/portfolio/frosinone" className="cc-link">
+              View deep dive
+            </Link>
+          </div>
+          <div className="club-card">
             <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
             <div className="cc-meta">
-              <span className="cc-num">02 / Spain</span>
+              <span className="cc-num">03 / Spain</span>
               <span className="cc-status">
                 <span className="cc-dot diligence" aria-hidden="true" />
                 <span className="cc-status-text">Active diligence</span>
@@ -2803,38 +2840,6 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
             </div>
             <Link href="/portfolio/spain" className="cc-link">
               View diligence brief
-            </Link>
-          </div>
-          <div className="club-card">
-            <div className="cc-logo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/frosinone-calcio.png" alt="Frosinone Calcio crest" className="frosinone-crest" />
-            </div>
-            <div className="cc-meta">
-              <span className="cc-num">03 / Frosinone Calcio</span>
-              <span className="cc-status">
-                <span className="cc-dot active" aria-hidden="true" />
-                <span className="cc-status-text">Active</span>
-              </span>
-            </div>
-            <div className="cc-name">Frosinone Calcio</div>
-            <div className="cc-location">Frosinone · Italy · Serie A</div>
-            <p className="cc-note">
-              Controlling investment via Clara Vista Frosinone SPV I. Promoted to Serie A in 2025/26 — a modern
-              16,227-seat stadium and three top-flight promotions in the last decade — positioned one hour from Rome.
-            </p>
-            <div className="cc-stats">
-              <div>
-                <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">1928</div>
-              </div>
-              <div>
-                <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">Serie A</div>
-              </div>
-            </div>
-            <Link href="/portfolio/frosinone" className="cc-link">
-              View deep dive
             </Link>
           </div>
         </div>

@@ -30,6 +30,10 @@ function metricId(pillar: string, name: string) {
   return `${pillar}-${name}`;
 }
 
+type RenderMetric = Metric & { id: string; basePct: number; animationIndex: number };
+
+type RenderPillar = Omit<Pillar, "metrics"> & { metrics: RenderMetric[] };
+
 const PILLARS: Pillar[] = [
   {
     n: "01",
@@ -80,6 +84,24 @@ const PILLARS: Pillar[] = [
     ],
   },
 ];
+
+// Sort metrics by impact and assign a stable, monotonically increasing
+// animation index across all pillars — computed once at module load rather
+// than recomputed (and mutated) on every render.
+const RENDER_PILLARS: RenderPillar[] = (() => {
+  let animationIndex = 0;
+  return PILLARS.map((pillar) => ({
+    ...pillar,
+    metrics: [...pillar.metrics]
+      .sort((a, b) => b.impact - a.impact)
+      .map((metric) => ({
+        ...metric,
+        id: metricId(pillar.n, metric.name),
+        basePct: basePos(metric.impact),
+        animationIndex: animationIndex++,
+      })),
+  }));
+})();
 
 function animateSliders(container: HTMLElement, reducedMotion: boolean) {
   const sliders = container.querySelectorAll<HTMLElement>(".ve-slider");
@@ -142,8 +164,6 @@ export function ValueEngine() {
     setActiveMetric((current) => (current === id ? null : id));
   };
 
-  let metricIndex = 0;
-
   return (
     <div
       className="value-engine"
@@ -168,9 +188,7 @@ export function ValueEngine() {
       </div>
 
       <div className="ve-bands">
-        {PILLARS.map((pillar) => {
-          const sortedMetrics = [...pillar.metrics].sort((a, b) => b.impact - a.impact);
-
+        {RENDER_PILLARS.map((pillar) => {
           return (
             <section key={pillar.n} className="ve-band" aria-labelledby={`ve-band-${pillar.n}`}>
               <div className="ve-band-label">
@@ -182,12 +200,10 @@ export function ValueEngine() {
 
               <div className="ve-metrics-col">
                 <div className="ve-metrics">
-                  {sortedMetrics.map((metric) => {
-                    const id = metricId(pillar.n, metric.name);
-                    const bp = basePos(metric.impact);
+                  {pillar.metrics.map((metric) => {
+                    const { id, basePct: bp } = metric;
                     const isActive = activeMetric === id;
-                    const delay = metricIndex * 50;
-                    metricIndex += 1;
+                    const delay = metric.animationIndex * 50;
 
                     return (
                       <button

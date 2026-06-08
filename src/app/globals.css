@@ -1165,6 +1165,13 @@ html {
   --type-display-sm: 1.5rem; /* 24px · card names, section titles */
   --type-display-sm-lg: 1.625rem; /* 26px · card headlines */
   --type-display-md: 2rem;   /* 32px · stat callouts */
+  /* Fluid display — rem + vw keeps mobile ~65–72% of desktop cap (best practice). */
+  --type-display-xl: clamp(3rem, 2rem + 5vw, 4.75rem);           /* page h1 · 48–76px */
+  --type-display-lg: clamp(2.25rem, 1.5rem + 3.5vw, 3.125rem); /* section h2 · 36–50px */
+  --type-display-md-fluid: clamp(2.125rem, 1.375rem + 3.25vw, 3.25rem); /* panel h2 · 34–52px */
+  --type-display-deep: clamp(3rem, 2rem + 6vw, 5.5rem);           /* club deep dive · 48–88px */
+  --type-display-hero: clamp(2.75rem, 1.625rem + 5.75vw, 4.5rem); /* home hero · 44–72px */
+  --type-display-statement: clamp(2.75rem, 1.5rem + 6vw, 5.75rem); /* manifesto · 44–92px */
 }
 
 /* Display headings — gold emphasis matches home hero (upright Switzer 700). */
@@ -1986,7 +1993,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hero-video { display: none; }
   .hero-video-backdrop {
-    background: url("/hero/ipswich-promotion-poster-v2.jpg") center 42% / cover no-repeat;
+    background: url("/hero/ipswich-promotion-poster-v2.webp") center 42% / cover no-repeat;
     filter: saturate(1.18) contrast(1.10) brightness(0.94);
   }
 }
@@ -2049,7 +2056,7 @@ body {
 .headline {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: clamp(40px, 5.2vw, 76px);
+  font-size: var(--type-display-hero);
   line-height: 1.02;
   letter-spacing: -0.03em;
   margin-bottom: 26px;
@@ -2089,7 +2096,7 @@ body {
 .home-hero .headline {
   font-family: 'Switzer', var(--font-sans), system-ui, sans-serif;
   font-weight: 600;
-  font-size: clamp(42px, 5.4vw, 72px);
+  font-size: var(--type-display-hero);
   line-height: 1.04;
   letter-spacing: -0.03em;
   margin-bottom: 20px;
@@ -2609,7 +2616,7 @@ body {
     letter-spacing: 0.28em;
   }
   .hero-headline .headline {
-    font-size: clamp(36px, 10.5vw, 48px);
+    font-size: var(--type-display-hero);
     line-height: 1.06;
     margin-bottom: 18px;
   }
@@ -2843,7 +2850,7 @@ body {
 }
 .ps-head h2 {
   font-family: var(--font-sans);
-  font-size: clamp(32px, 3.4vw, 52px);
+  font-size: var(--type-display-md-fluid);
   font-weight: 600; line-height: 1.08;
   letter-spacing: -0.03em;
   color: var(--ivory);
@@ -3135,7 +3142,7 @@ body {
 .manifesto-headline {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: clamp(28px, 5.8vw, 92px);
+  font-size: var(--type-display-statement);
   line-height: 1.05;
   letter-spacing: -0.03em;
   color: var(--ivory);
@@ -3779,7 +3786,7 @@ body {
 }
 .cv-page .chapter-break-h2 {
   font-family: var(--font-sans);
-  font-size: clamp(40px, 5.6vw, 80px);
+  font-size: var(--type-display-xl);
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.03em;
@@ -5248,7 +5255,7 @@ body {
 }
 .cv-page .ph-h1 {
   font-family: var(--font-sans);
-  font-size: clamp(40px, 5vw, 76px);
+  font-size: var(--type-display-xl);
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.03em;
@@ -5281,6 +5288,10 @@ body {
   border-bottom: 1px solid var(--line);
   background: var(--bg);
   transition: border-color 0.6s ease, background-color 0.6s ease;
+}
+.cv-page .section:not(:first-of-type) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
 }
 .cv-page .section:last-of-type { border-bottom: none; }
 .cv-page .section.bg-deep { background: var(--bg-deep); }
@@ -5327,7 +5338,7 @@ body {
 }
 .cv-page .sh-h2 {
   font-family: var(--font-sans);
-  font-size: clamp(30px, 3.4vw, 50px);
+  font-size: var(--type-display-lg);
   font-weight: 600;
   line-height: 1.06;
   letter-spacing: -0.03em;
@@ -5552,8 +5563,37 @@ body {
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   transition: color 0.6s ease;
+}
+.team-page .person-role-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.team-page .person-linkedin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--ivory-dim);
+  opacity: 0.78;
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+.team-page .person-linkedin:hover {
+  color: var(--green-light);
+  opacity: 1;
+}
+.team-page .person-linkedin:focus-visible {
+  outline: 2px solid var(--green-light);
+  outline-offset: 2px;
+}
+.team-page .person-linkedin--placeholder {
+  opacity: 0.42;
+  pointer-events: none;
 }
 .team-page .person-role {
   font-family: var(--font-sans);
@@ -5562,7 +5602,7 @@ body {
   text-transform: uppercase;
   color: var(--ivory-dim);
   font-weight: 500;
-  margin-bottom: 12px;
+  margin-bottom: 0;
   transition: color 0.6s ease;
 }
 .team-page .person-bio {
@@ -6387,7 +6427,7 @@ body {
 }
 .cv-page .deep-h1 {
   font-family: var(--font-serif);
-  font-size: clamp(48px, 5.6vw, 88px);
+  font-size: var(--type-display-deep);
   font-weight: 300;
   line-height: 0.98;
   letter-spacing: -0.028em;
@@ -6555,12 +6595,8 @@ body {
   border-right: 1px solid var(--line-soft);
   transition: background 0.4s;
 }
-.cv-page .glance-cell:nth-child(4) {
-  background: var(--bg-deep);
-}
 .cv-page .glance-cell:last-child { border-right: none; }
 .cv-page .glance-cell:hover { background: var(--bg-card); }
-.cv-page .glance-cell:nth-child(4):hover { background: var(--bg-card); }
 .cv-page .glance-label {
   font-family: var(--font-mono);
   font-size: var(--type-mono);
@@ -7358,6 +7394,12 @@ body {
   height: 100%;
 }
 
+/* Mobile-only era chapter breaks — hidden on horizontal desktop layout. */
+.cv-page .h-era-divider {
+  display: none;
+  list-style: none;
+}
+
 /* Each event: 3-row grid so dot sits exactly on rail center */
 .cv-page .h-event {
   flex: 0 0 172px;
@@ -7609,30 +7651,85 @@ body {
   .cv-page .glance-cell:nth-child(2n) { border-right: none; }
   .cv-page .glance-cell:nth-child(-n+4) { border-bottom: 1px solid var(--line-soft); }
   .cv-page .deal-row { grid-template-columns: 1fr; gap: 8px; padding: 16px 0; }
-  /* Mobile timeline: collapse to a vertical rail with cards on the right. */
+  /* Mobile timeline: vertical rail with grouped chapter sections. */
   .cv-page .h-timeline { margin: 32px 0 48px; }
   .cv-page .h-timeline-hint { display: none; }
-  /* Hide vertical bands and the chapter-row above; era markers appear
-     inline before each chapter's first event in the vertical layout. */
   .cv-page .h-timeline-eras-row { display: none; }
   .cv-page .h-event.starts-era::before {
-    content: attr(data-era-label);
-    grid-column: 1 / -1;
-    grid-row: auto;
+    display: none;
+    content: none;
+  }
+  .cv-page .h-era-divider {
     display: block;
-    margin: 12px 0 6px;
-    padding-left: 4px;
-    font-family: var(--font-mono);
-    font-size: var(--type-mono);
-    letter-spacing: 0.24em;
+    flex: 0 0 auto;
+    width: 100%;
+    margin: 0 0 20px;
+    padding: 0;
+    position: relative;
+  }
+  .cv-page .h-era-divider:not(.is-first) {
+    margin-top: 32px;
+  }
+  /* Break the vertical rail between chapters — standard mobile timeline pattern. */
+  .cv-page .h-era-divider:not(.is-first)::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: -20px;
+    width: 2px;
+    height: 20px;
+    background: var(--bg);
+    z-index: 3;
+  }
+  .cv-page .h-era-divider-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 18px 15px;
+    background: var(--bg-deep);
+    border: 1px solid var(--line-soft);
+    border-left-width: 3px;
+  }
+  .cv-page .h-era-divider.chap-founding .h-era-divider-inner {
+    border-left-color: color-mix(in srgb, var(--ivory-dim) 70%, transparent);
+  }
+  .cv-page .h-era-divider.chap-golden .h-era-divider-inner {
+    border-left-color: color-mix(in srgb, var(--green-light) 75%, transparent);
+  }
+  .cv-page .h-era-divider.chap-modern .h-era-divider-inner {
+    border-left-color: var(--green-light);
+  }
+  .cv-page .h-era-divider-label {
+    font-family: var(--font-sans);
+    font-size: var(--type-label);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
     text-transform: uppercase;
   }
-  .cv-page .h-event.starts-era.chap-founding::before { color: var(--ivory-mid); }
-  .cv-page .h-event.starts-era.chap-golden::before {
+  .cv-page .h-era-divider.chap-founding .h-era-divider-label {
+    color: var(--ivory-mid);
+  }
+  .cv-page .h-era-divider.chap-golden .h-era-divider-label {
     color: color-mix(in srgb, var(--green-light) 82%, var(--ivory));
   }
-  .cv-page .h-event.starts-era.chap-modern::before { color: var(--green-light); }
-  .cv-page .h-event:first-child.starts-era::before { margin-top: 0; }
+  .cv-page .h-era-divider.chap-modern .h-era-divider-label {
+    color: var(--green-light);
+  }
+  .cv-page .h-era-divider-years {
+    font-family: var(--font-mono);
+    font-size: var(--type-caption);
+    letter-spacing: 0.2em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--ivory-dim);
+  }
+  .cv-page .h-era-divider.chap-golden .h-era-divider-years {
+    color: color-mix(in srgb, var(--green-light) 45%, var(--ivory-dim));
+  }
+  .cv-page .h-era-divider.chap-modern .h-era-divider-years {
+    color: color-mix(in srgb, var(--green-light) 58%, var(--ivory-dim));
+  }
   .cv-page .h-timeline-scroll {
     overflow: visible;
     padding: 0;
@@ -7643,13 +7740,13 @@ body {
   .cv-page .h-timeline-track {
     min-width: 0;
     height: auto;
-    padding: 4px 0 4px 28px;
+    padding: 4px 0 4px 0;
   }
   .cv-page .h-timeline-rail {
     left: 4px;
     right: auto;
-    top: 0;
-    bottom: 0;
+    top: 8px;
+    bottom: 8px;
     width: 2px;
     height: auto;
     transform: none;
@@ -7666,7 +7763,7 @@ body {
   .cv-page .h-timeline-rail-seg { display: none; }
   .cv-page .h-timeline-grid {
     flex-direction: column;
-    gap: 22px;
+    gap: 0;
     height: auto;
   }
   .cv-page .h-event {
@@ -7676,8 +7773,12 @@ body {
     grid-template-rows: auto;
     justify-items: start;
     align-items: start;
-    padding: 0;
+    padding: 0 0 0 28px;
+    margin-bottom: 22px;
     column-gap: 16px;
+  }
+  .cv-page .h-event:last-child {
+    margin-bottom: 0;
   }
   .cv-page .h-event-dot {
     grid-row: 1;
