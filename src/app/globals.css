@@ -8316,6 +8316,29 @@ body {
   margin: 0 auto;
   text-align: center;
 }
+
+/* Home — fine-print disclaimer above the footer */
+.home-disclaimer {
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 5vw, 56px);
+}
+.home-disclaimer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.home-disclaimer p {
+  font-family: var(--font-sans);
+  font-size: var(--type-mono);
+  line-height: 1.6;
+  color: var(--ivory-dim);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  max-width: 80ch;
+}
 .home-platform-banner p {
   font-family: var(--font-sans);
   font-size: clamp(1.375rem, 1.1rem + 1.1vw, 1.875rem);
@@ -8451,4 +8474,22 @@ body {
     min-height: min(48vh, 520px);
     height: min(48vh, 520px);
   }
+}
+
+/* ===========================================================================
+   Laptop range (13"–15") — keep the full nav fitting without forcing the
+   mobile hamburger. 16"+ (>1500px) keeps the brand tagline + wider spacing.
+   =========================================================================== */
+@media (min-width: 721px) and (max-width: 1500px) {
+  .topbar { padding: 22px 32px; }
+  .brand-tagline,
+  .brand-divider { display: none; }
+  .nav-area { gap: 18px; }
+  .nav { gap: 22px; }
+}
+@media (min-width: 721px) and (max-width: 1240px) {
+  .topbar { padding: 20px 26px; }
+  .nav-area { gap: 14px; }
+  .nav { gap: 16px; }
+  .nav a { letter-spacing: 0.02em; }
 }

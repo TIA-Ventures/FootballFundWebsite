@@ -158,6 +158,20 @@ export function HomeHero() {
           </div>
         </div>
       </section>
+
+      <section className="home-disclaimer" aria-label="Disclaimer">
+        <div className="home-disclaimer-inner">
+          <p>
+            Clara Vista is regularly pursuing sports-focused investment opportunities in multiple
+            markets, including the possible acquisition of interests in European football clubs.
+          </p>
+          <p>
+            Clara Vista is also an investor in Ipswich Town FC, however, the firm is not pursuing a
+            Multi-Club Ownership model (MCO). None of these investments will have any connection with
+            Ipswich Town or Gamechanger 20, Ltd.
+          </p>
+        </div>
+      </section>
     </>
   );
 }

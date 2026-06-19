@@ -269,7 +269,6 @@ export function FrosinoneRevenueChart() {
             <p className="rev-series-panel-title">Revenue streams</p>
             <ul className="rev-series-legend">
               {SERIES.map((s) => {
-                const row = breakdown.rows.find((r) => r.id === s.id);
                 const isActive = activeSeries === s.id;
                 return (
                   <li key={s.id}>
@@ -283,9 +282,6 @@ export function FrosinoneRevenueChart() {
                     >
                       <span className="rev-series-swatch" style={{ background: s.color }} aria-hidden="true" />
                       <span className="rev-series-label">{s.label}</span>
-                      <span className="rev-series-val">
-                        {row ? `${formatM(row.value)} · ${Math.round(row.pct)}%` : "—"}
-                      </span>
                     </button>
                   </li>
                 );
