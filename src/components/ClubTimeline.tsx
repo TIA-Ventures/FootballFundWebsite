@@ -27,6 +27,8 @@ type ClubTimelineProps = {
   ariaLabel: string;
   /** Scroll the timeline to this event index on first paint (user can still scroll back). */
   initialScrollToIndex?: number;
+  /** Render most-recent first (left) shifting to the past on the right. */
+  reversed?: boolean;
 };
 
 export function ClubTimeline({
@@ -34,9 +36,17 @@ export function ClubTimeline({
   chapterBands,
   ariaLabel,
   initialScrollToIndex,
+  reversed = false,
 }: ClubTimelineProps) {
   const n = events.length;
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  const orderedEvents = reversed ? [...events].reverse() : events;
+  const displayBands = reversed
+    ? chapterBands
+        .map((b) => ({ ...b, start: n - b.end, end: n - b.start }))
+        .reverse()
+    : chapterBands;
 
   useEffect(() => {
     if (initialScrollToIndex === undefined) return;
@@ -65,7 +75,7 @@ export function ClubTimeline({
         aria-label={ariaLabel}
       >
         <div className="h-timeline-eras-row" aria-hidden="true">
-          {chapterBands.map((band) => {
+          {displayBands.map((band) => {
             const leftPct = (band.start / n) * 100;
             const widthPct = ((band.end - band.start) / n) * 100;
             return (
@@ -83,7 +93,7 @@ export function ClubTimeline({
 
         <div className="h-timeline-track">
           <div className="h-timeline-bands" aria-hidden="true">
-            {chapterBands.map((band, bi) => {
+            {displayBands.map((band, bi) => {
               const leftPct = (band.start / n) * 100;
               const widthPct = ((band.end - band.start) / n) * 100;
               return (
@@ -99,7 +109,7 @@ export function ClubTimeline({
           </div>
 
           <div className="h-timeline-rail" aria-hidden="true">
-            {chapterBands.map((band) => {
+            {displayBands.map((band) => {
               const leftPct = (band.start / n) * 100;
               const widthPct = ((band.end - band.start) / n) * 100;
               return (
@@ -113,9 +123,10 @@ export function ClubTimeline({
           </div>
 
           <ol className="h-timeline-grid">
-            {events.map((e, i) => {
-              const startsEra = i === 0 || events[i - 1].chapter !== e.chapter;
+            {orderedEvents.map((e, i) => {
+              const startsEra = i === 0 || orderedEvents[i - 1].chapter !== e.chapter;
               const band = chapterBands.find((b) => b.chapter === e.chapter);
+              const originalIndex = reversed ? n - 1 - i : i;
               return (
                 <Fragment key={`${e.year}-${i}`}>
                   {startsEra && band ? (
@@ -133,7 +144,7 @@ export function ClubTimeline({
                     className={`h-event chap-${e.chapter}${e.isAnchor ? " is-anchor" : ""}${
                       e.hero ? " is-hero" : ""
                     } ${i % 2 === 0 ? "is-above" : "is-below"}${startsEra ? " starts-era" : ""}`}
-                    data-timeline-index={i}
+                    data-timeline-index={originalIndex}
                   >
                     <div className="h-event-dot" aria-hidden="true" />
                     <div className="h-event-content">

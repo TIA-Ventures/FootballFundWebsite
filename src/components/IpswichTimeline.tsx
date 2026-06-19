@@ -148,13 +148,12 @@ type IpswichTimelineProps = {
 };
 
 export function IpswichTimeline({ events = IPSWICH_TIMELINE }: IpswichTimelineProps) {
-  const anchorIndex = events.findIndex((e) => e.year === "Mar 2024");
   return (
     <ClubTimeline
       events={events}
       chapterBands={IPSWICH_CHAPTER_BANDS}
       ariaLabel="Ipswich Town club history timeline"
-      initialScrollToIndex={anchorIndex >= 0 ? anchorIndex : undefined}
+      reversed
     />
   );
 }

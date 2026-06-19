@@ -33,19 +33,19 @@ const GLANCE: GlanceCell[] = [
 
 const ROADMAP = [
   {
-    num: "01",
+    num: "1",
     title: "Stabilize & build",
     body:
       "Deploy Clara Vista's data-led recruitment model, upgrade training infrastructure, and launch ticketing, sponsorship, and hospitality optimization — compounding commercial upside in the club's first Serie A season back.",
   },
   {
-    num: "02",
+    num: "2",
     title: "Establish in Serie A",
     body:
       "Consolidate top-flight status with a media revenue step-up to €35M+ and total club revenue above €50M, while maintaining a disciplined ~45% wage-to-revenue ratio after promotion from Serie B.",
   },
   {
-    num: "03",
+    num: "3",
     title: "Entrench & exit",
     body:
       "Sustain mid-table Serie A performance, grow revenue toward €70M+, expand the player-trading engine, and exit at institutional multiples in the ~€225M valuation range.",

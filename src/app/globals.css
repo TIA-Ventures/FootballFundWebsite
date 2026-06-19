@@ -7240,20 +7240,6 @@ body {
   padding: 8px 0 12px;
   margin: 0;
   scrollbar-width: none;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    black 56px,
-    black calc(100% - 56px),
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    black 56px,
-    black calc(100% - 56px),
-    transparent 100%
-  );
 }
 .cv-page .h-timeline-scroll::-webkit-scrollbar {
   display: none;
@@ -8326,7 +8312,7 @@ body {
   padding: clamp(72px, 9vw, 132px) clamp(24px, 5vw, 56px);
 }
 .home-platform-banner-inner {
-  max-width: 760px;
+  max-width: 80ch;
   margin: 0 auto;
   text-align: center;
 }

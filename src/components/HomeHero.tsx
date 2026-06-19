@@ -62,7 +62,7 @@ export function HomeHero() {
               <img src="/ipswich-town.svg" alt="Ipswich Town FC crest" />
             </div>
             <div className="cc-meta">
-              <span className="cc-num">01 / Ipswich Town FC</span>
+              <span className="cc-num">1 / Ipswich Town FC</span>
               <span className="cc-status">
                 <span className="cc-dot active" aria-hidden="true" />
                 <span className="cc-status-text">Active</span>
@@ -96,7 +96,7 @@ export function HomeHero() {
               <img src="/frosinone-calcio.png" alt="Frosinone Calcio crest" className="frosinone-crest" />
             </div>
             <div className="cc-meta">
-              <span className="cc-num">02 / Frosinone Calcio</span>
+              <span className="cc-num">2 / Frosinone Calcio</span>
               <span className="cc-status">
                 <span className="cc-dot active" aria-hidden="true" />
                 <span className="cc-status-text">Active</span>
@@ -125,7 +125,7 @@ export function HomeHero() {
           <div className="club-card">
             <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
             <div className="cc-meta">
-              <span className="cc-num">03 / Spain</span>
+              <span className="cc-num">3 / Spain</span>
               <span className="cc-status">
                 <span className="cc-dot diligence" aria-hidden="true" />
                 <span className="cc-status-text">Active diligence</span>

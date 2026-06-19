@@ -234,7 +234,7 @@ export function SelectionScorecard() {
         <div className="scoring-text-col">
           <div className="section-head solo" style={{ marginBottom: 28 }}>
             <div>
-              <div className="sh-eyebrow">001 · We invest</div>
+              <div className="sh-eyebrow">1 · We invest</div>
               <h2 className="sh-h2">
                 Acquire <em>the right clubs.</em>
               </h2>

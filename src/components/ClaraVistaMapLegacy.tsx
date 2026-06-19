@@ -676,7 +676,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
         league: "Premier League",
         status: "Active",
         kind: "closed",
-        num: "01",
+        num: "1",
         logo: "/ipswich-town.svg",
       },
       {
@@ -689,7 +689,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
         league: "La Liga",
         status: "Diligence",
         kind: "diligence",
-        num: "02",
+        num: "2",
       },
       {
         name: "Frosinone",
@@ -701,7 +701,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
         league: "Serie A",
         status: "Active",
         kind: "closed",
-        num: "03",
+        num: "3",
         logo: "/frosinone-calcio.png",
       },
     ];
@@ -2361,7 +2361,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
         const labelOffset = 32;
         const labelX = c.px + labelOffset;
         const numSize = 14;
-        const titleSize = 17;
+        const titleSize = 23;
         const subSize = 12;
 
         const subLabel = c.kind === "closed" ? c.league : `${c.league} · TBD`;
@@ -2651,14 +2651,14 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
         <div className="portfolio-panel">
           <div className="pp-label">
             <span>Portfolio</span>
-            <span className="pp-label-count">01 / 03</span>
+            <span className="pp-label-count">1 / 3</span>
           </div>
           <Link
             href="/portfolio/ipswich"
             className="pp-row is-ipswich"
             aria-label="View Ipswich Town FC details"
           >
-            <div className="pp-num">01</div>
+            <div className="pp-num">1</div>
             <div className="pp-info">
               <div className="pp-city">Ipswich</div>
               <div className="pp-club">Ipswich Town FC · England</div>
@@ -2666,7 +2666,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
             <div className="pp-status active" title="Active" />
           </Link>
           <Link href="/portfolio/frosinone" className="pp-row" aria-label="View Frosinone Calcio details">
-            <div className="pp-num">02</div>
+            <div className="pp-num">2</div>
             <div className="pp-info">
               <div className="pp-city">Frosinone</div>
               <div className="pp-club">Frosinone Calcio · Italy</div>
@@ -2674,7 +2674,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
             <div className="pp-status active" title="Active" />
           </Link>
           <Link href="/portfolio/spain" className="pp-row" aria-label="View Spain target details">
-            <div className="pp-num">03</div>
+            <div className="pp-num">3</div>
             <div className="pp-info">
               <div className="pp-city">Spain</div>
               <div className="pp-club">Target · active diligence</div>
@@ -2753,7 +2753,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
               <img src="/ipswich-town.svg" alt="Ipswich Town FC crest" />
             </div>
             <div className="cc-meta">
-              <span className="cc-num">01 / Ipswich Town FC</span>
+              <span className="cc-num">1 / Ipswich Town FC</span>
               <span className="cc-status">
                 <span className="cc-dot active" aria-hidden="true" />
                 <span className="cc-status-text">Active</span>
@@ -2786,7 +2786,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
               <img src="/frosinone-calcio.png" alt="Frosinone Calcio crest" className="frosinone-crest" />
             </div>
             <div className="cc-meta">
-              <span className="cc-num">02 / Frosinone Calcio</span>
+              <span className="cc-num">2 / Frosinone Calcio</span>
               <span className="cc-status">
                 <span className="cc-dot active" aria-hidden="true" />
                 <span className="cc-status-text">Active</span>
@@ -2815,7 +2815,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
           <div className="club-card">
             <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
             <div className="cc-meta">
-              <span className="cc-num">03 / Spain</span>
+              <span className="cc-num">3 / Spain</span>
               <span className="cc-status">
                 <span className="cc-dot diligence" aria-hidden="true" />
                 <span className="cc-status-text">Active diligence</span>

@@ -36,7 +36,7 @@ type RenderPillar = Omit<Pillar, "metrics"> & { metrics: RenderMetric[] };
 
 const PILLARS: Pillar[] = [
   {
-    n: "01",
+    n: "1",
     label: "Data-Driven Sports Operations",
     desc: (
       <>
@@ -51,7 +51,7 @@ const PILLARS: Pillar[] = [
     ],
   },
   {
-    n: "02",
+    n: "2",
     label: "Commercial Optimization",
     desc: (
       <>
@@ -69,7 +69,7 @@ const PILLARS: Pillar[] = [
     ],
   },
   {
-    n: "03",
+    n: "3",
     label: "Back Office Efficiency",
     desc: (
       <>

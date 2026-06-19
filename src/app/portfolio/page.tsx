@@ -31,7 +31,7 @@ type PortfolioCard = {
 
 const CLUBS: PortfolioCard[] = [
   {
-    num: "01 / Ipswich Town FC",
+    num: "1 / Ipswich Town FC",
     href: "/portfolio/ipswich",
     status: "active",
     statusLabel: "Active",
@@ -51,7 +51,7 @@ const CLUBS: PortfolioCard[] = [
     link: "View deep dive",
   },
   {
-    num: "02 / Frosinone Calcio",
+    num: "2 / Frosinone Calcio",
     href: "/portfolio/frosinone",
     status: "active",
     statusLabel: "Active",
@@ -70,7 +70,7 @@ const CLUBS: PortfolioCard[] = [
     link: "View deep dive",
   },
   {
-    num: "03 / Spain",
+    num: "3 / Spain",
     href: "/portfolio/spain",
     status: "diligence",
     statusLabel: "Active diligence",

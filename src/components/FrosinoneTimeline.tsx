@@ -122,6 +122,7 @@ export function FrosinoneTimeline() {
       events={FROSINONE_TIMELINE}
       chapterBands={FROSINONE_CHAPTER_BANDS}
       ariaLabel="Frosinone Calcio club history timeline"
+      reversed
     />
   );
 }

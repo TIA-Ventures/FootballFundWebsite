@@ -15,7 +15,7 @@ const ValueEngine = dynamic(
 export const metadata: Metadata = {
   title: "Approach · Clara Vista Investment Partners",
   description:
-    "Chapter 02 — We invest. We build. We win. How Clara Vista selects clubs, executes on operations, and drives returns across the portfolio.",
+    "Chapter 2 — We invest. We build. We win. How Clara Vista selects clubs, executes on operations, and drives returns across the portfolio.",
 };
 
 /* /approach — Chapter 02 · How we invest.
@@ -42,7 +42,7 @@ export default function ApproachPage() {
           <div className="page-hero">
             <div className="page-hero-inner">
               <div>
-                <div className="ph-eyebrow">Approach · Chapter 02</div>
+                <div className="ph-eyebrow">Approach · Chapter 2</div>
                 <h1 className="ph-h1">
                   We <em>invest.</em> We <em>build.</em> We <em>win.</em>
                 </h1>
@@ -63,7 +63,7 @@ export default function ApproachPage() {
           <div className="section-inner">
             <div className="section-head solo" style={{ marginBottom: 40 }}>
               <div>
-                <div className="sh-eyebrow">002 · The Value Engine</div>
+                <div className="sh-eyebrow">2 · The Value Engine</div>
                 <h2 className="sh-h2">
                   Awakening the <em>&ldquo;Sleeping Giant&rdquo;</em>
                 </h2>
@@ -79,7 +79,7 @@ export default function ApproachPage() {
           <div className="section-inner">
             <div className="section-head solo" style={{ marginBottom: 56 }}>
               <div>
-                <div className="sh-eyebrow">003 · We win</div>
+                <div className="sh-eyebrow">3 · We win</div>
                 <h2 className="sh-h2">
                   Alpha <em>and beta,</em> stacked.
                 </h2>
@@ -88,7 +88,7 @@ export default function ApproachPage() {
 
             <div className="return-engine">
               <div className="re-card">
-                <div className="re-label">Source 01 · Operational</div>
+                <div className="re-label">Source 1 · Operational</div>
                 <div className="re-multiplier">
                   2&ndash;3<span className="re-x">×</span>
                 </div>
@@ -102,7 +102,7 @@ export default function ApproachPage() {
                 </p>
               </div>
               <div className="re-card">
-                <div className="re-label">Source 02 · Structural</div>
+                <div className="re-label">Source 2 · Structural</div>
                 <div className="re-multiplier">
                   2<span className="re-x">×</span>
                 </div>
@@ -135,7 +135,7 @@ export default function ApproachPage() {
         <Link href="/portfolio" className="chapter-break">
           <div className="chapter-break-inner">
             <div>
-              <div className="chapter-break-eyebrow">Next chapter · 03 · Portfolio</div>
+              <div className="chapter-break-eyebrow">Next chapter · 3 · Portfolio</div>
               <h2 className="chapter-break-h2">
                 The <em>proof.</em>
                 <span className="chapter-break-arrow">→</span>
