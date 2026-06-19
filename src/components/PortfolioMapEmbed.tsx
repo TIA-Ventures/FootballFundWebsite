@@ -48,5 +48,5 @@ export function PortfolioMapEmbed() {
     );
   }
 
-  return <ClaraVistaMapLegacy embed />;
+  return <ClaraVistaMapLegacy embed locked />;
 }

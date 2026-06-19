@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SiteCursor } from "@/components/SiteCursor";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -7,16 +6,7 @@ export const metadata: Metadata = {
   description: "A football & technology investment fund.",
 };
 
-const THEME_BOOT = `
-try {
-  var t = localStorage.getItem('cv-theme');
-  if (t === 'day' || t === 'night') {
-    document.documentElement.setAttribute('data-theme', t);
-  } else {
-    document.documentElement.setAttribute('data-theme', 'day');
-  }
-} catch (e) {}
-`;
+const THEME_BOOT = `document.documentElement.setAttribute('data-theme', 'day');`;
 
 const FONT_PRESET_BOOT = `
 try {
@@ -100,7 +90,6 @@ export default function RootLayout({
       <body>
         <div className="grain" aria-hidden="true" />
         {children}
-        <SiteCursor />
       </body>
     </html>
   );

@@ -1,19 +1,10 @@
 "use client";
 
-import { useState } from "react";
-
-/* Selection scorecard · Radar (Approach 001).
- *
- * Heptagonal radar with seven selection criteria scored 0–100. Each
- * portfolio prospect is shown as an amber polygon at scaled radii.
- * One prospect at a time via tabs.
- *
- * The seven axis labels and vertex dots are clickable — selecting one
- * updates the side panel with the criterion's description and that
- * prospect's score on the criterion. Center label swaps per tab.
+/* Selection scorecard · static radar (Approach).
+ * Heptagonal radar with seven selection criteria. Prospect A (Ipswich) shown
+ * as a fixed polygon — no tabs or axis interaction.
  */
 
-type ClubKey = "ipswich" | "frosinone" | "spain";
 type AxisKey =
   | "league"
   | "modernization"
@@ -63,29 +54,25 @@ const CRITERION: Record<AxisKey, Criterion> = {
   },
 };
 
-const CLUB_SCORES: Record<ClubKey, Record<AxisKey, number>> = {
-  ipswich: { league:  92, modernization:  90, history:  75, fanbase:  70, acquisition:  85, stadium:  80, location:  65 },
-  frosinone: { league:  88, modernization:  95, history:  70, fanbase:  60, acquisition:  95, stadium:  95, location:  90 },
-  spain:   { league:  90, modernization:  85, history:  80, fanbase:  75, acquisition:  80, stadium:  70, location:  85 },
+const CLUB_SCORES: Record<AxisKey, number> = {
+  league: 92,
+  modernization: 90,
+  history: 75,
+  fanbase: 70,
+  acquisition: 85,
+  stadium: 80,
+  location: 65,
 };
 
-const CENTER_LABEL: Record<ClubKey, [string, string]> = {
-  ipswich: ["Prospect", "A"],
-  frosinone: ["Prospect", "B"],
-  spain:   ["Prospect", "C"],
-};
+const CLUB_POLY =
+  "300,160 440.72,187.77 446.24,333.38 360.75,426.13 226.24,453.15 144.02,335.60 198.37,218.94";
 
-const TABS: { key: ClubKey; label: string }[] = [
-  { key: "ipswich", label: "Prospect A" },
-  { key: "frosinone", label: "Prospect B" },
-  { key: "spain",   label: "Prospect C" },
-];
+const HEPTAGON_POINTS = "300,100 456.36,175.30 494.98,344.50 386.78,480.18 213.22,480.18 105.02,344.50 143.64,175.30";
 
-const CLUB_POLY: Record<ClubKey, string> = {
-  ipswich: "300,160 440.72,187.77 446.24,333.38 360.75,426.13 226.24,453.15 144.02,335.60 198.37,218.94",
-  frosinone: "300,140 448.54,181.54 436.49,331.15 352.07,408.11 221.90,462.16 202.51,322.25 159.28,187.77",
-  spain:   "300,120 432.91,194.01 455.98,335.60 365.08,435.13 230.57,444.14 163.51,331.15 167.09,194.01",
-};
+const CHART_CX = 300;
+const CHART_CY = 300;
+const LABEL_RADIAL = 30;
+const LABEL_LINE_EM = 1.15;
 
 const AXIS_ORDER: AxisKey[] = [
   "league",
@@ -97,7 +84,6 @@ const AXIS_ORDER: AxisKey[] = [
   "location",
 ];
 
-/** Inset score labels along each spoke so they sit inside the polygon, away from axis titles. */
 function scorePositionsForClub(
   poly: string,
   inset = 22,
@@ -121,14 +107,6 @@ function scorePositionsForClub(
   return out;
 }
 
-const HEPTAGON_POINTS = "300,100 456.36,175.30 494.98,344.50 386.78,480.18 213.22,480.18 105.02,344.50 143.64,175.30";
-
-const CHART_CX = 300;
-const CHART_CY = 300;
-/** Outward offset from each outer vertex along its spoke (px). */
-const LABEL_RADIAL = 30;
-const LABEL_LINE_EM = 1.15;
-
 type AxisVertex = {
   axis: AxisKey;
   x: number;
@@ -140,7 +118,6 @@ type AxisVertex = {
   labelLines?: [string, string];
 };
 
-/** Place axis titles just outside the outer ring without overlapping spokes or dots. */
 function axisLabel(
   axis: AxisKey,
   x: number,
@@ -191,7 +168,7 @@ function axisLabel(
     axis,
     x,
     y,
-    labelX: right ? anchorX : anchorX,
+    labelX: anchorX,
     labelY,
     labelAnchor: right ? "start" : "end",
     label,
@@ -215,71 +192,43 @@ const AXIS_VERTICES: AxisVertex[] = [
   ]),
 ];
 
+const positions = scorePositionsForClub(CLUB_POLY);
+
 export function SelectionScorecard() {
-  const [activeClub, setActiveClub] = useState<ClubKey>("ipswich");
-  const [activeAxis, setActiveAxis] = useState<AxisKey>("fanbase");
-
-  const detail = CRITERION[activeAxis];
-  const score = CLUB_SCORES[activeClub][activeAxis];
-  const center = CENTER_LABEL[activeClub];
-  const positions = scorePositionsForClub(CLUB_POLY[activeClub]);
-
   return (
-    <div
-      className="scoring-block"
-      data-active={activeClub}
-      data-axis={activeAxis}
-    >
+    <div className="scoring-block scoring-block--static" data-active="ipswich">
       <div className="scoring-layout">
         <div className="scoring-text-col">
           <div className="section-head solo" style={{ marginBottom: 28 }}>
             <div>
-              <div className="sh-eyebrow">001 · We invest</div>
-              <h2 className="sh-h2">
-                Acquire <em>the right clubs.</em>
-              </h2>
+              <div className="sh-eyebrow">We invest</div>
+              <h2 className="sh-h2">Acquire the right clubs.</h2>
             </div>
           </div>
 
           <p className="scoring-lede">
-            We invest in clubs with <em>strong foundations</em> and <em>meaningful room for improvement</em> — situations
+            We invest in clubs with strong foundations and meaningful room for improvement — situations
             where disciplined ownership, modern operations, and data-driven management can unlock
             substantial trapped value and long-term appreciation. Key criteria we score include:
           </p>
 
-          <div className="scoring-tabs" role="tablist" aria-label="Selection scorecard candidate">
-            {TABS.map((tab) => (
-              <button
-                key={tab.key}
-                type="button"
-                role="tab"
-                aria-selected={activeClub === tab.key}
-                className={`scoring-tab${activeClub === tab.key ? " is-active" : ""}`}
-                onClick={() => setActiveClub(tab.key)}
-              >
-                {tab.label}
-              </button>
+          <ul className="scoring-criteria-list">
+            {AXIS_ORDER.map((axis) => (
+              <li key={axis}>
+                <span className="scoring-criteria-name">{CRITERION[axis].name}</span>
+                <span className="scoring-criteria-score">{CLUB_SCORES[axis]}</span>
+              </li>
             ))}
-          </div>
-
-          <div className="scoring-detail">
-            <div className="scoring-detail-eyebrow">Selected criterion</div>
-            <div className="scoring-detail-name">{detail.name}</div>
-            <div className="scoring-detail-score">
-              {score}
-              <em>/100</em>
-            </div>
-            <p className="scoring-detail-desc">{detail.desc}</p>
-          </div>
+          </ul>
         </div>
 
         <div className="scoring-chart">
           <svg
             viewBox="0 0 600 600"
             xmlns="http://www.w3.org/2000/svg"
-            aria-label="Selection scorecard radar chart"
+            aria-label="Selection scorecard radar chart for Prospect A"
           >
-            <circle cx="300" cy="300" r="50"  className="sc-grid-ring" />
+            <circle cx="300" cy="300" r="50" className="sc-grid-ring" />
             <circle cx="300" cy="300" r="100" className="sc-grid-ring" />
             <circle cx="300" cy="300" r="150" className="sc-grid-ring" />
 
@@ -296,9 +245,9 @@ export function SelectionScorecard() {
 
             <polygon className="sc-outer-ring" points={HEPTAGON_POINTS} />
 
-            <g className="sc-club-group" data-club={activeClub}>
-              <polygon className="sc-club-poly" points={CLUB_POLY[activeClub]} />
-              {(Object.keys(positions) as AxisKey[]).map((axis) => {
+            <g className="sc-club-group" data-club="ipswich">
+              <polygon className="sc-club-poly" points={CLUB_POLY} />
+              {AXIS_ORDER.map((axis) => {
                 const p = positions[axis];
                 return (
                   <text
@@ -309,21 +258,14 @@ export function SelectionScorecard() {
                     textAnchor={p.anchor}
                     dominantBaseline="middle"
                   >
-                    {CLUB_SCORES[activeClub][axis]}
+                    {CLUB_SCORES[axis]}
                   </text>
                 );
               })}
             </g>
 
             {AXIS_VERTICES.map((v) => (
-              <circle
-                key={`dot-${v.axis}`}
-                cx={v.x}
-                cy={v.y}
-                className={`sc-vertex-dot${activeAxis === v.axis ? " is-selected" : ""}`}
-                data-axis={v.axis}
-                onClick={() => setActiveAxis(v.axis)}
-              />
+              <circle key={`dot-${v.axis}`} cx={v.x} cy={v.y} className="sc-vertex-dot" />
             ))}
 
             {AXIS_VERTICES.map((v) => (
@@ -331,10 +273,8 @@ export function SelectionScorecard() {
                 key={`label-${v.axis}`}
                 x={v.labelX}
                 y={v.labelY}
-                className={`sc-label${activeAxis === v.axis ? " is-selected" : ""}`}
+                className="sc-label"
                 textAnchor={v.labelAnchor}
-                data-axis={v.axis}
-                onClick={() => setActiveAxis(v.axis)}
               >
                 {v.labelLines ? (
                   <>
@@ -353,8 +293,8 @@ export function SelectionScorecard() {
           </svg>
 
           <div className="scoring-center" aria-hidden="true">
-            <span>{center[0]}</span>
-            <span>{center[1]}</span>
+            <span>Prospect</span>
+            <span>A</span>
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ function canvasFontVar(name: "--font-sans" | "--font-serif" | "--font-mono"): st
   return v || "sans-serif";
 }
 
-export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
+export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?: boolean; locked?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
@@ -1476,23 +1476,24 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       if (el) el.classList.remove("is-visible");
     }
 
-    canvasEl.addEventListener("pointerdown", onPointerDown);
-    canvasEl.addEventListener("pointermove", onPointerMove);
-    canvasEl.addEventListener("pointerup", endDrag);
-    canvasEl.addEventListener("pointercancel", endDrag);
-    canvasEl.addEventListener("pointerleave", endDrag);
-
-    // The existing click-to-pin tooltip behavior must NOT fire after a drag.
-    // We swap the bare click listener for one that respects the drag-moved
-    // flag set during pointermove.
     const onCanvasClickGuarded = () => {
       if (drag.moved) return;
       onCanvasClick();
     };
-    canvasEl.addEventListener("click", onCanvasClickGuarded);
 
     const recenterButton = document.getElementById("cv-recenter");
-    recenterButton?.addEventListener("click", onRecenterClick);
+
+    if (!locked) {
+      canvasEl.addEventListener("pointerdown", onPointerDown);
+      canvasEl.addEventListener("pointermove", onPointerMove);
+      canvasEl.addEventListener("pointerup", endDrag);
+      canvasEl.addEventListener("pointercancel", endDrag);
+      canvasEl.addEventListener("pointerleave", endDrag);
+      canvasEl.addEventListener("click", onCanvasClickGuarded);
+      recenterButton?.addEventListener("click", onRecenterClick);
+    } else {
+      canvasEl.style.cursor = "default";
+    }
 
     // ---- PARTICLES ----
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -2357,26 +2358,29 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
         }
 
         const labelOpacity = ease;
-        const labelOffset = 32;
+        const labelOffset = embed ? 38 : 32;
         const labelX = c.px + labelOffset;
+        const numSize = embed ? 17 : 14;
+        const titleSize = embed ? 21 : 17;
+        const subSize = embed ? 14 : 12;
 
         const subLabel = c.kind === "closed" ? c.league : `${c.league} · TBD`;
         ctx.textBaseline = "middle";
         ctx.textAlign = "left";
 
         // Measure label text to size a soft backdrop plate (no border).
-        ctx.font = `italic 400 14px ${canvasFontVar("--font-serif")}`;
+        ctx.font = `italic 400 ${numSize}px ${canvasFontVar("--font-serif")}`;
         const numW = ctx.measureText(c.num).width;
-        ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
+        ctx.font = `italic 400 ${titleSize}px ${canvasFontVar("--font-serif")}`;
         const labelW = ctx.measureText(c.label).width;
-        ctx.font = `400 12px ${canvasFontVar("--font-sans")}`;
+        ctx.font = `400 ${subSize}px ${canvasFontVar("--font-sans")}`;
         const subW = ctx.measureText(subLabel).width;
 
         const logoSrc = c.logo as string | undefined;
         const logoImg = logoSrc ? portfolioLogoImages[logoSrc] : undefined;
         const logoReady = Boolean(logoImg && logoImg.complete && logoImg.naturalWidth > 0);
         /** Stacked crest + wordmark (broadcast / fixture-card pattern); inline row for other markers. */
-        const LOGO_STACK_H = 26;
+        const LOGO_STACK_H = embed ? 32 : 26;
         const logoWStack =
           logoReady && logoImg ? LOGO_STACK_H * (logoImg.naturalWidth / logoImg.naturalHeight) : 0;
 
@@ -2442,7 +2446,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
         ctx.stroke();
 
         ctx.fillStyle = isDayTheme ? `rgba(99, 77, 44, ${labelOpacity})` : `rgba(168, 134, 72, ${labelOpacity})`;
-        ctx.font = `italic 400 14px ${canvasFontVar("--font-serif")}`;
+        ctx.font = `italic 400 ${numSize}px ${canvasFontVar("--font-serif")}`;
         ctx.textBaseline = "middle";
         ctx.fillText(c.num, labelX, c.py - 1);
 
@@ -2454,12 +2458,12 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
           ctx.fillStyle = isDayTheme
             ? `rgba(26, 37, 32, ${labelOpacity})`
             : `rgba(242, 234, 214, ${labelOpacity})`;
-          ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
+          ctx.font = `italic 400 ${titleSize}px ${canvasFontVar("--font-serif")}`;
           ctx.fillText(c.label, lockupColumnX, stackTop + LOGO_STACK_H + gapLogoTitle);
           ctx.fillStyle = isDayTheme
             ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
             : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
-          ctx.font = `400 12px ${canvasFontVar("--font-sans")}`;
+          ctx.font = `400 ${subSize}px ${canvasFontVar("--font-sans")}`;
           ctx.fillText(
             subLabel,
             lockupColumnX,
@@ -2470,13 +2474,13 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
           ctx.fillStyle = isDayTheme
             ? `rgba(26, 37, 32, ${labelOpacity})`
             : `rgba(242, 234, 214, ${labelOpacity})`;
-          ctx.font = `italic 400 17px ${canvasFontVar("--font-serif")}`;
+          ctx.font = `italic 400 ${titleSize}px ${canvasFontVar("--font-serif")}`;
           ctx.textBaseline = "middle";
           ctx.fillText(c.label, nameX, c.py - 1);
           ctx.fillStyle = isDayTheme
             ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
             : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
-          ctx.font = `400 12px ${canvasFontVar("--font-sans")}`;
+          ctx.font = `400 ${subSize}px ${canvasFontVar("--font-sans")}`;
           ctx.fillText(subLabel, nameX, c.py + 15);
         }
         ctx.textBaseline = "alphabetic";
@@ -2548,7 +2552,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       if (hintTimer !== undefined) window.clearTimeout(hintTimer);
       window.cancelAnimationFrame(rafRender);
     };
-  }, [embed]);
+  }, [embed, locked]);
 
   const recenterButton = (
     <button
@@ -2583,7 +2587,7 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
       id="map-canvas"
       ref={canvasRef}
       role="region"
-      aria-label="Global market map, draggable"
+      aria-label={locked ? "Global market map" : "Global market map, draggable"}
     />
   );
 
@@ -2605,12 +2609,12 @@ export function ClaraVistaMapLegacy({ embed = false }: { embed?: boolean }) {
 
   if (embed) {
     return (
-      <div ref={wrapRef}>
+      <div ref={wrapRef} className={locked ? "map-embed-locked" : undefined}>
         {loader}
         <section className="hero">
           {mapCanvas}
-          {dragHint}
-          <div className="hero-bottom">{recenterButton}</div>
+          {!locked && dragHint}
+          <div className="hero-bottom">{!locked && recenterButton}</div>
         </section>
       </div>
     );

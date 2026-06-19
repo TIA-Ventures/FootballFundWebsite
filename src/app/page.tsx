@@ -6,7 +6,7 @@ import { Topbar } from "@/components/Topbar";
 export const metadata: Metadata = {
   title: "Clara Vista Investment Partners",
   description:
-    "Data-driven sports investment — owning exceptional football clubs in the world's most valuable leagues. We invest. We build. We win.",
+    "We own exceptional football teams across the world in the most valuable leagues.",
 };
 
 export default function Home() {

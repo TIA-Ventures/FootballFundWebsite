@@ -106,7 +106,7 @@ export default function FrosinonePage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">001 · Investment Thesis</div>
+                <div className="sh-eyebrow">Investment Thesis</div>
                 <h2 className="sh-h2">
                   Newly promoted, <em>institutional upside.</em>
                 </h2>
@@ -149,7 +149,7 @@ export default function FrosinonePage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">002 · Value Creation Roadmap</div>
+                <div className="sh-eyebrow">Value Creation Roadmap</div>
                 <h2 className="sh-h2">
                   From Serie A promotion <em>to institutional exit.</em>
                 </h2>
@@ -178,7 +178,7 @@ export default function FrosinonePage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">003 · History</div>
+                <div className="sh-eyebrow">History</div>
                 <h2 className="sh-h2">
                   From Ciociaria roots <em>to control.</em>
                 </h2>
@@ -197,7 +197,7 @@ export default function FrosinonePage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">004 · Operating Edge</div>
+                <div className="sh-eyebrow">Operating Edge</div>
                 <h2 className="sh-h2">
                   Data infrastructure <em>meets Italian football.</em>
                 </h2>

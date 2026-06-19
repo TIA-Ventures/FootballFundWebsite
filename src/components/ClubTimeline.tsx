@@ -1,4 +1,6 @@
-import { Fragment, type ReactNode } from "react";
+"use client";
+
+import { Fragment, useEffect, useRef, type ReactNode } from "react";
 
 export type TimelineChapter = "founding" | "golden" | "modern";
 
@@ -23,10 +25,31 @@ type ClubTimelineProps = {
   events: TimelineEvent[];
   chapterBands: TimelineChapterBand[];
   ariaLabel: string;
+  /** Scroll the timeline to this event index on first paint (user can still scroll back). */
+  initialScrollToIndex?: number;
 };
 
-export function ClubTimeline({ events, chapterBands, ariaLabel }: ClubTimelineProps) {
+export function ClubTimeline({
+  events,
+  chapterBands,
+  ariaLabel,
+  initialScrollToIndex,
+}: ClubTimelineProps) {
   const n = events.length;
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (initialScrollToIndex === undefined) return;
+    const scroller = scrollRef.current;
+    if (!scroller) return;
+
+    const el = scroller.querySelector<HTMLElement>(
+      `[data-timeline-index="${initialScrollToIndex}"]`,
+    );
+    if (el) {
+      el.scrollIntoView({ inline: "center", block: "nearest", behavior: "auto" });
+    }
+  }, [initialScrollToIndex]);
 
   return (
     <div className="h-timeline h-timeline--scroll">
@@ -34,7 +57,13 @@ export function ClubTimeline({ events, chapterBands, ariaLabel }: ClubTimelinePr
         Scroll →
       </p>
 
-      <div className="h-timeline-scroll" tabIndex={0} role="region" aria-label={ariaLabel}>
+      <div
+        className="h-timeline-scroll"
+        ref={scrollRef}
+        tabIndex={0}
+        role="region"
+        aria-label={ariaLabel}
+      >
         <div className="h-timeline-eras-row" aria-hidden="true">
           {chapterBands.map((band) => {
             const leftPct = (band.start / n) * 100;
@@ -104,6 +133,7 @@ export function ClubTimeline({ events, chapterBands, ariaLabel }: ClubTimelinePr
                     className={`h-event chap-${e.chapter}${e.isAnchor ? " is-anchor" : ""}${
                       e.hero ? " is-hero" : ""
                     } ${i % 2 === 0 ? "is-above" : "is-below"}${startsEra ? " starts-era" : ""}`}
+                    data-timeline-index={i}
                   >
                     <div className="h-event-dot" aria-hidden="true" />
                     <div className="h-event-content">

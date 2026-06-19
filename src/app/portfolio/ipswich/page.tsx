@@ -81,7 +81,7 @@ export default function IpswichPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">001 · Investment Thesis</div>
+                <div className="sh-eyebrow">Investment Thesis</div>
                 <h2 className="sh-h2">
                   A historic club, <em>positioned for transformation.</em>
                 </h2>
@@ -124,7 +124,7 @@ export default function IpswichPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">002 · Accomplishments Since Investment</div>
+                <div className="sh-eyebrow">Accomplishments Since Investment</div>
                 <h2 className="sh-h2">
                   Two seasons. <em>Compounding outcomes.</em>
                 </h2>
@@ -143,7 +143,7 @@ export default function IpswichPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">003 · History</div>
+                <div className="sh-eyebrow">History</div>
                 <h2 className="sh-h2">
                   From founding <em>to control.</em>
                 </h2>

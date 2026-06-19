@@ -59,7 +59,7 @@ export default function TrackRecordPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">001 · Portfolio</div>
+                <div className="sh-eyebrow">Portfolio</div>
                 <h2 className="sh-h2">
                   Every investment <em>since 2014.</em>
                 </h2>

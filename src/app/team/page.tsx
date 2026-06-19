@@ -265,7 +265,7 @@ export default function TeamPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">001 · Leadership</div>
+                <div className="sh-eyebrow">Leadership</div>
                 <h2 className="sh-h2">
                   Leadership and <em>Investment Committee.</em>
                 </h2>
@@ -283,7 +283,7 @@ export default function TeamPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">Interlude · On the ground</div>
+                <div className="sh-eyebrow">On the ground</div>
                 <h2 className="sh-h2">
                   Boardroom to <em>the field.</em>
                 </h2>
@@ -301,7 +301,7 @@ export default function TeamPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">002 · Advisors</div>
+                <div className="sh-eyebrow">Advisors</div>
                 <h2 className="sh-h2">
                   Senior Advisors <em>and Experts.</em>
                 </h2>
@@ -319,7 +319,7 @@ export default function TeamPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">003 · Operating Principles</div>
+                <div className="sh-eyebrow">Operating Principles</div>
                 <h2 className="sh-h2">
                   Four pillars, <em>one philosophy.</em>
                 </h2>

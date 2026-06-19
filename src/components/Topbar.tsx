@@ -23,17 +23,6 @@ export function Topbar({ activeNav = null }: TopbarProps) {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const toggleRef = useRef<HTMLButtonElement | null>(null);
 
-  const onThemeToggle = () => {
-    const cur = document.documentElement.dataset.theme || "night";
-    const next = cur === "day" ? "night" : "day";
-    document.documentElement.dataset.theme = next;
-    try {
-      localStorage.setItem("cv-theme", next);
-    } catch {
-      /* ignore */
-    }
-  };
-
   const activeStyle: CSSProperties = { color: "var(--ivory)" };
 
   const closeMobile = () => setMobileOpen(false);
@@ -177,36 +166,6 @@ export function Topbar({ activeNav = null }: TopbarProps) {
               strokeWidth="1.6"
               strokeLinecap="round"
             />
-          </svg>
-        </button>
-        <button
-          className="theme-toggle"
-          onClick={onThemeToggle}
-          aria-label="Toggle theme"
-          type="button"
-        >
-          <svg
-            className="icon-night"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M12 3a6.5 6.5 0 1 0 9 9 9 9 0 0 1-9-9z" />
-          </svg>
-          <svg
-            className="icon-day"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="12" cy="12" r="4" />
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
           </svg>
         </button>
       </div>

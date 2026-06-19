@@ -107,7 +107,7 @@ export default function ThesisPage() {
           <div className="section-inner">
             <div className="section-head solo">
               <div>
-                <div className="sh-eyebrow">001 · Why sports work</div>
+                <div className="sh-eyebrow">Why sports work</div>
                 <h2 className="sh-h2">
                   Reliable. <em>Uncorrelated.</em> Resilient.
                 </h2>
@@ -151,7 +151,7 @@ export default function ThesisPage() {
           <div className="section-inner">
             <div className="section-head solo">
               <div>
-                <div className="sh-eyebrow">002 · Tailwinds</div>
+                <div className="sh-eyebrow">Tailwinds</div>
                 <h2 className="sh-h2">
                   Capital is flowing. <em>Attention is fixed on live sport.</em>
                 </h2>
@@ -191,7 +191,7 @@ export default function ThesisPage() {
           <div className="section-inner">
             <div className="section-head solo">
               <div>
-                <div className="sh-eyebrow">003 · Why football</div>
+                <div className="sh-eyebrow">Why football</div>
                 <h2 className="sh-h2">
                   Global football at scale. <em>Our focus.</em>
                 </h2>
@@ -205,7 +205,7 @@ export default function ThesisPage() {
         <Link href="/approach" className="chapter-break">
           <div className="chapter-break-inner">
             <div>
-              <div className="chapter-break-eyebrow">Next chapter · 02 · Approach</div>
+              <div className="chapter-break-eyebrow">Next · Approach</div>
               <h2 className="chapter-break-h2">
                 Our <em>approach.</em>
                 <span className="chapter-break-arrow">→</span>
