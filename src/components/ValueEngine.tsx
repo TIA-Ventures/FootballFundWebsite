@@ -131,6 +131,7 @@ function animateSliders(container: HTMLElement, reducedMotion: boolean) {
 
 export function ValueEngine() {
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const [activeMetric, setActiveMetric] = useState<string | null>(null);
   const [inView, setInView] = useState(false);
 
   const runSliderAnimation = useCallback(() => {
@@ -159,10 +160,15 @@ export function ValueEngine() {
     runSliderAnimation();
   }, [runSliderAnimation]);
 
+  const onMetricClick = (id: string) => {
+    setActiveMetric((current) => (current === id ? null : id));
+  };
+
   return (
     <div
-      className="value-engine value-engine--static"
+      className="value-engine"
       ref={rootRef}
+      data-metric-focus={activeMetric ? "true" : "false"}
       data-in-view={inView ? "true" : "false"}
     >
       <p className="ve-lede">
@@ -196,13 +202,17 @@ export function ValueEngine() {
                 <div className="ve-metrics">
                   {pillar.metrics.map((metric) => {
                     const { id, basePct: bp } = metric;
+                    const isActive = activeMetric === id;
                     const delay = metric.animationIndex * 50;
 
                     return (
-                      <div
+                      <button
                         key={id}
-                        className="ve-cell"
+                        type="button"
+                        className={`ve-cell${isActive ? " is-active" : ""}`}
                         style={{ animationDelay: `${delay}ms` }}
+                        aria-pressed={isActive}
+                        onClick={() => onMetricClick(id)}
                       >
                         <div className="ve-m-name">
                           {metric.name} <span className="ve-m-sub">{metric.sub}</span>
@@ -220,7 +230,8 @@ export function ValueEngine() {
                           </span>
                           <span className="ve-tgt">{metric.tgt}</span>
                         </div>
-                      </div>
+                        <span className="ve-cell-hint">{isActive ? "Selected" : "Compare lift"}</span>
+                      </button>
                     );
                   })}
                 </div>

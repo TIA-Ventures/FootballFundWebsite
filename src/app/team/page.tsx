@@ -223,7 +223,7 @@ export default function TeamPage() {
         <div className="page-hero">
           <div className="page-hero-inner">
             <div>
-              <div className="ph-eyebrow">Team</div>
+              <div className="ph-eyebrow">About Us</div>
               <h1 className="ph-h1">
                 Decades of <em>operating depth.</em>
               </h1>

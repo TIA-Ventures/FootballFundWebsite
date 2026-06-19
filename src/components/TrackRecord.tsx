@@ -109,7 +109,7 @@ const INVESTMENTS: Investment[] = [
     status: "Diligence",
     sector: "football",
     description:
-      "A historic Spanish club in active diligence — La Liga is the second-most valuable football league in the world. Details under embargo.",
+      "A historic Spanish club in active diligence — La Liga is the second-most valuable football league in the world. Details TBA.",
     href: "/portfolio/spain",
     league: "La Liga · Spain",
   },

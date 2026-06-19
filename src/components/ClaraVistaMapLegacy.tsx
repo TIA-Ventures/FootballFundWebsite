@@ -2358,11 +2358,11 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
         }
 
         const labelOpacity = ease;
-        const labelOffset = embed ? 38 : 32;
+        const labelOffset = 32;
         const labelX = c.px + labelOffset;
-        const numSize = embed ? 17 : 14;
-        const titleSize = embed ? 21 : 17;
-        const subSize = embed ? 14 : 12;
+        const numSize = 14;
+        const titleSize = 17;
+        const subSize = 12;
 
         const subLabel = c.kind === "closed" ? c.league : `${c.league} · TBD`;
         ctx.textBaseline = "middle";
@@ -2380,7 +2380,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
         const logoImg = logoSrc ? portfolioLogoImages[logoSrc] : undefined;
         const logoReady = Boolean(logoImg && logoImg.complete && logoImg.naturalWidth > 0);
         /** Stacked crest + wordmark (broadcast / fixture-card pattern); inline row for other markers. */
-        const LOGO_STACK_H = embed ? 32 : 26;
+        const LOGO_STACK_H = 26;
         const logoWStack =
           logoReady && logoImg ? LOGO_STACK_H * (logoImg.naturalWidth / logoImg.naturalHeight) : 0;
 
@@ -2650,7 +2650,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
 
         <div className="portfolio-panel">
           <div className="pp-label">
-            <span>Active Portfolio</span>
+            <span>Portfolio</span>
             <span className="pp-label-count">01 / 03</span>
           </div>
           <Link
@@ -2740,7 +2740,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
       <section className="portfolio-section" id="portfolio">
         <div className="ps-head">
           <div>
-            <div className="ps-eyebrow">001 · Active Portfolio</div>
+            <div className="ps-eyebrow">Portfolio</div>
             <h2>
               Three clubs. Three leagues. <em>One operating system.</em>
             </h2>
@@ -2828,13 +2828,13 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
             <p className="cc-note">
               A historic Spanish club in active diligence — La Liga is the second most valuable football league in the world, primary
               league for the 600M-strong Spanish-speaking market, with mid-table valuations trading well below European peers.{" "}
-              <em>Details under embargo.</em>
+              <em>Details TBA.</em>
             </p>
             <div className="cc-stats">
               <div>
                 <div className="cc-stat-label">Founded</div>
                 <div className="cc-stat-value">
-                  <em>under embargo</em>
+                  <em>TBA</em>
                 </div>
               </div>
               <div>

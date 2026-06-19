@@ -20,9 +20,9 @@ export default function SpainPage() {
       sideMeta={[
         { label: "Country", value: "Spain" },
         { label: "League", value: "La Liga" },
-        { label: "Founded", value: <em>under embargo</em> },
-        { label: "Stadium", value: <em>under embargo</em> },
-        { label: "Stake", value: <em>under embargo</em> },
+        { label: "Founded", value: <em>TBA</em> },
+        { label: "Stadium", value: <em>TBA</em> },
+        { label: "Stake", value: <em>TBA</em> },
         { label: "Status", value: "Active diligence" },
       ]}
       banner={{
@@ -30,7 +30,7 @@ export default function SpainPage() {
         body: (
           <>
             Clara Vista is conducting diligence on a controlling interest in a historic Spanish club.{" "}
-            <em>Details remain under embargo.</em>
+            <em>Details remain TBA.</em>
           </>
         ),
       }}
@@ -48,7 +48,7 @@ export default function SpainPage() {
           </>,
           <>
             Specific club identity, financial position, and proposed deal structure remain{" "}
-            <span className="em-dash">— under embargo —</span> until diligence concludes and an Investment Committee
+            <span className="em-dash">— TBA —</span> until diligence concludes and an Investment Committee
             decision is reached.
           </>,
         ],

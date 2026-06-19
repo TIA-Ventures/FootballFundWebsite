@@ -84,10 +84,10 @@ const CLUBS: PortfolioCard[] = [
     note: (
       <>
         A historic Spanish club in active diligence — La Liga is the second most-valuable football league in the world
-        and the primary league for the 600M-strong Spanish-speaking market. <em>Details under embargo.</em>
+        and the primary league for the 600M-strong Spanish-speaking market. <em>Details TBA.</em>
       </>
     ),
-    founded: <em>under embargo</em>,
+    founded: <em>TBA</em>,
     leagueLabel: "League",
     leagueValue: "La Liga",
     link: "View diligence brief",
@@ -99,22 +99,24 @@ export default function PortfolioPage() {
     <>
       <Topbar activeNav="portfolio" />
       <main className="cv-page portfolio-page portfolio-hub">
-        <div className="portfolio-hero-stack">
-          <div className="portfolio-hero-map" aria-hidden="true">
-            <PortfolioMapEmbed />
-          </div>
-          <div className="page-hero portfolio-hero-copy">
+        <div className="portfolio-hero-banner">
+          <div className="page-hero">
             <div className="page-hero-inner">
               <div>
                 <div className="ph-eyebrow">Portfolio</div>
-                <h1 className="ph-h1">Three clubs. Three leagues. One operating system.</h1>
+                <h1 className="ph-h1">
+                  Three clubs. <em>One operating system.</em>
+                </h1>
               </div>
               <p className="ph-intro">
-                We invest in clubs with untapped potential, asymmetric upside, and clear pathways to
+                We invest in clubs with <em>untapped potential, asymmetric upside,</em> and clear pathways to
                 transformative value. A geographically diversified portfolio of European clubs, unified by a single
                 data-led operating model and disciplined capital deployment.
               </p>
             </div>
+          </div>
+          <div className="portfolio-map-embed" aria-hidden="true">
+            <PortfolioMapEmbed />
           </div>
         </div>
 

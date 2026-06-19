@@ -3,13 +3,10 @@ export function Footer() {
     <footer className="footer">
       <div className="footer-row">
         <div>
-          Clara Vista Investment Partners <span>· MMXXVI</span>
+          Clara Vista Investment Partners
         </div>
         <div>
-          <span>NEW YORK · LONDON · MILAN · MADRID</span>
-        </div>
-        <div>
-          Football &amp; Technology <span>· FUND II</span>
+          <span>NEW YORK · LONDON · ROME · MADRID</span>
         </div>
       </div>
     </footer>

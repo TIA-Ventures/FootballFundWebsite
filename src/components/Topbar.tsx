@@ -63,7 +63,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
           CLARA <span>VISTA</span>
         </span>
         <span className="brand-divider" />
-        <span className="brand-tagline">Investment Partners · Football &amp; Technology</span>
+        <span className="brand-tagline">Investment Partners</span>
       </Link>
       <div className="nav-area">
         <nav className="nav">
@@ -71,7 +71,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
             Home
           </Link>
           <Link href="/team" style={activeNav === "team" ? activeStyle : undefined}>
-            Team
+            About Us
           </Link>
           <div
             className={`nav-portfolio${activeNav === "portfolio" ? " is-active" : ""}`}
@@ -186,7 +186,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
             Home
           </Link>
           <Link href="/team" className="mm-link" onClick={closeMobile} style={activeNav === "team" ? activeStyle : undefined}>
-            Team
+            About Us
           </Link>
           <div className="mm-group">
             <Link

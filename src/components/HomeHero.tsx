@@ -11,10 +11,7 @@ export function HomeHero() {
 
         <div className="hero-bottom">
           <div className="hero-headline">
-            <h1 className="headline-lead">
-              We own exceptional football teams across the world in the most valuable leagues.
-            </h1>
-            <p className="headline-manifesto" aria-label="We invest. We build. We win.">
+            <h1 className="headline-manifesto" aria-label="We invest. We build. We win.">
               <span className="headline-we">WE</span>{" "}
               <span className="headline-verb">INVEST.</span>
               <br />
@@ -23,6 +20,9 @@ export function HomeHero() {
               <br />
               <span className="headline-we">WE</span>{" "}
               <span className="headline-verb">WIN.</span>
+            </h1>
+            <p className="headline-lead">
+              We own exceptional football teams across the world in the most valuable leagues.
             </p>
             <div className="hero-actions">
               <Link href="/approach" className="hero-cta hero-cta--primary">
@@ -33,6 +33,18 @@ export function HomeHero() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="home-platform-banner" aria-label="About Clara Vista">
+        <div className="home-platform-banner-inner">
+          <p>
+            Clara Vista is a{" "}
+            <span className="home-platform-banner-accent">data-driven sports investment platform</span>{" "}
+            built to generate asymmetric outcomes. We invest behind strong tailwinds and partner with
+            winning organizations to achieve{" "}
+            <strong>excellence across every dimension of performance.</strong>
+          </p>
         </div>
       </section>
 
@@ -126,13 +138,13 @@ export function HomeHero() {
             <p className="cc-note">
               A historic Spanish club in active diligence — La Liga is the second most valuable football league in the
               world, primary league for the 600M-strong Spanish-speaking market, with mid-table valuations trading well
-              below European peers. <em>Details under embargo.</em>
+              below European peers. <em>Details TBA.</em>
             </p>
             <div className="cc-stats">
               <div>
                 <div className="cc-stat-label">Founded</div>
                 <div className="cc-stat-value">
-                  <em>under embargo</em>
+                  <em>TBA</em>
                 </div>
               </div>
               <div>
