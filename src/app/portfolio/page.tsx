@@ -19,7 +19,7 @@ type PortfolioCard = {
   status: ClubStatus;
   statusLabel: string;
   /** Club crest asset key; null for embargoed / undisclosed targets. */
-  logo: "ipswich" | "frosinone" | null;
+  logo: "ipswich" | null;
   name: ReactNode;
   loc: string;
   note: ReactNode;
@@ -51,23 +51,27 @@ const CLUBS: PortfolioCard[] = [
     link: "View deep dive",
   },
   {
-    num: "2 / Frosinone Calcio",
-    href: "/portfolio/frosinone",
-    status: "active",
-    statusLabel: "Active",
-    logo: "frosinone",
-    name: "Frosinone Calcio",
-    loc: "Frosinone · Italy · Serie A",
-    note: (
+    num: "2 / Italy",
+    href: "/portfolio/italy",
+    status: "diligence",
+    statusLabel: "Confidential",
+    logo: null,
+    name: (
       <>
-        Controlling investment via Clara Vista Frosinone SPV I. Promoted to Serie A in 2025/26 — a modern 16,227-seat
-        stadium with concession through 2061, and three top-flight promotions in the last decade — located an hour from Rome.
+        Italy <em>(target)</em>
       </>
     ),
-    founded: "1928",
+    loc: "Italy · Serie A",
+    note: (
+      <>
+        A football opportunity in Italy&apos;s Serie A — one of the most storied top-flight leagues in world football.{" "}
+        <em>Details TBA.</em>
+      </>
+    ),
+    founded: <em>TBA</em>,
     leagueLabel: "League",
     leagueValue: "Serie A",
-    link: "View deep dive",
+    link: "View brief",
   },
   {
     num: "3 / Spain",
@@ -132,9 +136,6 @@ export default function PortfolioPage() {
                     {c.logo === "ipswich" ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src="/ipswich-town.svg" alt="Ipswich Town FC crest" />
-                    ) : c.logo === "frosinone" ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src="/frosinone-calcio.png" alt="Frosinone Calcio crest" className="frosinone-crest" />
                     ) : null}
                   </div>
                   <div className="cc-meta">

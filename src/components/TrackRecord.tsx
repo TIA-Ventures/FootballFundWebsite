@@ -91,16 +91,15 @@ const INVESTMENTS: Investment[] = [
     logo: "ipswich.svg",
   },
   {
-    name: "Frosinone Calcio",
+    name: "Italy (target)",
     firm: "ClaraVista",
     funds: ["cv-i"],
-    status: "Active",
+    status: "Diligence",
     sector: "football",
     description:
-      "Controlling investment via Clara Vista Frosinone SPV I — promoted to Serie A in 2025/26, modern Serie A-ready stadium, and three top-flight promotions in the last decade.",
-    href: "/portfolio/frosinone",
+      "A football opportunity in Italy's Serie A — one of the most storied top-flight leagues in world football. Details TBA.",
+    href: "/portfolio/italy",
     league: "Serie A · Italy",
-    logo: "frosinone-calcio.png",
   },
   {
     name: "Spain (target)",

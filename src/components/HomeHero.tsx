@@ -91,35 +91,36 @@ export function HomeHero() {
             </Link>
           </div>
           <div className="club-card">
-            <div className="cc-logo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/frosinone-calcio.png" alt="Frosinone Calcio crest" className="frosinone-crest" />
-            </div>
+            <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
             <div className="cc-meta">
-              <span className="cc-num">2 / Frosinone Calcio</span>
+              <span className="cc-num">2 / Italy</span>
               <span className="cc-status">
-                <span className="cc-dot active" aria-hidden="true" />
-                <span className="cc-status-text">Active</span>
+                <span className="cc-dot diligence" aria-hidden="true" />
+                <span className="cc-status-text">Confidential</span>
               </span>
             </div>
-            <div className="cc-name">Frosinone Calcio</div>
-            <div className="cc-location">Frosinone · Italy · Serie A</div>
+            <div className="cc-name">
+              Italy <em>(target)</em>
+            </div>
+            <div className="cc-location">Italy · Serie A</div>
             <p className="cc-note">
-              Controlling investment via Clara Vista Frosinone SPV I. Promoted to Serie A in 2025/26 — a modern
-              16,227-seat stadium and three top-flight promotions in the last decade — located an hour from Rome.
+              A football opportunity in Italy&apos;s Serie A — one of the most storied top-flight leagues in world
+              football. <em>Details TBA.</em>
             </p>
             <div className="cc-stats">
               <div>
                 <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">1928</div>
+                <div className="cc-stat-value">
+                  <em>TBA</em>
+                </div>
               </div>
               <div>
                 <div className="cc-stat-label">League</div>
                 <div className="cc-stat-value">Serie A</div>
               </div>
             </div>
-            <Link href="/portfolio/frosinone" className="cc-link">
-              View deep dive
+            <Link href="/portfolio/italy" className="cc-link">
+              View brief
             </Link>
           </div>
           <div className="club-card">

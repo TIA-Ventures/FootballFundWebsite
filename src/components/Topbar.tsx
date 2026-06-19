@@ -108,12 +108,14 @@ export function Topbar({ activeNav = null }: TopbarProps) {
                   <span className="npm-meta">Premier League · England</span>
                 </span>
               </Link>
-              <Link href="/portfolio/frosinone" role="menuitem" className="npm-item">
+              <Link href="/portfolio/italy" role="menuitem" className="npm-item">
                 <span className="npm-flag" aria-hidden="true">
-                  <span className="npm-dot" />
+                  <span className="npm-dot npm-dot--target" />
                 </span>
                 <span className="npm-text">
-                  <span className="npm-club">Frosinone Calcio</span>
+                  <span className="npm-club">
+                    Italy <em>(target)</em>
+                  </span>
                   <span className="npm-meta">Serie A · Italy</span>
                 </span>
               </Link>
@@ -201,8 +203,8 @@ export function Topbar({ activeNav = null }: TopbarProps) {
               <Link href="/portfolio/ipswich" className="mm-sublink" onClick={closeMobile}>
                 Ipswich Town FC
               </Link>
-              <Link href="/portfolio/frosinone" className="mm-sublink" onClick={closeMobile}>
-                Frosinone Calcio
+              <Link href="/portfolio/italy" className="mm-sublink" onClick={closeMobile}>
+                Italy <em>(target)</em>
               </Link>
               <Link href="/portfolio/spain" className="mm-sublink" onClick={closeMobile}>
                 Spain <em>(target)</em>
