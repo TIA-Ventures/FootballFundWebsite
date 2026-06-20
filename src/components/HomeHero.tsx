@@ -1,13 +1,13 @@
-"use client";
-
 import Link from "next/link";
-import { HeroVideoBackdrop } from "./HeroVideoBackdrop";
+import { PORTFOLIO_CLUBS } from "@/data/portfolioClubs";
+import { PortfolioClubGrid } from "@/components/PortfolioClubGrid";
+import { HomeHeroVideo } from "@/components/HomeHeroVideo";
 
 export function HomeHero() {
   return (
     <>
       <section className="hero home-hero">
-        <HeroVideoBackdrop />
+        <HomeHeroVideo />
 
         <div className="hero-bottom">
           <div className="hero-headline">
@@ -40,10 +40,9 @@ export function HomeHero() {
         <div className="home-platform-banner-inner">
           <p>
             Clara Vista is a{" "}
-            <span className="home-platform-banner-accent">data-driven sports investment platform</span>{" "}
-            built to generate asymmetric outcomes. We invest behind strong tailwinds and partner with
-            winning organizations to achieve{" "}
-            <strong>excellence across every dimension of performance.</strong>
+            <span className="home-platform-banner-accent">data-driven sports investment platform</span> built to
+            generate asymmetric outcomes. We invest behind strong tailwinds and partner with winning organizations to
+            achieve <strong>excellence across every dimension of performance.</strong>
           </p>
         </div>
       </section>
@@ -52,124 +51,21 @@ export function HomeHero() {
         <div className="ps-head">
           <div>
             <div className="ps-eyebrow">Portfolio</div>
-            <h2>Three clubs. One operating system.</h2>
+            <h2>Three clubs. One proven strategy.</h2>
           </div>
         </div>
-        <div className="ps-grid">
-          <div className="club-card">
-            <div className="cc-logo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/ipswich-town.svg" alt="Ipswich Town FC crest" />
-            </div>
-            <div className="cc-meta">
-              <span className="cc-num">1 / Ipswich Town FC</span>
-              <span className="cc-status">
-                <span className="cc-dot active" aria-hidden="true" />
-                <span className="cc-status-text">Active</span>
-              </span>
-            </div>
-            <div className="cc-name">Ipswich Town</div>
-            <div className="cc-location">Ipswich · England · Premier League</div>
-            <p className="cc-note">
-              Controlling shareholder, Ipswich is the anchor investment of Fund II. Held via the{" "}
-              <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio Management and the Three Lions Fund.
-              Back-to-back promotions to the Premier League — among the highest player value creation in global
-              football in 2024/25.
-            </p>
-            <div className="cc-stats">
-              <div>
-                <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">1878</div>
-              </div>
-              <div>
-                <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">Premier League</div>
-              </div>
-            </div>
-            <Link href="/portfolio/ipswich" className="cc-link">
-              View deep dive
-            </Link>
-          </div>
-          <div className="club-card">
-            <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
-            <div className="cc-meta">
-              <span className="cc-num">2 / Italy</span>
-              <span className="cc-status">
-                <span className="cc-dot diligence" aria-hidden="true" />
-                <span className="cc-status-text">Confidential</span>
-              </span>
-            </div>
-            <div className="cc-name">
-              Italy <em>(target)</em>
-            </div>
-            <div className="cc-location">Italy · Serie A</div>
-            <p className="cc-note">
-              A football opportunity in Italy&apos;s Serie A — one of the most storied top-flight leagues in world
-              football. <em>Details TBA.</em>
-            </p>
-            <div className="cc-stats">
-              <div>
-                <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">
-                  <em>TBA</em>
-                </div>
-              </div>
-              <div>
-                <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">Serie A</div>
-              </div>
-            </div>
-            <Link href="/portfolio/italy" className="cc-link">
-              View brief
-            </Link>
-          </div>
-          <div className="club-card">
-            <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
-            <div className="cc-meta">
-              <span className="cc-num">3 / Spain</span>
-              <span className="cc-status">
-                <span className="cc-dot diligence" aria-hidden="true" />
-                <span className="cc-status-text">Active diligence</span>
-              </span>
-            </div>
-            <div className="cc-name">
-              Spain <em>(target)</em>
-            </div>
-            <div className="cc-location">Spain · La Liga</div>
-            <p className="cc-note">
-              A historic Spanish club in active diligence — La Liga is the second most valuable football league in the
-              world, primary league for the 600M-strong Spanish-speaking market, with mid-table valuations trading well
-              below European peers. <em>Details TBA.</em>
-            </p>
-            <div className="cc-stats">
-              <div>
-                <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">
-                  <em>TBA</em>
-                </div>
-              </div>
-              <div>
-                <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">La Liga</div>
-              </div>
-            </div>
-            <Link href="/portfolio/spain" className="cc-link">
-              View diligence brief
-            </Link>
-          </div>
-        </div>
+        <PortfolioClubGrid clubs={PORTFOLIO_CLUBS.home} />
       </section>
 
       <section className="home-disclaimer" aria-label="Disclaimer">
         <div className="home-disclaimer-inner">
           <p>
-            Clara Vista is regularly pursuing sports-focused investment opportunities in multiple
-            markets, including the possible acquisition of interests in European football clubs.
+            Clara Vista is regularly pursuing sports-focused investment opportunities in multiple markets, including the
+            possible acquisition of interests in European football clubs.
           </p>
           <p>
-            Clara Vista is also an investor in Ipswich Town FC, however, the firm is not pursuing a
-            Multi-Club Ownership model (MCO). None of these investments will have any connection with
-            Ipswich Town or Gamechanger 20, Ltd.
+            Clara Vista is also an investor in Ipswich Town FC, however, the firm is not pursuing a Multi-Club Ownership
+            model (MCO). None of these investments will have any connection with Ipswich Town or Gamechanger 20, Ltd.
           </p>
         </div>
       </section>

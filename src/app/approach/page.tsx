@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { Topbar } from "@/components/Topbar";
 
@@ -90,7 +89,7 @@ export default function ApproachPage() {
               <div className="re-card">
                 <div className="re-label">Source 1 · Operational</div>
                 <div className="re-multiplier">
-                  2&ndash;3<span className="re-x">×</span>
+                  1&ndash;3<span className="re-x">×</span>
                 </div>
                 <div className="re-name">Alpha</div>
                 <p className="re-desc">
@@ -131,23 +130,6 @@ export default function ApproachPage() {
           </div>
         </div>
 
-        {/* Chapter break · routes to /portfolio (the proof). */}
-        <Link href="/portfolio" className="chapter-break">
-          <div className="chapter-break-inner">
-            <div>
-              <div className="chapter-break-eyebrow">Next chapter · 3 · Portfolio</div>
-              <h2 className="chapter-break-h2">
-                The <em>proof.</em>
-                <span className="chapter-break-arrow">→</span>
-              </h2>
-            </div>
-            <div className="chapter-break-meta">
-              Three clubs · three leagues
-              <br />
-              One operating system, deployed
-            </div>
-          </div>
-        </Link>
       </main>
       <Footer />
     </>

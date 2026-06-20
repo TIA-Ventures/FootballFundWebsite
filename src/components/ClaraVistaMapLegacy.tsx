@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { TEAM_MOMENTS } from "./TeamMoments";
 
 function canvasFontVar(name: "--font-sans" | "--font-serif" | "--font-mono"): string {
   if (typeof document === "undefined") return "sans-serif";
@@ -10,11 +8,12 @@ function canvasFontVar(name: "--font-sans" | "--font-serif" | "--font-mono"): st
   return v || "sans-serif";
 }
 
-export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?: boolean; locked?: boolean }) {
+export function ClaraVistaMapLegacy({ locked = false }: { locked?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const embed = true;
     const canvas = canvasRef.current;
     const wrap = wrapRef.current;
     if (!canvas || !wrap) return;
@@ -685,9 +684,9 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
         lat: 40.4,
         lng: -3.7,
         label: "Spain",
-        club: "Target acquisition · active diligence",
+        club: "To Be Announced",
         league: "La Liga",
-        status: "Diligence",
+        status: "To Be Announced",
         kind: "diligence",
         num: "2",
       },
@@ -697,9 +696,9 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
         lat: 41.9,
         lng: 12.5,
         label: "Italy",
-        club: "Target acquisition · confidential",
+        club: "To Be Announced",
         league: "Serie A",
-        status: "Confidential",
+        status: "To Be Announced",
         kind: "diligence",
         num: "3",
       },
@@ -2384,8 +2383,8 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
           logoReady && logoImg ? LOGO_STACK_H * (logoImg.naturalWidth / logoImg.naturalHeight) : 0;
 
         const gapLogoTitle = 5;
-        const gapTitleSub = 5;
-        const titleLineH = 18;
+        const gapTitleSub = 8;
+        const titleLineH = 26;
         const subLineH = 12;
 
         const isDayTheme = getTheme() === "day";
@@ -2480,7 +2479,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
             ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
             : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
           ctx.font = `400 ${subSize}px ${canvasFontVar("--font-sans")}`;
-          ctx.fillText(subLabel, nameX, c.py + 15);
+          ctx.fillText(subLabel, nameX, c.py + 24);
         }
         ctx.textBaseline = "alphabetic";
       });
@@ -2551,7 +2550,7 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
       if (hintTimer !== undefined) window.clearTimeout(hintTimer);
       window.cancelAnimationFrame(rafRender);
     };
-  }, [embed, locked]);
+  }, [locked]);
 
   const recenterButton = (
     <button
@@ -2606,249 +2605,14 @@ export function ClaraVistaMapLegacy({ embed = false, locked = false }: { embed?:
     </div>
   );
 
-  if (embed) {
-    return (
-      <div ref={wrapRef} className={locked ? "map-embed-locked" : undefined}>
-        {loader}
-        <section className="hero">
-          {mapCanvas}
-          {!locked && dragHint}
-          <div className="hero-bottom">{!locked && recenterButton}</div>
-        </section>
-      </div>
-    );
-  }
-
   return (
-    <div ref={wrapRef}>
+    <div ref={wrapRef} className={locked ? "map-embed-locked" : undefined}>
       {loader}
-
       <section className="hero">
         {mapCanvas}
-        {dragHint}
-
-        <div className="hero-bottom">
-          <div className="hero-headline">
-            <div className="eyebrow">Data-Driven Sports Investment</div>
-            <h1 className="headline">
-              WE <em>INVEST.</em>
-              <br />
-              WE <em>BUILD.</em>
-              <br />
-              WE <em>WIN.</em>
-            </h1>
-            <p className="subhead">
-              Owning exceptional football clubs in the world&apos;s most valuable leagues.
-              We invest behind strong tailwinds and partner with winning organizations to achieve excellence across every dimension of
-              performance.
-            </p>
-          </div>
-
-          {recenterButton}
-        </div>
-
-        <div className="portfolio-panel">
-          <div className="pp-label">
-            <span>Portfolio</span>
-            <span className="pp-label-count">1 / 3</span>
-          </div>
-          <Link
-            href="/portfolio/ipswich"
-            className="pp-row is-ipswich"
-            aria-label="View Ipswich Town FC details"
-          >
-            <div className="pp-num">1</div>
-            <div className="pp-info">
-              <div className="pp-city">Ipswich</div>
-              <div className="pp-club">Ipswich Town FC · England</div>
-            </div>
-            <div className="pp-status active" title="Active" />
-          </Link>
-          <Link href="/portfolio/italy" className="pp-row" aria-label="View Italy target details">
-            <div className="pp-num">2</div>
-            <div className="pp-info">
-              <div className="pp-city">Italy</div>
-              <div className="pp-club">Target · confidential</div>
-            </div>
-            <div className="pp-status diligence" title="Confidential" />
-          </Link>
-          <Link href="/portfolio/spain" className="pp-row" aria-label="View Spain target details">
-            <div className="pp-num">3</div>
-            <div className="pp-info">
-              <div className="pp-city">Spain</div>
-              <div className="pp-club">Target · active diligence</div>
-            </div>
-            <div className="pp-status diligence" title="Diligence" />
-          </Link>
-        </div>
-
-        {/* Ipswich hover preview — anchored beneath the Active Portfolio panel.
-            Appears when the Ipswich row is hovered/focused, when the preview
-            itself is hovered, or when the Ipswich marker on the map is
-            hovered (driven by the `.is-ipswich-hovered` class on the hero,
-            toggled inside the render loop). Cycles through the same photos
-            used by the team page Moments strip. */}
-        <aside className="ipswich-preview" aria-hidden="true">
-          <div className="ipswich-preview-stack">
-            {TEAM_MOMENTS.map((m, i) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={m.src}
-                className={`ipswich-preview-img is-frame-${i + 1}`}
-                src={m.src}
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-            ))}
-          </div>
-          <div className="ipswich-preview-cap">Behind the scenes · Ipswich</div>
-        </aside>
-
-        <div className="credentials">
-          <div className="cred-item">
-            <div className="cred-value">
-              <em>$</em>240M
-            </div>
-            <div className="cred-label">AUM</div>
-          </div>
-          <div className="cred-divider" />
-          <div className="cred-item">
-            <div className="cred-value">
-              3.5<em>B</em>
-            </div>
-            <div className="cred-label">Global Fans</div>
-          </div>
-        </div>
-
-        <div className="tooltip" id="tooltip">
-          <div className="tooltip-meta">
-            <span id="t-tier">Portfolio</span>
-            <span id="t-country">ES</span>
-          </div>
-          <div className="tooltip-city" id="t-city" />
-          <div className="tooltip-club" id="t-club" />
-          <div className="tooltip-divider" />
-          <div className="tooltip-stat">
-            <span>Status</span>
-            <strong id="t-flow">Active</strong>
-          </div>
-        </div>
+        {!locked && dragHint}
+        <div className="hero-bottom">{!locked && recenterButton}</div>
       </section>
-
-      <section className="portfolio-section" id="portfolio">
-        <div className="ps-head">
-          <div>
-            <div className="ps-eyebrow">Portfolio</div>
-            <h2>
-              Three clubs. Three leagues. <em>One operating system.</em>
-            </h2>
-          </div>
-        </div>
-        <div className="ps-grid">
-          <div className="club-card">
-            <div className="cc-logo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/ipswich-town.svg" alt="Ipswich Town FC crest" />
-            </div>
-            <div className="cc-meta">
-              <span className="cc-num">1 / Ipswich Town FC</span>
-              <span className="cc-status">
-                <span className="cc-dot active" aria-hidden="true" />
-                <span className="cc-status-text">Active</span>
-              </span>
-            </div>
-            <div className="cc-name">Ipswich Town</div>
-            <div className="cc-location">Ipswich · England</div>
-            <p className="cc-note">
-              Controlling shareholder, Ipswich is the anchor investment of Fund II. Held via the <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio
-              Management and the Three Lions Fund. Back-to-back promotions to the Premier League — among the highest
-              player value creation in global football in 2024/25.
-            </p>
-            <div className="cc-stats">
-              <div>
-                <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">1878</div>
-              </div>
-              <div>
-                <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">Premier League</div>
-              </div>
-            </div>
-            <Link href="/portfolio/ipswich" className="cc-link">
-              View deep dive
-            </Link>
-          </div>
-          <div className="club-card">
-            <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
-            <div className="cc-meta">
-              <span className="cc-num">2 / Italy</span>
-              <span className="cc-status">
-                <span className="cc-dot diligence" aria-hidden="true" />
-                <span className="cc-status-text">Confidential</span>
-              </span>
-            </div>
-            <div className="cc-name">
-              Italy <em>(target)</em>
-            </div>
-            <div className="cc-location">Italy · Serie A</div>
-            <p className="cc-note">
-              A football opportunity in Italy&apos;s Serie A — one of the most storied top-flight leagues in world
-              football. <em>Details TBA.</em>
-            </p>
-            <div className="cc-stats">
-              <div>
-                <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">
-                  <em>TBA</em>
-                </div>
-              </div>
-              <div>
-                <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">Serie A</div>
-              </div>
-            </div>
-            <Link href="/portfolio/italy" className="cc-link">
-              View brief
-            </Link>
-          </div>
-          <div className="club-card">
-            <div className="cc-logo cc-logo-placeholder" aria-hidden="true" />
-            <div className="cc-meta">
-              <span className="cc-num">3 / Spain</span>
-              <span className="cc-status">
-                <span className="cc-dot diligence" aria-hidden="true" />
-                <span className="cc-status-text">Active diligence</span>
-              </span>
-            </div>
-            <div className="cc-name">
-              Spain <em>(target)</em>
-            </div>
-            <div className="cc-location">Spain · La Liga</div>
-            <p className="cc-note">
-              A historic Spanish club in active diligence — La Liga is the second most valuable football league in the world, primary
-              league for the 600M-strong Spanish-speaking market, with mid-table valuations trading well below European peers.{" "}
-              <em>Details TBA.</em>
-            </p>
-            <div className="cc-stats">
-              <div>
-                <div className="cc-stat-label">Founded</div>
-                <div className="cc-stat-value">
-                  <em>TBA</em>
-                </div>
-              </div>
-              <div>
-                <div className="cc-stat-label">League</div>
-                <div className="cc-stat-value">La Liga</div>
-              </div>
-            </div>
-            <Link href="/portfolio/spain" className="cc-link">
-              View diligence brief
-            </Link>
-          </div>
-        </div>
-      </section>
-
     </div>
   );
 }

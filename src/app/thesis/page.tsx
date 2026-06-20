@@ -193,7 +193,7 @@ export default function ThesisPage() {
               <div>
                 <div className="sh-eyebrow">Why football</div>
                 <h2 className="sh-h2">
-                  Global football at scale. <em>Our focus.</em>
+                  Global football at scale.
                 </h2>
               </div>
             </div>
@@ -210,11 +210,6 @@ export default function ThesisPage() {
                 Our <em>approach.</em>
                 <span className="chapter-break-arrow">→</span>
               </h2>
-            </div>
-            <div className="chapter-break-meta">
-              We invest · We build · We win
-              <br />
-              How we turn the thesis into returns.
             </div>
           </div>
         </Link>

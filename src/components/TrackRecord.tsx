@@ -91,7 +91,7 @@ const INVESTMENTS: Investment[] = [
     logo: "ipswich.svg",
   },
   {
-    name: "Italy (target)",
+    name: "Italy",
     firm: "ClaraVista",
     funds: ["cv-i"],
     status: "Diligence",
@@ -102,13 +102,13 @@ const INVESTMENTS: Investment[] = [
     league: "Serie A · Italy",
   },
   {
-    name: "Spain (target)",
+    name: "Spain",
     firm: "ClaraVista",
     funds: ["cv-i"],
     status: "Diligence",
     sector: "football",
     description:
-      "A historic Spanish club in active diligence — La Liga is the second-most valuable football league in the world. Details TBA.",
+      "A historic Spanish club — La Liga is the second-most valuable football league in the world. Details TBA.",
     href: "/portfolio/spain",
     league: "La Liga · Spain",
   },
@@ -578,7 +578,7 @@ type SectorFilter = "all" | SectorSlug;
 
 function StatusBadge({ status }: { status: Status }) {
   const label =
-    status === "Active" ? "Active" : status === "Realized" ? "Realized" : "Diligence";
+    status === "Active" ? "Active" : status === "Realized" ? "Realized" : "To Be Announced";
   return (
     <span className={`tr-status tr-status--${status.toLowerCase()}`}>
       <span className="tr-status-dot" aria-hidden="true" />

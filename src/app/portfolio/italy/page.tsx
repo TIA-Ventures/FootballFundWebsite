@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { TbdClubPage } from "@/components/TbdClubPage";
 
 export const metadata: Metadata = {
-  title: "Italy (target) · Portfolio · Clara Vista Investment Partners",
+  title: "Italy · Portfolio · Clara Vista Investment Partners",
   description:
     "Clara Vista is evaluating a controlling interest in an Italian football club competing in Serie A. Details remain TBA.",
 };
@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 export default function ItalyPage() {
   return (
     <TbdClubPage
-      breadcrumbCurrent="Italy · target"
+      breadcrumbCurrent="Italy"
       h1={
         <>
-          Italy <em>(target)</em> <em className="deep-h1-accent">.</em>
+          Italy <em className="deep-h1-accent">.</em>
         </>
       }
-      sub="An Italian football opportunity in Serie A — details remain confidential while the process is underway."
+      sub="An Italian football opportunity in Serie A — details to be announced."
       sideMeta={[
         { label: "Country", value: "Italy" },
         { label: "League", value: "Serie A" },
@@ -26,7 +26,7 @@ export default function ItalyPage() {
         { label: "Status", value: "TBA" },
       ]}
       banner={{
-        eyebrow: "Confidential",
+        eyebrow: "To Be Announced",
         body: (
           <>
             Clara Vista is pursuing a football opportunity in Italy.{" "}

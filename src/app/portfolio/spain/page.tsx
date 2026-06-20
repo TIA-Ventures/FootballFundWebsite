@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { TbdClubPage } from "@/components/TbdClubPage";
 
 export const metadata: Metadata = {
-  title: "Spain (target) · Portfolio · Clara Vista Investment Partners",
+  title: "Spain · Portfolio · Clara Vista Investment Partners",
   description:
     "Clara Vista is conducting diligence on a controlling interest in a historic La Liga football club — gateway to a 600M-strong Spanish-speaking audience.",
 };
@@ -10,23 +10,23 @@ export const metadata: Metadata = {
 export default function SpainPage() {
   return (
     <TbdClubPage
-      breadcrumbCurrent="Spain · target"
+      breadcrumbCurrent="Spain"
       h1={
         <>
-          Spain <em>(target)</em> <em className="deep-h1-accent">.</em>
+          Spain <em className="deep-h1-accent">.</em>
         </>
       }
-      sub="Active diligence on a historic La Liga club — gateway to a 600M-strong Spanish-speaking audience."
+      sub="A historic La Liga club — gateway to a 600M-strong Spanish-speaking audience."
       sideMeta={[
         { label: "Country", value: "Spain" },
         { label: "League", value: "La Liga" },
         { label: "Founded", value: <em>TBA</em> },
         { label: "Stadium", value: <em>TBA</em> },
         { label: "Stake", value: <em>TBA</em> },
-        { label: "Status", value: "Active diligence" },
+        { label: "Status", value: "To Be Announced" },
       ]}
       banner={{
-        eyebrow: "Active diligence",
+        eyebrow: "To Be Announced",
         body: (
           <>
             Clara Vista is conducting diligence on a controlling interest in a historic Spanish club.{" "}
@@ -35,10 +35,10 @@ export default function SpainPage() {
         ),
       }}
       prose={{
-        eyebrow: "Diligence brief",
+        eyebrow: "Brief",
         paragraphs: [
           <>
-            The diligence target is a historic Spanish club competing in <em>La Liga</em> — the gateway property for the
+            The club under review is a historic Spanish club competing in <em>La Liga</em> — the gateway property for the
             global Spanish-speaking market and, by audience and rights value, the closest peer to the Premier League.
           </>,
           <>

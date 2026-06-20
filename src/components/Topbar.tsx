@@ -114,7 +114,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
                 </span>
                 <span className="npm-text">
                   <span className="npm-club">
-                    Italy <em>(target)</em>
+                    Italy
                   </span>
                   <span className="npm-meta">Serie A · Italy</span>
                 </span>
@@ -125,7 +125,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
                 </span>
                 <span className="npm-text">
                   <span className="npm-club">
-                    Spain <em>(target)</em>
+                    Spain
                   </span>
                   <span className="npm-meta">La Liga · Spain</span>
                 </span>
@@ -141,7 +141,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
             Thesis
           </Link>
           <Link href="/approach" style={activeNav === "approach" ? activeStyle : undefined}>
-            Approach
+            Strategy
           </Link>
           <a
             href="https://login.app.carta.com/credentials/login/"
@@ -204,10 +204,10 @@ export function Topbar({ activeNav = null }: TopbarProps) {
                 Ipswich Town FC
               </Link>
               <Link href="/portfolio/italy" className="mm-sublink" onClick={closeMobile}>
-                Italy <em>(target)</em>
+                Italy
               </Link>
               <Link href="/portfolio/spain" className="mm-sublink" onClick={closeMobile}>
-                Spain <em>(target)</em>
+                Spain
               </Link>
             </div>
           </div>
@@ -225,7 +225,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
             onClick={closeMobile}
             style={activeNav === "approach" ? activeStyle : undefined}
           >
-            Approach
+            Strategy
           </Link>
           <a
             href="https://login.app.carta.com/credentials/login/"

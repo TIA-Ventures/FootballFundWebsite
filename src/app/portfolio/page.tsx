@@ -1,102 +1,16 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
+import { PortfolioClubGrid } from "@/components/PortfolioClubGrid";
 import { PortfolioMapEmbed } from "@/components/PortfolioMapEmbed";
 import { Topbar } from "@/components/Topbar";
+import { PORTFOLIO_CLUBS } from "@/data/portfolioClubs";
 
 export const metadata: Metadata = {
   title: "Portfolio · Clara Vista Investment Partners",
   description:
-    "Three clubs. Three leagues. One operating system. A geographically diversified portfolio of European football clubs unified by a single data-led operating model.",
+    "Three clubs. Three leagues. One proven strategy. A geographically diversified portfolio of European football clubs unified by a single data-led operating model.",
 };
-
-type ClubStatus = "active" | "pending" | "diligence";
-
-type PortfolioCard = {
-  num: string;
-  href: string;
-  status: ClubStatus;
-  statusLabel: string;
-  /** Club crest asset key; null for embargoed / undisclosed targets. */
-  logo: "ipswich" | null;
-  name: ReactNode;
-  loc: string;
-  note: ReactNode;
-  founded: ReactNode;
-  leagueLabel: string;
-  leagueValue: ReactNode;
-  link: string;
-};
-
-const CLUBS: PortfolioCard[] = [
-  {
-    num: "1 / Ipswich Town FC",
-    href: "/portfolio/ipswich",
-    status: "active",
-    statusLabel: "Active",
-    logo: "ipswich",
-    name: "Ipswich Town",
-    loc: "Ipswich · England · Premier League",
-    note: (
-      <>
-        Controlling shareholder, Ipswich is the anchor investment of Fund II. Held via the <em>Portman Holdings LLC</em> consortium alongside ORG Portfolio
-        Management and the Three Lions Fund. Bob Gold sits on the board of Gamechanger 20 Ltd, the parent company of the
-        club.
-      </>
-    ),
-    founded: "1878",
-    leagueLabel: "Investment",
-    leagueValue: "Mar 2024",
-    link: "View deep dive",
-  },
-  {
-    num: "2 / Italy",
-    href: "/portfolio/italy",
-    status: "diligence",
-    statusLabel: "Confidential",
-    logo: null,
-    name: (
-      <>
-        Italy <em>(target)</em>
-      </>
-    ),
-    loc: "Italy · Serie A",
-    note: (
-      <>
-        A football opportunity in Italy&apos;s Serie A — one of the most storied top-flight leagues in world football.{" "}
-        <em>Details TBA.</em>
-      </>
-    ),
-    founded: <em>TBA</em>,
-    leagueLabel: "League",
-    leagueValue: "Serie A",
-    link: "View brief",
-  },
-  {
-    num: "3 / Spain",
-    href: "/portfolio/spain",
-    status: "diligence",
-    statusLabel: "Active diligence",
-    logo: null,
-    name: (
-      <>
-        Spain <em>(target)</em>
-      </>
-    ),
-    loc: "Spain · La Liga",
-    note: (
-      <>
-        A historic Spanish club in active diligence — La Liga is the second most-valuable football league in the world
-        and the primary league for the 600M-strong Spanish-speaking market. <em>Details TBA.</em>
-      </>
-    ),
-    founded: <em>TBA</em>,
-    leagueLabel: "League",
-    leagueValue: "La Liga",
-    link: "View diligence brief",
-  },
-];
 
 export default function PortfolioPage() {
   return (
@@ -109,7 +23,7 @@ export default function PortfolioPage() {
               <div>
                 <div className="ph-eyebrow">Portfolio</div>
                 <h1 className="ph-h1">
-                  Three clubs. <em>One operating system.</em>
+                  Three clubs. <em>One proven strategy.</em>
                 </h1>
               </div>
               <p className="ph-intro">
@@ -126,52 +40,12 @@ export default function PortfolioPage() {
 
         <div className="section bg-deep portfolio-hub-cards">
           <div className="section-inner">
-            <div className="ps-grid">
-              {CLUBS.map((c) => (
-                <div key={c.num} className="club-card">
-                  <div
-                    className={`cc-logo${c.logo ? "" : " cc-logo-placeholder"}`}
-                    aria-hidden={c.logo ? undefined : true}
-                  >
-                    {c.logo === "ipswich" ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src="/ipswich-town.svg" alt="Ipswich Town FC crest" />
-                    ) : null}
-                  </div>
-                  <div className="cc-meta">
-                    <span className="cc-num">{c.num}</span>
-                    <span className="cc-status">
-                      <span className={`cc-dot ${c.status}`} aria-hidden="true" />
-                      <span className="cc-status-text">{c.statusLabel}</span>
-                    </span>
-                  </div>
-                  <div className="cc-name">{c.name}</div>
-                  <div className="cc-location">{c.loc}</div>
-                  <p className="cc-note">{c.note}</p>
-                  <div className="cc-stats">
-                    <div>
-                      <div className="cc-stat-label">Founded</div>
-                      <div className="cc-stat-value">{c.founded}</div>
-                    </div>
-                    <div>
-                      <div className="cc-stat-label">{c.leagueLabel}</div>
-                      <div className="cc-stat-value">{c.leagueValue}</div>
-                    </div>
-                  </div>
-                  <Link href={c.href} className="cc-link">
-                    {c.link}
-                  </Link>
-                </div>
-              ))}
-            </div>
+            <PortfolioClubGrid clubs={PORTFOLIO_CLUBS.hub} />
 
             <div className="cta-row">
               <Link href="/thesis" className="cta-link">
                 Read the thesis
               </Link>
-              <a href="#" className="cta-link">
-                Fund II terms
-              </a>
             </div>
           </div>
         </div>

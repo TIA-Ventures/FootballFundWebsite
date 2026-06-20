@@ -58,7 +58,7 @@ const LEADERSHIP: Person[] = [
   {
     name: "Wills Hapworth",
     role: "Venture",
-    photo: "/team/wills_hapworth.webp",
+    photo: "/team/wills_hapworth_v2.webp",
     linkedin: "https://www.linkedin.com/in/willshapworth/",
     bio: "20+ years as investor and advisor to high-growth tech companies. Founding Partner of TIA Ventures.",
   },
@@ -321,7 +321,7 @@ export default function TeamPage() {
               <div>
                 <div className="sh-eyebrow">Operating Principles</div>
                 <h2 className="sh-h2">
-                  Four pillars, <em>one philosophy.</em>
+                  Operating <em>principles.</em>
                 </h2>
               </div>
               <p className="sh-deck">
@@ -336,9 +336,6 @@ export default function TeamPage() {
               <Link href="/thesis" className="cta-link">
                 Read the thesis
               </Link>
-              <a href="#" className="cta-link">
-                Fund II terms
-              </a>
             </div>
           </div>
         </div>

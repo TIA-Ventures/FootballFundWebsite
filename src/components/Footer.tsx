@@ -6,7 +6,7 @@ export function Footer() {
           Clara Vista Investment Partners
         </div>
         <div>
-          <span>NEW YORK · LONDON · ROME · MADRID</span>
+          <span>NEW YORK · LONDON · ITALY · SPAIN</span>
         </div>
       </div>
     </footer>
