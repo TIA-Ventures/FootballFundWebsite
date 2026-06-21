@@ -2691,17 +2691,15 @@ body {
   transition: color 0.6s ease;
 }
 .cv-page .scoring-tabs {
-  display: inline-flex;
+  display: flex;
   align-self: flex-start;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  gap: 10px;
   margin-bottom: 40px;
   flex-wrap: wrap;
-  transition: background 0.6s ease, border-color 0.6s ease;
 }
 .cv-page .scoring-tab {
-  background: var(--bg);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
   padding: 12px 20px;
   font-family: var(--font-sans);
   font-size: var(--type-mono);
@@ -2710,16 +2708,18 @@ body {
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
-  border: none;
-  transition: background 0.3s, color 0.3s;
+  border-radius: 1px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
   white-space: nowrap;
 }
 .cv-page .scoring-tab:hover {
   background: var(--bg-card);
   color: var(--ivory);
+  border-color: var(--green-light);
 }
 .cv-page .scoring-tab.is-active {
   background: var(--green-light);
+  border-color: var(--green-light);
   color: var(--bg);
   font-weight: 600;
 }
@@ -3377,9 +3377,6 @@ body {
 .cv-page .ve-bands .ve-band:last-child {
   border-bottom: 1px solid var(--line-soft);
 }
-.cv-page .value-engine[data-metric-focus="true"] .ve-cell:not(.is-active) {
-  opacity: 0.52;
-}
 .cv-page .value-engine[data-in-view="false"] .ve-cell {
   opacity: 0;
   animation: none;
@@ -3502,70 +3499,15 @@ body {
   border-radius: 6px;
   background: transparent;
   text-align: left;
-  cursor: pointer;
+  cursor: default;
   opacity: 0;
   transform: translateY(8px);
   animation: ve-rise 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
-  transition:
-    opacity 0.35s ease,
-    border-color 0.25s ease,
-    background 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.25s ease;
-}
-.cv-page .ve-cell:hover {
-  border-color: var(--line);
-  background: color-mix(in srgb, var(--green-light) 4%, transparent);
-}
-.cv-page .ve-cell:focus-visible {
-  outline: 2px solid var(--green-light);
-  outline-offset: 2px;
-}
-.cv-page .ve-cell.is-active {
-  opacity: 1;
-  border-color: color-mix(in srgb, var(--green-light) 35%, transparent);
-  background: color-mix(in srgb, var(--green-light) 8%, transparent);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--green-light) 12%, transparent);
-}
-.cv-page .ve-cell.is-active .ve-slider-fill {
-  background: var(--green-light);
-  filter: brightness(1.08);
-}
-.cv-page .ve-cell.is-active .ve-slider-target {
-  transform: translate(-50%, -50%) scale(1.12);
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--green-light) 18%, transparent);
-}
-.cv-page .ve-cell:hover .ve-slider-target,
-.cv-page .ve-cell:focus-visible .ve-slider-target {
-  transform: translate(-50%, -50%) scale(1.08);
-}
-.cv-page .ve-cell-hint {
-  display: block;
-  margin-top: 10px;
-  font-family: var(--font-mono);
-  font-size: var(--type-caption);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ivory-faint);
-  opacity: 0;
-  transition: opacity 0.2s ease, color 0.2s ease;
-}
-.cv-page .ve-cell:hover .ve-cell-hint,
-.cv-page .ve-cell:focus-visible .ve-cell-hint,
-.cv-page .ve-cell.is-active .ve-cell-hint {
-  opacity: 1;
-}
-.cv-page .ve-cell.is-active .ve-cell-hint {
-  color: var(--green-light);
 }
 .cv-page .ve-arrow {
   color: var(--ivory-faint);
   font-size: var(--type-caption);
   transition: color 0.25s ease, transform 0.25s ease;
-}
-.cv-page .ve-cell:hover .ve-arrow,
-.cv-page .ve-cell.is-active .ve-arrow {
-  color: var(--green-light);
 }
 @media (prefers-reduced-motion: reduce) {
   .cv-page .value-engine[data-in-view="false"] .ve-cell,
@@ -3682,8 +3624,21 @@ body {
   color: var(--ivory-faint);
   line-height: 1.7;
   margin-top: 40px;
-  max-width: 760px;
-  transition: color 0.6s ease;
+  max-width: none;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: clamp(28px, 4vw, 40px) clamp(24px, 5vw, 56px) 0;
+  border-top: 1px solid var(--line-soft);
+  box-sizing: border-box;
+  text-align: justify;
+  text-justify: inter-word;
+  transition: color 0.6s ease, border-color 0.6s ease;
+}
+@media (min-width: 900px) {
+  .cv-page .ve-disclaimer {
+    letter-spacing: 0.14em;
+  }
 }
 @media (max-width: 760px) {
   .cv-page .ve-band {
@@ -3732,8 +3687,8 @@ body {
   .cv-page .terminal-table .col-line { font-size: var(--type-label); letter-spacing: 0.10em; }
 }
 @media (max-width: 720px) {
-  .cv-page .scoring-tabs { width: 100%; }
-  .cv-page .scoring-tab { flex: 1 1 0; padding: 12px 8px; font-size: var(--type-mono); letter-spacing: 0.12em; }
+  .cv-page .scoring-tabs { width: 100%; gap: 8px; }
+  .cv-page .scoring-tab { flex: 1 1 calc(33.333% - 6px); min-width: 0; padding: 12px 8px; font-size: var(--type-mono); letter-spacing: 0.12em; }
   .cv-page .scoring-detail { padding: 24px; }
   .cv-page.approach-page .approach-invest-section .scoring-detail {
     padding: 22px 0 0;
@@ -7127,9 +7082,6 @@ body {
 .value-engine--static .ve-cell {
   cursor: default;
   pointer-events: none;
-}
-.value-engine--static .ve-cell-hint {
-  display: none;
 }
 
 @media (max-width: 900px) {

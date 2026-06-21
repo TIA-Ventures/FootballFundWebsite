@@ -320,9 +320,6 @@ export function IpswichRevenueChart() {
             <text className="rev-anchor-value" x={xAt(0)} y={yAt(YEARS[0].total) - 10}>
               £8M
             </text>
-            <text className="rev-anchor-value rev-anchor-end" x={xAt(YEARS.length - 1)} y={yAt(YEARS[YEARS.length - 1].total) - 12}>
-              £303M
-            </text>
 
             <g className="rev-x-axis">
               {YEARS.map((p, i) => (
