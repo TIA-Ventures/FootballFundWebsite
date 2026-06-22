@@ -166,7 +166,7 @@ export function ValueEngine() {
       data-in-view={inView ? "true" : "false"}
     >
       <p className="ve-lede">
-        Three operating pillars. Every revenue line treated as <em>its own business</em>, moving
+        Every revenue line treated as <em>its own business</em>, moving
         from a pre-investment baseline to a Clara Vista target.
       </p>
 

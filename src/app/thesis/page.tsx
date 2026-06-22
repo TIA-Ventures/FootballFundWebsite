@@ -205,9 +205,9 @@ export default function ThesisPage() {
         <Link href="/approach" className="chapter-break">
           <div className="chapter-break-inner">
             <div>
-              <div className="chapter-break-eyebrow">Next · Approach</div>
+              <div className="chapter-break-eyebrow">Next · Strategy</div>
               <h2 className="chapter-break-h2">
-                Our <em>approach.</em>
+                Our <em>Strategy.</em>
                 <span className="chapter-break-arrow">→</span>
               </h2>
             </div>

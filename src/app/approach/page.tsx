@@ -12,9 +12,9 @@ const ValueEngine = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Approach · Clara Vista Investment Partners",
+  title: "Strategy · Clara Vista Investment Partners",
   description:
-    "Chapter 2 — We invest. We build. We win. How Clara Vista selects clubs, executes on operations, and drives returns across the portfolio.",
+    "We invest. We build. We win. How Clara Vista selects clubs, executes on operations, and drives returns across the portfolio.",
 };
 
 /* /approach — Chapter 02 · How we invest.
@@ -41,7 +41,7 @@ export default function ApproachPage() {
           <div className="page-hero">
             <div className="page-hero-inner">
               <div>
-                <div className="ph-eyebrow">Approach · Chapter 2</div>
+                <div className="ph-eyebrow">Strategy</div>
                 <h1 className="ph-h1">
                   We <em>invest.</em> We <em>build.</em> We <em>win.</em>
                 </h1>

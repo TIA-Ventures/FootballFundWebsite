@@ -3374,9 +3374,6 @@ body {
 .cv-page .value-engine {
   margin-top: 4px;
 }
-.cv-page .ve-bands .ve-band:last-child {
-  border-bottom: 1px solid var(--line-soft);
-}
 .cv-page .value-engine[data-in-view="false"] .ve-cell {
   opacity: 0;
   animation: none;

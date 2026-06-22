@@ -283,24 +283,6 @@ export default function TeamPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <div className="sh-eyebrow">On the ground</div>
-                <h2 className="sh-h2">
-                  Boardroom to <em>the field.</em>
-                </h2>
-              </div>
-              <p className="sh-deck">
-                Moments from inside the club since the initial investment — directors&apos; box, dressing room,
-                lap of honour. Clara Vista is hands-on, focused on driving growth and success.
-              </p>
-            </div>
-            <TeamMoments />
-          </div>
-        </div>
-
-        <div className="section bg-deep">
-          <div className="section-inner">
-            <div className="section-head">
-              <div>
                 <div className="sh-eyebrow">Advisors</div>
                 <h2 className="sh-h2">
                   Senior Advisors <em>and Experts.</em>
@@ -315,13 +297,13 @@ export default function TeamPage() {
           </div>
         </div>
 
-        <div className="section">
+        <div className="section bg-deep">
           <div className="section-inner">
             <div className="section-head">
               <div>
                 <div className="sh-eyebrow">Operating Principles</div>
                 <h2 className="sh-h2">
-                  Operating <em>principles.</em>
+                  Four pillars.
                 </h2>
               </div>
               <p className="sh-deck">
@@ -337,6 +319,24 @@ export default function TeamPage() {
                 Read the thesis
               </Link>
             </div>
+          </div>
+        </div>
+
+        <div className="section">
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <div className="sh-eyebrow">On the ground</div>
+                <h2 className="sh-h2">
+                  Boardroom to <em>the field.</em>
+                </h2>
+              </div>
+              <p className="sh-deck">
+                Moments from inside the club since the initial investment — directors&apos; box, dressing room,
+                lap of honour. Clara Vista is hands-on, focused on driving growth and success.
+              </p>
+            </div>
+            <TeamMoments />
           </div>
         </div>
       </main>
