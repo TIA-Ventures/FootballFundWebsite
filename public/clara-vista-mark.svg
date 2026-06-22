@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none" aria-label="Clara Vista mark">
-  <!-- Brand mark — matches .brand-mark in globals.css / Topbar -->
-  <circle cx="11" cy="11" r="10.5" stroke="#B89455" stroke-opacity="0.55" stroke-width="1"/>
-  <circle cx="11" cy="11" r="6.5" stroke="#735A34" stroke-opacity="0.18" stroke-width="0.5"/>
-  <circle cx="11" cy="11" r="2" fill="#B89455"/>
-</svg>

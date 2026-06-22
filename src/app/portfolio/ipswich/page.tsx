@@ -12,7 +12,7 @@ const IpswichRevenueChart = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Ipswich Town · Portfolio · Clara Vista Investment Partners",
+  title: "Ipswich Town · Portfolio",
   description:
     "Ipswich Town FC — anchor investment of Fund II, held via the Portman Holdings LLC consortium. A historic English club positioned for transformation under Mark Ashton's leadership.",
 };

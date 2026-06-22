@@ -8,7 +8,7 @@ const TrackRecord = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Track Record · Clara Vista Investment Partners",
+  title: "Track Record",
   description:
     "Combined investment record of Clara Vista (PE, European football) and TIA Ventures (VC, early-stage technology) — Fund I/II/III holdings, realized investments, and CEOs.",
 };

@@ -39,14 +39,14 @@
 html {
   --font-display: 'Switzer', system-ui, sans-serif;
   --font-body: 'Switzer', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace;
   --font-serif: var(--font-display);
   --font-sans: var(--font-body);
 }
 html[data-fonts="d6"] {
   --font-display: 'Switzer', system-ui, sans-serif;
   --font-body: 'Switzer', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace;
   --font-serif: var(--font-display);
   --font-sans: var(--font-body);
 }
@@ -81,7 +81,6 @@ html {
 
 /* Display headings — gold emphasis matches home hero (upright Switzer 700). */
 .headline em,
-.manifesto-headline em,
 .ps-head h2 em,
 .cv-page .ph-h1 em,
 .cv-page .sh-h2 em,
@@ -585,7 +584,11 @@ body {
 /* ---- Hero ---- */
 .hero {
   position: relative;
-  height: 100vh; width: 100%;
+  height: 100vh;
+  /* svh = smallest viewport height: avoids the hero overflowing under mobile/
+     tablet browser toolbars in the 721–900px range (not just ≤720px). */
+  height: 100svh;
+  width: 100%;
   overflow: hidden;
   background: var(--bg);
 }
@@ -672,19 +675,6 @@ body {
   }
 }
 
-.hero-map-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  isolation: isolate;
-  pointer-events: none;
-  /* Map overlay disabled — video is the hero. The canvas and its render
-     loop are still mounted (component-managed lifecycle) but hidden so
-     dots / countries / markers / labels / leader lines are all suppressed
-     in one declaration. To bring the map back, remove this `display:none`. */
-  display: none;
-}
-
 #map-canvas {
   position: absolute;
   inset: 0;
@@ -741,13 +731,6 @@ body {
 }
 .headline em {
   color: var(--accent-display);
-  transition: color 0.6s ease;
-}
-.subhead {
-  font-family: var(--font-sans);
-  font-size: var(--type-body); line-height: 1.55;
-  color: var(--ivory-mid); max-width: 480px;
-  font-weight: 400; letter-spacing: 0;
   transition: color 0.6s ease;
 }
 
@@ -856,89 +839,6 @@ body {
 }
 
 /* ---- Portfolio Panel ---- */
-.portfolio-panel {
-  position: absolute;
-  top: 110px; right: 56px;
-  z-index: 10; width: 304px;
-  pointer-events: auto;
-  opacity: 0;
-  animation: fadeUp 1.4s ease 2.0s forwards;
-  padding: 22px 24px 18px;
-  background: color-mix(in srgb, var(--bg) 55%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(115%);
-  backdrop-filter: blur(14px) saturate(115%);
-  border: 1px solid rgba(242, 234, 214, 0.06);
-  border-radius: 6px;
-  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
-}
-[data-theme="day"] .portfolio-panel {
-  background: color-mix(in srgb, var(--bg) 55%, transparent);
-  border-color: rgba(26, 37, 32, 0.08);
-  box-shadow: 0 30px 60px -30px rgba(26, 37, 32, 0.18);
-}
-.pp-label {
-  font-family: var(--font-sans);
-  font-size: var(--type-mono); letter-spacing: 0.28em;
-  color: var(--ivory-dim); text-transform: uppercase;
-  font-weight: 500;
-  margin-bottom: 18px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--line-soft);
-  display: flex; justify-content: space-between;
-  align-items: baseline;
-  transition: color 0.6s ease, border-color 0.6s ease;
-}
-.pp-label-count {
-  font-family: var(--font-mono);
-  font-weight: 300;
-  color: var(--green-light);
-  letter-spacing: 0.18em;
-}
-.pp-row {
-  text-decoration: none;
-  color: inherit;
-  display: grid;
-  grid-template-columns: 22px 1fr auto;
-  gap: 14px;
-  align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line-soft);
-  transition: border-color 0.6s ease;
-}
-.pp-row:hover {
-  background: color-mix(in srgb, var(--green-light) 6%, transparent);
-}
-.pp-row:focus-visible {
-  outline: 2px solid var(--green-light);
-  outline-offset: 4px;
-  border-radius: 6px;
-}
-.pp-row:last-child { border-bottom: none; }
-.pp-num {
-  font-family: var(--font-mono);
-  font-size: var(--type-label);
-  color: var(--green-light);
-  font-weight: 300;
-  letter-spacing: 0.08em;
-}
-.pp-info { overflow: hidden; }
-.pp-city {
-  font-family: var(--font-serif);
-  font-weight: 400; font-size: var(--type-title);
-  color: var(--ivory); line-height: 1.1;
-  letter-spacing: -0.005em;
-  transition: color 0.6s ease;
-}
-.pp-club {
-  font-family: var(--font-sans);
-  font-size: var(--type-label); color: var(--ivory-dim);
-  margin-top: 3px; font-weight: 300;
-  transition: color 0.6s ease;
-}
-.pp-status {
-  width: 7px; height: 7px;
-  border-radius: 50%; flex-shrink: 0;
-}
 .pp-status.active {
   background: var(--green-light);
   box-shadow: 0 0 8px var(--green-glow);
@@ -963,39 +863,6 @@ body {
    Photo cycle is pure CSS — animation-play-state pauses when hidden and
    resumes from its previous position when shown, so the storytelling feels
    continuous across hovers. */
-.ipswich-preview {
-  position: absolute;
-  top: 374px;
-  right: 56px;
-  z-index: 9;
-  width: 304px;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.32s ease, transform 0.32s ease;
-}
-.ipswich-preview-stack {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  background: var(--bg-card);
-  border: 1px solid var(--line-soft);
-  border-radius: 3px;
-  overflow: hidden;
-  box-shadow: 0 1px 0 var(--line-soft);
-}
-.ipswich-preview-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 35%;
-  opacity: 0;
-  filter: saturate(0.94) contrast(1.02);
-  animation: ipswichPreviewCycle 18s linear infinite;
-  animation-play-state: paused;
-}
 /* Stagger each photo's entry across the 18s cycle. With 9 photos and a 2s
    offset, each frame holds for ~1.4s with a ~0.36s crossfade in/out. */
 .ipswich-preview-img.is-frame-1 { animation-delay: 0s; }
@@ -1016,17 +883,6 @@ body {
 }
 /* Caption — single line, full-width, centred with wide tracking so it
    reads as a chapter title beneath the photograph. */
-.ipswich-preview-cap {
-  margin-top: 12px;
-  padding: 0 2px;
-  font-family: var(--font-mono);
-  font-size: var(--type-mono);
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--ivory-mid);
-  text-align: center;
-  line-height: 1.3;
-}
 
 /* Reveal states — any one of these makes the preview visible. */
 .hero:has(.pp-row.is-ipswich:hover) .ipswich-preview,
@@ -1054,34 +910,6 @@ body {
   opacity: 0;
   animation: fadeUp 1.2s ease 2.4s forwards;
   display: flex; align-items: center; gap: 28px;
-}
-.cred-item {
-  display: flex; flex-direction: column;
-  align-items: flex-end; gap: 4px;
-}
-.cred-value {
-  font-family: var(--font-serif);
-  font-weight: 400; font-size: var(--type-display-sm);
-  color: var(--ivory); line-height: 1;
-  letter-spacing: -0.01em;
-  transition: color 0.6s ease;
-}
-.cred-value em {
-  font-style: italic; color: var(--green-light);
-  font-weight: 400;
-  transition: color 0.6s ease;
-}
-.cred-label {
-  font-family: var(--font-sans);
-  font-size: var(--type-caption); letter-spacing: 0.24em;
-  color: var(--ivory-dim);
-  text-transform: uppercase; font-weight: 500;
-  transition: color 0.6s ease;
-}
-.cred-divider {
-  width: 1px; height: 36px;
-  background: var(--line-soft);
-  transition: background 0.6s ease;
 }
 
 /* ---- Draggable map chrome (extension layer) ----
@@ -1360,47 +1188,6 @@ body {
   opacity: 1;
   transform: translate(20px, 20px) scale(1);
 }
-.tooltip-meta {
-  font-family: var(--font-sans);
-  font-size: var(--type-caption); color: var(--green-light);
-  letter-spacing: 0.26em; text-transform: uppercase;
-  margin-bottom: 8px; font-weight: 500;
-  display: flex; justify-content: space-between;
-  transition: color 0.6s ease;
-}
-.tooltip-city {
-  font-family: var(--font-serif);
-  font-size: var(--type-display-sm); color: var(--ivory);
-  margin-bottom: 4px; font-weight: 400;
-  letter-spacing: -0.012em;
-  transition: color 0.6s ease;
-}
-.tooltip-club {
-  font-family: var(--font-sans);
-  font-size: var(--type-body); color: var(--ivory-mid);
-  line-height: 1.55; font-weight: 300;
-  transition: color 0.6s ease;
-}
-.tooltip-divider {
-  height: 1px; background: var(--line-soft);
-  margin: 12px 0 10px;
-  transition: background 0.6s ease;
-}
-.tooltip-stat {
-  font-family: var(--font-sans);
-  font-size: var(--type-label); letter-spacing: 0.04em;
-  color: var(--ivory-dim);
-  display: flex; justify-content: space-between;
-  align-items: baseline; font-weight: 400;
-  transition: color 0.6s ease;
-}
-.tooltip-stat strong {
-  font-family: var(--font-mono);
-  color: var(--green-light); font-weight: 300;
-  letter-spacing: 0.1em;
-  font-size: var(--type-mono); text-transform: uppercase;
-  transition: color 0.6s ease;
-}
 
 /* ---- Cursor ---- */
 .cursor {
@@ -1419,14 +1206,6 @@ body {
   width: 64px; height: 64px;
   border-color: var(--green-light);
   background: transparent;
-}
-.cursor-dot {
-  position: fixed; pointer-events: none;
-  width: 3px; height: 3px;
-  background: var(--green-light);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1001;
 }
 
 /* ---- Below: Portfolio detail (home · Active Portfolio) ----
@@ -1532,13 +1311,6 @@ body {
 }
 .ps-head h2 em {
   color: var(--accent-display);
-  transition: color 0.6s ease;
-}
-.ps-head-right {
-  font-family: var(--font-sans);
-  font-size: var(--type-lead); color: var(--ivory-mid);
-  line-height: 1.7; font-weight: 300;
-  max-width: 460px; padding-bottom: 6px;
   transition: color 0.6s ease;
 }
 .ps-grid {
@@ -1792,51 +1564,6 @@ body {
   padding: 140px 56px;
   transition: background 0.6s ease, border-color 0.6s ease;
 }
-.manifesto-inner {
-  max-width: 1400px; margin: 0 auto;
-}
-.manifesto-eyebrow {
-  font-family: var(--font-sans);
-  font-size: var(--type-label); letter-spacing: 0.32em;
-  color: var(--accent-ui); text-transform: uppercase;
-  font-weight: 500;
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 44px;
-  transition: color 0.6s ease;
-}
-.manifesto-eyebrow-num {
-  font-family: var(--font-mono);
-  font-weight: 300; letter-spacing: 0.18em;
-}
-.manifesto-eyebrow-rule {
-  width: 28px; height: 1px;
-  background: var(--accent-ui);
-  transition: background 0.6s ease;
-}
-.manifesto-headline {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: var(--type-display-statement);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: var(--ivory);
-  font-feature-settings: "kern", "liga", "ss01";
-  transition: color 0.6s ease;
-  white-space: nowrap;
-}
-.manifesto-headline em {
-  color: var(--accent-display);
-  transition: color 0.6s ease;
-}
-.manifesto-body {
-  margin-top: 44px;
-  font-family: var(--font-sans);
-  font-size: var(--type-lead-lg); line-height: 1.75;
-  color: var(--ivory-mid);
-  font-weight: 400; letter-spacing: 0;
-  max-width: 640px;
-  transition: color 0.6s ease;
-}
 
 /* ---- Thesis page ----
    Rhythm mirrors team / approach: photo banner → proof strip → alternating
@@ -1862,7 +1589,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url('/thesis-asset-banner-bg.png');
+  background-image: url('/thesis-asset-banner-bg.webp');
   background-size: cover;
   background-position: center 36%;
   background-repeat: no-repeat;
@@ -1928,10 +1655,6 @@ body {
   margin-top: 20px;
   max-width: 560px;
 }
-.cv-page.thesis-page .ac-grid {
-  margin-bottom: 0;
-}
-
 /* Hairline stat grid — same flush-panel language as .ps-grid / .club-card */
 .cv-page .thesis-hairline-grid {
   display: grid;
@@ -2234,95 +1957,107 @@ body {
   transition: color 0.6s ease;
 }
 
-/* Asset class outperformance · floating-bar 2×2 grid.
-   Pills sit on a horizontal axis; sports is highlighted via .is-sports;
-   negatives use a tokenized warm-red (--neg) so day/night both resolve
-   to a readable contrast against the active bg. */
+/* Asset-class exhibit · value chips on a per-metric axis. On-brand hierarchy:
+   the gold accent is reserved for the Sports hero, competitors recede as light
+   chips, dark tags label each row, and downturn losses use the brand red. */
 .cv-page .ac-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px 64px;
-  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(26px, 3vw, 42px);
+  margin-bottom: 18px;
 }
-.cv-page .ac-row { position: relative; }
-.cv-page .ac-row-head { margin-bottom: 28px; }
-.cv-page .ac-row-name {
+.cv-page .ac-metric {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+.cv-page .ac-metric-box {
   font-family: var(--font-sans);
   font-size: var(--type-ui);
   font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ivory);
-  margin-bottom: 6px;
-  transition: color 0.6s ease;
+  letter-spacing: 0.005em;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--bg-card);
+  background: var(--ivory);
+  border-radius: 3px;
+  padding: 15px 16px;
+  transition: background 0.6s ease, color 0.6s ease;
 }
-.cv-page .ac-row-meta {
+.cv-page .ac-metric-meta {
   font-family: var(--font-mono);
   font-size: var(--type-label);
-  color: var(--ivory-dim);
   letter-spacing: 0.04em;
+  color: var(--ivory-dim);
   font-weight: 300;
+  text-align: center;
+  margin: 10px 0 0;
   transition: color 0.6s ease;
 }
-.cv-page .ac-bars {
+.cv-page .ac-plot {
   position: relative;
-  height: 60px;
+  height: 56px;
 }
-.cv-page .ac-axis {
+.cv-page .ac-plot-axis {
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
-  height: 1px;
-  background: var(--line);
+  top: 15px;
+  height: 1.5px;
+  background: var(--ivory-faint);
   transition: background 0.6s ease;
 }
-.cv-page .ac-bar {
+.cv-page .ac-point {
   position: absolute;
+  top: 0;
   transform: translateX(-50%);
-  text-align: center;
-  transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
 }
-.cv-page .ac-bar:hover { transform: translateX(-50%) translateY(-2px); }
-.cv-page .ac-bar-pill {
+.cv-page .ac-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 48px;
   height: 30px;
-  min-width: 56px;
-  padding: 0 10px;
+  padding: 0 11px;
+  border-radius: 4px;
   font-family: var(--font-mono);
-  font-size: var(--type-ui);
+  font-size: var(--type-label);
   font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--ivory);
+  font-variant-numeric: tabular-nums;
+  color: var(--ivory-mid);
   background: var(--bg-card);
   border: 1px solid var(--line);
-  transition: background 0.3s, border-color 0.3s, color 0.6s ease;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
-.cv-page .ac-bar.is-sports .ac-bar-pill {
-  color: var(--green-light);
+.cv-page .ac-point.is-sports .ac-chip {
+  background: var(--green-light);
+  color: var(--ivory);
   border-color: var(--green-light);
-  background: transparent;
-  font-weight: 600;
+  font-weight: 700;
 }
-.cv-page .ac-bar.is-negative .ac-bar-pill {
-  color: var(--neg);
-  border-color: var(--neg-line);
-  background: var(--neg-soft);
+.cv-page .ac-point.is-negative .ac-chip {
+  background: var(--neg);
+  border-color: var(--neg);
+  color: var(--bg-card);
 }
-.cv-page .ac-bar-label {
-  margin-top: 6px;
-  font-family: var(--font-sans);
-  font-size: var(--type-mono);
-  letter-spacing: 0.18em;
-  color: var(--ivory-dim);
+.cv-page .ac-point-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-caption);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 500;
-  white-space: nowrap;
+  color: var(--ivory-dim);
   transition: color 0.6s ease;
 }
-.cv-page .ac-bar.is-sports .ac-bar-label { color: var(--green-light); }
+.cv-page .ac-point.is-sports .ac-point-label {
+  color: var(--green-light);
+  font-weight: 600;
+}
 .cv-page .ac-source {
   font-family: var(--font-mono);
   font-size: var(--type-mono);
@@ -2512,6 +2247,133 @@ body {
 
 /* Full-bleed celebration photography behind Approach hero + selection radar
    (same photo → scrim → content stack as .thesis-asset-banner / .portfolio-section). */
+/* 002 · We build — Install world-class management. */
+.cv-page.approach-page .approach-mgmt-section {
+  background: var(--bg);
+  transition: background 0.6s ease;
+}
+.cv-page.approach-page .mgmt-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+.cv-page.approach-page .mgmt-lede {
+  font-family: var(--font-sans);
+  font-size: var(--type-lead);
+  line-height: 1.7;
+  color: var(--ivory-mid);
+  font-weight: 300;
+  max-width: none;
+  margin: 0;
+  transition: color 0.6s ease;
+}
+
+.cv-page .moc-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: clamp(20px, 2.4vw, 32px) clamp(18px, 2.2vw, 30px) clamp(16px, 1.8vw, 24px);
+  transition: background 0.6s ease, border-color 0.6s ease;
+}
+.cv-page .moc-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.cv-page .moc-edge {
+  fill: none;
+  stroke: color-mix(in srgb, var(--green-light) 40%, transparent);
+  stroke-width: 1.4;
+  transition: stroke 0.6s ease;
+}
+.cv-page .moc-circle {
+  fill: var(--bg-card);
+  stroke: var(--green-light);
+  stroke-width: 1.5;
+  transition: fill 0.6s ease, stroke 0.6s ease;
+}
+.cv-page .moc-node.is-lead .moc-circle {
+  fill: var(--green-light);
+  stroke: none;
+}
+.cv-page .moc-glyph {
+  fill: var(--green-light);
+  transition: fill 0.6s ease;
+}
+.cv-page .moc-node.is-lead .moc-glyph {
+  fill: var(--bg-card);
+}
+.cv-page .moc-role {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: var(--ivory);
+  transition: fill 0.6s ease;
+}
+.cv-page .moc-role.is-lead {
+  fill: var(--green-light);
+  font-weight: 600;
+}
+.cv-page .moc-sub {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  fill: var(--ivory-dim);
+  transition: fill 0.6s ease;
+}
+.cv-page .moc-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: clamp(18px, 2.4vw, 30px);
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.cv-page .moc-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: var(--type-caption);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+  transition: color 0.6s ease;
+}
+.cv-page .moc-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--green-light);
+  background: var(--bg-card);
+  flex-shrink: 0;
+  transition: background 0.6s ease, border-color 0.6s ease;
+}
+.cv-page .moc-swatch.is-lead {
+  background: var(--green-light);
+  border-color: var(--green-light);
+}
+/* Below the two-column breakpoint the chart returns to full width (more room
+   for its labels) above the text-only stack. */
+@media (max-width: 1040px) {
+  .cv-page.approach-page .mgmt-layout {
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 4vw, 44px);
+  }
+}
+/* On phones the dense org chart labels stop being legible; let it scroll. */
+@media (max-width: 680px) {
+  .cv-page .moc-svg {
+    min-width: 560px;
+  }
+  .cv-page .moc-panel {
+    overflow-x: auto;
+  }
+}
+
 .cv-page.approach-page .approach-invest-banner {
   position: relative;
   overflow: hidden;
@@ -2523,7 +2385,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url('/approach-invest-banner-bg.png');
+  background-image: url('/approach-invest-banner-bg.webp');
   background-size: cover;
   /* Centered crop — no vertical bias toward faces */
   background-position: center center;
@@ -2807,6 +2669,12 @@ body {
   user-select: none;
 }
 .cv-page .sc-label:hover { fill: var(--green-light); }
+.cv-page .sc-label:focus-visible {
+  outline: 2px solid var(--accent-ui);
+  outline-offset: 3px;
+  border-radius: 2px;
+  fill: var(--green-light);
+}
 .cv-page .sc-label.is-selected {
   fill: var(--green-light);
   font-weight: 600;
@@ -3079,7 +2947,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url('/approach-return-engine-bg.png');
+  background-image: url('/approach-return-engine-bg.webp');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3411,26 +3279,17 @@ body {
   align-items: center;
   gap: 8px;
 }
-.cv-page .ve-dot {
-  width: 9px;
+.cv-page .ve-swatch {
+  width: 22px;
   height: 9px;
-  border-radius: 50%;
+  border-radius: 4px;
   flex-shrink: 0;
 }
-.cv-page .ve-dot-hollow {
-  border: 1.5px solid var(--ivory-dim);
-  background: var(--bg-card);
-  transition: border-color 0.6s ease, background 0.6s ease;
+.cv-page .ve-swatch-base {
+  background: var(--ivory-faint);
+  transition: background 0.6s ease;
 }
-.cv-page .section.bg-card .ve-dot-hollow,
-.cv-page .section.bg-card .ve-slider-base {
-  background: var(--bg-card);
-}
-.cv-page .section.bg-deep .ve-dot-hollow,
-.cv-page .section.bg-deep .ve-slider-base {
-  background: var(--bg-deep);
-}
-.cv-page .ve-dot-fill {
+.cv-page .ve-swatch-uplift {
   background: var(--green-light);
   transition: background 0.6s ease;
 }
@@ -3501,11 +3360,6 @@ body {
   transform: translateY(8px);
   animation: ve-rise 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
 }
-.cv-page .ve-arrow {
-  color: var(--ivory-faint);
-  font-size: var(--type-caption);
-  transition: color 0.25s ease, transform 0.25s ease;
-}
 @media (prefers-reduced-motion: reduce) {
   .cv-page .value-engine[data-in-view="false"] .ve-cell,
   .cv-page .ve-cell {
@@ -3531,87 +3385,61 @@ body {
   color: var(--ivory-dim);
   font-weight: 400;
 }
-.cv-page .ve-slider {
+.cv-page .ve-bar {
   position: relative;
-  height: 16px;
+  height: 9px;
   width: 100%;
-  margin-bottom: 11px;
-}
-.cv-page .ve-slider-line {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2.5px;
-  transform: translateY(-50%);
+  margin-bottom: 2px;
   background: var(--line-soft);
-  border-radius: 2px;
-  transition: background 0.6s ease;
+  border-radius: 5px;
+  /* no overflow clip — the uplift arrow extends past the bar height */
 }
-.cv-page .ve-slider-fill {
+.cv-page .ve-bar-base {
   position: absolute;
-  top: 50%;
-  height: 2.5px;
-  transform: translateY(-50%);
-  background: var(--green-light);
-  border-radius: 2px;
+  top: 0;
+  bottom: 0;
+  left: 0;
   width: 0;
-  transition: width 0.8s cubic-bezier(0.2, 0.7, 0.3, 1), left 0.8s cubic-bezier(0.2, 0.7, 0.3, 1), background 0.6s ease;
+  background: var(--ivory-faint);
+  border-radius: 5px 0 0 5px;
+  transition: width 0.6s ease, background 0.6s ease;
 }
-.cv-page .ve-slider-base {
+.cv-page .ve-bar-uplift {
   position: absolute;
-  top: 50%;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1.8px solid var(--ivory-dim);
-  background: var(--bg-card);
-  transform: translate(-50%, -50%);
-  transition:
-    left 0.8s cubic-bezier(0.2, 0.7, 0.3, 1),
-    border-color 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s ease;
-  z-index: 2;
-}
-.cv-page .ve-slider-target {
-  position: absolute;
-  top: 50%;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
   background: var(--green-light);
-  box-shadow: 0 0 0 5px color-mix(in srgb, var(--green-light) 12%, transparent);
-  transform: translate(-50%, -50%);
+  border-radius: 0 5px 5px 0;
   transition:
+    width 0.8s cubic-bezier(0.2, 0.7, 0.3, 1),
     left 0.8s cubic-bezier(0.2, 0.7, 0.3, 1),
-    background 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-  z-index: 2;
+    background 0.6s ease;
 }
-.cv-page .ve-vals {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: var(--type-label);
-  letter-spacing: 0.02em;
-  line-height: 1;
-  margin-top: 2px;
+/* Arrowhead riding the leading edge of the uplift — points into the
+   remaining headroom to read as "further upside". */
+.cv-page .ve-bar-arrow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(calc(100% + 4px), -50%);
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid var(--green-light);
+  opacity: 0;
+  transition: opacity 0.5s ease 0.55s, border-left-color 0.6s ease;
 }
-.cv-page .ve-vals .ve-pre { margin-right: auto; }
-.cv-page .ve-vals .ve-tgt { margin-left: auto; }
-.cv-page .ve-pre {
-  color: var(--ivory-dim);
-  font-weight: 400;
-  transition: color 0.6s ease;
+.cv-page .value-engine[data-in-view="true"] .ve-bar-arrow {
+  opacity: 1;
 }
-.cv-page .ve-tgt {
-  color: var(--green-light);
-  font-weight: 500;
-  transition: color 0.6s ease;
+@media (prefers-reduced-motion: reduce) {
+  .cv-page .ve-bar-arrow {
+    opacity: 1;
+    transition: none;
+  }
 }
 .cv-page .ve-disclaimer {
   font-family: var(--font-mono);
@@ -3744,8 +3572,28 @@ body {
   .ps-head { grid-template-columns: 1fr; gap: 32px; }
   .ps-grid { grid-template-columns: 1fr; }
   .credentials { display: none; }
-  /* Thesis: collapse 2×2 ac-grid earliest because each row needs ~520px to read */
-  .cv-page .ac-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+/* Thesis: shrink the value chips so the closely-spaced clusters
+   (e.g. 81/91/100) keep clear air as the plot narrows. */
+@media (max-width: 900px) {
+  .cv-page .ac-chip {
+    min-width: 42px;
+    height: 27px;
+    padding: 0 8px;
+    font-size: var(--type-caption);
+  }
+  .cv-page .ac-point-label {
+    font-size: 10px;
+    letter-spacing: 0.03em;
+  }
+}
+/* Thesis: stack the accent label above its plot once the row gets tight. */
+@media (max-width: 760px) {
+  .cv-page .ac-metric {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .cv-page .ac-metric-box { padding: 12px 16px; }
 }
 @media (max-width: 900px) {
   .cv-page .thesis-hairline-grid--hero,
@@ -3780,7 +3628,7 @@ body {
 }
 @media (max-width: 720px) {
   body { cursor: auto; }
-  .cursor, .cursor-dot { display: none; }
+  .cursor { display: none; }
   .topbar { padding: 18px 22px; }
   .brand-divider, .brand-tagline { display: none; }
   .nav { display: none; }
@@ -3791,14 +3639,11 @@ body {
     height: 100svh;
     min-height: -webkit-fill-available;
   }
-  .portfolio-panel { display: none; }
-  .ipswich-preview { display: none; }
   .footer { padding-left: 22px; padding-right: 22px; }
   /* Mobile: normalize section rhythm between banners */
   .portfolio-section { padding: 92px 22px 86px; }
   .ps-head { margin-bottom: 56px; gap: 32px; }
   .manifesto { padding: 88px 22px; }
-  .manifesto-headline { white-space: normal; }
   /* Thesis · mobile rhythm */
   .cv-page .stat-grid { grid-template-columns: 1fr; }
   .cv-page.thesis-page .thesis-asset-banner {
@@ -6867,13 +6712,11 @@ body {
 .cv-page .sh-eyebrow::before,
 .cv-page .chapter-break-eyebrow::before,
 .cv-page .thesis-takeaway-eyebrow::before,
-.cv-page .prose-eyebrow::before,
-.manifesto-eyebrow-rule {
+.cv-page .prose-eyebrow::before {
   display: none !important;
 }
 
 .headline em,
-.manifesto-headline em,
 .ps-head h2 em,
 .cv-page .ph-h1 em,
 .cv-page .sh-h2 em,
@@ -6967,15 +6810,11 @@ body {
 }
 .home-platform-banner-accent {
   color: #ffffff;
-  font-weight: 500;
+  font-weight: 700;
 }
 .home-platform-banner strong {
   font-weight: 700;
   color: #ffffff;
-}
-
-.approach-hero-inner {
-  grid-template-columns: 1fr !important;
 }
 .approach-manifesto .headline-we {
   color: var(--ivory);
@@ -6983,25 +6822,8 @@ body {
 }
 
 /* Portfolio — map above copy, lighter scrim */
-.portfolio-hero-stack {
-  display: flex;
-  flex-direction: column;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
-}
-.portfolio-hero-map {
-  position: relative;
-  width: 100%;
-  min-height: min(62vh, 720px);
-  overflow: hidden;
-}
-.portfolio-hero-map > div {
-  height: 100%;
-}
 .portfolio-hero-map .loader,
 .portfolio-hero-map .hero-bottom .hero-headline,
-.portfolio-hero-map .portfolio-panel,
-.portfolio-hero-map .ipswich-preview,
 .portfolio-hero-map .credentials,
 .portfolio-hero-map .portfolio-section,
 .portfolio-hero-map .tooltip {
@@ -7012,24 +6834,12 @@ body {
   min-height: 100%;
   background: var(--bg);
 }
-.portfolio-hero-map #map-canvas {
-  background: var(--bg);
-  cursor: default !important;
-}
 .portfolio-hero-map .map-embed-locked .hero {
   min-height: min(62vh, 720px);
   height: min(62vh, 720px);
 }
 .portfolio-hero-map .map-embed-locked #map-canvas {
   cursor: default !important;
-}
-.portfolio-hero-copy {
-  position: relative;
-  z-index: 2;
-  border-bottom: none;
-  padding-top: 48px;
-  padding-bottom: 56px;
-  background: var(--bg);
 }
 .cv-page.portfolio-hub .portfolio-hero-stack + .portfolio-hub-cards {
   margin-top: 0;
@@ -7053,28 +6863,6 @@ body {
   cursor: default;
   pointer-events: none;
 }
-.scoring-criteria-list {
-  list-style: none;
-  margin-top: 24px;
-  display: grid;
-  gap: 10px;
-}
-.scoring-criteria-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: var(--type-lead);
-}
-.scoring-criteria-name {
-  color: var(--ivory-mid);
-}
-.scoring-criteria-score {
-  font-family: var(--font-mono);
-  color: var(--ivory);
-  font-weight: 500;
-}
 
 .value-engine--static .ve-cell {
   cursor: default;
@@ -7082,9 +6870,6 @@ body {
 }
 
 @media (max-width: 900px) {
-  .portfolio-hero-map {
-    min-height: min(48vh, 520px);
-  }
   .portfolio-hero-map .map-embed-locked .hero {
     min-height: min(48vh, 520px);
     height: min(48vh, 520px);
@@ -7107,4 +6892,30 @@ body {
   .nav-area { gap: 14px; }
   .nav { gap: 16px; }
   .nav a { letter-spacing: 0.02em; }
+}
+/* ============================================================
+   RESPONSIVE REFINEMENTS — added in optimization pass.
+   Appended last so they win over earlier max-width blocks via
+   source order without disturbing the existing cascade.
+   ============================================================ */
+
+/* Tablet (iPad portrait / small laptops): portfolio hub renders 2 columns
+   instead of jumping straight from 3 columns to a single full-width column,
+   which left oversized cards and large whitespace at 768–1100px. */
+@media (min-width: 721px) and (max-width: 1100px) {
+  .cv-page .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Small phones: the team person-card's fixed 124px photo column crowded the
+   name/role text below ~400px. Shrink the photo and tighten padding. */
+@media (max-width: 480px) {
+  .team-page .person-card {
+    grid-template-columns: 96px 1fr;
+    gap: 16px;
+    padding: 18px 16px;
+  }
+  .team-page .person-photo {
+    width: 96px;
+    height: 124px;
+  }
 }

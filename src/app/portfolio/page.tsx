@@ -7,7 +7,7 @@ import { Topbar } from "@/components/Topbar";
 import { PORTFOLIO_CLUBS } from "@/data/portfolioClubs";
 
 export const metadata: Metadata = {
-  title: "Portfolio · Clara Vista Investment Partners",
+  title: "Portfolio",
   description:
     "Three clubs. Three leagues. One proven strategy. A geographically diversified portfolio of European football clubs unified by a single data-led operating model.",
 };

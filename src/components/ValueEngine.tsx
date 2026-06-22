@@ -18,8 +18,8 @@ type Pillar = {
   metrics: Metric[];
 };
 
-const TGT = 92;
-const LEFT = 15;
+const TGT = 74;
+const LEFT = 14;
 
 function basePos(impact: number) {
   const norm = Math.max(0.22, Math.min(1, impact / 1.6));
@@ -40,7 +40,7 @@ const PILLARS: Pillar[] = [
     label: "Data-Driven Sports Operations",
     desc: (
       <>
-        A data-driven culture that maximizes{" "}
+        A data-driven culture maximizing{" "}
         <em>competitiveness, performance bonuses, and transfer profits.</em>
       </>
     ),
@@ -103,41 +103,43 @@ const RENDER_PILLARS: RenderPillar[] = (() => {
   }));
 })();
 
-function animateSliders(container: HTMLElement, reducedMotion: boolean) {
-  const sliders = container.querySelectorAll<HTMLElement>(".ve-slider");
+function animateBars(container: HTMLElement, reducedMotion: boolean): number[] {
+  const bars = container.querySelectorAll<HTMLElement>(".ve-bar");
+  const timers: number[] = [];
 
-  sliders.forEach((slider, i) => {
-    const bp = parseFloat(slider.dataset.base || "0");
-    const base = slider.querySelector<HTMLElement>(".ve-slider-base");
-    const target = slider.querySelector<HTMLElement>(".ve-slider-target");
-    const fill = slider.querySelector<HTMLElement>(".ve-slider-fill");
+  bars.forEach((bar, i) => {
+    const bp = parseFloat(bar.dataset.base || "0");
+    const base = bar.querySelector<HTMLElement>(".ve-bar-base");
+    const uplift = bar.querySelector<HTMLElement>(".ve-bar-uplift");
 
-    if (base) base.style.left = `${bp}%`;
-    if (target) target.style.left = `${TGT}%`;
+    if (base) base.style.width = `${bp}%`;
 
-    if (fill) {
-      fill.style.left = `${bp}%`;
-      fill.style.width = reducedMotion ? `${TGT - bp}%` : "0";
+    if (uplift) {
+      uplift.style.left = `${bp}%`;
+      uplift.style.width = reducedMotion ? `${TGT - bp}%` : "0";
     }
 
-    if (reducedMotion || !fill) return;
+    if (reducedMotion || !uplift) return;
 
-    window.setTimeout(() => {
-      fill.style.left = `${bp}%`;
-      fill.style.width = `${TGT - bp}%`;
-    }, 90 + i * 45);
+    timers.push(
+      window.setTimeout(() => {
+        uplift.style.width = `${TGT - bp}%`;
+      }, 90 + i * 45),
+    );
   });
+
+  return timers;
 }
 
 export function ValueEngine() {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(false);
 
-  const runSliderAnimation = useCallback(() => {
+  const runBarAnimation = useCallback(() => {
     const root = rootRef.current;
-    if (!root || !inView) return;
+    if (!root || !inView) return [] as number[];
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    animateSliders(root, reducedMotion);
+    return animateBars(root, reducedMotion);
   }, [inView]);
 
   useEffect(() => {
@@ -156,8 +158,9 @@ export function ValueEngine() {
   }, []);
 
   useEffect(() => {
-    runSliderAnimation();
-  }, [runSliderAnimation]);
+    const timers = runBarAnimation();
+    return () => timers.forEach((t) => window.clearTimeout(t));
+  }, [runBarAnimation]);
 
   return (
     <div
@@ -172,12 +175,12 @@ export function ValueEngine() {
 
       <div className="ve-legend" aria-label="Chart legend">
         <span className="ve-legend-item">
-          <span className="ve-dot ve-dot-hollow" aria-hidden="true" />
-          Pre-Investment Baseline
+          <span className="ve-swatch ve-swatch-base" aria-hidden="true" />
+          Baseline
         </span>
         <span className="ve-legend-item">
-          <span className="ve-dot ve-dot-fill" aria-hidden="true" />
-          Clara Vista Target
+          <span className="ve-swatch ve-swatch-uplift" aria-hidden="true" />
+          Clara Vista Uplift
         </span>
       </div>
 
@@ -207,18 +210,11 @@ export function ValueEngine() {
                         <div className="ve-m-name">
                           {metric.name} <span className="ve-m-sub">{metric.sub}</span>
                         </div>
-                        <div className="ve-slider" data-base={String(bp)} aria-hidden="true">
-                          <div className="ve-slider-line" />
-                          <div className="ve-slider-fill" />
-                          <div className="ve-slider-base" />
-                          <div className="ve-slider-target" />
-                        </div>
-                        <div className="ve-vals">
-                          <span className="ve-pre">{metric.pre}</span>
-                          <span className="ve-arrow" aria-hidden="true">
-                            →
+                        <div className="ve-bar" data-base={String(bp)} aria-hidden="true">
+                          <span className="ve-bar-base" />
+                          <span className="ve-bar-uplift">
+                            <span className="ve-bar-arrow" />
                           </span>
-                          <span className="ve-tgt">{metric.tgt}</span>
                         </div>
                       </div>
                     );

@@ -24,13 +24,6 @@ export function ClaraVistaMapLegacy({ locked = false }: { locked?: boolean }) {
 
     const canvasEl: HTMLCanvasElement = canvas;
 
-    const cursor = document.getElementById("cursor");
-    const tooltip = document.getElementById("tooltip");
-    const tCity = document.getElementById("t-city");
-    const tClub = document.getElementById("t-club");
-    const tTier = document.getElementById("t-tier");
-    const tCountry = document.getElementById("t-country");
-    const tFlow = document.getElementById("t-flow");
     const loader = document.getElementById("loader");
     /* The Ipswich hover preview is gated by a class on the hero section.
        We toggle it here (instead of in React state) to avoid re-rendering
@@ -2491,30 +2484,8 @@ export function ClaraVistaMapLegacy({ locked = false }: { locked?: boolean }) {
       // Sync recenter button visibility once per frame (cheap class-toggle).
       syncRecenterVisibility();
 
-      // TOOLTIP
+      // Current hover/pin target — drives the Ipswich hero highlight below.
       const showCity = pinned || hoveredCity;
-      if (showCity && tooltip && tCity && tClub && tTier && tFlow && tCountry && cursor) {
-        tooltip.classList.add("visible");
-        tooltip.style.left = `${mouse.clientX}px`;
-        tooltip.style.top = `${mouse.clientY}px`;
-        tCity.textContent = showCity.label || showCity.name;
-        tClub.textContent = showCity.club;
-        if (showCity.tier === "P") {
-          tTier.textContent = `Portfolio · ${showCity.num}`;
-          tFlow.textContent = showCity.status;
-        } else if (showCity.tier === "W") {
-          tTier.textContent = "Global hub";
-          tFlow.textContent = "Football market";
-        } else {
-          tTier.textContent = "Watchlist";
-          tFlow.textContent = "Monitoring";
-        }
-        tCountry.textContent = showCity.country;
-        cursor.classList.add("hovering-city");
-      } else {
-        tooltip?.classList.remove("visible");
-        cursor?.classList.remove("hovering-city");
-      }
 
       /* Drive the Ipswich preview from the live map hover state. classList
          toggles are no-ops when the class is already in the right state,

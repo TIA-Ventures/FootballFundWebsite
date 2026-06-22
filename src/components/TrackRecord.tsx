@@ -727,9 +727,14 @@ export function TrackRecord() {
               <header className="tr-card-head">
                 <div className="tr-card-logo" aria-hidden="true">
                   {inv.logo ? (
+                    // Tiny (<=44px) logos rendered in a fixed-size box; the
+                    // next/image optimizer overhead isn't worth it here.
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={`/track-record/${inv.logo.includes(".") ? inv.logo : `${inv.logo}.png`}`}
                       alt=""
+                      width={44}
+                      height={44}
                       loading="lazy"
                       decoding="async"
                     />

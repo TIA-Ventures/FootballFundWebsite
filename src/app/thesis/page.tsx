@@ -5,53 +5,58 @@ import { ThesisFootballRows } from "@/components/ThesisFootballRows";
 import { Topbar } from "@/components/Topbar";
 
 export const metadata: Metadata = {
-  title: "Thesis · Clara Vista Investment Partners",
+  title: "Thesis",
   description:
     "Sports as an asset class — reliable, uncorrelated, and accelerating. Global football offers asymmetric returns, deep cultural scale, and a structural discount to US sports.",
 };
 
-type AcBar = { value: string; label: string; left: string; tone?: "sports" | "negative" };
-type AcRow = { name: string; meta: string; bars: AcBar[] };
+type AcTone = "sports" | "neutral" | "negative";
+type AcBar = { label: string; value: number; display: string; tone: AcTone };
+type AcMetric = {
+  name: string;
+  meta: string;
+  bars: AcBar[];
+};
 
-const AC_ROWS: AcRow[] = [
+const AC_METRICS: AcMetric[] = [
   {
     name: "Long-term outperformance",
     meta: "Annualized return · last 10 yrs",
     bars: [
-      { value: "11%", label: "S&P 500", left: "14%" },
-      { value: "15%", label: "NASDAQ", left: "42%" },
-      { value: "17%", label: "U.S. PE", left: "70%" },
-      { value: "18%", label: "Sports", left: "90%", tone: "sports" },
+      { label: "S&P 500", value: 11, display: "11%", tone: "neutral" },
+      { label: "NASDAQ", value: 15, display: "15%", tone: "neutral" },
+      { label: "U.S. PE", value: 17, display: "17%", tone: "neutral" },
+      { label: "Sports", value: 18, display: "18%", tone: "sports" },
     ],
   },
   {
-    name: "Outperformance during downturns",
-    meta: "Avg. return during the Great Financial Recession · 2007–2009",
+    name: "Resilience in downturns",
+    meta: "Avg. return · 2007–2009 recession",
     bars: [
-      { value: "-22%", label: "S&P 500", left: "14%", tone: "negative" },
-      { value: "-16%", label: "NASDAQ", left: "38%", tone: "negative" },
-      { value: "-11%", label: "U.S. PE", left: "60%", tone: "negative" },
-      { value: "+4%", label: "Sports", left: "90%", tone: "sports" },
+      { label: "S&P 500", value: -22, display: "−22%", tone: "negative" },
+      { label: "NASDAQ", value: -16, display: "−16%", tone: "negative" },
+      { label: "U.S. PE", value: -11, display: "−11%", tone: "negative" },
+      { label: "Sports", value: 4, display: "+4%", tone: "sports" },
     ],
   },
   {
     name: "Low correlation",
     meta: "Correlation vs S&P 500 · last 10 yrs",
     bars: [
-      { value: "4%", label: "Sports", left: "12%", tone: "sports" },
-      { value: "81%", label: "U.S. PE", left: "64%", tone: "negative" },
-      { value: "91%", label: "NASDAQ", left: "78%", tone: "negative" },
-      { value: "100%", label: "S&P 500", left: "92%", tone: "negative" },
+      { label: "Sports", value: 4, display: "4%", tone: "sports" },
+      { label: "U.S. PE", value: 81, display: "81%", tone: "neutral" },
+      { label: "NASDAQ", value: 91, display: "91%", tone: "neutral" },
+      { label: "S&P 500", value: 100, display: "100%", tone: "neutral" },
     ],
   },
   {
     name: "Low volatility",
-    meta: "% volatility · last 10 yrs",
+    meta: "Annualized volatility · last 10 yrs",
     bars: [
-      { value: "9%", label: "Sports", left: "12%", tone: "sports" },
-      { value: "13%", label: "S&P 500", left: "44%" },
-      { value: "14%", label: "U.S. PE", left: "56%" },
-      { value: "19%", label: "NASDAQ", left: "90%" },
+      { label: "Sports", value: 9, display: "9%", tone: "sports" },
+      { label: "S&P 500", value: 13, display: "13%", tone: "neutral" },
+      { label: "U.S. PE", value: 14, display: "14%", tone: "neutral" },
+      { label: "NASDAQ", value: 19, display: "19%", tone: "neutral" },
     ],
   },
 ];
@@ -62,10 +67,14 @@ const HERO_PROOF = [
   { value: "+4", suffix: "%", label: "Sports return during the 2008 Recession" },
 ];
 
-function toneClass(tone?: "sports" | "negative") {
-  if (tone === "sports") return "ac-bar is-sports";
-  if (tone === "negative") return "ac-bar is-negative";
-  return "ac-bar";
+/* Each value chip sits on a horizontal axis at a position encoding its value,
+   scaled across the row's own min→max range (inset so edge chips don't clip). */
+function pointLeft(metric: AcMetric, value: number): string {
+  const values = metric.bars.map((b) => b.value);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const span = max - min || 1;
+  return `${6 + ((value - min) / span) * 88}%`;
 }
 
 export default function ThesisPage() {
@@ -112,29 +121,30 @@ export default function ThesisPage() {
                   Reliable. <em>Uncorrelated.</em> Resilient.
                 </h2>
                 <p className="sh-deck">
-                  Relative to public equities and traditional private equity, sports has delivered superior
-                  risk-adjusted returns across every dimension measured below.
+                  Across every dimension that matters, sports has outpaced public equities and private equity
+                  &mdash; higher returns, near-zero correlation, and lower volatility. It even <em>grew through the
+                  2008 crash</em>, a proven hedge against downturns.
                 </p>
               </div>
             </div>
 
             <div className="ac-grid">
-              {AC_ROWS.map((row) => (
-                <div key={row.name} className="ac-row">
-                  <div className="ac-row-head">
-                    <div className="ac-row-name">{row.name}</div>
-                    <div className="ac-row-meta">{row.meta}</div>
+              {AC_METRICS.map((metric) => (
+                <div key={metric.name} className="ac-metric">
+                  <div className="ac-metric-head">
+                    <div className="ac-metric-box">{metric.name}</div>
+                    <p className="ac-metric-meta">{metric.meta}</p>
                   </div>
-                  <div className="ac-bars">
-                    <div className="ac-axis" />
-                    {row.bars.map((b) => (
+                  <div className="ac-plot">
+                    <span className="ac-plot-axis" aria-hidden="true" />
+                    {metric.bars.map((b) => (
                       <div
-                        key={`${row.name}-${b.label}`}
-                        className={toneClass(b.tone)}
-                        style={{ left: b.left }}
+                        key={b.label}
+                        className={`ac-point is-${b.tone}`}
+                        style={{ left: pointLeft(metric, b.value) }}
                       >
-                        <div className="ac-bar-pill">{b.value}</div>
-                        <div className="ac-bar-label">{b.label}</div>
+                        <span className="ac-chip">{b.display}</span>
+                        <span className="ac-point-label">{b.label}</span>
                       </div>
                     ))}
                   </div>

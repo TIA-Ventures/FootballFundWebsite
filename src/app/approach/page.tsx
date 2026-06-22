@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { Footer } from "@/components/Footer";
 import { Topbar } from "@/components/Topbar";
+import { ManagementOrgChart } from "@/components/ManagementOrgChart";
 
 const SelectionScorecard = dynamic(
   () => import("@/components/SelectionScorecard").then((m) => ({ default: m.SelectionScorecard })),
@@ -12,7 +13,7 @@ const ValueEngine = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Strategy · Clara Vista Investment Partners",
+  title: "Strategy",
   description:
     "We invest. We build. We win. How Clara Vista selects clubs, executes on operations, and drives returns across the portfolio.",
 };
@@ -57,12 +58,40 @@ export default function ApproachPage() {
           </div>
         </div>
 
-        {/* 002 · The Value Engine — pillar bands + metric sliders. */}
+        {/* 002 · We build — Install world-class management (org chart). */}
+        <div className="section approach-mgmt-section">
+          <div className="section-inner">
+            <div className="mgmt-layout">
+              <div className="mgmt-intro">
+                <div className="section-head solo" style={{ marginBottom: 28 }}>
+                  <div>
+                    <div className="sh-eyebrow">2 · We build</div>
+                    <h2 className="sh-h2">
+                      Install <em>world-class management.</em>
+                    </h2>
+                  </div>
+                </div>
+
+                <p className="mgmt-lede">
+                  Most clubs are run with the operating discipline of a small business.
+                  Post-acquisition, Clara Vista installs a proven leadership team across{" "}
+                  <em>every function</em> — sporting, commercial, and operational — aligning incentives
+                  from the boardroom to the training ground and turning trapped potential into{" "}
+                  <em>compounding performance.</em>
+                </p>
+              </div>
+
+              <ManagementOrgChart />
+            </div>
+          </div>
+        </div>
+
+        {/* 003 · The Value Engine — pillar bands + metric sliders. */}
         <div className="section bg-card">
           <div className="section-inner">
             <div className="section-head solo" style={{ marginBottom: 40 }}>
               <div>
-                <div className="sh-eyebrow">2 · The Value Engine</div>
+                <div className="sh-eyebrow">3 · The Value Engine</div>
                 <h2 className="sh-h2">
                   Awakening the <em>&ldquo;Sleeping Giant&rdquo;</em>
                 </h2>
@@ -73,12 +102,12 @@ export default function ApproachPage() {
           </div>
         </div>
 
-        {/* 003 · We win — Alpha and beta, stacked. */}
+        {/* 004 · We win — Alpha and beta, stacked. */}
         <div className="section return-engine-section">
           <div className="section-inner">
             <div className="section-head solo" style={{ marginBottom: 56 }}>
               <div>
-                <div className="sh-eyebrow">3 · We win</div>
+                <div className="sh-eyebrow">4 · We win</div>
                 <h2 className="sh-h2">
                   Alpha <em>and beta,</em> stacked.
                 </h2>

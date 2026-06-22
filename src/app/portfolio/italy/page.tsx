@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { TbdClubPage } from "@/components/TbdClubPage";
 
 export const metadata: Metadata = {
-  title: "Italy · Portfolio · Clara Vista Investment Partners",
+  title: "Italy · Portfolio",
   description:
     "Clara Vista is evaluating a controlling interest in an Italian football club competing in Serie A. Details remain TBA.",
 };

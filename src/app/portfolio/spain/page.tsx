@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { TbdClubPage } from "@/components/TbdClubPage";
 
 export const metadata: Metadata = {
-  title: "Spain · Portfolio · Clara Vista Investment Partners",
+  title: "Spain · Portfolio",
   description:
     "Clara Vista is conducting diligence on a controlling interest in a historic La Liga football club — gateway to a 600M-strong Spanish-speaking audience.",
 };

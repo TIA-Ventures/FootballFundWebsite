@@ -8,7 +8,7 @@ import { TeamMoments } from "@/components/TeamMoments";
 import { Topbar } from "@/components/Topbar";
 
 export const metadata: Metadata = {
-  title: "Team · Clara Vista Investment Partners",
+  title: "Team",
   description:
     "Decades of operating depth — the partners, advisors, and operators behind Clara Vista's investments in European football.",
 };

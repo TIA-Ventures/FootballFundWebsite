@@ -109,6 +109,24 @@ function areaPath(seriesIndex: number, segment: "actual" | "projected") {
   return `M ${tops.join(" L ")} L ${bots.join(" L ")} Z`;
 }
 
+// Path geometry is fully static (depends only on module-level constants), so
+// precompute once instead of rebuilding the strings on every hover/lock render.
+const AREA_PATHS = SERIES.map((_, si) => ({
+  actual: areaPath(si, "actual"),
+  projected: areaPath(si, "projected"),
+}));
+
+const TOTAL_LINE_ACTUAL = YEARS.filter((y) => !y.projected)
+  .map((y, i) => `${i === 0 ? "M" : "L"} ${xAt(i)} ${yAt(y.total)}`)
+  .join(" ");
+
+const TOTAL_LINE_PROJECTED = YEARS.slice(PROJECTED_START - 1)
+  .map((y, j) => {
+    const i = PROJECTED_START - 1 + j;
+    return `${j === 0 ? "M" : "L"} ${xAt(i)} ${yAt(y.total)}`;
+  })
+  .join(" ");
+
 type Stat = {
   eyebrow: string;
   headline: ReactNode;
@@ -262,33 +280,18 @@ export function IpswichRevenueChart() {
 
             {SERIES.map((s, si) => (
               <g key={`${s.id}-actual`} style={{ opacity: seriesOpacity(s.id) }}>
-                <path d={areaPath(si, "actual")} fill={s.color} fillOpacity={0.82} />
+                <path d={AREA_PATHS[si].actual} fill={s.color} fillOpacity={0.82} />
               </g>
             ))}
             {SERIES.map((s, si) => (
               <g key={`${s.id}-proj`} style={{ opacity: seriesOpacity(s.id) * 0.72 }}>
-                <path d={areaPath(si, "projected")} fill={s.color} fillOpacity={0.55} />
+                <path d={AREA_PATHS[si].projected} fill={s.color} fillOpacity={0.55} />
               </g>
             ))}
 
             {/* Total outline */}
-            <path
-              className="rev-line rev-line-actual"
-              d={YEARS.filter((y) => !y.projected)
-                .map((y, i) => `${i === 0 ? "M" : "L"} ${xAt(i)} ${yAt(y.total)}`)
-                .join(" ")}
-              fill="none"
-            />
-            <path
-              className="rev-line rev-line-projected"
-              d={YEARS.slice(PROJECTED_START - 1)
-                .map((y, j) => {
-                  const i = PROJECTED_START - 1 + j;
-                  return `${j === 0 ? "M" : "L"} ${xAt(i)} ${yAt(y.total)}`;
-                })
-                .join(" ")}
-              fill="none"
-            />
+            <path className="rev-line rev-line-actual" d={TOTAL_LINE_ACTUAL} fill="none" />
+            <path className="rev-line rev-line-projected" d={TOTAL_LINE_PROJECTED} fill="none" />
 
             {YEARS.map((y, i) => {
               const colW = innerW / (YEARS.length - 1);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 
 /* Selection scorecard · Radar (Approach 001).
  *
@@ -224,6 +224,14 @@ export function SelectionScorecard() {
   const center = CENTER_LABEL[activeClub];
   const positions = scorePositionsForClub(CLUB_POLY[activeClub]);
 
+  // Keyboard activation for the SVG axis controls (Enter / Space).
+  const handleAxisKey = (e: KeyboardEvent<SVGElement>, axis: AxisKey) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setActiveAxis(axis);
+    }
+  };
+
   return (
     <div
       className="scoring-block"
@@ -262,7 +270,7 @@ export function SelectionScorecard() {
             ))}
           </div>
 
-          <div className="scoring-detail">
+          <div className="scoring-detail" aria-live="polite">
             <div className="scoring-detail-eyebrow">Selected criterion</div>
             <div className="scoring-detail-name">{detail.name}</div>
             <div className="scoring-detail-score">
@@ -334,7 +342,12 @@ export function SelectionScorecard() {
                 className={`sc-label${activeAxis === v.axis ? " is-selected" : ""}`}
                 textAnchor={v.labelAnchor}
                 data-axis={v.axis}
+                role="button"
+                tabIndex={0}
+                aria-pressed={activeAxis === v.axis}
+                aria-label={`${v.label} criterion`}
                 onClick={() => setActiveAxis(v.axis)}
+                onKeyDown={(e) => handleAxisKey(e, v.axis)}
               >
                 {v.labelLines ? (
                   <>
