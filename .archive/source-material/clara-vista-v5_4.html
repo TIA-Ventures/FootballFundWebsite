@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clara Vista Investment Partners — Football & Technology Fund II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     THEME PALETTES — toggle via data-theme on <html>
+     ============================================================ */
+  :root[data-theme="night"] {
+    --bg: #060a08;
+    --bg-deep: #030604;
+    --bg-card: #0c1612;
+    --bg-elev: #0e1a14;
+    --green-deep: #065d39;
+    --green-mid: #0e8a55;
+    --green: #14a368;
+    --green-light: #34c281;
+    --green-glow: rgba(52, 194, 129, 0.55);
+    --green-soft: rgba(6, 93, 57, 0.18);
+    --amber: #d4a86a;
+    --amber-glow: rgba(232, 197, 71, 0.85);
+    --ivory: #F2EAD6;
+    --ivory-mid: rgba(242, 234, 214, 0.72);
+    --ivory-dim: rgba(242, 234, 214, 0.42);
+    --line: rgba(52, 194, 129, 0.12);
+    --line-soft: rgba(242, 234, 214, 0.10);
+    --grain-opacity: 0.05;
+    --grain-blend: overlay;
+  }
+  :root[data-theme="day"] {
+    --bg: #F4EDDC;
+    --bg-deep: #EAE2CC;
+    --bg-card: #FBF5E5;
+    --bg-elev: #FBF5E5;
+    --green-deep: #065d39;
+    --green-mid: #0a7a47;
+    --green: #0e8a55;
+    --green-light: #14a368;
+    --green-glow: rgba(6, 93, 57, 0.4);
+    --green-soft: rgba(6, 93, 57, 0.14);
+    --amber: #9a6f30;
+    --amber-glow: rgba(154, 111, 48, 0.7);
+    --ivory: #1A2520;
+    --ivory-mid: rgba(26, 37, 32, 0.72);
+    --ivory-dim: rgba(26, 37, 32, 0.46);
+    --line: rgba(6, 93, 57, 0.16);
+    --line-soft: rgba(26, 37, 32, 0.10);
+    --grain-opacity: 0.07;
+    --grain-blend: multiply;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); transition: background-color 0.6s ease; }
+  body {
+    color: var(--ivory);
+    font-family: 'Onest', system-ui, sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    transition: color 0.6s ease;
+  }
+
+  /* ---- Loader ---- */
+  .loader {
+    position: fixed; inset: 0; z-index: 200;
+    background: var(--bg-deep);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 26px;
+    pointer-events: none;
+    transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.6s ease;
+  }
+  .loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .loader-mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300; font-size: 13px;
+    letter-spacing: 0.46em;
+    color: var(--green-light);
+  }
+  .loader-bar {
+    width: 220px; height: 1px;
+    background: var(--green-soft);
+    overflow: hidden; position: relative;
+  }
+  .loader-bar::after {
+    content: ''; position: absolute; top: 0; left: -50%;
+    width: 50%; height: 100%; background: var(--green-light);
+    animation: load 1.6s ease-in-out infinite;
+  }
+  @keyframes load { to { left: 100%; } }
+  .loader-sub {
+    font-family: 'Newsreader', serif;
+    font-style: italic; font-weight: 300;
+    font-size: 14px; letter-spacing: 0.06em;
+    color: var(--ivory-dim);
+  }
+
+  /* ---- Grain ---- */
+  .grain {
+    position: fixed; inset: 0; pointer-events: none;
+    opacity: var(--grain-opacity); z-index: 100;
+    mix-blend-mode: var(--grain-blend);
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/></svg>");
+    transition: opacity 0.6s ease;
+  }
+
+  /* ---- Top bar ---- */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    padding: 24px 44px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(20px);
+    transition: border-color 0.6s ease, background 0.6s ease;
+  }
+  :root[data-theme="night"] .topbar {
+    background: linear-gradient(to bottom, rgba(6, 10, 8, 0.88), rgba(6, 10, 8, 0.42));
+  }
+  :root[data-theme="day"] .topbar {
+    background: linear-gradient(to bottom, rgba(244, 237, 220, 0.92), rgba(244, 237, 220, 0.55));
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 22px; height: 22px;
+    border: 1px solid var(--green-glow);
+    border-radius: 50%;
+    position: relative; flex-shrink: 0;
+    transition: border-color 0.6s ease;
+  }
+  .brand-mark::before {
+    content: ''; position: absolute; inset: 4px;
+    border-radius: 50%;
+    border: 0.5px solid var(--green-soft);
+    transition: border-color 0.6s ease;
+  }
+  .brand-mark::after {
+    content: ''; position: absolute;
+    top: 50%; left: 50%;
+    width: 4px; height: 4px;
+    background: var(--green-light);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: softpulse 3s ease-in-out infinite;
+  }
+  @keyframes softpulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  .brand-wordmark {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300; font-size: 13px;
+    letter-spacing: 0.32em;
+    color: var(--ivory);
+    transition: color 0.6s ease;
+  }
+  .brand-wordmark span { color: var(--green-light); }
+  .brand-divider {
+    width: 1px; height: 18px;
+    background: var(--line);
+    margin: 0 4px;
+  }
+  .brand-tagline {
+    font-family: 'Newsreader', serif;
+    font-style: italic; font-weight: 300;
+    font-size: 13px; letter-spacing: 0.02em;
+    color: var(--ivory-dim);
+    transition: color 0.6s ease;
+  }
+  .nav-area { display: flex; align-items: center; gap: 22px; }
+  .nav { display: flex; gap: 28px; align-items: center; }
+  .nav a {
+    color: var(--ivory-mid); text-decoration: none;
+    font-family: 'Onest', sans-serif;
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.06em;
+    transition: color 0.3s;
+  }
+  .nav a:hover { color: var(--green-light); }
+  .nav-cta {
+    color: var(--ivory) !important;
+    border: 1px solid var(--line);
+    padding: 8px 18px;
+    border-radius: 1px;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover {
+    background: var(--green-light);
+    color: var(--bg) !important;
+    border-color: var(--green-light);
+  }
+
+  /* Theme toggle */
+  .theme-toggle {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line);
+    background: transparent;
+    cursor: none;
+    border-radius: 1px;
+    color: var(--ivory-mid);
+    transition: all 0.3s, color 0.6s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .theme-toggle:hover {
+    border-color: var(--green-light);
+    color: var(--green-light);
+  }
+  .theme-toggle svg {
+    width: 16px; height: 16px;
+    transition: transform 0.6s ease, opacity 0.4s ease;
+    position: absolute;
+  }
+  .theme-toggle .icon-day { opacity: 0; transform: rotate(90deg) scale(0.4); }
+  .theme-toggle .icon-night { opacity: 1; transform: rotate(0) scale(1); }
+  :root[data-theme="day"] .theme-toggle .icon-day { opacity: 1; transform: rotate(0) scale(1); }
+  :root[data-theme="day"] .theme-toggle .icon-night { opacity: 0; transform: rotate(-90deg) scale(0.4); }
+
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    height: 100vh; width: 100%;
+    overflow: hidden;
+  }
+  #map-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; display: block;
+  }
+
+  /* ---- Headline ---- */
+  .hero-headline {
+    position: absolute;
+    bottom: 100px; left: 56px;
+    z-index: 10; max-width: 600px;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeUp 1.6s cubic-bezier(.2,.8,.2,1) 1.6s forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .eyebrow {
+    font-family: 'Onest', sans-serif;
+    font-size: 11px; letter-spacing: 0.32em;
+    color: var(--green-light); text-transform: uppercase;
+    margin-bottom: 28px; font-weight: 500;
+    display: flex; align-items: center; gap: 14px;
+    transition: color 0.6s ease;
+  }
+  .eyebrow::before {
+    content: ''; width: 28px; height: 1px; background: var(--green-light);
+    transition: background 0.6s ease;
+  }
+  .headline {
+    font-family: 'Newsreader', serif;
+    font-weight: 300;
+    font-size: clamp(34px, 4.4vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    margin-bottom: 26px;
+    color: var(--ivory);
+    font-feature-settings: "kern", "liga", "ss01";
+    transition: color 0.6s ease;
+  }
+  .headline em {
+    font-style: italic; font-weight: 400;
+    color: var(--green-light);
+    transition: color 0.6s ease;
+  }
+  .subhead {
+    font-family: 'Onest', sans-serif;
+    font-size: 14px; line-height: 1.7;
+    color: var(--ivory-mid); max-width: 500px;
+    font-weight: 300; letter-spacing: 0.005em;
+    transition: color 0.6s ease;
+  }
+
+  /* ---- Portfolio Panel ---- */
+  .portfolio-panel {
+    position: absolute;
+    top: 110px; right: 56px;
+    z-index: 10; width: 304px;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeUp 1.4s ease 2.0s forwards;
+  }
+  .pp-label {
+    font-family: 'Onest', sans-serif;
+    font-size: 10px; letter-spacing: 0.28em;
+    color: var(--ivory-dim); text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line-soft);
+    display: flex; justify-content: space-between;
+    align-items: baseline;
+    transition: color 0.6s ease, border-color 0.6s ease;
+  }
+  .pp-label-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    color: var(--green-light);
+    letter-spacing: 0.18em;
+  }
+  .pp-row {
+    display: grid;
+    grid-template-columns: 22px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+    transition: border-color 0.6s ease;
+  }
+  .pp-row:last-child { border-bottom: none; }
+  .pp-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green-light);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+  }
+  .pp-info { overflow: hidden; }
+  .pp-city {
+    font-family: 'Newsreader', serif;
+    font-weight: 400; font-size: 17px;
+    color: var(--ivory); line-height: 1.1;
+    letter-spacing: -0.005em;
+    transition: color 0.6s ease;
+  }
+  .pp-club {
+    font-family: 'Onest', sans-serif;
+    font-size: 11px; color: var(--ivory-dim);
+    margin-top: 3px; font-weight: 300;
+    transition: color 0.6s ease;
+  }
+  .pp-status {
+    width: 7px; height: 7px;
+    border-radius: 50%; flex-shrink: 0;
+  }
+  .pp-status.active {
+    background: var(--green-light);
+    box-shadow: 0 0 8px var(--green-glow);
+  }
+  .pp-status.pending {
+    background: var(--amber);
+    box-shadow: 0 0 8px var(--amber-glow);
+  }
+  .pp-status.diligence {
+    background: transparent;
+    border: 1px solid var(--ivory-dim);
+  }
+
+  /* ---- Fund credentials ---- */
+  .credentials {
+    position: absolute;
+    bottom: 36px; right: 56px;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 2.4s forwards;
+    display: flex; align-items: center; gap: 28px;
+  }
+  .cred-item {
+    display: flex; flex-direction: column;
+    align-items: flex-end; gap: 4px;
+  }
+  .cred-value {
+    font-family: 'Newsreader', serif;
+    font-weight: 400; font-size: 22px;
+    color: var(--ivory); line-height: 1;
+    letter-spacing: -0.01em;
+    transition: color 0.6s ease;
+  }
+  .cred-value em {
+    font-style: italic; color: var(--green-light);
+    font-weight: 400;
+    transition: color 0.6s ease;
+  }
+  .cred-label {
+    font-family: 'Onest', sans-serif;
+    font-size: 9px; letter-spacing: 0.24em;
+    color: var(--ivory-dim);
+    text-transform: uppercase; font-weight: 500;
+    transition: color 0.6s ease;
+  }
+  .cred-divider {
+    width: 1px; height: 36px;
+    background: var(--line-soft);
+    transition: background 0.6s ease;
+  }
+
+  /* ---- Tooltip ---- */
+  .tooltip {
+    position: fixed; pointer-events: none;
+    background: var(--bg-elev);
+    border: 1px solid var(--green-soft);
+    border-left: 1px solid var(--green-light);
+    backdrop-filter: blur(20px);
+    padding: 16px 20px;
+    min-width: 240px; max-width: 320px;
+    z-index: 60; opacity: 0;
+    transition: opacity 0.18s, transform 0.18s,
+                background-color 0.6s ease, border-color 0.6s ease;
+    transform: translate(20px, 20px) scale(0.97);
+  }
+  .tooltip.visible {
+    opacity: 1;
+    transform: translate(20px, 20px) scale(1);
+  }
+  .tooltip-meta {
+    font-family: 'Onest', sans-serif;
+    font-size: 9px; color: var(--green-light);
+    letter-spacing: 0.26em; text-transform: uppercase;
+    margin-bottom: 8px; font-weight: 500;
+    display: flex; justify-content: space-between;
+    transition: color 0.6s ease;
+  }
+  .tooltip-city {
+    font-family: 'Newsreader', serif;
+    font-size: 22px; color: var(--ivory);
+    margin-bottom: 4px; font-weight: 400;
+    letter-spacing: -0.012em;
+    transition: color 0.6s ease;
+  }
+  .tooltip-club {
+    font-family: 'Onest', sans-serif;
+    font-size: 13px; color: var(--ivory-mid);
+    line-height: 1.55; font-weight: 300;
+    transition: color 0.6s ease;
+  }
+  .tooltip-divider {
+    height: 1px; background: var(--line-soft);
+    margin: 12px 0 10px;
+    transition: background 0.6s ease;
+  }
+  .tooltip-stat {
+    font-family: 'Onest', sans-serif;
+    font-size: 11px; letter-spacing: 0.04em;
+    color: var(--ivory-dim);
+    display: flex; justify-content: space-between;
+    align-items: baseline; font-weight: 400;
+    transition: color 0.6s ease;
+  }
+  .tooltip-stat strong {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--green-light); font-weight: 300;
+    letter-spacing: 0.1em;
+    font-size: 10px; text-transform: uppercase;
+    transition: color 0.6s ease;
+  }
+
+  /* ---- Cursor ---- */
+  .cursor {
+    position: fixed; pointer-events: none;
+    width: 28px; height: 28px;
+    border: 1px solid var(--green-glow);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    transition: width 0.3s cubic-bezier(.2,.8,.2,1),
+                height 0.3s cubic-bezier(.2,.8,.2,1),
+                border-color 0.3s, background 0.3s;
+  }
+  .cursor.hovering {
+    width: 64px; height: 64px;
+    border-color: var(--green-light);
+    background: rgba(52, 194, 129, 0.06);
+  }
+  .cursor-dot {
+    position: fixed; pointer-events: none;
+    width: 3px; height: 3px;
+    background: var(--green-light);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+  }
+
+  /* ---- Below: Portfolio detail ---- */
+  .portfolio-section {
+    padding: 140px 56px 110px;
+    border-top: 1px solid var(--line);
+    background: linear-gradient(to bottom, var(--bg-deep), var(--bg));
+    transition: background 0.6s ease, border-color 0.6s ease;
+  }
+  .ps-head {
+    max-width: 1400px; margin: 0 auto 80px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px; align-items: end;
+  }
+  .ps-eyebrow {
+    font-family: 'Onest', sans-serif;
+    font-size: 11px; letter-spacing: 0.3em;
+    color: var(--green-light); text-transform: uppercase;
+    margin-bottom: 24px; font-weight: 500;
+    display: flex; align-items: center; gap: 14px;
+    transition: color 0.6s ease;
+  }
+  .ps-eyebrow::before {
+    content: ''; width: 28px; height: 1px; background: var(--green-light);
+    transition: background 0.6s ease;
+  }
+  .ps-head h2 {
+    font-family: 'Newsreader', serif;
+    font-size: clamp(30px, 3.2vw, 48px);
+    font-weight: 300; line-height: 1.06;
+    letter-spacing: -0.024em;
+    color: var(--ivory);
+    transition: color 0.6s ease;
+  }
+  .ps-head h2 em {
+    font-style: italic; color: var(--green-light); font-weight: 400;
+    transition: color 0.6s ease;
+  }
+  .ps-head-right {
+    font-family: 'Onest', sans-serif;
+    font-size: 14px; color: var(--ivory-mid);
+    line-height: 1.7; font-weight: 300;
+    max-width: 460px; padding-bottom: 6px;
+    transition: color 0.6s ease;
+  }
+  .ps-grid {
+    max-width: 1400px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    transition: background 0.6s ease, border-color 0.6s ease;
+  }
+  .club-card {
+    background: var(--bg);
+    padding: 44px 36px 38px;
+    transition: background 0.5s, color 0.6s ease;
+    cursor: pointer;
+    position: relative;
+  }
+  .club-card:hover { background: var(--bg-card); }
+  .club-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: var(--green-light);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s cubic-bezier(.2,.8,.2,1);
+  }
+  .club-card:hover::before { transform: scaleX(1); }
+  .cc-meta {
+    font-family: 'Onest', sans-serif;
+    font-size: 10px; letter-spacing: 0.26em;
+    text-transform: uppercase; font-weight: 500;
+    margin-bottom: 36px;
+    display: flex; justify-content: space-between;
+    align-items: center;
+  }
+  .cc-num {
+    color: var(--green-light);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300; letter-spacing: 0.1em;
+    transition: color 0.6s ease;
+  }
+  .cc-status-text {
+    color: var(--ivory-dim);
+    transition: color 0.6s ease;
+  }
+  .cc-name {
+    font-family: 'Newsreader', serif;
+    font-size: 30px; font-weight: 400;
+    color: var(--ivory); margin-bottom: 6px;
+    letter-spacing: -0.018em; line-height: 1.05;
+    transition: color 0.6s ease;
+  }
+  .cc-name em {
+    font-style: italic; color: var(--green-light);
+    transition: color 0.6s ease;
+  }
+  .cc-location {
+    font-family: 'Onest', sans-serif;
+    font-size: 11px; color: var(--ivory-dim);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; margin-bottom: 28px;
+    transition: color 0.6s ease;
+  }
+  .cc-note {
+    font-family: 'Onest', sans-serif;
+    font-size: 13px; line-height: 1.7;
+    color: var(--ivory-mid); font-weight: 300;
+    transition: color 0.6s ease;
+  }
+  .cc-note em {
+    font-family: 'Newsreader', serif;
+    font-style: italic; color: var(--ivory);
+    transition: color 0.6s ease;
+  }
+  .cc-stats {
+    margin-top: 32px; padding-top: 22px;
+    border-top: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    transition: border-color 0.6s ease;
+  }
+  .cc-stat-label {
+    font-family: 'Onest', sans-serif;
+    font-size: 9px; color: var(--ivory-dim);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.6s ease;
+  }
+  .cc-stat-value {
+    font-family: 'Newsreader', serif;
+    color: var(--ivory); margin-top: 6px;
+    font-size: 16px; font-weight: 400;
+    letter-spacing: -0.005em;
+    transition: color 0.6s ease;
+  }
+  .cc-stat-value em {
+    font-style: italic;
+    color: var(--ivory-dim);
+    font-size: 14px;
+    transition: color 0.6s ease;
+  }
+
+  /* ---- Footer ---- */
+  .footer {
+    padding: 56px 56px 40px;
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    transition: background 0.6s ease, border-color 0.6s ease;
+  }
+  .footer-row {
+    max-width: 1400px; margin: 0 auto;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 18px;
+    font-family: 'Onest', sans-serif;
+    font-size: 11px;
+    color: var(--ivory-dim);
+    font-weight: 400; letter-spacing: 0.02em;
+    transition: color 0.6s ease;
+  }
+  .footer-row span {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300; letter-spacing: 0.18em;
+  }
+
+  @media (max-width: 1100px) {
+    .ps-head { grid-template-columns: 1fr; gap: 32px; }
+    .ps-grid { grid-template-columns: 1fr; }
+    .credentials { display: none; }
+  }
+  @media (max-width: 720px) {
+    body { cursor: auto; }
+    .cursor, .cursor-dot { display: none; }
+    .topbar { padding: 18px 22px; }
+    .brand-divider, .brand-tagline { display: none; }
+    .nav { display: none; }
+    .hero-headline { left: 22px; right: 22px; bottom: 56px; max-width: 100%; }
+    .portfolio-panel { display: none; }
+    .portfolio-section, .footer { padding-left: 22px; padding-right: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div class="loader" id="loader">
+  <div class="loader-mark">CLARA · VISTA</div>
+  <div class="loader-bar"></div>
+  <div class="loader-sub">Tracing Europe's pitch</div>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark"></span>
+    <span class="brand-wordmark">CLARA <span>VISTA</span></span>
+    <span class="brand-divider"></span>
+    <span class="brand-tagline">Investment Partners · Football &amp; Technology Fund II</span>
+  </div>
+  <div class="nav-area">
+    <nav class="nav">
+      <a href="#portfolio">Portfolio</a>
+      <a href="#">Thesis</a>
+      <a href="#">Insights</a>
+      <a href="#">Team</a>
+      <a href="#" class="nav-cta">LP Access</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg class="icon-night" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a6.5 6.5 0 1 0 9 9 9 9 0 0 1-9-9z"/>
+      </svg>
+      <svg class="icon-day" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <canvas id="map-canvas"></canvas>
+
+  <div class="hero-headline">
+    <div class="eyebrow">Fund II — Data-Driven Sports Investment</div>
+    <h1 class="headline">Owning <em>exceptional</em> football clubs in Europe's most valuable leagues.</h1>
+    <p class="subhead">We invest behind strong tailwinds and partner with winning organizations to achieve excellence across every dimension of performance — backed by data, technology, and the world's most-watched sport.</p>
+  </div>
+
+  <div class="portfolio-panel">
+    <div class="pp-label">
+      <span>Active Portfolio</span>
+      <span class="pp-label-count">03 / 12</span>
+    </div>
+    <div class="pp-row">
+      <div class="pp-num">01</div>
+      <div class="pp-info">
+        <div class="pp-city">Ipswich</div>
+        <div class="pp-club">Ipswich Town FC · England</div>
+      </div>
+      <div class="pp-status active" title="Active"></div>
+    </div>
+    <div class="pp-row">
+      <div class="pp-num">02</div>
+      <div class="pp-info">
+        <div class="pp-city">Italy</div>
+        <div class="pp-club">Target · pending close</div>
+      </div>
+      <div class="pp-status pending" title="Pending"></div>
+    </div>
+    <div class="pp-row">
+      <div class="pp-num">03</div>
+      <div class="pp-info">
+        <div class="pp-city">Spain</div>
+        <div class="pp-club">Target · active diligence</div>
+      </div>
+      <div class="pp-status diligence" title="Diligence"></div>
+    </div>
+  </div>
+
+  <div class="credentials">
+    <div class="cred-item">
+      <div class="cred-value"><em>$</em>250M</div>
+      <div class="cred-label">Fund II</div>
+    </div>
+    <div class="cred-divider"></div>
+    <div class="cred-item">
+      <div class="cred-value"><em>$</em>140M</div>
+      <div class="cred-label">Ipswich SPV</div>
+    </div>
+    <div class="cred-divider"></div>
+    <div class="cred-item">
+      <div class="cred-value">3.5<em>B</em></div>
+      <div class="cred-label">Global Fans</div>
+    </div>
+  </div>
+
+  <div class="tooltip" id="tooltip">
+    <div class="tooltip-meta">
+      <span id="t-tier">Portfolio</span>
+      <span id="t-country">ES</span>
+    </div>
+    <div class="tooltip-city" id="t-city"></div>
+    <div class="tooltip-club" id="t-club"></div>
+    <div class="tooltip-divider"></div>
+    <div class="tooltip-stat"><span>Status</span><strong id="t-flow">Active</strong></div>
+  </div>
+</section>
+
+<section class="portfolio-section" id="portfolio">
+  <div class="ps-head">
+    <div>
+      <div class="ps-eyebrow">001 · Active Portfolio</div>
+      <h2>Three clubs. Three leagues. <em>One operating system.</em></h2>
+    </div>
+    <p class="ps-head-right">A geographically diversified portfolio of European clubs, unified by a single data-led operating model and disciplined capital deployment — engineered to generate asymmetric outcomes across the world's most-watched sport.</p>
+  </div>
+  <div class="ps-grid">
+    <div class="club-card">
+      <div class="cc-meta"><span class="cc-num">01 / Ipswich Town FC</span><span class="cc-status-text">Active</span></div>
+      <div class="cc-name">Ipswich Town</div>
+      <div class="cc-location">Ipswich · England</div>
+      <p class="cc-note">Anchor investment of Fund I, with Clara Vista leading the $140M SPV to controlling interest in Q1 2026. Back-to-back promotions to the Premier League — one of the rarest feats in English football, and the highest player value creation in global football in 2024/25.</p>
+      <div class="cc-stats">
+        <div>
+          <div class="cc-stat-label">Founded</div>
+          <div class="cc-stat-value">1878</div>
+        </div>
+        <div>
+          <div class="cc-stat-label">League</div>
+          <div class="cc-stat-value">Championship</div>
+        </div>
+      </div>
+    </div>
+    <div class="club-card">
+      <div class="cc-meta"><span class="cc-num">02 / Italy</span><span class="cc-status-text">Pending close</span></div>
+      <div class="cc-name">Italy <em>(target)</em></div>
+      <div class="cc-location">Italy · Serie B</div>
+      <p class="cc-note">A historic Italian club with a track record of recent Serie A promotions, a modern Serie A-ready stadium, and the youngest squad in Serie B. <em>Acquisition pending close — full disclosure following announcement.</em></p>
+      <div class="cc-stats">
+        <div>
+          <div class="cc-stat-label">Founded</div>
+          <div class="cc-stat-value"><em>under embargo</em></div>
+        </div>
+        <div>
+          <div class="cc-stat-label">League</div>
+          <div class="cc-stat-value">Serie B → A</div>
+        </div>
+      </div>
+    </div>
+    <div class="club-card">
+      <div class="cc-meta"><span class="cc-num">03 / Spain</span><span class="cc-status-text">Active diligence</span></div>
+      <div class="cc-name">Spain <em>(target)</em></div>
+      <div class="cc-location">Spain · La Liga</div>
+      <p class="cc-note">A historic Spanish club in active diligence — La Liga is the second most valuable football league in the world, primary league for the 600M-strong Spanish-speaking market, with mid-table valuations trading well below European peers. <em>Details under embargo.</em></p>
+      <div class="cc-stats">
+        <div>
+          <div class="cc-stat-label">Founded</div>
+          <div class="cc-stat-value"><em>under embargo</em></div>
+        </div>
+        <div>
+          <div class="cc-stat-label">League</div>
+          <div class="cc-stat-value">La Liga</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-row">
+    <div>Clara Vista Investment Partners <span>· MMXXVI</span></div>
+    <div><span>NEW YORK · LONDON · MILAN · MADRID</span></div>
+    <div>Football &amp; Technology <span>· FUND II</span></div>
+  </div>
+</footer>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<script>
+//============================================================================
+// CLARA VISTA · v4 — DAY/NIGHT, PROPER EUROPE MAP, TBD MARKERS
+//============================================================================
+
+// ---- THEME ----
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  const cur = document.documentElement.dataset.theme || 'night';
+  document.documentElement.dataset.theme = cur === 'night' ? 'day' : 'night';
+});
+function getTheme() {
+  return document.documentElement.dataset.theme || 'night';
+}
+function getColors() {
+  if (getTheme() === 'day') {
+    return {
+      spotlight1: 'rgba(220, 215, 195, 0.55)',
+      spotlight2: 'rgba(244, 237, 220, 0)',
+      countryFill: 'rgba(6, 93, 57, 0.045)',
+      countryStroke: 'rgba(6, 93, 57, 0.42)',
+      countryStrokeStrong: 'rgba(6, 93, 57, 0.55)',
+      particle: 'rgba(26, 37, 32, 0.22)',
+      ambientCity: 'rgba(26, 37, 32, 0.7)',
+      ambientCityHalo: 'rgba(6, 93, 57, 0.18)',
+      worldCity: 'rgba(26, 37, 32, 0.45)',
+      worldCityLit: 'rgba(6, 93, 57, 0.85)',
+      portfolioCore: ['#34c281', '#0a7a47', '#065d39'],
+      portfolioGlow: 'rgba(14, 138, 85, 0.42)',
+      portfolioRing: 'rgba(6, 93, 57, 0.62)',
+      portfolioPulse: 'rgba(6, 93, 57, 0.45)',
+      broadcast: 'rgba(6, 93, 57, 0.30)',
+      broadcastInner: 'rgba(6, 93, 57, 0.13)',
+      transferLine: 'rgba(154, 111, 48, 0.28)',
+      transferGlow: 'rgba(154, 111, 48, 0.85)',
+      labelPrimary: '#1A2520',
+      labelSecondary: 'rgba(26, 37, 32, 0.62)',
+      labelAccent: '#065d39',
+    };
+  }
+  return {
+    spotlight1: 'rgba(20, 50, 36, 0.45)',
+    spotlight2: 'rgba(8, 22, 14, 0.20)',
+    countryFill: 'rgba(52, 194, 129, 0.045)',
+    countryStroke: 'rgba(52, 194, 129, 0.30)',
+    countryStrokeStrong: 'rgba(52, 194, 129, 0.42)',
+    particle: 'rgba(242, 234, 214, 0.22)',
+    ambientCity: 'rgba(242, 234, 214, 0.78)',
+    ambientCityHalo: 'rgba(242, 234, 214, 0.32)',
+    worldCity: 'rgba(242, 234, 214, 0.34)',
+    worldCityLit: 'rgba(242, 234, 214, 0.95)',
+    portfolioCore: ['#7be0aa', '#34c281', '#065d39'],
+    portfolioGlow: 'rgba(52, 194, 129, 0.5)',
+    portfolioRing: 'rgba(52, 194, 129, 0.7)',
+    portfolioPulse: 'rgba(52, 194, 129, 0.45)',
+    broadcast: 'rgba(52, 194, 129, 0.16)',
+    broadcastInner: 'rgba(52, 194, 129, 0.07)',
+    transferLine: 'rgba(212, 168, 106, 0.20)',
+    transferGlow: 'rgba(232, 197, 71, 0.85)',
+    labelPrimary: '#F2EAD6',
+    labelSecondary: 'rgba(242, 234, 214, 0.62)',
+    labelAccent: '#34c281',
+  };
+}
+
+//============================================================================
+// COUNTRY POLYGONS — proper Europe map (lat, lng pairs)
+//============================================================================
+const COUNTRIES = [
+  { name: 'UK', poly: [
+    [50.07,-5.6],[50.7,-4.0],[50.6,-3.4],[50.7,-2.0],[50.85,-1.4],
+    [50.95,0.3],[51.4,1.4],[51.9,1.6],[52.6,1.8],[53.0,0.5],[53.6,0.2],
+    [54.5,-0.2],[55.2,-1.5],[55.9,-2.0],[56.5,-2.6],[57.5,-1.8],
+    [58.5,-3.0],[58.7,-4.5],[58.4,-5.5],[57.5,-6.5],[56.5,-6.0],
+    [55.5,-5.5],[54.7,-4.8],[54.0,-3.2],[53.5,-3.0],[52.9,-4.7],
+    [51.7,-5.3],[51.3,-3.9],[50.07,-5.6]
+  ]},
+  { name: 'Ireland', poly: [
+    [55.4,-6.0],[55.4,-7.5],[54.5,-8.5],[54.0,-10.0],[53.0,-10.0],
+    [52.5,-10.0],[51.5,-9.5],[51.5,-8.0],[52.0,-6.5],[52.5,-6.0],
+    [53.5,-5.7],[54.5,-5.5],[55.4,-6.0]
+  ]},
+  { name: 'Portugal', poly: [
+    [42.0,-8.2],[42.0,-8.7],[41.5,-8.85],[41.0,-8.85],[40.5,-8.85],
+    [40.0,-8.85],[39.4,-9.4],[38.7,-9.5],[38.0,-8.8],[37.0,-8.9],
+    [37.0,-7.4],[38.0,-7.0],[39.5,-7.5],[40.0,-7.0],[41.0,-7.0],
+    [42.0,-8.2]
+  ]},
+  { name: 'Spain', poly: [
+    [43.79,-7.96],[43.55,-5.5],[43.4,-3.7],[43.4,-1.8],[42.8,0.6],
+    [42.43,3.27],[41.5,2.2],[40.7,0.7],[39.5,-0.3],[38.4,-0.5],
+    [37.4,-0.7],[36.7,-2.1],[36.7,-4.5],[36.0,-5.6],[36.7,-6.4],
+    [37.2,-7.4],[38.0,-7.0],[39.5,-7.5],[40.0,-7.0],[41.0,-7.0],
+    [42.0,-8.2],[43.0,-7.7],[43.79,-7.96]
+  ]},
+  { name: 'France', poly: [
+    [50.95,1.6],[50.5,2.4],[50.2,4.0],[49.5,5.6],[49.0,7.0],
+    [48.0,7.6],[47.4,7.5],[46.5,7.0],[45.7,6.8],[44.5,7.5],
+    [43.7,7.5],[43.4,6.0],[43.0,4.0],[42.5,3.0],[42.6,1.5],
+    [42.95,-0.3],[43.4,-1.8],[44.5,-1.2],[45.5,-1.2],[46.4,-1.5],
+    [47.5,-2.5],[48.4,-4.7],[48.7,-3.5],[49.4,-1.5],[49.7,0.0],
+    [50.0,1.4],[50.95,1.6]
+  ]},
+  { name: 'Belgium', poly: [
+    [51.5,2.5],[51.5,4.0],[51.4,5.8],[50.8,6.0],[50.2,6.4],
+    [49.5,5.7],[49.5,5.0],[50.3,4.0],[50.7,2.7],[51.2,2.5],
+    [51.5,2.5]
+  ]},
+  { name: 'Netherlands', poly: [
+    [53.4,5.0],[53.4,7.0],[52.7,7.0],[52.0,7.1],[51.5,6.1],
+    [51.4,5.8],[51.2,4.0],[51.5,3.5],[52.0,4.5],[52.7,4.5],
+    [53.4,5.0]
+  ]},
+  { name: 'Germany', poly: [
+    [54.5,8.5],[54.6,9.5],[54.5,11.0],[54.0,12.5],[54.5,14.0],
+    [53.5,14.5],[52.0,14.7],[50.8,14.9],[50.0,14.5],[49.0,13.5],
+    [48.5,13.0],[47.7,12.0],[47.5,10.5],[47.5,9.5],[47.6,7.5],
+    [49.0,7.0],[50.2,6.4],[51.4,5.8],[52.0,7.0],[53.4,7.0],
+    [53.7,8.0],[54.5,8.5]
+  ]},
+  { name: 'Switzerland', poly: [
+    [47.6,9.5],[47.5,10.5],[46.5,10.5],[46.0,9.0],[45.9,7.0],
+    [46.5,6.0],[47.4,6.5],[47.5,7.5],[47.6,9.5]
+  ]},
+  { name: 'Austria', poly: [
+    [48.8,13.0],[48.5,14.0],[49.0,15.0],[48.7,16.5],[47.4,16.5],
+    [46.7,16.0],[46.5,14.5],[46.7,13.0],[46.9,11.0],[47.5,10.5],
+    [47.5,12.0],[47.7,12.0],[48.5,13.0],[48.8,13.0]
+  ]},
+  { name: 'Italy', poly: [
+    [46.5,7.5],[46.6,9.0],[46.7,11.0],[46.5,12.5],[46.0,13.5],
+    [45.7,13.7],[45.5,13.6],[44.5,12.4],[43.5,13.5],[42.4,14.5],
+    [41.5,15.5],[41.0,16.5],[40.5,17.0],[40.5,18.5],[40.0,18.4],
+    [39.8,17.0],[38.9,16.5],[37.9,16.1],[38.0,15.7],[38.5,15.5],
+    [39.4,15.6],[40.0,14.5],[40.5,14.0],[41.2,13.0],[42.0,11.5],
+    [43.0,10.5],[43.8,10.0],[44.4,9.7],[44.0,8.0],[44.0,7.0],
+    [45.5,6.7],[46.5,7.5]
+  ]},
+  { name: 'Sicily', poly: [
+    [38.3,12.4],[38.2,13.4],[38.1,14.5],[38.3,15.6],[37.4,15.3],
+    [36.7,14.5],[36.7,13.5],[37.5,12.5],[38.3,12.4]
+  ]},
+  { name: 'Sardinia', poly: [
+    [41.2,8.4],[41.0,9.6],[40.0,9.7],[39.0,9.5],[39.1,8.5],
+    [40.0,8.4],[41.2,8.4]
+  ]},
+  { name: 'Corsica', poly: [
+    [43.0,9.4],[42.5,9.5],[41.5,9.4],[41.4,9.0],[42.5,8.6],[43.0,9.4]
+  ]},
+  { name: 'Norway', poly: [
+    [58.0,5.5],[58.5,5.0],[60.0,5.0],[61.5,5.0],[63.0,8.0],
+    [65.0,11.0],[67.0,14.5],[69.0,17.0],[70.5,22.0],[71.0,28.0],
+    [70.0,30.0],[69.0,28.0],[68.0,24.0],[66.0,19.0],[64.0,14.0],
+    [62.0,12.5],[60.5,12.5],[59.5,11.5],[59.0,10.5],[58.0,5.5]
+  ]},
+  { name: 'Sweden', poly: [
+    [69.0,18.0],[68.5,22.5],[67.0,23.5],[65.5,24.0],[63.5,21.0],
+    [60.5,18.5],[58.0,17.0],[56.0,16.0],[55.4,13.0],[56.0,12.5],
+    [57.5,12.0],[59.0,11.0],[60.5,12.5],[62.0,12.5],[64.0,14.0],
+    [66.0,16.0],[67.5,17.5],[69.0,18.0]
+  ]},
+  { name: 'Finland', poly: [
+    [70.0,28.0],[70.0,30.0],[68.0,28.5],[65.0,29.5],[62.0,31.5],
+    [60.5,28.0],[60.0,22.0],[62.0,21.5],[63.5,22.0],[65.5,24.0],
+    [67.0,23.5],[68.5,22.5],[70.0,28.0]
+  ]},
+  { name: 'Denmark', poly: [
+    [57.7,8.5],[57.5,10.5],[57.0,11.0],[56.0,11.0],[55.0,11.0],
+    [54.6,9.5],[54.7,8.5],[55.0,8.0],[56.5,8.0],[57.7,8.5]
+  ]},
+  { name: 'Poland', poly: [
+    [54.5,14.0],[54.4,16.5],[54.4,19.0],[54.3,22.5],[54.0,23.0],
+    [52.0,24.0],[50.5,24.0],[49.5,22.5],[49.0,19.5],[49.5,17.5],
+    [50.0,14.5],[51.0,14.7],[52.0,14.7],[53.5,14.5],[54.5,14.0]
+  ]},
+  { name: 'Czech', poly: [
+    [51.0,12.0],[51.0,14.7],[50.0,14.5],[49.5,17.5],[48.6,17.0],
+    [48.6,16.5],[48.8,13.0],[49.5,12.5],[50.5,12.0],[51.0,12.0]
+  ]},
+  { name: 'Slovakia', poly: [
+    [49.5,17.5],[49.5,22.5],[48.5,22.5],[48.0,21.5],[47.7,18.5],
+    [48.0,17.0],[48.6,17.0],[49.5,17.5]
+  ]},
+  { name: 'Hungary', poly: [
+    [48.5,16.5],[48.5,22.5],[48.0,22.5],[46.0,22.5],[45.7,21.0],
+    [45.7,17.5],[46.5,16.5],[47.0,16.0],[48.0,17.0],[48.5,16.5]
+  ]},
+  { name: 'Romania', poly: [
+    [48.0,22.5],[48.5,26.5],[47.0,28.5],[45.5,29.5],[43.7,28.5],
+    [44.0,26.0],[44.0,22.5],[45.0,21.5],[46.0,22.5],[48.0,22.5]
+  ]},
+  { name: 'Bulgaria', poly: [
+    [44.0,22.5],[44.0,27.5],[43.7,28.5],[42.0,28.0],[41.4,26.5],
+    [41.4,23.0],[42.5,22.5],[44.0,22.5]
+  ]},
+  { name: 'Greece', poly: [
+    [41.7,20.5],[41.4,23.0],[41.4,26.5],[40.5,26.0],[40.5,22.5],
+    [39.5,23.5],[38.5,23.5],[38.0,22.0],[36.5,22.5],[36.5,23.5],
+    [36.5,25.0],[37.5,27.0],[38.5,26.5],[39.5,25.0],[40.0,22.0],
+    [40.5,19.5],[41.0,19.5],[41.7,20.5]
+  ]},
+  { name: 'Albania', poly: [
+    [42.5,19.5],[42.0,20.5],[41.0,20.5],[40.0,20.0],[40.5,19.5],
+    [41.5,19.3],[42.5,19.5]
+  ]},
+  { name: 'Croatia', poly: [
+    [46.5,16.0],[46.5,18.5],[45.0,19.0],[44.0,17.0],[43.5,15.5],
+    [42.5,16.5],[43.0,17.5],[43.0,18.5],[42.7,18.5],[42.5,18.0],
+    [42.4,16.5],[43.5,15.5],[44.0,14.0],[45.0,13.5],[45.5,14.0],
+    [46.5,16.0]
+  ]},
+  { name: 'Serbia', poly: [
+    [46.0,19.0],[46.0,21.0],[45.7,22.5],[44.0,22.5],[42.5,22.5],
+    [42.5,21.5],[42.7,19.5],[43.5,19.0],[44.0,19.0],[45.0,19.0],
+    [46.0,19.0]
+  ]},
+  { name: 'Bosnia', poly: [
+    [45.2,16.0],[45.0,19.0],[44.0,19.0],[43.0,18.5],[42.7,18.5],
+    [43.0,17.5],[43.5,16.5],[44.5,16.0],[45.2,16.0]
+  ]},
+  { name: 'Slovenia', poly: [
+    [46.9,13.5],[46.7,16.0],[45.5,16.0],[45.5,13.5],[46.5,13.5],
+    [46.9,13.5]
+  ]},
+  { name: 'Turkey', poly: [
+    [42.0,26.5],[41.5,28.0],[41.0,30.0],[38.0,30.0],[36.5,30.0],
+    [36.0,28.0],[37.0,26.5],[38.5,26.5],[39.5,26.5],[40.5,26.0],
+    [41.4,26.5],[42.0,26.5]
+  ]},
+  { name: 'Estonia', poly: [
+    [59.5,22.0],[59.6,24.0],[59.5,28.0],[58.0,28.0],[57.5,27.5],
+    [57.5,24.0],[57.5,22.0],[59.5,22.0]
+  ]},
+  { name: 'Latvia', poly: [
+    [57.5,21.0],[57.5,22.0],[57.5,24.0],[57.5,27.5],[56.5,27.5],
+    [55.7,26.5],[55.7,21.0],[57.5,21.0]
+  ]},
+  { name: 'Lithuania', poly: [
+    [55.7,21.0],[55.7,26.5],[55.0,26.5],[54.0,25.0],[54.0,23.5],
+    [54.5,21.0],[55.7,21.0]
+  ]},
+];
+
+//============================================================================
+// CITIES
+//============================================================================
+// Three portfolio markers — Frosinone (Italy) and Valencia (Spain) shown as country labels only.
+// Coordinates intentionally placed at country centroids, not actual deal cities.
+const PORTFOLIO = [
+  { name: 'Ipswich', country: 'GB', lat: 52.06, lng: 1.16,
+    label: 'Ipswich', club: 'Ipswich Town FC · founded 1878', league: 'EFL Championship',
+    status: 'Active', kind: 'closed', num: '01' },
+  { name: 'Italy', country: 'IT', lat: 42.6, lng: 12.5,   // Italy centroid (not Frosinone)
+    label: 'Italy', club: 'Target acquisition · pending close', league: 'Serie B',
+    status: 'Pending close', kind: 'pending', num: '02' },
+  { name: 'Spain', country: 'ES', lat: 40.4, lng: -3.7,   // Spain centroid (not Valencia)
+    label: 'Spain', club: 'Target acquisition · active diligence', league: 'La Liga',
+    status: 'Diligence', kind: 'diligence', num: '03' },
+];
+
+const AMBIENT = [
+  { name: 'London', country: 'GB', lat: 51.5, lng: -0.1, club: 'Premier League heart' },
+  { name: 'Manchester', country: 'GB', lat: 53.5, lng: -2.2, club: 'United · City' },
+  { name: 'Liverpool', country: 'GB', lat: 53.4, lng: -3.0, club: 'Liverpool FC · Everton' },
+  { name: 'Brighton', country: 'GB', lat: 50.82, lng: -0.14, club: 'The Bloom playbook' },
+  { name: 'Newcastle', country: 'GB', lat: 54.97, lng: -1.6, club: 'Newcastle United' },
+  { name: 'Madrid', country: 'ES', lat: 40.42, lng: -3.71, club: 'Real · Atlético' },
+  { name: 'Barcelona', country: 'ES', lat: 41.4, lng: 2.2, club: 'FC Barcelona' },
+  { name: 'Seville', country: 'ES', lat: 37.4, lng: -5.99, club: 'Sevilla · Real Betis' },
+  { name: 'Bilbao', country: 'ES', lat: 43.26, lng: -2.93, club: 'Athletic Bilbao' },
+  { name: 'Lisbon', country: 'PT', lat: 38.72, lng: -9.14, club: 'Benfica · Sporting' },
+  { name: 'Porto', country: 'PT', lat: 41.16, lng: -8.6, club: 'FC Porto' },
+  { name: 'Paris', country: 'FR', lat: 48.85, lng: 2.35, club: 'Paris Saint-Germain' },
+  { name: 'Marseille', country: 'FR', lat: 43.3, lng: 5.4, club: 'Olympique de Marseille' },
+  { name: 'Lyon', country: 'FR', lat: 45.75, lng: 4.85, club: 'Olympique Lyonnais' },
+  { name: 'Munich', country: 'DE', lat: 48.13, lng: 11.58, club: 'Bayern München' },
+  { name: 'Dortmund', country: 'DE', lat: 51.51, lng: 7.47, club: 'Borussia Dortmund' },
+  { name: 'Berlin', country: 'DE', lat: 52.52, lng: 13.4, club: 'Hertha · Union Berlin' },
+  { name: 'Leverkusen', country: 'DE', lat: 51.04, lng: 6.99, club: 'Bayer 04' },
+  { name: 'Amsterdam', country: 'NL', lat: 52.37, lng: 4.9, club: 'AFC Ajax' },
+  { name: 'Brussels', country: 'BE', lat: 50.85, lng: 4.35, club: 'Anderlecht · Union SG' },
+  { name: 'Milan', country: 'IT', lat: 45.46, lng: 9.19, club: 'AC Milan · Inter' },
+  { name: 'Turin', country: 'IT', lat: 45.07, lng: 7.69, club: 'Juventus · Torino' },
+  { name: 'Bergamo', country: 'IT', lat: 45.7, lng: 9.67, club: 'Atalanta BC' },
+  { name: 'Bologna', country: 'IT', lat: 44.49, lng: 11.34, club: 'Bologna FC' },
+  { name: 'Naples', country: 'IT', lat: 40.85, lng: 14.27, club: 'SSC Napoli' },
+  { name: 'Glasgow', country: 'GB', lat: 55.86, lng: -4.25, club: 'Celtic · Rangers' },
+  { name: 'Vienna', country: 'AT', lat: 48.21, lng: 16.37, club: 'Rapid · Austria' },
+  { name: 'Athens', country: 'GR', lat: 37.98, lng: 23.73, club: 'Olympiacos · AEK' },
+  { name: 'Istanbul', country: 'TR', lat: 41.01, lng: 28.97, club: 'Galatasaray · Fenerbahçe' },
+  { name: 'Copenhagen', country: 'DK', lat: 55.68, lng: 12.57, club: 'FC København' },
+  { name: 'Zagreb', country: 'HR', lat: 45.81, lng: 15.97, club: 'Dinamo Zagreb' },
+  { name: 'Stockholm', country: 'SE', lat: 59.33, lng: 18.07, club: 'Allsvenskan' },
+  { name: 'Oslo', country: 'NO', lat: 59.91, lng: 10.75, club: 'Eliteserien' },
+  { name: 'Warsaw', country: 'PL', lat: 52.23, lng: 21.01, club: 'Ekstraklasa' },
+];
+
+// World audience cities — positioned in normalized canvas space (sx, sy)
+const WORLD = [
+  { name: 'New York', country: 'US', sx: 0.045, sy: 0.34, club: 'NBC Sports · Premier League US' },
+  { name: 'Toronto', country: 'CA', sx: 0.040, sy: 0.24, club: 'TSN · global feed' },
+  { name: 'Los Angeles', country: 'US', sx: 0.020, sy: 0.40, club: 'West Coast viewership' },
+  { name: 'Mexico City', country: 'MX', sx: 0.030, sy: 0.50, club: 'TUDN · ESPN Deportes' },
+  { name: 'Bogotá', country: 'CO', sx: 0.060, sy: 0.61, club: 'ESPN Latin America' },
+  { name: 'Lima', country: 'PE', sx: 0.030, sy: 0.69, club: 'ESPN Latin America' },
+  { name: 'São Paulo', country: 'BR', sx: 0.090, sy: 0.78, club: 'Globo · 50M+ viewers' },
+  { name: 'Rio de Janeiro', country: 'BR', sx: 0.130, sy: 0.74, club: 'SporTV' },
+  { name: 'Buenos Aires', country: 'AR', sx: 0.075, sy: 0.90, club: 'ESPN Sur' },
+  { name: 'Casablanca', country: 'MA', sx: 0.290, sy: 0.78, club: 'beIN MENA' },
+  { name: 'Cairo', country: 'EG', sx: 0.475, sy: 0.78, club: 'beIN Sports MENA' },
+  { name: 'Lagos', country: 'NG', sx: 0.395, sy: 0.88, club: 'SuperSport · 200M+ fans' },
+  { name: 'Nairobi', country: 'KE', sx: 0.510, sy: 0.91, club: 'SuperSport East Africa' },
+  { name: 'Cape Town', country: 'ZA', sx: 0.450, sy: 0.97, club: 'SuperSport · DStv' },
+  { name: 'Dubai', country: 'AE', sx: 0.640, sy: 0.58, club: 'beIN Sports · MENA hub' },
+  { name: 'Riyadh', country: 'SA', sx: 0.620, sy: 0.66, club: 'Saudi sovereign capital' },
+  { name: 'Tehran', country: 'IR', sx: 0.620, sy: 0.42, club: 'IRIB Varzesh' },
+  { name: 'Mumbai', country: 'IN', sx: 0.730, sy: 0.58, club: 'Star Sports · 100M+ fans' },
+  { name: 'Delhi', country: 'IN', sx: 0.755, sy: 0.45, club: 'Star Sports · Hotstar' },
+  { name: 'Bangkok', country: 'TH', sx: 0.840, sy: 0.62, club: 'TrueVisions' },
+  { name: 'Singapore', country: 'SG', sx: 0.870, sy: 0.72, club: 'StarHub · Singtel' },
+  { name: 'Jakarta', country: 'ID', sx: 0.910, sy: 0.78, club: 'Champions TV · 50M+ fans' },
+  { name: 'Hong Kong', country: 'HK', sx: 0.890, sy: 0.50, club: 'Now Sports · PCCW' },
+  { name: 'Shanghai', country: 'CN', sx: 0.920, sy: 0.40, club: 'iQIYI · 200M+ fans' },
+  { name: 'Beijing', country: 'CN', sx: 0.945, sy: 0.30, club: 'CCTV-5 · state broadcast' },
+  { name: 'Seoul', country: 'KR', sx: 0.950, sy: 0.35, club: 'JTBC · SPOTV' },
+  { name: 'Tokyo', country: 'JP', sx: 0.975, sy: 0.32, club: 'DAZN Japan' },
+  { name: 'Moscow', country: 'RU', sx: 0.665, sy: 0.20, club: 'Match TV' },
+  { name: 'Sydney', country: 'AU', sx: 0.945, sy: 0.91, club: 'Optus Sport · Fox' },
+  { name: 'Melbourne', country: 'AU', sx: 0.910, sy: 0.95, club: 'Optus Sport' },
+];
+
+const ALL_EU = [...PORTFOLIO, ...AMBIENT];
+PORTFOLIO.forEach(c => { c.tier = 'P'; });
+AMBIENT.forEach(c => { c.tier = 'A'; });
+WORLD.forEach(c => { c.tier = 'W'; });
+
+const BOUNDS = { minLng: -11, maxLng: 32, minLat: 35.5, maxLat: 60 };
+
+//============================================================================
+// CANVAS
+//============================================================================
+const canvas = document.getElementById('map-canvas');
+const ctx = canvas.getContext('2d');
+let W = 0, H = 0;
+const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+function resize() {
+  W = window.innerWidth;
+  H = window.innerHeight;
+  canvas.width = W * DPR;
+  canvas.height = H * DPR;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  recomputeProjection();
+}
+
+let proj = { ox: 0, oy: 0, drawW: 0, drawH: 0 };
+function computeProjection() {
+  const targetWidth = Math.min(W * 0.62, 1100);
+  const lngRange = BOUNDS.maxLng - BOUNDS.minLng;
+  const latRange = BOUNDS.maxLat - BOUNDS.minLat;
+  const meanLatCos = Math.cos(((BOUNDS.maxLat + BOUNDS.minLat) / 2) * Math.PI / 180);
+  const dataAspect = (lngRange / latRange) * meanLatCos * 1.4;
+
+  let drawW = targetWidth;
+  let drawH = drawW / dataAspect;
+  const maxH = H * 0.78;
+  if (drawH > maxH) {
+    drawH = maxH;
+    drawW = drawH * dataAspect;
+  }
+  const ox = (W - drawW) / 2;
+  const oy = (H - drawH) / 2 - H * 0.04;
+  proj = { ox, oy, drawW, drawH };
+}
+
+function project(lat, lng) {
+  const { ox, oy, drawW, drawH } = proj;
+  const x = ox + ((lng - BOUNDS.minLng) / (BOUNDS.maxLng - BOUNDS.minLng)) * drawW;
+  const y = oy + ((BOUNDS.maxLat - lat) / (BOUNDS.maxLat - BOUNDS.minLat)) * drawH;
+  return { x, y };
+}
+
+function recomputeProjection() {
+  computeProjection();
+  ALL_EU.forEach((c) => {
+    const p = project(c.lat, c.lng);
+    c.px = p.x; c.py = p.y;
+  });
+  WORLD.forEach((c) => {
+    c.px = c.sx * W; c.py = c.sy * H;
+  });
+  // Pre-project country polygons (used as masks; never rendered as strokes)
+  COUNTRIES.forEach((country) => {
+    country.points = country.poly.map(([lat, lng]) => project(lat, lng));
+  });
+  buildDotMap();
+}
+
+//============================================================================
+// DOT MAP — high-density dots inside country polygons (the actual map)
+//============================================================================
+const PORTFOLIO_COUNTRIES = new Set(['UK', 'Italy', 'Spain']);
+const DOTS = [];
+
+function pointInPolygonLL(lat, lng, poly) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [latI, lngI] = poly[i];
+    const [latJ, lngJ] = poly[j];
+    const intersect = ((latI > lat) !== (latJ > lat)) &&
+      (lng < (lngJ - lngI) * (lat - latI) / (latJ - latI) + lngI);
+    if (intersect) inside = !inside;
+  }
+  return inside;
+}
+
+function whichCountry(lat, lng) {
+  for (let i = 0; i < COUNTRIES.length; i++) {
+    if (pointInPolygonLL(lat, lng, COUNTRIES[i].poly)) return COUNTRIES[i].name;
+  }
+  return null;
+}
+
+function buildDotMap() {
+  DOTS.length = 0;
+  // Step sizes tuned for ~7000-9000 dots
+  const stepLat = 0.20;
+  const stepLng = 0.28;
+  for (let lat = 35; lat <= 71; lat += stepLat) {
+    for (let lng = -12; lng <= 35; lng += stepLng) {
+      const country = whichCountry(lat, lng);
+      if (country) {
+        const p = project(lat, lng);
+        DOTS.push({
+          x: p.x,
+          y: p.y,
+          country: country,
+          isPortfolio: PORTFOLIO_COUNTRIES.has(country),
+          basePhase: Math.random() * Math.PI * 2,
+          // Tiny per-dot offset so dots don't form a perfect grid line
+          jitterX: (Math.random() - 0.5) * 1.4,
+          jitterY: (Math.random() - 0.5) * 1.4,
+          proximity: 0,
+          waveBoost: 0,
+        });
+      }
+    }
+  }
+  // Apply jitter
+  DOTS.forEach(d => { d.x += d.jitterX; d.y += d.jitterY; });
+}
+
+//============================================================================
+// SPORTS-HUB NETWORK — static thin lines between major football cities
+//============================================================================
+const HUB_LINKS = [
+  // UK regional (anchored on Ipswich)
+  ['Ipswich', 'London'], ['Ipswich', 'Manchester'], ['Ipswich', 'Brighton'],
+  ['London', 'Manchester'], ['London', 'Liverpool'], ['London', 'Brighton'],
+  ['London', 'Newcastle'], ['Manchester', 'Liverpool'], ['Manchester', 'Newcastle'],
+  ['Glasgow', 'Liverpool'], ['Glasgow', 'Newcastle'],
+  // Italy regional
+  ['Milan', 'Turin'], ['Milan', 'Bergamo'], ['Milan', 'Bologna'],
+  ['Bologna', 'Naples'], ['Naples', 'Milan'],
+  ['Bergamo', 'Bologna'], ['Turin', 'Bologna'],
+  // Spain & Portugal regional
+  ['Madrid', 'Barcelona'], ['Madrid', 'Seville'], ['Madrid', 'Bilbao'],
+  ['Barcelona', 'Bilbao'], ['Madrid', 'Lisbon'], ['Lisbon', 'Porto'],
+  ['Madrid', 'Porto'], ['Bilbao', 'Porto'],
+  // France
+  ['Paris', 'Lyon'], ['Lyon', 'Marseille'], ['Paris', 'Marseille'],
+  // Germany & central
+  ['Munich', 'Dortmund'], ['Munich', 'Berlin'], ['Berlin', 'Dortmund'],
+  ['Munich', 'Leverkusen'], ['Berlin', 'Leverkusen'],
+  // Cross-border transfer corridors
+  ['London', 'Paris'], ['London', 'Amsterdam'], ['Amsterdam', 'Brussels'],
+  ['Brussels', 'Paris'], ['Paris', 'Madrid'], ['Paris', 'Milan'],
+  ['Munich', 'Milan'], ['Munich', 'Vienna'], ['Vienna', 'Milan'],
+  ['Amsterdam', 'Berlin'], ['Berlin', 'Warsaw'], ['Vienna', 'Zagreb'],
+  ['Athens', 'Istanbul'], ['Copenhagen', 'Stockholm'], ['Stockholm', 'Oslo'],
+];
+
+const CITY_INDEX = {};
+function indexCities() {
+  ALL_EU.forEach(c => { CITY_INDEX[c.name] = c; });
+}
+indexCities();
+
+//============================================================================
+// KICK-OFF WAVES — soft propagating ring from each portfolio city, staggered
+//============================================================================
+const WAVES = [];
+// Each portfolio city emits independently — staggered so a new wave starts every ~1.8s
+const WAVE_INTERVAL_PER_CITY = [5400, 5800, 5500];
+const WAVE_FIRST_DELAY = [2400, 4200, 5800];
+// -Infinity so the first interval check passes as soon as WAVE_FIRST_DELAY elapses.
+const lastCityWaveTime = [-Infinity, -Infinity, -Infinity];
+
+function emitWave(city, startT) {
+  WAVES.push({
+    cx: city.px, cy: city.py,
+    start: startT,
+    duration: 4500,
+  });
+}
+
+//============================================================================
+// MOUSE
+//============================================================================
+const mouse = { x: -9999, y: -9999, clientX: 0, clientY: 0 };
+let pinned = null;
+let hoveredCity = null;
+
+function updateMousePosition(e) {
+  mouse.clientX = e.clientX;
+  mouse.clientY = e.clientY;
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - rect.left;
+  mouse.y = e.clientY - rect.top;
+}
+// Track mouse on the document — fires regardless of which element is under the cursor.
+// Both mousemove and pointermove for redundancy across input types.
+document.addEventListener('mousemove', updateMousePosition, { passive: true });
+document.addEventListener('pointermove', updateMousePosition, { passive: true });
+// mouseleave on documentElement does NOT bubble — it only fires when the cursor truly
+// leaves the viewport, so it won't be triggered by element transitions or the loader fade.
+document.documentElement.addEventListener('mouseleave', () => {
+  mouse.x = -9999; mouse.y = -9999;
+});
+document.documentElement.addEventListener('mouseenter', updateMousePosition);
+canvas.addEventListener('click', () => { pinned = hoveredCity || null; });
+
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursorDot');
+let curX = 0, curY = 0;
+document.addEventListener('mousemove', (e) => {
+  cursorDot.style.left = e.clientX + 'px';
+  cursorDot.style.top = e.clientY + 'px';
+}, { passive: true });
+function loopCursor() {
+  curX += (mouse.clientX - curX) * 0.18;
+  curY += (mouse.clientY - curY) * 0.18;
+  cursor.style.left = curX + 'px';
+  cursor.style.top = curY + 'px';
+  requestAnimationFrame(loopCursor);
+}
+loopCursor();
+
+const tooltip = document.getElementById('tooltip');
+const tCity = document.getElementById('t-city');
+const tClub = document.getElementById('t-club');
+const tTier = document.getElementById('t-tier');
+const tCountry = document.getElementById('t-country');
+const tFlow = document.getElementById('t-flow');
+
+//============================================================================
+// PARTICLES
+//============================================================================
+const PARTICLES = [];
+const PARTICLE_COUNT = 110;
+function initParticles() {
+  PARTICLES.length = 0;
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    PARTICLES.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.12,
+      vy: (Math.random() - 0.5) * 0.12,
+      r: Math.random() * 1.0 + 0.3,
+      alpha: Math.random() * 0.5 + 0.15,
+      phase: Math.random() * Math.PI * 2,
+    });
+  }
+}
+
+//============================================================================
+// PLAYER TRANSFER ARCS — intra-Europe, frequent, discreet warm color
+//============================================================================
+const TRANSFERS = [];
+function spawnTransfer(startT) {
+  // Bias: pick endpoint A from portfolio half the time, otherwise from ambient
+  const portfolioBias = Math.random() < 0.45;
+  const a = portfolioBias
+    ? PORTFOLIO[Math.floor(Math.random() * PORTFOLIO.length)]
+    : ALL_EU[Math.floor(Math.random() * ALL_EU.length)];
+  let b, tries = 0;
+  while (tries < 12) {
+    const cand = ALL_EU[Math.floor(Math.random() * ALL_EU.length)];
+    const d = Math.hypot(cand.lat - a.lat, cand.lng - a.lng);
+    if (cand !== a && d < 22 && d > 2) { b = cand; break; }
+    tries++;
+  }
+  if (!b) return;
+  TRANSFERS.push({
+    a, b,
+    duration: 1700 + Math.random() * 700,
+    start: startT,
+  });
+}
+
+//============================================================================
+// BROADCAST RIPPLES — outward from portfolio cities
+//============================================================================
+const BROADCASTS = [];
+const portfolioBroadcastTimers = PORTFOLIO.map((_, i) => 3000 + i * 1700);
+
+function emitBroadcast(city, startT) {
+  BROADCASTS.push({
+    cx: city.px, cy: city.py,
+    start: startT,
+    duration: 6500,
+  });
+}
+
+//============================================================================
+// CITY INIT
+//============================================================================
+ALL_EU.forEach((c) => {
+  c.phase = Math.random() * Math.PI * 2;
+  c.period = 2600 + Math.random() * 2000;
+  c.revealAt = (c.tier === 'P' ? 1700 : 400) + Math.random() * 700;
+  c.lit = 0;
+});
+WORLD.forEach((c) => {
+  c.phase = Math.random() * Math.PI * 2;
+  c.period = 3200 + Math.random() * 2500;
+  c.revealAt = 1300 + Math.random() * 1400;
+  c.lit = 0;
+});
+
+//============================================================================
+// RESIZE
+//============================================================================
+window.addEventListener('resize', () => {
+  resize();
+  initParticles();
+});
+resize();
+initParticles();
+
+//============================================================================
+// RENDER LOOP
+//============================================================================
+let firstFrame = performance.now();
+let lastBroadcastTime = [-Infinity, -Infinity, -Infinity];
+const BROADCAST_INTERVAL = [4800, 5400, 5100];
+let lastTransferTime = -Infinity;
+
+function render(t) {
+  const elapsed = t - firstFrame;
+  const C = getColors();
+  ctx.clearRect(0, 0, W, H);
+
+  // ---- Background spotlight ----
+  const europeCx = proj.ox + proj.drawW * 0.5;
+  const europeCy = proj.oy + proj.drawH * 0.5;
+  const spotGrad = ctx.createRadialGradient(europeCx, europeCy, 60, europeCx, europeCy, Math.max(W, H) * 0.55);
+  spotGrad.addColorStop(0, C.spotlight1);
+  spotGrad.addColorStop(0.5, C.spotlight2);
+  spotGrad.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = spotGrad;
+  ctx.fillRect(0, 0, W, H);
+
+  // ---- KICK-OFF WAVES (must run before dot render so waveBoost is current) ----
+  // Each portfolio city emits on its own staggered cadence — keeps the map
+  // continuously active rather than punctuated by silence.
+  for (let i = 0; i < PORTFOLIO.length; i++) {
+    const c = PORTFOLIO[i];
+    if (!c.px) continue;
+    if (elapsed > WAVE_FIRST_DELAY[i] && t - lastCityWaveTime[i] > WAVE_INTERVAL_PER_CITY[i]) {
+      emitWave(c, t);
+      lastCityWaveTime[i] = t;
+    }
+  }
+  // Reset waveBoost on all dots, then re-apply from active waves
+  for (let i = 0; i < DOTS.length; i++) DOTS[i].waveBoost = 0;
+  for (let wi = WAVES.length - 1; wi >= 0; wi--) {
+    const wave = WAVES[wi];
+    const e = (t - wave.start) / wave.duration;
+    if (e >= 1) { WAVES.splice(wi, 1); continue; }
+    const r = e * Math.max(W, H) * 0.52;
+    const ringWidth = 56;
+    const decay = 1 - e;
+    // Apply wave boost to dots near the ring radius
+    for (let i = 0; i < DOTS.length; i++) {
+      const d = DOTS[i];
+      const dx = d.x - wave.cx;
+      const dy = d.y - wave.cy;
+      const dist = Math.hypot(dx, dy);
+      const delta = Math.abs(dist - r);
+      if (delta < ringWidth) {
+        const proximity = (1 - delta / ringWidth) * decay;
+        if (proximity > d.waveBoost) d.waveBoost = proximity;
+      }
+    }
+  }
+
+  // ---- HUB-NETWORK STATIC LINES ----
+  const hubReveal = Math.min(1, Math.max(0, (elapsed - 600) / 1800));
+  const hubEase = 1 - Math.pow(1 - hubReveal, 3);
+  const hubAlpha = (getTheme() === 'day' ? 0.18 : 0.085) * hubEase;
+  ctx.strokeStyle = getTheme() === 'day'
+    ? `rgba(6, 93, 57, ${hubAlpha})`
+    : `rgba(52, 194, 129, ${hubAlpha})`;
+  ctx.lineWidth = 0.5;
+  ctx.beginPath();
+  for (let i = 0; i < HUB_LINKS.length; i++) {
+    const a = CITY_INDEX[HUB_LINKS[i][0]];
+    const b = CITY_INDEX[HUB_LINKS[i][1]];
+    if (!a || !b || a.px === undefined || b.px === undefined) continue;
+    ctx.moveTo(a.px, a.py);
+    ctx.lineTo(b.px, b.py);
+  }
+  ctx.stroke();
+
+  // ---- DOT MAP (the actual map) — interactive, mouse-reactive ----
+  const dotReveal = Math.min(1, elapsed / 1400);
+  const dotEase = 1 - Math.pow(1 - dotReveal, 3);
+  const cursorR = 150;
+  const cursorR2 = cursorR * cursorR;
+  const isDay = getTheme() === 'day';
+  // Dot colors per theme
+  // Day: brand green for regular, darker forest for portfolio (darker = more visible on cream)
+  // Night: mid-green for regular, brighter sage for portfolio (lighter = more visible on dark)
+  const dotR = isDay ? 6 : 52;
+  const dotG = isDay ? 93 : 194;
+  const dotB = isDay ? 57 : 129;
+  const portR = isDay ? 4 : 122;
+  const portG = isDay ? 70 : 226;
+  const portB = isDay ? 42 : 170;
+  // Theme-aware base alphas — day mode needs higher opacity to be visible on cream bg
+  const baseAlphaPort = isDay ? 0.55 : 0.21;
+  const baseAlphaReg = isDay ? 0.30 : 0.115;
+  const pulseAmpPort = isDay ? 0.08 : 0.055;
+  const pulseAmpReg = isDay ? 0.035 : 0.022;
+  const mx = mouse.x, my = mouse.y;
+  const mouseActive = mx > -1000;
+  const tBreath = t * 0.0007;
+
+  for (let i = 0; i < DOTS.length; i++) {
+    const d = DOTS[i];
+    // Mouse proximity (squared-distance early exit)
+    let target = 0;
+    if (mouseActive) {
+      const dx = d.x - mx;
+      const dy = d.y - my;
+      const distSq = dx * dx + dy * dy;
+      if (distSq < cursorR2) {
+        const dist = Math.sqrt(distSq);
+        target = 1 - dist / cursorR;
+        target *= target; // quadratic falloff
+      }
+    }
+    d.proximity += (target - d.proximity) * 0.10;
+
+    // Subtle breathing pulse — stronger on portfolio countries
+    const breath = 0.5 + 0.5 * Math.sin(tBreath + d.basePhase);
+    const isPort = d.isPortfolio;
+    const baseAlpha = isPort ? baseAlphaPort : baseAlphaReg;
+    const pulseAmp = isPort ? pulseAmpPort : pulseAmpReg;
+    const proxBoost = d.proximity * 0.55;
+    const waveBoost = d.waveBoost * 0.45;
+    const alpha = (baseAlpha + breath * pulseAmp + proxBoost + waveBoost) * dotEase;
+
+    const baseSize = isPort ? 0.95 : 0.7;
+    const size = baseSize + d.proximity * 1.35 + d.waveBoost * 0.85;
+
+    if (isPort) {
+      ctx.fillStyle = `rgba(${portR},${portG},${portB},${alpha})`;
+    } else {
+      ctx.fillStyle = `rgba(${dotR},${dotG},${dotB},${alpha})`;
+    }
+    ctx.beginPath();
+    ctx.arc(d.x, d.y, size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Soft cursor halo (atmospheric)
+  if (mouseActive) {
+    const haloGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 180);
+    if (isDay) {
+      haloGrad.addColorStop(0, 'rgba(6, 93, 57, 0.05)');
+      haloGrad.addColorStop(1, 'rgba(6, 93, 57, 0)');
+    } else {
+      haloGrad.addColorStop(0, 'rgba(52, 194, 129, 0.08)');
+      haloGrad.addColorStop(1, 'rgba(52, 194, 129, 0)');
+    }
+    ctx.fillStyle = haloGrad;
+    ctx.beginPath();
+    ctx.arc(mx, my, 180, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // ---- PARTICLES ----
+  PARTICLES.forEach((p) => {
+    if (mouse.x > 0) {
+      const dx = p.x - mouse.x;
+      const dy = p.y - mouse.y;
+      const dd = Math.hypot(dx, dy);
+      if (dd < 140 && dd > 0.1) {
+        const force = (140 - dd) / 140 * 0.32;
+        p.vx += (dx / dd) * force * 0.05;
+        p.vy += (dy / dd) * force * 0.05;
+      }
+    }
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vx *= 0.97; p.vy *= 0.97;
+    p.vx += (Math.random() - 0.5) * 0.018;
+    p.vy += (Math.random() - 0.5) * 0.018;
+    if (p.x < -10) p.x = W + 10;
+    if (p.x > W + 10) p.x = -10;
+    if (p.y < -10) p.y = H + 10;
+    if (p.y > H + 10) p.y = -10;
+
+    const flicker = 0.7 + 0.3 * Math.sin(t * 0.001 + p.phase);
+    const baseAlpha = parseFloat(C.particle.match(/[\d.]+(?=\))/)[0]);
+    const alpha = baseAlpha * flicker * p.alpha * 2;
+    if (getTheme() === 'day') {
+      ctx.fillStyle = `rgba(26, 37, 32, ${Math.min(0.3, alpha)})`;
+    } else {
+      ctx.fillStyle = `rgba(242, 234, 214, ${Math.min(0.4, alpha)})`;
+    }
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // ---- PLAYER TRANSFER ARCS (intra-Europe) ----
+  if (t - lastTransferTime > 1400 && elapsed > 2200) {
+    spawnTransfer(t);
+    lastTransferTime = t;
+  }
+  for (let i = TRANSFERS.length - 1; i >= 0; i--) {
+    const arc = TRANSFERS[i];
+    const e = (t - arc.start) / arc.duration;
+    if (e >= 1) { TRANSFERS.splice(i, 1); continue; }
+    const a = arc.a, b = arc.b;
+    const midX = (a.px + b.px) / 2;
+    const midY = (a.py + b.py) / 2;
+    const distance = Math.hypot(b.px - a.px, b.py - a.py);
+    const lift = -Math.min(distance * 0.32, 80);
+
+    // Trail
+    const trailAlpha = Math.sin(e * Math.PI) * 0.22;
+    const baseTransfer = C.transferLine.match(/[\d.]+(?=\))/)[0];
+    const trailColor = getTheme() === 'day'
+      ? `rgba(154, 111, 48, ${trailAlpha})`
+      : `rgba(212, 168, 106, ${trailAlpha})`;
+    ctx.strokeStyle = trailColor;
+    ctx.lineWidth = 0.7;
+    ctx.beginPath();
+    ctx.moveTo(a.px, a.py);
+    ctx.quadraticCurveTo(midX, midY + lift, b.px, b.py);
+    ctx.stroke();
+
+    // Travelling glow — fades in/out with the arc so it never looks like a static dot
+    const u = 1 - e;
+    const px = u * u * a.px + 2 * u * e * midX + e * e * b.px;
+    const py = u * u * a.py + 2 * u * e * (midY + lift) + e * e * b.py;
+    const dotAlpha = Math.sin(e * Math.PI); // 0 at endpoints, 1 at midpoint
+    const glowGrad = ctx.createRadialGradient(px, py, 0, px, py, 7);
+    if (getTheme() === 'day') {
+      glowGrad.addColorStop(0, `rgba(154, 111, 48, ${dotAlpha * 0.55})`);
+    } else {
+      glowGrad.addColorStop(0, `rgba(232, 197, 71, ${dotAlpha * 0.6})`);
+    }
+    glowGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glowGrad;
+    ctx.fillRect(px - 7, py - 7, 14, 14);
+    ctx.fillStyle = getTheme() === 'day'
+      ? `rgba(154, 111, 48, ${dotAlpha * 0.78})`
+      : `rgba(232, 197, 71, ${dotAlpha * 0.78})`;
+    ctx.beginPath();
+    ctx.arc(px, py, 1.0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // ---- BROADCAST RIPPLES (outward to world) ----
+  PORTFOLIO.forEach((c, i) => {
+    if (elapsed > portfolioBroadcastTimers[i] && t - lastBroadcastTime[i] > BROADCAST_INTERVAL[i]) {
+      emitBroadcast(c, t);
+      lastBroadcastTime[i] = t;
+    }
+  });
+
+  for (let i = BROADCASTS.length - 1; i >= 0; i--) {
+    const b = BROADCASTS[i];
+    const e = (t - b.start) / b.duration;
+    if (e >= 1) { BROADCASTS.splice(i, 1); continue; }
+    const maxR = Math.hypot(W, H) * 0.85;
+    const r = e * maxR;
+    const alphaMul = Math.sin(e * Math.PI);
+    const baseAlpha = parseFloat(C.broadcast.match(/[\d.]+(?=\))/)[0]);
+    const alpha = alphaMul * baseAlpha;
+    if (getTheme() === 'day') {
+      ctx.strokeStyle = `rgba(6, 93, 57, ${alpha})`;
+    } else {
+      ctx.strokeStyle = `rgba(52, 194, 129, ${alpha})`;
+    }
+    ctx.lineWidth = 0.9;
+    ctx.beginPath();
+    ctx.arc(b.cx, b.cy, r, 0, Math.PI * 2);
+    ctx.stroke();
+    if (r > 30) {
+      if (getTheme() === 'day') {
+        ctx.strokeStyle = `rgba(6, 93, 57, ${alpha * 0.45})`;
+      } else {
+        ctx.strokeStyle = `rgba(52, 194, 129, ${alpha * 0.45})`;
+      }
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      ctx.arc(b.cx, b.cy, r * 0.92, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // Light up world cities the ring passes
+    const ringWidth = 22;
+    WORLD.forEach((wc) => {
+      const dist = Math.hypot(wc.px - b.cx, wc.py - b.cy);
+      if (Math.abs(dist - r) < ringWidth) {
+        const proximity = 1 - Math.abs(dist - r) / ringWidth;
+        wc.lit = Math.max(wc.lit, proximity);
+      }
+    });
+  }
+
+  // ---- WORLD CITIES ----
+  hoveredCity = null;
+  let bestHover = Infinity;
+
+  WORLD.forEach((c) => {
+    if (elapsed < c.revealAt) return;
+    const reveal = Math.min(1, (elapsed - c.revealAt) / 900);
+    const ease = 1 - Math.pow(1 - reveal, 3);
+
+    const litBoost = c.lit;
+    c.lit *= 0.985; // slower decay — lit state lingers ~3s instead of ~1s
+
+    const pulse = 0.5 + 0.5 * Math.sin(t / c.period * Math.PI * 2 + c.phase);
+    const baseR = 1.7 + pulse * 0.5;
+    const r = baseR * ease;
+    const glowR = (6 + pulse * 2 + litBoost * 12) * ease;
+
+    const dx = c.px - mouse.x;
+    const dy = c.py - mouse.y;
+    const d = Math.hypot(dx, dy);
+    const isHover = d < 18;
+    if (isHover && d < bestHover) {
+      hoveredCity = c;
+      bestHover = d;
+    }
+    const hoverMul = isHover ? 2.0 : 1;
+
+    const ringGrad = ctx.createRadialGradient(c.px, c.py, 0, c.px, c.py, glowR * hoverMul);
+    if (getTheme() === 'day') {
+      const glowAlpha = (0.42 + litBoost * 0.5) * ease;
+      ringGrad.addColorStop(0, `rgba(6, 93, 57, ${glowAlpha})`);
+      ringGrad.addColorStop(1, 'rgba(6, 93, 57, 0)');
+    } else {
+      const glowAlpha = (0.55 + litBoost * 0.55) * ease;
+      ringGrad.addColorStop(0, `rgba(242, 234, 214, ${glowAlpha})`);
+      ringGrad.addColorStop(1, 'rgba(242, 234, 214, 0)');
+    }
+    ctx.fillStyle = ringGrad;
+    ctx.beginPath();
+    ctx.arc(c.px, c.py, glowR * hoverMul, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Core
+    if (getTheme() === 'day') {
+      const coreAlpha = (0.55 + litBoost * 0.5) * ease;
+      ctx.fillStyle = `rgba(26, 37, 32, ${Math.min(1, coreAlpha)})`;
+    } else {
+      const coreAlpha = (0.55 + litBoost * 0.5) * ease;
+      ctx.fillStyle = `rgba(242, 234, 214, ${Math.min(1, coreAlpha)})`;
+    }
+    ctx.beginPath();
+    ctx.arc(c.px, c.py, r * (1 + litBoost * 0.4), 0, Math.PI * 2);
+    ctx.fill();
+
+    if (isHover) {
+      ctx.fillStyle = C.labelPrimary;
+      ctx.font = "300 11px 'JetBrains Mono', monospace";
+      ctx.textAlign = 'left';
+      ctx.fillText(c.name.toUpperCase(), c.px + r + 8, c.py + 3.5);
+    }
+  });
+
+  // ---- AMBIENT EUROPEAN CITIES ----
+  AMBIENT.forEach((c) => {
+    if (elapsed < c.revealAt) return;
+    const reveal = Math.min(1, (elapsed - c.revealAt) / 700);
+    const ease = 1 - Math.pow(1 - reveal, 3);
+
+    const pulse = 0.5 + 0.5 * Math.sin(t / c.period * Math.PI * 2 + c.phase);
+    const r = (1.7 + pulse * 0.5) * ease;
+    const glowR = (8 + pulse * 3) * ease;
+
+    const dx = c.px - mouse.x;
+    const dy = c.py - mouse.y;
+    const d = Math.hypot(dx, dy);
+    const isHover = d < 18;
+    if (isHover && d < bestHover) {
+      hoveredCity = c;
+      bestHover = d;
+    }
+    const hoverMul = isHover ? 1.8 : 1;
+
+    const ringGrad = ctx.createRadialGradient(c.px, c.py, 0, c.px, c.py, glowR * hoverMul);
+    if (getTheme() === 'day') {
+      ringGrad.addColorStop(0, `rgba(6, 93, 57, ${0.35 * ease})`);
+      ringGrad.addColorStop(1, 'rgba(6, 93, 57, 0)');
+    } else {
+      ringGrad.addColorStop(0, `rgba(242, 234, 214, ${0.45 * ease})`);
+      ringGrad.addColorStop(1, 'rgba(242, 234, 214, 0)');
+    }
+    ctx.fillStyle = ringGrad;
+    ctx.beginPath();
+    ctx.arc(c.px, c.py, glowR * hoverMul, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (getTheme() === 'day') {
+      ctx.fillStyle = `rgba(26, 37, 32, ${0.78 * ease})`;
+    } else {
+      ctx.fillStyle = `rgba(242, 234, 214, ${0.78 * ease})`;
+    }
+    ctx.beginPath();
+    ctx.arc(c.px, c.py, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (isHover) {
+      ctx.fillStyle = C.labelPrimary;
+      ctx.font = "400 11px 'Onest', sans-serif";
+      ctx.textAlign = 'left';
+      ctx.fillText(c.name, c.px + r + 8, c.py + 3.5);
+    }
+  });
+
+  // ---- PORTFOLIO MARKERS (3 heroes) ----
+  PORTFOLIO.forEach((c, i) => {
+    if (elapsed < c.revealAt) return;
+    const reveal = Math.min(1, (elapsed - c.revealAt) / 1300);
+    const ease = 1 - Math.pow(1 - reveal, 3);
+
+    const pulse = 0.5 + 0.5 * Math.sin(t / c.period * Math.PI * 2 + c.phase);
+    const r = (5.4 + pulse * 1.1) * ease;
+    const glowR = (44 + pulse * 14) * ease;
+
+    const dx = c.px - mouse.x;
+    const dy = c.py - mouse.y;
+    const d = Math.hypot(dx, dy);
+    const isHover = d < 28;
+    if (isHover && d < bestHover) {
+      hoveredCity = c;
+      bestHover = d;
+    }
+    const hoverMul = (isHover || pinned === c) ? 1.5 : 1;
+
+    // Outer glow
+    const outerGrad = ctx.createRadialGradient(c.px, c.py, 0, c.px, c.py, glowR * hoverMul);
+    if (getTheme() === 'day') {
+      outerGrad.addColorStop(0, `rgba(14, 138, 85, ${0.36 * ease})`);
+      outerGrad.addColorStop(0.4, `rgba(14, 138, 85, ${0.12 * ease})`);
+      outerGrad.addColorStop(1, 'rgba(14, 138, 85, 0)');
+    } else {
+      outerGrad.addColorStop(0, `rgba(52, 194, 129, ${0.5 * ease})`);
+      outerGrad.addColorStop(0.4, `rgba(52, 194, 129, ${0.16 * ease})`);
+      outerGrad.addColorStop(1, 'rgba(52, 194, 129, 0)');
+    }
+    ctx.fillStyle = outerGrad;
+    ctx.beginPath();
+    ctx.arc(c.px, c.py, glowR * hoverMul, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Slow heartbeat ring
+    const ringPhase = (t / 3200 + i * 0.33) % 1;
+    const ringR = ringPhase * (glowR * 1.2);
+    const ringAlpha = (1 - ringPhase) * 0.45 * ease;
+
+    ctx.strokeStyle = getTheme() === 'day'
+      ? `rgba(6, 93, 57, ${ringAlpha})`
+      : `rgba(52, 194, 129, ${ringAlpha})`;
+
+    if (c.kind === 'closed') {
+      ctx.lineWidth = 1;
+      ctx.setLineDash([]);
+    } else {
+      // Pending / diligence: dashed pulse to signal "in process"
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+    }
+    ctx.beginPath();
+    ctx.arc(c.px, c.py, ringR, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Outer pin ring
+    ctx.strokeStyle = C.portfolioRing;
+    ctx.lineWidth = 1.2;
+    if (c.kind !== 'closed') {
+      ctx.setLineDash([2, 3]);
+    }
+    ctx.beginPath();
+    ctx.arc(c.px, c.py, r + 6, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Core
+    if (c.kind === 'closed') {
+      // Solid filled gradient — locked deal
+      const coreGrad = ctx.createRadialGradient(c.px, c.py - r * 0.2, 0, c.px, c.py, r);
+      coreGrad.addColorStop(0, C.portfolioCore[0]);
+      coreGrad.addColorStop(0.5, C.portfolioCore[1]);
+      coreGrad.addColorStop(1, C.portfolioCore[2]);
+      ctx.fillStyle = coreGrad;
+      ctx.globalAlpha = ease;
+      ctx.beginPath();
+      ctx.arc(c.px, c.py, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    } else {
+      // Hollow / partial fill — pending or in diligence
+      ctx.fillStyle = getTheme() === 'day' ? 'rgba(244, 237, 220, 1)' : 'rgba(6, 10, 8, 1)';
+      ctx.globalAlpha = ease;
+      ctx.beginPath();
+      ctx.arc(c.px, c.py, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      ctx.strokeStyle = C.portfolioCore[1];
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.arc(c.px, c.py, r, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Small inner dot
+      ctx.fillStyle = C.portfolioCore[1];
+      ctx.beginPath();
+      ctx.arc(c.px, c.py, r * 0.32, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Label
+    const labelOpacity = ease;
+    const labelOffset = 32;
+    const labelX = c.px + labelOffset;
+
+    // Connector
+    ctx.strokeStyle = getTheme() === 'day'
+      ? `rgba(6, 93, 57, ${0.5 * labelOpacity})`
+      : `rgba(52, 194, 129, ${0.5 * labelOpacity})`;
+    ctx.lineWidth = 0.7;
+    ctx.beginPath();
+    ctx.moveTo(c.px + r + 7, c.py);
+    ctx.lineTo(labelX - 4, c.py);
+    ctx.stroke();
+
+    // Number (italic serif)
+    ctx.fillStyle = getTheme() === 'day'
+      ? `rgba(6, 93, 57, ${labelOpacity})`
+      : `rgba(52, 194, 129, ${labelOpacity})`;
+    ctx.font = "italic 400 12px 'Newsreader', serif";
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(c.num, labelX, c.py - 1);
+
+    // City/country name (italic serif)
+    ctx.fillStyle = getTheme() === 'day'
+      ? `rgba(26, 37, 32, ${labelOpacity})`
+      : `rgba(242, 234, 214, ${labelOpacity})`;
+    ctx.font = "italic 400 17px 'Newsreader', serif";
+    ctx.fillText(c.label, labelX + 22, c.py - 1);
+
+    // Sub-label
+    ctx.fillStyle = getTheme() === 'day'
+      ? `rgba(26, 37, 32, ${0.55 * labelOpacity})`
+      : `rgba(242, 234, 214, ${0.55 * labelOpacity})`;
+    ctx.font = "400 10px 'Onest', sans-serif";
+    const subLabel = c.kind === 'closed'
+      ? c.league
+      : c.league + ' · TBD';
+    ctx.fillText(subLabel, labelX + 22, c.py + 15);
+
+    ctx.textBaseline = 'alphabetic';
+  });
+
+  // ---- TOOLTIP ----
+  const showCity = pinned || hoveredCity;
+  if (showCity) {
+    tooltip.classList.add('visible');
+    tooltip.style.left = mouse.clientX + 'px';
+    tooltip.style.top = mouse.clientY + 'px';
+    tCity.textContent = showCity.label || showCity.name;
+    tClub.textContent = showCity.club;
+    if (showCity.tier === 'P') {
+      tTier.textContent = `Portfolio · ${showCity.num}`;
+      tFlow.textContent = showCity.status;
+    } else if (showCity.tier === 'W') {
+      tTier.textContent = 'Audience';
+      tFlow.textContent = 'Live broadcast';
+    } else {
+      tTier.textContent = 'Watchlist';
+      tFlow.textContent = 'Monitoring';
+    }
+    tCountry.textContent = showCity.country;
+    cursor.classList.add('hovering');
+  } else {
+    tooltip.classList.remove('visible');
+    cursor.classList.remove('hovering');
+  }
+
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+
+// Hide loader
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 400);
+});
+</script>
+</body>
+</html>
