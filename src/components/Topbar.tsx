@@ -67,10 +67,18 @@ export function Topbar({ activeNav = null }: TopbarProps) {
       </Link>
       <div className="nav-area">
         <nav className="nav">
-          <Link href="/" style={activeNav === "home" ? activeStyle : undefined}>
+          <Link
+            href="/"
+            aria-current={activeNav === "home" ? "page" : undefined}
+            style={activeNav === "home" ? activeStyle : undefined}
+          >
             Home
           </Link>
-          <Link href="/team" style={activeNav === "team" ? activeStyle : undefined}>
+          <Link
+            href="/team"
+            aria-current={activeNav === "team" ? "page" : undefined}
+            style={activeNav === "team" ? activeStyle : undefined}
+          >
             About Us
           </Link>
           <div
@@ -79,6 +87,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
             <Link
               href="/portfolio"
               className="nav-portfolio-trigger"
+              aria-current={activeNav === "portfolio" ? "page" : undefined}
               style={activeNav === "portfolio" ? activeStyle : undefined}
               aria-haspopup="menu"
             >
@@ -137,10 +146,18 @@ export function Topbar({ activeNav = null }: TopbarProps) {
               </Link>
             </div>
           </div>
-          <Link href="/thesis" style={activeNav === "thesis" ? activeStyle : undefined}>
+          <Link
+            href="/thesis"
+            aria-current={activeNav === "thesis" ? "page" : undefined}
+            style={activeNav === "thesis" ? activeStyle : undefined}
+          >
             Thesis
           </Link>
-          <Link href="/approach" style={activeNav === "approach" ? activeStyle : undefined}>
+          <Link
+            href="/approach"
+            aria-current={activeNav === "approach" ? "page" : undefined}
+            style={activeNav === "approach" ? activeStyle : undefined}
+          >
             Strategy
           </Link>
           <a
@@ -184,10 +201,10 @@ export function Topbar({ activeNav = null }: TopbarProps) {
         aria-label="Site navigation"
       >
         <div className="mobile-menu-inner">
-          <Link href="/" className="mm-link" onClick={closeMobile} style={activeNav === "home" ? activeStyle : undefined}>
+          <Link href="/" className="mm-link" onClick={closeMobile} aria-current={activeNav === "home" ? "page" : undefined} style={activeNav === "home" ? activeStyle : undefined}>
             Home
           </Link>
-          <Link href="/team" className="mm-link" onClick={closeMobile} style={activeNav === "team" ? activeStyle : undefined}>
+          <Link href="/team" className="mm-link" onClick={closeMobile} aria-current={activeNav === "team" ? "page" : undefined} style={activeNav === "team" ? activeStyle : undefined}>
             About Us
           </Link>
           <div className="mm-group">
@@ -195,6 +212,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
               href="/portfolio"
               className="mm-link"
               onClick={closeMobile}
+              aria-current={activeNav === "portfolio" ? "page" : undefined}
               style={activeNav === "portfolio" ? activeStyle : undefined}
             >
               Portfolio
@@ -215,6 +233,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
             href="/thesis"
             className="mm-link"
             onClick={closeMobile}
+            aria-current={activeNav === "thesis" ? "page" : undefined}
             style={activeNav === "thesis" ? activeStyle : undefined}
           >
             Thesis
@@ -223,6 +242,7 @@ export function Topbar({ activeNav = null }: TopbarProps) {
             href="/approach"
             className="mm-link"
             onClick={closeMobile}
+            aria-current={activeNav === "approach" ? "page" : undefined}
             style={activeNav === "approach" ? activeStyle : undefined}
           >
             Strategy
